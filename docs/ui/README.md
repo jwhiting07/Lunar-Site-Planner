@@ -4,6 +4,25 @@ This saves the interface direction reviewed with Elliott on November 14, 2026.
 The typography, sharp edges, restrained dark palette, and overall appearance were approved.
 Trek workspace is the selected starting layout. The other three layouts are retained as references.
 
+## Current planning flow — November 14, 2026
+
+The latest request supersedes the separate Moon/Planning pages below. Keep one
+Planning workspace without page tabs or preset locations. Accept entered coordinates
+or a click on the Moon, landing date and mission duration. Show a target-based verdict,
+sunlight and Earth visibility first; place custom minima, outage limits, clearance and
+power assumptions behind Advanced. Detailed data retains timelines, terrain and the
+local horizon. Scale, zoom, far-side and south-pole controls, sources and the UTC clock
+are carried into Planning. Keep the approved typography, palette and square controls.
+
+Find a site supports independent optional location-radius and landing-date limits;
+neither selected means a sampled search across the Moon and available dates. Offer
+nearby date/location alternatives with metric differences, and a compact comparison
+of user-added scenarios with optional detailed metrics. Clearly distinguish arbitrary
+coordinate flat-horizon estimates from the exact shipped terrain masks. The default
+50% visibility targets are editable assumptions, not official challenge thresholds.
+
+Earlier page and interaction descriptions below are historical references.
+
 ## Latest view direction — November 14, 2026
 
 Moon is now the default application page. Solar view is parked at the user's request:

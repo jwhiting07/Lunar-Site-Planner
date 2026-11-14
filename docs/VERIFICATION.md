@@ -1,3 +1,19 @@
+# Unified Planning verification — November 14, 2026
+
+`npm run build` and all 103 Vitest tests pass, including new lunar-radius,
+pole/date-line, date-grid, target-boundary, cancellation, hourly-refinement and
+multi-date export checks. Browser checks covered coordinate entry, keyboard and
+click selection, drag suppression, nearby date and location improvements,
+unrestricted search (1,519 scenarios for a seven-day mission), radius/date-limited
+search, basic/detailed comparison, and retained detailed data/timeline. The 390 px
+viewport reflows into one column without horizontal page overflow. Moon/Planning
+navigation and preset sites are absent from the active entry point.
+
+Arbitrary-coordinate terrain remains unavailable; the interface labels those
+results as flat-horizon estimates. Search samples a grid and does not establish a
+global optimum or landing safety. The editable initial 50% targets are project
+assumptions. Prior verification notes below describe earlier versions.
+
 # Verification status — 2026-11-14
 
 ## Star background refinement

@@ -30,9 +30,12 @@ export function moonScaleBar(kmPerPixel: number, maxWidth = 100) {
   return { km, pixels: km / kmPerPixel };
 }
 
-export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null }: {
+export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
+  compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
 }) {
+  const pick = useRef(onPick);
+  pick.current = onPick;
   const host = useRef<HTMLDivElement>(null);
   const pins = useRef(new Map<string, HTMLButtonElement>());
   const focus = useRef<(id: string | null) => void>(() => {});
@@ -58,7 +61,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     if (!element) return;
     let renderer: THREE.WebGLRenderer;
     try { renderer = new THREE.WebGLRenderer({ antialias: true }); }
-    catch { setError('3-D unavailable. Select a site from the list; analysis still works.'); setLoading(false); return; }
+    catch { setError('3-D unavailable. Enter coordinates to continue.'); setLoading(false); return; }
     let disposed = false;
     let frame = 0;
     setError(null);
@@ -184,6 +187,36 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       pointer = new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2);
       draw();
     };
+    let gesture: { x: number; y: number; moved: number; id: number } | null = null;
+    let multiplePointers = false;
+    const pointers = new Set<number>();
+    const onDown = (event: PointerEvent) => {
+      pointers.add(event.pointerId);
+      if (pointers.size > 1) multiplePointers = true;
+      if (event.button === 0 && pointers.size === 1) { multiplePointers = false; gesture = { x: event.clientX, y: event.clientY, moved: 0, id: event.pointerId }; }
+    };
+    const onMove = (event: PointerEvent) => {
+      if (!gesture || gesture.id !== event.pointerId) return;
+      gesture.moved += Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y);
+      gesture.x = event.clientX; gesture.y = event.clientY;
+    };
+    const selectAt = (ndc: THREE.Vector2) => {
+      if (!pick.current || !model) return;
+      raycaster.setFromCamera(ndc, camera);
+      const surface = raycaster.intersectObject(model, true)[0]?.point;
+      if (surface) pick.current(globeCoordinates(surface));
+    };
+    const onUp = (event: PointerEvent) => {
+      pointers.delete(event.pointerId);
+      if (!gesture || event.pointerId !== gesture.id) return;
+      const tap = !multiplePointers && gesture.moved + Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) < 5;
+      gesture = null;
+      if (tap) {
+        const bounds = renderer.domElement.getBoundingClientRect();
+        selectAt(new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
+      }
+    };
+    const onCancel = (event: PointerEvent) => { pointers.delete(event.pointerId); gesture = null; };
     const onLeave = () => { pointer = null; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
     const onKey = (event: KeyboardEvent) => {
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
@@ -200,7 +233,12 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       } else if (event.key === '+' || event.key === '=') { event.preventDefault(); zoom.current(0.85); }
       else if (event.key === '-') { event.preventDefault(); zoom.current(1.18); }
       else if (event.key === 'Home') { event.preventDefault(); if (explorer) setOrientation('south'); focus.current(local ? sites[0]?.id ?? null : null); }
+      else if (event.key === 'Enter' && pick.current) { event.preventDefault(); selectAt(new THREE.Vector2(0, 0)); }
     };
+    renderer.domElement.addEventListener('pointerdown', onDown);
+    renderer.domElement.addEventListener('pointermove', onMove);
+    renderer.domElement.addEventListener('pointerup', onUp);
+    renderer.domElement.addEventListener('pointercancel', onCancel);
     renderer.domElement.addEventListener('keydown', onKey);
     if (explorer) { renderer.domElement.addEventListener('pointermove', onPointer); renderer.domElement.addEventListener('pointerleave', onLeave); }
     const resize = new ResizeObserver(() => {
@@ -208,7 +246,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       const previousFit = fittedDistance();
       renderer.setSize(element.clientWidth, element.clientHeight, false);
       camera.aspect = element.clientWidth / element.clientHeight;
-      if (explorer) camera.setViewOffset(element.clientWidth, element.clientHeight, element.clientWidth > 760 ? -element.clientWidth * 0.075 : 0, element.clientWidth <= 760 ? -Math.min(element.clientHeight * 0.08, 50) : 0, element.clientWidth, element.clientHeight);
+      if (explorer && !compact) camera.setViewOffset(element.clientWidth, element.clientHeight, element.clientWidth > 760 ? -element.clientWidth * 0.075 : 0, element.clientWidth <= 760 ? -Math.min(element.clientHeight * 0.08, 50) : 0, element.clientWidth, element.clientHeight);
       else camera.clearViewOffset();
       if (!local) camera.position.multiplyScalar(fittedDistance() / previousFit);
       updateLimits();
@@ -219,7 +257,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     loadNasaModel('moon').then(loaded => {
       if (disposed) { disposeModel(loaded); return; }
       model = loaded; scene.add(loaded); if (local) focus.current(activeFocus.current); setLoading(false); draw();
-    }).catch(() => { if (!disposed) { setLoading(false); setError('NASA Moon model could not load. The site list and Planning remain available.'); } });
+    }).catch(() => { if (!disposed) { setLoading(false); setError('Moon model could not load. Enter coordinates to continue.'); } });
     const contextLost = (event: Event) => { event.preventDefault(); setLoading(false); setError('The 3D display was interrupted. Reload to restore it; Planning remains available.'); };
     renderer.domElement.addEventListener('webglcontextlost', contextLost);
     return () => {
@@ -236,10 +274,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       renderer.domElement.removeEventListener('pointermove', onPointer);
       renderer.domElement.removeEventListener('pointerleave', onLeave);
       renderer.domElement.removeEventListener('keydown', onKey);
+      renderer.domElement.removeEventListener('pointerdown', onDown);
+      renderer.domElement.removeEventListener('pointermove', onMove);
+      renderer.domElement.removeEventListener('pointerup', onUp);
+      renderer.domElement.removeEventListener('pointercancel', onCancel);
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [sites, explorer, local]);
+  }, [sites, explorer, local, compact]);
 
   useEffect(() => { focus.current(explorer ? null : primaryId); }, [sites, explorer, local]);
   useEffect(() => { if (!explorer || orientation === 'site') focus.current(primaryId); }, [primaryId, sites, explorer, orientation]);
@@ -247,7 +289,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
 
   return <>
     <div className={`moon-stage${explorer ? ' moon-stage-full' : ''}${showSites ? '' : ' moon-hide-sites'}`} ref={host}>
-      {explorer ? <div className="moon-simple-controls">
+      {explorer && !compact ? <div className="moon-simple-controls">
         <label className="sr-only" htmlFor="moon-orientation">Moon view</label>
         <select id="moon-orientation" value={orientation} onChange={event => { setOrientation(event.target.value); focus.current(event.target.value === 'site' ? primaryId : event.target.value === 'far' ? 'far' : null); }}>
           <option value="south">South pole</option><option value="far">Far side</option><option value="site">Selected landing site</option>
@@ -257,8 +299,9 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         <button className="btn explorer-button" onClick={() => { setOrientation('south'); focus.current(null); }}>Reset view</button>
       </div> :
       <div className="moon-toolbar">
-        <button className="btn small" onClick={() => focus.current(primaryId)}>{local ? 'Reset view' : 'Focus site'}</button>
+        <button className="btn small" disabled={!local && !primaryId} onClick={() => focus.current(primaryId)}>{local ? 'Reset view' : 'Focus site'}</button>
         {!local && <button className="btn small" onClick={() => focus.current(null)}>South pole</button>}
+        {compact && <button className="btn small" onClick={() => focus.current('far')}>Far side</button>}
       </div>}
       {!local && sites.map((site, i) => <button key={site.id} ref={el => { if (el) pins.current.set(site.id, el); else pins.current.delete(site.id); }}
         className={`moon-pin${site.id === primaryId ? ' selected' : ''}`} hidden
@@ -266,7 +309,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         title={site.short} onClick={() => { onSelect(site.id); setOrientation('site'); focus.current(site.id); }}>{i + 1}</button>)}
       {loading && <div className="moon-message" role="status">Loading Moon…</div>}
       {error && <div className="moon-message" role="alert">{error}</div>}
-      <span className="moon-hint">Drag to rotate · Scroll to zoom</span>
+      <span className="moon-hint">{onPick ? 'Click to select · Enter selects center · ' : ''}Drag to rotate · Scroll to zoom</span>
       {local && <span className="moon-local-reticle" aria-label="Selected landing site" />}
       {explorer && <div className="moon-coordinate-hud" aria-label="Moon surface scale and cursor coordinates">
         <button ref={scaleTrigger} type="button" className="btn" aria-expanded={scaleOpen} aria-controls={scaleId} onClick={() => { if (scaleOpen) scalePopup.current?.hidePopover(); else { scalePopup.current?.showPopover(); redraw.current(); } }}>Scale</button>

@@ -28,11 +28,24 @@ export interface MethodDoc {
 
 export const METHODS: MethodDoc[] = [
   {
+    id: 'M-PLAN', title: 'Mission targets and search', kind: 'approximated',
+    summary: 'A scenario meets targets when its unrounded sunlight and Earth-visible percentages meet the chosen minima and its optional darkness and blackout durations stay within their limits. The initial 50% targets are editable project assumptions, not NASA requirements. Power does not affect this verdict.',
+    formula: 'Rank by all targets met, then sum of normalized target shortfalls, then total sunlight + Earth-visible fractions. Break ties by distance (km) + date offset (days).',
+    refs: [],
+    limitations: [
+      'Arbitrary coordinates assume zero elevation on the 1737.4 km reference sphere and a flat horizontal skyline. Only exact matches to the shipped points use LOLA terrain masks. This estimates lighting and geometric Earth visibility, not landing safety.',
+      'Local search samples the center and 8 bearings on each of two radius rings. Unrestricted search samples 48 equal-area sphere points and a neutral equatorial point. Dates sample daily or at a whole-day spacing that limits the grid to 32 dates, including both boundaries.',
+      'Search screens each mission at a whole-hour spacing of ceil(duration hours / 168), at least one hour, and refines its leading 12 candidates hourly. The best five refined candidates are shown; unsampled sites, dates and brief visibility events may be missed.',
+      'Nearby alternatives test date offsets within 7 days at the same site, and 16 points within 50 km on the original date. Duration and targets are preserved. The search is bounded, not a global optimum guarantee.',
+    ],
+    code: ['src/science/planner.ts', 'src/MissionPlanner.tsx'],
+  },
+  {
     id: 'M-SITE',
     title: 'Site coordinates and elevation',
     kind: 'sourced',
     summary:
-      'Latitude and longitude come from published records (as-landed lander positions) or from a documented selection rule applied to a NASA map (representative points). Elevation is read from the LOLA 80 m DEM at those coordinates.',
+      'Coordinates may be entered or selected on the Moon. Arbitrary coordinates use zero reference-sphere elevation and a flat horizon. Exact shipped points retain their published or documented coordinates and LOLA DEM elevations.',
     formula: 'h_site = bilinear(LDEM_80S_80MPP_ADJ, stereo(lat, lon)); observer radius r_o = 1737.4 km + h_site + h_obs',
     inputs: ['scripts/sites_input.json', 'LDEM_80S_80MPP_ADJ.TIF', 'A-OBS-HEIGHT'],
     refs: ['R-LROC-1408', 'R-LROC-1360', 'R-NASA-IM1', 'R-LOLA-SITES', 'R-MAZARICO-2011', 'R-LOLA-PGDA'],

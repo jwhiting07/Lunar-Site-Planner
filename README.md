@@ -1,7 +1,9 @@
 # CLPS Lunar Mission Browser
 
-Compare three lunar south-pole locations using NASA LOLA terrain and precomputed
-SPICE DE440 geometry. React, TypeScript, Three.js and Vite; no backend or API keys.
+Check a lunar location or search for a mission that meets sunlight and Earth-visibility
+targets using precomputed SPICE DE440 geometry. React, TypeScript, Three.js and Vite;
+no backend, new dependencies, or API keys. Arbitrary coordinates use a clearly labeled
+flat horizon; the three exact shipped points retain NASA LOLA terrain masks.
 The shipped data supports 2026-01-01 through 2029-01-01 UTC.
 
 ## Run locally
@@ -27,6 +29,31 @@ For a production build, run `npm run build`; serve `dist/` with a static HTTP
 server (`npm run preview` locally). Opening index.html as a file will not work.
 
 ## Use the application
+
+The current entry point is one Planning workspace, without Moon/Planning tabs or
+preset locations. **Check a site** accepts coordinates (or **Choose on Moon**), a
+UTC landing date and a duration from one hour to 365 days. **Run analysis** shows
+whether the scenario meets the displayed sunlight and Earth-visibility targets.
+The initial 50% minima are editable project assumptions, not NASA requirements.
+**Advanced** adds outage limits, Earth clearance and power-estimate parameters.
+
+**Find a site** optionally restricts the search to a lunar radius and/or landing-date
+range. With neither selected it samples across the Moon and shipped 2026–2028
+coverage. **Find better nearby** keeps mission duration and targets fixed, testing
+date changes within seven days or locations within 50 km. Search is a bounded grid,
+with coarse screening and hourly refinement of the leading twelve candidates;
+it can miss better unsampled options. Methods in the app document spacing and ranking.
+
+Add up to twelve scenarios to **Compare**, including different dates at the same
+location. Basic comparison shows location, landing date, duration, sunlight, Earth
+visibility, verdict and model. **Detailed** includes all metrics and assumptions.
+Exports preserve individual dates, parameters and targets. Comparisons remain in
+memory for the current page session. Detailed data also retains timelines, the local
+horizon, terrain view and site facts. The Moon's scale, zoom, coordinate readout,
+south-pole and far-side controls are available in this same workspace.
+
+The previous navigation described below is retained as implementation history;
+its separate pages and preset selection are superseded by the workflow above.
 
 The app opens at the south pole on the minimal **Moon** page, using NASA's LRO model. Drag to rotate,
 scroll or use the +/− buttons to zoom, and move over the surface for east-positive

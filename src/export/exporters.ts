@@ -79,7 +79,7 @@ export function buildSeriesCsv(result: AnalysisResult): string {
     metaLine(`site_id: ${site.id}`),
     metaLine(`latitude_deg: ${site.lat_deg} (planetocentric, negative = south)`),
     metaLine(`longitude_deg_east: ${site.lon_deg}`),
-    metaLine(`elevation_m: ${site.elevation_m} (LOLA 80 m DEM height above the 1737.4 km reference sphere)`),
+    metaLine(`elevation_m: ${site.elevation_m} (${site.elevation_source}; height above the 1737.4 km reference sphere)`),
     metaLine(`coordinate_class: ${site.coord_class} (${COORD_CLASS_LABEL[site.coord_class] ?? site.coord_class})`),
     metaLine(`coordinate_note: ${site.coord_note}`),
     metaLine(`terrain_aware: ${result.terrainAware}${result.terrainAware ? '' : ' (flat-horizon approximation, no terrain data)'}`),
@@ -111,21 +111,20 @@ function csvField(v: string): string {
 
 /** Comparison CSV: one row per summary key, one value column per site. */
 export function buildSummaryCsv(results: AnalysisResult[]): string {
+  const columnIds = results.map((r, i) => results.filter(x => x.site.id === r.site.id).length > 1 ? `${r.site.id}__scenario${i + 1}` : r.site.id);
   const lines: string[] = [metaLine('CLPS Lunar Mission Browser - site comparison (values unrounded)')];
   if (results.length > 0) {
-    const r0 = results[0];
-    lines.push(metaLine(`interval_utc: ${iso(r0.startMs)} to ${iso(r0.endMs)}; step_s: ${r0.stepMs / 1000}; time_system: UTC`));
-    lines.push(metaLine(`earth_min_clearance_deg: ${r0.earthMinClearanceDeg}; assumed_lander_parameters: ${landerText(r0)}`));
+    lines.push(metaLine('time_system: UTC; dates and assumptions are recorded per scenario below'));
     lines.push(metaLine(`Earth metrics: ${EARTH_DISCLAIMER} Energy metrics: ${ENERGY_DISCLAIMER}`));
-    for (const r of results) lines.push(metaLine(`${r.site.id}: ${r.site.name}; terrain_aware=${r.terrainAware}`));
+    results.forEach((r, i) => lines.push(metaLine(`${columnIds[i]}: ${r.site.name}; lat_deg=${r.site.lat_deg}; lon_deg_east=${r.site.lon_deg}; interval_utc=${iso(r.startMs)} to ${iso(r.endMs)}; step_s=${r.stepMs / 1000}; terrain_aware=${r.terrainAware}; earth_min_clearance_deg=${r.earthMinClearanceDeg}; ${landerText(r)}`)));
   }
   const rowsBySite = results.map((r) => new Map(summaryRows(r).map((row) => [row.key, row])));
-  const head = ['key', 'label', 'unit', 'kind', 'method_id', ...results.map((r) => r.site.id), 'truncated_sites'];
+  const head = ['key', 'label', 'unit', 'kind', 'method_id', ...columnIds, 'truncated_sites'];
   lines.push(head.map(csvField).join(','));
   const base = results.length > 0 ? summaryRows(results[0]) : [];
   for (const row of base) {
     const vals = rowsBySite.map((m) => m.get(row.key));
-    const truncated = results.filter((_, i) => vals[i]?.truncated).map((r) => r.site.id);
+    const truncated = columnIds.filter((_, i) => vals[i]?.truncated);
     const cells = [
       row.key,
       row.label,

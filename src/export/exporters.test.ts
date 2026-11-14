@@ -11,6 +11,16 @@ const provenance = readJson<ProvenanceDoc>(`${DATA_DIR}/provenance.json`);
 const json = buildExportJson(results, provenance, '2026-11-14T00:00:00Z');
 
 describe('scientific exports', () => {
+  it('distinguishes repeated locations with different mission dates and parameters', () => {
+    const first = results[0];
+    const next = { ...first, startMs: first.startMs + 86400000, earthMinClearanceDeg: 5, params: { ...first.params, loadW: 300 } };
+    const csv = buildSummaryCsv([first, next]);
+    expect(csv).toContain(`${first.site.id}__scenario1`);
+    expect(csv).toContain(`${first.site.id}__scenario2`);
+    expect(csv).toContain('2027-01-02T00:00:00Z');
+    expect(csv).toContain('earth_min_clearance_deg=5');
+    expect(csv).toContain('constant_load_w=300');
+  });
   it('preserves displayed summary values, assumptions, references and clipped windows', () => {
     expect(json.references).toEqual(provenance.references);
     results.forEach((r, i) => {

@@ -3,6 +3,7 @@ import type { AnalysisResult, ProvenanceDoc } from '../science';
 import { buildExportJson, buildSeriesCsv, buildSummaryCsv } from '../export/exporters';
 import { downloadText } from '../export/download';
 import { DAY_MS, clamp, isoDate } from '../ui/labels';
+import type { Targets } from '../science/planner';
 
 interface RangeProps {
   startMs: number;
@@ -68,9 +69,10 @@ interface ExportProps {
   results: AnalysisResult[];
   primaryId: string;
   provenance: ProvenanceDoc | null;
+  targets?: Targets[];
 }
 
-export function ExportMenu({ results, primaryId, provenance }: ExportProps) {
+export function ExportMenu({ results, primaryId, provenance, targets }: ExportProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -93,7 +95,8 @@ export function ExportMenu({ results, primaryId, provenance }: ExportProps) {
   const primary = results.find((r) => r.site.id === primaryId) ?? results[0];
   const disabled = results.length === 0;
   const range = primary ? `${isoDate(primary.startMs)}_${isoDate(primary.endMs)}` : '';
-  const ids = results.map((r) => r.site.id).join('+');
+  const ids = results.map((r) => r.site.id).join('+').slice(0, 90);
+  const targetMetadata = targets?.map((t, i) => `# scenario_${i + 1}_targets: ${JSON.stringify(t)}`).join('\n');
 
   return (
     <div className="menu" ref={ref}>
@@ -105,7 +108,7 @@ export function ExportMenu({ results, primaryId, provenance }: ExportProps) {
           <button
             type="button"
             onClick={() => {
-              if (primary) downloadText(`${primary.site.id}_${range}_series.csv`, buildSeriesCsv(primary), 'text/csv');
+              if (primary) downloadText(`${primary.site.id}_${range}_series.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSeriesCsv(primary), 'text/csv');
               setOpen(false);
             }}
           >
@@ -114,7 +117,7 @@ export function ExportMenu({ results, primaryId, provenance }: ExportProps) {
           <button
             type="button"
             onClick={() => {
-              downloadText(`comparison_${ids}_${range}.csv`, buildSummaryCsv(results), 'text/csv');
+              downloadText(`comparison_${ids}_${range}.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSummaryCsv(results), 'text/csv');
               setOpen(false);
             }}
           >
@@ -124,7 +127,7 @@ export function ExportMenu({ results, primaryId, provenance }: ExportProps) {
             type="button"
             onClick={() => {
               const doc = buildExportJson(results, provenance, new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'));
-              downloadText(`clps_${ids}_${range}.json`, JSON.stringify(doc), 'application/json');
+              downloadText(`clps_${ids}_${range}.json`, JSON.stringify(targets ? { ...doc, planning_targets: targets } : doc), 'application/json');
               setOpen(false);
             }}
           >
