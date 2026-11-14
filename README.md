@@ -28,6 +28,16 @@ server (`npm run preview` locally). Opening index.html as a file will not work.
 
 ## Use the application
 
+The app opens on the minimal **Moon** page, using NASA's LRO model. Drag to rotate,
+scroll or use the +/− buttons to zoom, and move over the surface for east-positive
+latitude/longitude. The lower-left distance bar follows zoom (an approximate scale
+at the globe centre). Arrow keys also rotate a focused globe; +/− zoom and Home resets.
+Enable Landing sites to select a site, then open **Planning** for the existing tools
+below. Site selection is shared and Planning state stays intact when changing pages.
+
+Solar view is hidden for now; its code, assets and mockups are preserved for later.
+See [parked solar work](docs/ui/SOLAR_PARKED.md).
+
 1. Choose Mons Mouton (IM-2), Malapert A (IM-1), or the representative connecting-ridge point.
 2. Select the UTC interval. Comparison checkboxes include up to three sites under identical assumptions.
 3. Scrub the timeline to inspect Sun/Earth positions against the terrain skyline and local 3-D terrain.
@@ -39,6 +49,17 @@ CSV files begin with `#` metadata lines; skip these when importing the table.
 JSON includes references, assumptions, windows, summary values and sampled series.
 
 ## Sources and reproducibility
+
+The display-only NASA models are recorded with source URLs and checksums in
+`public/models/provenance.json`. NASA geometry/UVs are preserved, with embedded maps
+repacked for the web (Moon: 4096 px; Earth/Sun: 2048 px). The Moon is about 4.5 MB and
+is loaded with the Moon page. The globe uses a viewing light, not physical illumination
+for the displayed UTC. Scientific calculations still use the original terrain and
+ephemeris pipeline below.
+
+To reproduce the models and the retained solar-only orbit data, run
+`.venv\Scripts\python.exe scripts/prepare_visuals.py` after installing requirements.
+Original model downloads and NAIF kernels are cached in ignored `data_cache/`.
 
 - NASA/JPL NAIF: DE440 SPK, lunar orientation/frame kernels, planetary constants and leap seconds.
 - NASA LOLA/PGDA: 80 m and 240 m elevation products, 80 m slope map and the illumination map used to select the ridge point.

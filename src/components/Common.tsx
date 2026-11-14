@@ -98,8 +98,11 @@ export function InfoButton({ label, methodId, kind, onClick }: { label: string; 
       </button>
       {createPortal(
         <div ref={popup} id={id} popover="auto" role="dialog" aria-label={`About ${label}`} className="info-popover" style={position} onToggle={(event) => setOpen(event.newState === 'open')}>
-          <p><strong>{classificationLabel}:</strong> {explanation ? `${explanation}.` : method.summary}</p>
-          <button type="button" className="info-learn-more" onClick={() => { popup.current?.hidePopover(); trigger.current?.focus(); onClick(); }}>Learn more</button>
+          <p>{explanation ? `${explanation[0].toUpperCase()}${explanation.slice(1)}.` : method.summary}</p>
+          <div className="info-popover-footer">
+            <button type="button" className="info-learn-more" onClick={() => { popup.current?.hidePopover(); trigger.current?.focus(); onClick(); }}>Learn more</button>
+            <span className="info-kind">{classificationLabel}</span>
+          </div>
         </div>, document.body,
       )}
     </>
