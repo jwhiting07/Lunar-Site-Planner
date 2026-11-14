@@ -15,16 +15,6 @@
       "file": "moon-bump.jpg",
       "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg",
       "sha256": "6d93f887e7d8bedfe35ab89ba785e5e3ca12381bd092a5e6abe2c707dda8bb98"
-    },
-    {
-      "file": "nasa-star-map.jpg",
-      "url": "https://svs.gsfc.nasa.gov/vis/a000000/a003800/a003895/starmap_4k.jpg",
-      "source": "https://svs.gsfc.nasa.gov/3895/",
-      "credit": "NASA/Goddard Space Flight Center Scientific Visualization Studio",
-      "sha256": "0b33503895abebeb92fd89d3332e3ca62515b8cc458d243f208e4ca5d8c1452d",
-      "accessed": "2026-11-14",
-      "purpose": "Contextual star background in the active Moon views; not an epoch-aligned sky or an input to planning calculations",
-      "modifications": "Original 4096 x 2048 JPEG; dimmed at runtime"
     }
   ]
 }

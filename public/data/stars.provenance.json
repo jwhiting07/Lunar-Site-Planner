@@ -1,0 +1,12 @@
+{
+  "source": "https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_bsc5p.tdat.gz",
+  "documentation": "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html",
+  "credit": "Yale Bright Star Catalog, 5th Revised Edition (Preliminary), Hoffleit and Warren (1991); hosted by NASA/GSFC HEASARC",
+  "source_sha256": "122628cde2d8bedf7e16ddf5f888167ac58c04b5592d6155408ce297f3073931",
+  "product_sha256": "e1b3cfa03dd62a7fad4ee772987f25aae4685c0bb8a0648a93fe78e3d40dcedf",
+  "selection": "J2000 RA/Dec and magnitude; magnitude <= 5.8; non-stellar catalog entries and missing values excluded",
+  "count": 4103,
+  "display": "Small antialiased points in device pixels, dimmed with compressed magnitude contrast; no glow, texture enlargement or animation",
+  "purpose": "Contextual background only; no lunar epoch alignment, proper-motion update or input to planning calculations",
+  "reproduce": "node scripts/prepare_stars.mjs"
+}

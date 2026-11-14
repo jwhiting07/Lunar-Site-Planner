@@ -66,9 +66,11 @@ ephemeris pipeline below.
 To reproduce the models and the retained solar-only orbit data, run
 `.venv\Scripts\python.exe scripts/prepare_visuals.py` after installing requirements.
 Original model downloads and NAIF kernels are cached in ignored `data_cache/`.
-The active Moon views also use NASA SVS's Deep Star Maps 4096 × 2048 JPEG as a
-dim, contextual background; its source URL, credit and checksum are recorded in
-`public/textures/provenance.json`, and its orientation is not a simulated epoch sky.
+The active Moon views use 4,103 bright-star positions from the Yale Bright Star
+Catalog hosted by NASA/GSFC HEASARC, rendered as small, dim, antialiased points.
+`public/data/stars.provenance.json` records the source, credit, selection and checksums;
+`node scripts/prepare_stars.mjs` regenerates the 97 KB data file. Its orientation is
+contextual rather than a simulated epoch sky.
 
 - NASA/JPL NAIF: DE440 SPK, lunar orientation/frame kernels, planetary constants and leap seconds.
 - NASA LOLA/PGDA: 80 m and 240 m elevation products, 80 m slope map and the illumination map used to select the ridge point.

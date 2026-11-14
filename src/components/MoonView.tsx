@@ -5,6 +5,7 @@ import { enuBasis, type InstantState, type SiteDoc } from '../science';
 import { loadNasaModel, disposeModel } from '../visuals/models';
 import { clampMoonCamera, moonZoomLimits } from '../visuals/moonNavigation';
 import { COORD_CLASS_LABEL } from '../ui/labels';
+import { disposeStarfield, loadStarfield } from '../visuals/stars';
 
 // Body-fixed (X,Y,Z) -> Three (X,Z,-Y), shared with the site's ME coordinates.
 // models.ts aligns the native NASA LRO cube-mesh axes with this convention.
@@ -69,16 +70,13 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     renderer.domElement.setAttribute('role', 'img');
     renderer.domElement.setAttribute('aria-label', 'NASA Moon globe. Drag or use arrow keys to rotate. Use plus and minus to zoom, Home to reset.');
     const scene = new THREE.Scene();
-    let stars: THREE.Texture | undefined;
-    new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}textures/nasa-star-map.jpg`, texture => {
-      if (disposed) { texture.dispose(); return; }
-      stars = texture;
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      scene.background = texture;
-      scene.backgroundIntensity = 0.3;
+    let stars: Awaited<ReturnType<typeof loadStarfield>> | undefined;
+    loadStarfield().then(points => {
+      if (disposed) { disposeStarfield(points); return; }
+      stars = points;
+      scene.add(points);
       draw();
-    }, undefined, () => { /* The Moon remains usable if the optional background fails. */ });
+    }).catch(() => { /* The Moon remains usable if the optional background fails. */ });
     const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 30);
     // OrbitControls caches the up-axis transform at construction.
     camera.up.copy(local && sites[0] ? globePosition(sites[0].lat_deg, sites[0].lon_deg) : new THREE.Vector3(0, 0, -1));
@@ -122,6 +120,10 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
           }
           light.position.copy(direction).multiplyScalar(10);
         } else light.position.copy(camera.position).applyAxisAngle(camera.up, -0.6).add(new THREE.Vector3(0, 2, 0));
+        if (stars) {
+          stars.position.copy(camera.position);
+          stars.material.uniforms.pixelRatio.value = renderer.getPixelRatio();
+        }
         renderer.render(scene, camera);
         if (explorer) {
           // Perspective scale at the facing surface rather than the centre plane.
@@ -229,7 +231,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       resize.disconnect();
       controls.dispose();
       if (model) disposeModel(model);
-      stars?.dispose();
+      if (stars) disposeStarfield(stars);
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
       renderer.domElement.removeEventListener('pointermove', onPointer);
       renderer.domElement.removeEventListener('pointerleave', onLeave);

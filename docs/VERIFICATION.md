@@ -1,5 +1,17 @@
 # Verification status — 2026-11-14
 
+## Star background refinement
+
+Replaced the enlarged 2.35 MB sky JPEG with 4,103 real bright-star catalog positions
+(97,429 bytes), selected through magnitude 5.8 from NASA HEASARC's Yale Bright Star
+Catalog. The background now renders dim antialiased points in device pixels, with
+no Milky Way haze, enlarged texture, glow or animation. Source and product hashes,
+selection and reproduction command are recorded in `public/data/stars.provenance.json`.
+The catalog is contextual and is not aligned to a lunar epoch.
+Browser checks verified the sparse star field in Moon and Planning, including Moon
+zoom, with no console warnings or errors in the final fresh session. The production
+build and all 97 JavaScript tests passed.
+
 ## Review refinements — November 14, 2026
 
 The later viewport refinement was browser-checked at 1920 × 975 and 390 × 844:

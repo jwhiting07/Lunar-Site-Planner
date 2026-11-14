@@ -58,8 +58,10 @@ dialogs scroll their contents.
 
 Metric info popouts contain one sentence explaining what the value means and how
 it is calculated; omit classification labels and Learn more links. Detailed sources
-remain in Sources & methods. Use NASA's Deep Star Maps image as a dim background
-in both active Moon views, with credit and its contextual purpose in Sources & methods.
+remain in Sources & methods. Use a sparse field of small, dim, crisp stars in both
+active Moon views, following the supplied Moonquake Map reference. Avoid dense
+Milky Way haze and enlarged star textures. Render real bright-star catalog positions
+at screen resolution, with credit and contextual purpose in Sources & methods.
 
 Timeline and 3D drag surfaces must not select browser text while tracking. Keep
 metric values, comparison tables, and explanatory text selectable for copying.
