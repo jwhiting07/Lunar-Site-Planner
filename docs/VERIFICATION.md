@@ -1,3 +1,17 @@
+# Navigator implementation — November 14, 2026
+
+Integrated main's c829a9b cleanup and calculation/search performance improvements.
+Production build and 111 Vitest tests pass, including duration-range coverage,
+stable search ranking, DST and fractional time-zone offsets, and full zone retention.
+Browser checks exercised discovery across location/date/duration, exact terrain-aware
+analysis, nearby alternatives, comparison/detail views, synchronized timeline/horizon
+controls, 3-D terrain, JSON download, collapsible controls/results, and immediate
+comparison checkbox inclusion/removal. The time-zone picker is searchable, compact,
+and ordered by current UTC offset, with named zones and fixed UTC−12 through UTC+14.
+Further mobile polish is deferred at the user's request.
+
+Older verification notes below describe previous application versions.
+
 # Unified Planning verification — November 14, 2026
 
 `npm run build` and all 103 Vitest tests pass, including new lunar-radius,

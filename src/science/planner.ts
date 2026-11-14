@@ -69,6 +69,16 @@ export function dateGrid(start: number, end: number): number[] {
   return out;
 }
 
+/** Bounded duration samples, including both limits. Values are in days. */
+export function durationGrid(min: number, max = min): number[] {
+  if (![min, max].every(value => Number.isFinite(value) && value >= 1 / 24 && value <= 365) || max < min) {
+    throw new RangeError('Duration must be between 1 hour and 365 days, with maximum at least minimum.');
+  }
+  if (min === max) return [min];
+  const intervals = Math.min(7, Math.max(1, Math.ceil(max - min)));
+  return Array.from({ length: intervals + 1 }, (_, i) => i === intervals ? max : min + (max - min) * i / intervals);
+}
+
 export interface Candidate { result: AnalysisResult; targets: Targets }
 export function compareCandidates(a: Candidate, b: Candidate, origin: Point, startMs: number) {
   const x = assessment(a.result, a.targets), y = assessment(b.result, b.targets);
@@ -83,6 +93,7 @@ export function compareCandidates(a: Candidate, b: Candidate, origin: Point, sta
 
 export interface SearchOptions {
   points: Point[]; dates: number[]; durationDays: number; targets: Targets;
+  durationsDays?: number[]; coverageEndMs?: number;
   lander: LanderParams; clearance: number; origin: Point; startMs: number;
   known: SiteDoc[]; observerHeight: number; masks: Map<string, HorizonMask>;
 }
@@ -96,7 +107,7 @@ export interface SearchOptions {
 function yieldToUi(): Promise<void> {
   return new Promise(resolve => {
     const { port1, port2 } = new MessageChannel();
-    port1.onmessage = () => { port1.close(); resolve(); };
+    port1.onmessage = () => { port1.close(); port2.close(); resolve(); };
     port2.postMessage(null);
   });
 }
@@ -112,22 +123,25 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
   const rest = async () => { await yieldToUi(); sliceStart = performance.now(); };
   const flat = flatHorizon();
   const rank = (a: Candidate, b: Candidate) => compareCandidates(a, b, o.origin, o.startMs);
-  const evaluate = (point: Point, startMs: number, stepMs: number): Candidate => {
+  const evaluate = (point: Point, startMs: number, days: number, stepMs: number): Candidate => {
     const site = coordinateSite(point, o.known);
     const mask = o.masks.get(site.id) ?? flat;
     const result = analyzeSite(makeSiteContext(site, o.observerHeight, mask), eph, {
-      startMs, endMs: startMs + o.durationDays * DAY, stepMs, params: o.lander, earthMinClearanceDeg: o.clearance,
+      startMs, endMs: startMs + days * DAY, stepMs, params: o.lander, earthMinClearanceDeg: o.clearance,
     });
     if (mask.terrainAware && !site.horizon.file) result.horizonMask = mask;
     return { targets: { ...o.targets }, result };
   };
-  const total = o.points.length * o.dates.length;
+  const durations = o.durationsDays ?? durationGrid(o.durationDays);
+  for (const days of durations) durationGrid(days);
+  const scenarios = o.dates.flatMap(date => durations.filter(days => date + days * DAY <= (o.coverageEndMs ?? Infinity)).map(days => ({ date, days })));
+  const total = o.points.length * scenarios.length;
   let done = 0;
-  const step = Math.max(1, Math.ceil(o.durationDays * 24 / 168)) * HOUR_MS;
-  for (const point of o.points) for (const date of o.dates) {
+  for (const point of o.points) for (const { date, days } of scenarios) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    // Keep the 12 best, ordered: binary insertion (after equal ranks, like a stable sort).
-    const candidate = evaluate(point, date, step);
+    const step = Math.max(1, Math.ceil(days * 24 / 168)) * HOUR_MS;
+    // Preserve main's stable binary insertion and short, responsive work slices.
+    const candidate = evaluate(point, date, days, step);
     let lo = 0, hi = best.length;
     while (lo < hi) { const mid = (lo + hi) >> 1; if (rank(best[mid], candidate) <= 0) lo = mid + 1; else hi = mid; }
     if (lo < 12) { best.splice(lo, 0, candidate); if (best.length > 12) best.pop(); }
@@ -136,7 +150,7 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
   const refined: Candidate[] = [];
   for (const candidate of best) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    refined.push(evaluate({ lat: candidate.result.site.lat_deg, lon: candidate.result.site.lon_deg }, candidate.result.startMs, HOUR_MS));
+    refined.push(evaluate({ lat: candidate.result.site.lat_deg, lon: candidate.result.site.lon_deg }, candidate.result.startMs, (candidate.result.endMs - candidate.result.startMs) / DAY, HOUR_MS));
     if (sliceOver()) await rest();
   }
   progress(total, total);

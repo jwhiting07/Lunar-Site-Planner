@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { analyzeSite, makeSiteContext } from './analysis';
 import { DEFAULT_LANDER, HOUR_MS } from './constants';
 import { flatHorizon } from './horizon';
-import { assessment, compareCandidates, coordinateSite, dateGrid, DAY, DEFAULT_TARGETS, destination, distanceKm, locationGrid, searchCandidates } from './planner';
+import { assessment, compareCandidates, coordinateSite, dateGrid, durationGrid, DAY, DEFAULT_TARGETS, destination, distanceKm, locationGrid, searchCandidates } from './planner';
 import { shippedEphemeris, sitesDoc } from './__fixtures__/shipped';
 
 describe('coordinate planning and mission targets', () => {
@@ -40,10 +40,39 @@ describe('coordinate planning and mission targets', () => {
     expect(() => dateGrid(end, start)).toThrow();
   });
 
+  it('bounds duration exploration, preserves fractional and endpoint durations, and rejects invalid ranges', () => {
+    expect(durationGrid(7, 14)).toEqual([7, 8, 9, 10, 11, 12, 13, 14]);
+    expect(durationGrid(0.5)).toEqual([0.5]);
+    const wide = durationGrid(1 / 24, 365);
+    expect(wide.length).toBeLessThanOrEqual(8);
+    expect(wide[0]).toBe(1 / 24);
+    expect(wide.at(-1)).toBe(365);
+    for (const [min, max] of [[0, 7], [14, 7], [7, 366], [NaN, 7], [7, Infinity]]) expect(() => durationGrid(min, max)).toThrow(RangeError);
+  });
+
   const site = coordinateSite({ lat: -85, lon: 0 });
   const eph = shippedEphemeris();
   const start = Date.UTC(2026, 11, 1);
   const result = analyzeSite(makeSiteContext(site, 2, flatHorizon()), eph, { startMs: start, endMs: start + 7 * DAY, params: DEFAULT_LANDER });
+
+  it('searches multiple durations without crossing ephemeris coverage or changing the chosen site', async () => {
+    const end = start + 2 * DAY;
+    const out = await searchCandidates(eph, {
+      points: [{ lat: -85, lon: 0 }], dates: [start, start + DAY], durationDays: 1,
+      durationsDays: [1, 2], coverageEndMs: end, targets: DEFAULT_TARGETS,
+      lander: DEFAULT_LANDER, clearance: 0, origin: { lat: -85, lon: 0 }, startMs: start,
+      known: [], observerHeight: 2, masks: new Map(),
+    }, new AbortController().signal, () => {});
+    expect(out).toHaveLength(3);
+    expect(new Set(out.map(candidate => candidate.result.metrics.intervalHours))).toEqual(new Set([24, 48]));
+    for (const candidate of out) {
+      expect(candidate.result.site.lat_deg).toBe(-85);
+      expect(candidate.result.site.lon_deg).toBe(0);
+      expect(candidate.result.endMs).toBeLessThanOrEqual(end);
+      expect(candidate.result.stepMs).toBe(HOUR_MS);
+      expect(candidate.result.series.tMs.at(-1)).toBe(candidate.result.endMs);
+    }
+  });
 
   it('applies inclusive percentage and outage limits using unrounded values', () => {
     const matching = { ...DEFAULT_TARGETS, sunlight: result.metrics.sunlitFraction * 100, earth: result.metrics.earthVisibleFraction * 100 };

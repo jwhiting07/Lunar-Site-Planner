@@ -1,8 +1,40 @@
-# Seraphim UI direction
+# Lunar Landing Site Navigator UI direction
 
 This saves the interface direction reviewed with Elliott on November 14, 2026.
 The typography, sharp edges, restrained dark palette, and overall appearance were approved.
 Trek workspace is the selected starting layout. The other three layouts are retained as references.
+
+## Approved navigator implementation — November 14, 2026
+
+This direction supersedes the historical layouts and sidebar/dashboard descriptions
+below. The user approved the slim horizontal controls and requested a complete
+implementation retaining all current functionality. Product name: Lunar Landing
+Site Navigator. Keep the existing Inter, dark palette, and square edges.
+
+- One horizontal row: Location, Landing (UTC), Duration, one primary action, and
+  Advanced. Individual fields open contextual editors; no persistent sidebar.
+- Location can be anywhere, exact coordinates/map selection, or a radius. Landing
+  can be any available date, exact, or a range. Duration can be fixed or a range.
+  Analyze handles fully fixed missions; Find options explores the open fields.
+- Inputs and results collapse independently with arrows; all state is preserved.
+- Results are a compact table with three rows initially, and more on demand.
+  Checking a scenario immediately adds it to Compare; unchecking removes it.
+  There is no separate Add to comparison action.
+- Open a row for Results, Timeline, Terrain, and Compare. Retain detailed data,
+  horizon, terrain geometry, power assumptions, nearby alternatives and exports.
+- Site callouts use a surface dot, diagonal leader, horizontal rule, and site name
+  or number above the rule. Stagger overlapping callout labels.
+- Omit South pole and other view-preset controls. Selecting a location centers it.
+- Sources live in the quiet footer beside credits and the time-zone clock. The
+  compact searchable picker retains all supported zones and fixed UTC offsets,
+  names each time zone, and orders by current UTC offset west to east.
+- Keep the latest main-branch performance/cleanup changes; do not restore removed
+  legacy Planning components or replace the approved layout with older UI.
+
+The implementation uses the real science/data layers. Duration ranges sample at
+most eight lengths; search results are sampled candidates, not a global optimum.
+Flat-horizon previews and terrain-aware refinements remain explicitly identified.
+The saved index.html remains the earlier typography/palette reference.
 
 ## Current planning flow — November 14, 2026
 

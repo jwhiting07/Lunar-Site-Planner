@@ -30,10 +30,11 @@ export function moonScaleBar(kmPerPixel: number, maxWidth = 100) {
   return { km, pixels: km / kmPerPixel };
 }
 
-export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds }: {
+export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
   compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
   savedSiteIds?: ReadonlySet<string>;
+  markerLabels?: ReadonlyMap<string, string>;
 }) {
   const pick = useRef(onPick);
   pick.current = onPick;
@@ -141,6 +142,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
             } else hoverReadout.current.textContent = 'Lat: —, Lon: —';
           }
         }
+        const occupied: { left: number; top: number; right: number; bottom: number }[] = [];
         for (const { id, point } of positionsRef.current) {
           const pin = pins.current.get(id);
           if (!pin) continue;
@@ -149,6 +151,26 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
           pin.hidden = !visible;
           pin.style.left = `${(screen.x + 1) * 50}%`;
           pin.style.top = `${(1 - screen.y) * 50}%`;
+          if (visible && compact && explorer) {
+            const label = pin.querySelector<HTMLElement>('.moon-callout-label');
+            const leader = pin.querySelector('polyline');
+            if (label && leader) {
+              const x = (screen.x + 1) * element.clientWidth / 2;
+              const y = (1 - screen.y) * element.clientHeight / 2;
+              const width = label.offsetWidth;
+              const direction = x + width + 40 > element.clientWidth - 20 ? -1 : 1;
+              let rise = 28;
+              const left = direction === 1 ? x + 28 : x - 28 - width;
+              while (rise < 224 && occupied.some(rect => left < rect.right + 8 && left + width > rect.left - 8 && y - rise - 20 < rect.bottom + 6 && y - rise > rect.top - 6)) rise += 28;
+              // Keep labels inside the map at the upper edge, too.
+              const endY = y - rise - 20 < 8 ? 28 : -rise;
+              const elbow = direction * 28;
+              leader.setAttribute('points', `0,0 ${elbow},${endY} ${elbow + direction * width},${endY}`);
+              label.style.left = `${12 + (direction === 1 ? 28 : -28 - width)}px`;
+              label.style.top = `${12 + endY - 21}px`;
+              occupied.push({ left, right: left + width, top: y + endY - 21, bottom: y + endY });
+            }
+          }
         }
       });
     };
@@ -284,6 +306,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions]);
   useEffect(() => { if (explorer) focus.current(null); }, [explorer, local, compact]);
   useEffect(() => { if (!explorer || orientation === 'site') focus.current(primaryId); }, [primaryId, sites, explorer, orientation]);
+  useEffect(() => { if (compact && explorer && primaryId) focus.current(primaryId); }, [primaryId, compact, explorer]);
   useEffect(() => { redraw.current(); }, [inst]);
 
   return <>
@@ -293,7 +316,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         {showSites && <ul className="moon-site-list">{sites.map(site => <li key={site.id}><button type="button" aria-pressed={site.id === primaryId} onClick={() => { onSelect(site.id); setOrientation('site'); focus.current(site.id); }}><span>{site.short}</span><small>{COORD_CLASS_LABEL[site.coord_class]}</small></button></li>)}</ul>}
         <button className="btn explorer-button" onClick={() => { setShowSites(true); setOrientation('site'); focus.current(primaryId); }}>Focus site</button>
       </div> :
-      <div className="moon-toolbar">
+      <div className="moon-toolbar" hidden={compact && explorer}>
         <button className="btn small" disabled={!local && !primaryId} onClick={() => focus.current(primaryId)}>{local ? 'Reset view' : 'Focus site'}</button>
       </div>}
       {!local && sites.map((site, i) => <button key={site.id} ref={el => { if (el) pins.current.set(site.id, el); else pins.current.delete(site.id); }}
@@ -301,7 +324,11 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         aria-label={savedSiteIds?.has(site.id) ? `Saved scenarios at ${site.lat_deg.toFixed(4)}°, ${site.lon_deg.toFixed(4)}°` : `Select ${site.short}`}
         aria-pressed={site.id === primaryId}
         title={site.short} onClick={() => { onSelect(site.id); if (!compact) focus.current(site.id); }}>
-        {explorer && !compact ? i + 1 : <span aria-hidden="true" className={`planning-site-marker ${site.coord_class}`} />}
+        {compact && explorer ? <>
+          <span aria-hidden="true" className="moon-callout-dot" />
+          <svg className="moon-leader" aria-hidden="true"><polyline points="0,0 28,-28 112,-28" /></svg>
+          <span className="moon-callout-label">{markerLabels?.get(site.id) ?? (site.short === 'Selected location' ? `Site ${i + 1}` : site.short)}</span>
+        </> : explorer ? i + 1 : <span aria-hidden="true" className={`planning-site-marker ${site.coord_class}`} />}
       </button>)}
       {loading && <div className="moon-message" role="status">Loading Moon…</div>}
       {error && <div className="moon-message" role="alert">{error}</div>}

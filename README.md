@@ -1,4 +1,4 @@
-# CLPS Lunar Mission Browser
+# Lunar Landing Site Navigator
 
 Check a lunar location or search for a mission that meets sunlight and Earth-visibility
 targets using precomputed SPICE DE440 geometry. The three shipped sites use
@@ -36,61 +36,54 @@ to support on-demand profiles. Shipped terrain profiles work on a static host.
 
 ## Use the application
 
-The current entry point is one Planning workspace, without Moon/Planning tabs or
-preset locations. **Check a site** accepts coordinates (or **Choose on Moon**), a
-UTC landing date and a duration from one hour to 365 days. **Run analysis** shows
-whether the scenario meets the displayed sunlight and Earth-visibility targets.
-The initial 50% minima are editable project assumptions, not NASA requirements.
-**Advanced** adds outage limits, Earth clearance and power-estimate parameters.
-For custom coordinates, enter the latitude and east-positive longitude and run the
-analysis. Results first show a flat-horizon preview while the terrain profile
-computes in the background. Where LOLA coverage is sufficient, the results and
-the skyline under **Dashboard → Timeline** update together. Try `-83` and `25`.
-Outside coverage, the result is labeled as a flat-horizon estimate.
+The Moon workspace has one collapsible row: **Location**, **Landing (UTC)**,
+and **Duration**. Each field opens a small editor. Enter coordinates or choose
+on the Moon, fix a landing date, and set a duration from one hour to 365 days;
+**Analyze** checks that exact mission. **Advanced** retains visibility targets,
+outage limits, Earth clearance, and all power assumptions. The initial 50% minima
+are editable project assumptions, not NASA requirements.
 
-**Find a site** optionally restricts the search to a lunar radius and/or landing-date
-range. With neither selected it samples across the Moon and shipped 2026–2028
-coverage. **Find better nearby** keeps mission duration and targets fixed, testing
-date changes within seven days or locations within 50 km. Search is a bounded grid,
-with coarse screening and hourly refinement of the leading twelve candidates;
-it can miss better unsampled options. Methods in the app document spacing and ranking.
-Search ranks custom grid points using flat-horizon screening. Viewing a result
-starts its terrain calculation in the background if it is in the south-polar
-region. A nearby date search at a site already analyzed with terrain reuses that
-profile.
+For discovery, choose Anywhere or a nearby radius, any landing date or a date
+range, and a fixed duration or duration range. **Find options** searches only the
+fields left open; exact coordinates and dates remain fixed. Duration ranges
+sample at most eight lengths, including both endpoints. Search uses bounded
+location/date grids, coarse screening, and hourly refinement of the leading
+twelve candidates. It shows five sampled matches, with three rows initially
+visible; better unsampled options may exist. Sources & methods documents ranking.
 
-Add up to twelve scenarios to **Compare**, including different dates at the same
-location. Basic comparison shows location, landing date, duration, sunlight, Earth
-visibility, verdict and model. **Detailed** includes all metrics and assumptions.
-Exports preserve individual dates, parameters and targets. Comparisons remain in
-memory for the current page session. Detailed data also retains timelines, the local
-horizon, terrain view and site facts. The Moon's scale, zoom, coordinate readout,
-and Focus site controls are available in this same workspace.
+Each result shows coordinates, landing, duration, sunlight, Earth visibility,
+verdict, and terrain model. Checking a row immediately includes that scenario in
+**Compare**; unchecking removes it. Up to twelve scenarios can be compared,
+including different dates and durations at one location. Basic and detailed
+comparison and CSV/JSON exports retain each scenario's parameters and targets.
+Comparison is held in memory for the current page session.
 
-The previous navigation described below is retained as implementation history;
-its separate pages and preset selection are superseded by the workflow above.
+**Open** reveals Results, Timeline, Terrain, and Compare. The timeline and local
+horizon share a cursor; the Terrain view uses the same cursor for Sun/Earth
+geometry. Detailed metrics, terrain facts, power estimates, nearby alternatives,
+and exports remain available. **Use this mission in controls** adopts a result
+without changing the search settings just by opening it. Nearby alternatives
+preserve duration and targets while testing dates within seven days and locations
+within 50 km.
 
-The app opens at the south pole on the minimal **Moon** page, using NASA's LRO model. Drag to rotate,
-scroll or use the +/− buttons to zoom, and move over the surface for east-positive
-latitude/longitude. The lower-left **Scale** popout follows zoom (an approximate scale
-at the facing surface). Arrow keys also rotate a focused globe; +/− zoom and Home resets.
-Landing sites start visible. Select a site, then open **Planning** for the existing tools
-below. Site selection is shared and Planning state stays intact when changing pages.
+Custom south-polar coordinates first show a flat-horizon preview while a LOLA
+profile computes in the background. Where coverage is sufficient, results and
+the local skyline update together. Outside coverage, results remain labeled as
+flat-horizon estimates. Sampled searches use flat-horizon screening; opening a
+candidate can refine its terrain. Try `-83` and `25` for an on-demand profile.
 
-Solar view is hidden for now; its code, assets and mockups are preserved for later.
-See [parked solar work](docs/ui/SOLAR_PARKED.md).
+Drag or use arrow keys to rotate the Moon; scroll or use +/− to zoom. The map
+centers an entered location and retains cursor coordinates and a distance scale.
+Site callouts have a surface dot, diagonal leader, and horizontal name/number line.
+The up/down arrows hide and restore mission controls and results without losing
+state. Sources & methods stays in the footer. Click the clock for a compact,
+searchable time-zone list, ordered west to east by current UTC offset. Every
+browser-supported named zone and fixed offsets UTC−12 through UTC+14 remain
+available, with time-zone names and daylight-saving-aware offsets. Mission dates
+and scientific timeline controls always use UTC.
 
-1. Choose Mons Mouton (IM-2), Malapert A (IM-1), or the representative connecting-ridge point.
-2. Select the UTC interval. Comparison checkboxes include up to three sites under identical assumptions.
-3. Scrub the timeline to inspect Sun and Earth positions in the Local horizon tab. Local terrain shows a textured 40 km square around the primary site.
-4. Change panel area, efficiency, pointing, load, battery capacity or Earth clearance to recompute estimates.
-5. Open a metric's information button or Sources & methods to trace its calculation.
-6. Export the primary site's series CSV, comparison CSV, or all selected results as JSON.
-
-Planning fills the viewport without page scrolling; open panels and dialogs scroll
-internally. Its compact bottom row holds the shared cursor and scrubber. Open
-Timelines & comparison to edit the date range. Metric info buttons sit after the
-values and show one sentence explaining the meaning and calculation.
+Solar view remains parked with its code and assets preserved. See
+[parked solar work](docs/ui/SOLAR_PARKED.md).
 
 CSV files begin with `#` metadata lines; skip these when importing the table.
 JSON includes references, assumptions, windows, summary values and sampled series.

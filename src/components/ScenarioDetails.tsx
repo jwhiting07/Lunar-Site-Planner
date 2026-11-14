@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { loadEphemeris, loadHorizon } from '../data/loader';
 import { flatHorizon, instantState, makeSiteContext, type AnalysisResult, type EphemerisIndex, type EphemerisTable, type HorizonMask } from '../science';
 import { formatRowValue, summaryRows } from '../science/summary';
 import { TimeControls, TimelinesPanel } from './Timelines';
 import { SkyView } from './SkyView';
+const Terrain = lazy(() => import('./TerrainView').then(module => ({ default: module.TerrainView })));
 
 export function ScenarioDetails({ result }: { result: AnalysisResult }) {
   return <details className="mission-data"><summary>Detailed data</summary>
@@ -21,7 +22,7 @@ export function ScenarioDetails({ result }: { result: AnalysisResult }) {
   </details>;
 }
 
-export function ScenarioTimeline({ result, index }: { result: AnalysisResult; index: EphemerisIndex }) {
+export function ScenarioTimeline({ result, index, view = 'timeline' }: { result: AnalysisResult; index: EphemerisIndex; view?: 'timeline' | 'terrain' }) {
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
   const timelineResults = useMemo(() => [result], [result]);
   const [eph, setEph] = useState<EphemerisTable | null>(null);
@@ -57,9 +58,11 @@ export function ScenarioTimeline({ result, index }: { result: AnalysisResult; in
     <div className="mission-timeline-controls">
       <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
     </div>
+    {view === 'terrain' ? site.terrain.file ? <Suspense fallback={<p>Loading terrain…</p>}><Terrain site={site} inst={instant} /></Suspense> : <p>3-D terrain is unavailable at these coordinates. The local horizon and calculated values remain available in Timeline.</p> : <>
     {error ? <p role="alert" className="mission-error">{error}</p> :
       <SkyView result={result} mask={mask} inst={instant} cursorMs={cursor}
         earthMinClearanceDeg={earthMinClearanceDeg} onCursor={setCursor} />}
     <TimelinesPanel results={timelineResults} primaryId={site.id} startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
+    </>}
   </div>;
 }
