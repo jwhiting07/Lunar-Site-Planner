@@ -3,7 +3,7 @@ import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, load
 import { analyzeSite, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
 import { assessment, compareCandidates, coordinateSite, dateGrid, DAY, DEFAULT_TARGETS, distanceKm, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
 import { formatRowValue, summaryRows } from './science/summary';
-import { DEFAULT_PARAM_STATE, type ParamState } from './components/ParamsPanel';
+import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
 import { ExportMenu, parseDate } from './components/Controls';
 import { deg, fmtUtc, isoDate } from './ui/labels';
 import { ScenarioDetails, ScenarioTimeline } from './components/ScenarioDetails';

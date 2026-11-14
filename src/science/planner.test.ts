@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { analyzeSite, makeSiteContext } from './analysis';
 import { DEFAULT_LANDER, HOUR_MS } from './constants';
 import { flatHorizon } from './horizon';
-import { assessment, coordinateSite, dateGrid, DAY, DEFAULT_TARGETS, destination, distanceKm, locationGrid, searchCandidates } from './planner';
+import { assessment, compareCandidates, coordinateSite, dateGrid, DAY, DEFAULT_TARGETS, destination, distanceKm, locationGrid, searchCandidates } from './planner';
 import { shippedEphemeris, sitesDoc } from './__fixtures__/shipped';
 
 describe('coordinate planning and mission targets', () => {
@@ -67,5 +67,26 @@ describe('coordinate planning and mission targets', () => {
     }
     const cancelled = new AbortController(); cancelled.abort();
     await expect(searchCandidates(eph, config, cancelled.signal, () => {})).rejects.toMatchObject({ name: 'AbortError' });
+  });
+
+  it('returns the same top results as a full sort over every candidate (more candidates than the kept 12)', async () => {
+    const origin = { lat: -85, lon: 0 };
+    const points = locationGrid(origin, null);
+    const dates = [start, start + 9 * DAY];
+    const config = { points, dates, durationDays: 3, targets: DEFAULT_TARGETS, lander: DEFAULT_LANDER, clearance: 0,
+      origin, startMs: start, known: [], observerHeight: 2, masks: new Map() };
+    expect(points.length * dates.length).toBeGreaterThan(12);
+    const out = await searchCandidates(eph, config, new AbortController().signal, () => {});
+
+    // Reference: evaluate everything (3-day missions screen at the 1 h step), stable full sort, keep 12, refine, keep 5.
+    const evaluate = (p: { lat: number; lon: number }, t: number) => ({
+      targets: { ...DEFAULT_TARGETS },
+      result: analyzeSite(makeSiteContext(coordinateSite(p), 2, flatHorizon()), eph, { startMs: t, endMs: t + 3 * DAY, stepMs: HOUR_MS, params: DEFAULT_LANDER, earthMinClearanceDeg: 0 }),
+    });
+    const rank = (a: ReturnType<typeof evaluate>, b: ReturnType<typeof evaluate>) => compareCandidates(a, b, origin, start);
+    const expected = points.flatMap(p => dates.map(t => evaluate(p, t))).sort(rank).slice(0, 12)
+      .map(c => evaluate({ lat: c.result.site.lat_deg, lon: c.result.site.lon_deg }, c.result.startMs)).sort(rank).slice(0, 5);
+    const key = (c: ReturnType<typeof evaluate>) => `${c.result.site.lat_deg.toFixed(6)},${c.result.site.lon_deg.toFixed(6)},${c.result.startMs}`;
+    expect(out.map(key)).toEqual(expected.map(key));
   });
 });

@@ -87,9 +87,29 @@ export interface SearchOptions {
   known: SiteDoc[]; observerHeight: number; masks: Map<string, HorizonMask>;
 }
 
-/** Bounded screening, then hourly refinement. Yield between batches to keep the UI responsive. */
+/**
+ * Let the event loop run (rendering, input) without the >= 4 ms clamp that
+ * browsers apply to nested setTimeout(0): a MessageChannel hop returns almost
+ * at once. Measured: 126 setTimeout(0) yields cost 1.9 s in Node on Windows,
+ * more than all the geometry in a 1,500-scenario search.
+ */
+function yieldToUi(): Promise<void> {
+  return new Promise(resolve => {
+    const { port1, port2 } = new MessageChannel();
+    port1.onmessage = () => { port1.close(); resolve(); };
+    port2.postMessage(null);
+  });
+}
+
+/** Work slice between yields, ms: short enough to keep the UI at 60 fps. */
+const SLICE_MS = 12;
+
+/** Bounded screening, then hourly refinement. Yields every SLICE_MS of work to keep the UI responsive. */
 export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, signal: AbortSignal, progress: (done: number, total: number) => void): Promise<Candidate[]> {
   const best: Candidate[] = [];
+  let sliceStart = performance.now();
+  const sliceOver = () => performance.now() - sliceStart >= SLICE_MS;
+  const rest = async () => { await yieldToUi(); sliceStart = performance.now(); };
   const flat = flatHorizon();
   const rank = (a: Candidate, b: Candidate) => compareCandidates(a, b, o.origin, o.startMs);
   const evaluate = (point: Point, startMs: number, stepMs: number): Candidate => {
@@ -106,16 +126,18 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
   const step = Math.max(1, Math.ceil(o.durationDays * 24 / 168)) * HOUR_MS;
   for (const point of o.points) for (const date of o.dates) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    best.push(evaluate(point, date, step));
-    best.sort(rank);
-    if (best.length > 12) best.pop();
-    if (++done % 12 === 0) { progress(done, total); await new Promise(resolve => setTimeout(resolve, 0)); }
+    // Keep the 12 best, ordered: binary insertion (after equal ranks, like a stable sort).
+    const candidate = evaluate(point, date, step);
+    let lo = 0, hi = best.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (rank(best[mid], candidate) <= 0) lo = mid + 1; else hi = mid; }
+    if (lo < 12) { best.splice(lo, 0, candidate); if (best.length > 12) best.pop(); }
+    if (++done < total && sliceOver()) { progress(done, total); await rest(); }
   }
   const refined: Candidate[] = [];
   for (const candidate of best) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
     refined.push(evaluate({ lat: candidate.result.site.lat_deg, lon: candidate.result.site.lon_deg }, candidate.result.startMs, HOUR_MS));
-    await new Promise(resolve => setTimeout(resolve, 0));
+    if (sliceOver()) await rest();
   }
   progress(total, total);
   return refined.sort(rank).slice(0, 5);

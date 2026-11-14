@@ -122,7 +122,7 @@ export const METHODS: MethodDoc[] = [
       'The horizon is treated as a straight level edge across the disk; limb darkening is ignored.',
       'Same convention as the NASA LOLA illumination maps (sunlit by any fraction of the disk).',
     ],
-    code: ['src/science/analysis.ts instantState', 'src/science/power.ts diskFractionVisible'],
+    code: ['src/science/analysis.ts instantState, analyzeSite', 'src/science/power.ts diskFractionVisible'],
   },
   {
     id: 'M-EARTHVIS',
@@ -138,7 +138,7 @@ export const METHODS: MethodDoc[] = [
       'Uses the centre of Earth (apparent radius about 0.9 to 1.0 deg); a station near the limb could appear or disappear earlier or later. The NASA LOLA Earth-visibility maps instead count Earth as visible when any part of its disc is unobscured, which gives higher fractions (docs/VALIDATION.md V-5).',
       'Which Earth ground station faces the Moon at a given time is not modelled.',
     ],
-    code: ['src/science/analysis.ts instantState'],
+    code: ['src/science/analysis.ts instantState, analyzeSite'],
   },
   {
     id: 'M-WINDOWS',

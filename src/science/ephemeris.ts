@@ -37,6 +37,7 @@ export function tableFromBuffer(buffer: ArrayBuffer, t0Ms: number, stepMs: numbe
  */
 export function mergeTables(parts: EphemerisTable[]): EphemerisTable {
   if (parts.length === 0) throw new Error('no ephemeris tables');
+  if (parts.length === 1) return parts[0]; // tables are never mutated: share instead of copying
   const sorted = [...parts].sort((a, b) => a.t0Ms - b.t0Ms);
   const stepMs = sorted[0].stepMs;
   let n = sorted[0].n;
@@ -64,18 +65,26 @@ export const tableEndMs = (t: EphemerisTable): number => t.t0Ms + (t.n - 1) * t.
  * the table is never extrapolated.
  */
 export function bodyVectorKm(table: EphemerisTable, tMs: number, body: Body): Vec3 {
+  bodyVectorsInto(table, tMs, VECTOR_SCRATCH);
+  const o = OFFSET[body];
+  return [VECTOR_SCRATCH[o], VECTOR_SCRATCH[o + 1], VECTOR_SCRATCH[o + 2]];
+}
+
+const VECTOR_SCRATCH = new Float64Array(6);
+
+/**
+ * Allocation-free form of bodyVectorKm for both bodies at once (one bracket
+ * lookup): writes Sun x, y, z then Earth x, y, z (km) to out[0..5]. Same
+ * interpolation and coverage check as bodyVectorKm.
+ */
+export function bodyVectorsInto(table: EphemerisTable, tMs: number, out: Float64Array): void {
   const f = (tMs - table.t0Ms) / table.stepMs;
   if (!(f >= 0 && f <= table.n - 1)) {
     throw new RangeError(`time ${new Date(tMs).toISOString()} is outside the ephemeris coverage`);
   }
   const i = Math.min(Math.floor(f), table.n - 2);
   const w = f - i;
-  const a = i * 6 + OFFSET[body];
-  const b = a + 6;
   const d = table.data;
-  return [
-    d[a] + (d[b] - d[a]) * w,
-    d[a + 1] + (d[b + 1] - d[a + 1]) * w,
-    d[a + 2] + (d[b + 2] - d[a + 2]) * w,
-  ];
+  const a = i * 6;
+  for (let k = 0; k < 6; k++) out[k] = d[a + k] + (d[a + 6 + k] - d[a + k]) * w;
 }

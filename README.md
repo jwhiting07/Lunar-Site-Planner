@@ -29,7 +29,9 @@ For a production build, run `npm run build` and serve it with `npm run preview`.
 On-demand terrain requires the Python environment from `requirements.txt` and the
 80 m and 240 m LOLA rasters in `data_cache/lola/` (see `scripts/fetch_sources.py`).
 The server uses `.venv` when present. Set `SERAPHIM_PYTHON` to use a different
-Python executable. A static host needs an equivalent `/api/custom-horizon` endpoint
+Python executable. The first on-demand request starts a Python worker that keeps the
+rasters in memory (about 7 s once, then about 1 s per location); the worker exits after
+five idle minutes. A static host needs an equivalent `/api/custom-horizon` endpoint
 to support on-demand profiles. Shipped terrain profiles work on a static host.
 
 ## Use the application

@@ -18,8 +18,8 @@ import {
   R_SUN_KM,
   type LanderParams,
 } from './constants';
-import { bodyVectorKm, type EphemerisTable } from './ephemeris';
-import { azEl, enuBasis, sitePositionKm, sub, type EnuBasis, type Vec3 } from './geometry';
+import { bodyVectorKm, bodyVectorsInto, type EphemerisTable } from './ephemeris';
+import { azEl, azElInto, enuBasis, sitePositionKm, sub, type EnuBasis, type Vec3 } from './geometry';
 import { horizonAt, horizonDistanceAt, type HorizonMask } from './horizon';
 import { diskFractionVisible, panelPowerW, simulateBattery, type BatteryResult } from './power';
 import type { SiteDoc } from './types';
@@ -256,26 +256,44 @@ export function analyzeSite(ctx: SiteContext, eph: EphemerisTable, opts: Analysi
   // Margins whose sign defines visibility; flat-horizon versions for the terrain-effect comparison.
   const sunMargin = f64(), earthMargin = f64(), sunMarginFlat = f64(), earthMarginFlat = f64();
 
+  // Hot loop: the same geometry as instantState (azElInto is the shared core),
+  // without per-sample allocation.
+  const vec = new Float64Array(6);
+  const ae = new Float64Array(3);
+  const [ox, oy, oz] = ctx.observerKm;
   for (let i = 0; i < n; i++) {
-    const st = instantState(ctx, eph, tMs[i], minClear);
-    s.sunAzDeg[i] = st.sun.azDeg;
-    s.sunElDeg[i] = st.sun.elDeg;
-    s.sunHorizonDeg[i] = st.sun.horizonDeg;
-    s.sunClearanceDeg[i] = st.sun.clearanceDeg;
-    s.sunRadiusDeg[i] = st.sun.angularRadiusDeg;
-    s.sunDistKm[i] = st.sun.distKm;
-    s.sunDiskFraction[i] = st.sun.diskFraction;
-    s.earthAzDeg[i] = st.earth.azDeg;
-    s.earthElDeg[i] = st.earth.elDeg;
-    s.earthHorizonDeg[i] = st.earth.horizonDeg;
-    s.earthClearanceDeg[i] = st.earth.clearanceDeg;
-    s.sunVisible[i] = st.sun.visible ? 1 : 0;
-    s.earthVisible[i] = st.earth.visible ? 1 : 0;
-    s.powerW[i] = panelPowerW(opts.params, st.sun.distKm, st.sun.elDeg, st.sun.diskFraction);
-    sunMargin[i] = st.sun.clearanceDeg + st.sun.angularRadiusDeg;
-    earthMargin[i] = st.earth.clearanceDeg - minClear;
-    sunMarginFlat[i] = st.sun.elDeg + st.sun.angularRadiusDeg;
-    earthMarginFlat[i] = st.earth.elDeg - minClear;
+    bodyVectorsInto(eph, tMs[i], vec);
+
+    azElInto(vec[0] - ox, vec[1] - oy, vec[2] - oz, ctx.basis, ae);
+    const sunAz = ae[0], sunEl = ae[1], sunDist = ae[2];
+    const sunH = horizonAt(ctx.mask, sunAz);
+    const sunClear = sunEl - sunH;
+    const rho = sunAngularRadiusDeg(sunDist);
+    const disk = diskFractionVisible(sunClear, rho);
+
+    azElInto(vec[3] - ox, vec[4] - oy, vec[5] - oz, ctx.basis, ae);
+    const earthAz = ae[0], earthEl = ae[1];
+    const earthH = horizonAt(ctx.mask, earthAz);
+    const earthClear = earthEl - earthH;
+
+    s.sunAzDeg[i] = sunAz;
+    s.sunElDeg[i] = sunEl;
+    s.sunHorizonDeg[i] = sunH;
+    s.sunClearanceDeg[i] = sunClear;
+    s.sunRadiusDeg[i] = rho;
+    s.sunDistKm[i] = sunDist;
+    s.sunDiskFraction[i] = disk;
+    s.earthAzDeg[i] = earthAz;
+    s.earthElDeg[i] = earthEl;
+    s.earthHorizonDeg[i] = earthH;
+    s.earthClearanceDeg[i] = earthClear;
+    sunMargin[i] = sunClear + rho;
+    earthMargin[i] = earthClear - minClear;
+    s.sunVisible[i] = sunMargin[i] > 0 ? 1 : 0;
+    s.earthVisible[i] = earthMargin[i] > 0 ? 1 : 0;
+    s.powerW[i] = panelPowerW(opts.params, sunDist, sunEl, disk);
+    sunMarginFlat[i] = sunEl + rho;
+    earthMarginFlat[i] = earthEl - minClear;
   }
 
   const battery = simulateBattery(tMs, s.powerW, opts.params);

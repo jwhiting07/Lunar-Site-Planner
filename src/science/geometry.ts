@@ -67,17 +67,28 @@ export interface AzEl {
   dist: number;
 }
 
+/**
+ * Allocation-free azimuth/elevation of the observer->target vector (x, y, z)
+ * in body-fixed components: writes [azDeg, elDeg, dist] to out[o..o+2].
+ * Hot-path form of azEl (analysis loops evaluate it tens of thousands of times).
+ */
+export function azElInto(x: number, y: number, z: number, basis: EnuBasis, out: Float64Array, o = 0): void {
+  const { east, north, up } = basis;
+  const e = x * east[0] + y * east[1] + z * east[2];
+  const n = x * north[0] + y * north[1] + z * north[2];
+  const u = x * up[0] + y * up[1] + z * up[2];
+  const dist = Math.hypot(e, n, u);
+  out[o] = wrap360(Math.atan2(e, n) / DEG);
+  out[o + 1] = Math.asin(Math.max(-1, Math.min(1, u / dist))) / DEG;
+  out[o + 2] = dist;
+}
+
+const AZEL_SCRATCH = new Float64Array(3);
+
 /** Azimuth/elevation of an observer->target vector given in body-fixed components. */
 export function azEl(topo: Vec3, basis: EnuBasis): AzEl {
-  const e = dot(topo, basis.east);
-  const n = dot(topo, basis.north);
-  const u = dot(topo, basis.up);
-  const dist = Math.hypot(e, n, u);
-  return {
-    azDeg: wrap360(Math.atan2(e, n) / DEG),
-    elDeg: Math.asin(Math.max(-1, Math.min(1, u / dist))) / DEG,
-    dist,
-  };
+  azElInto(topo[0], topo[1], topo[2], basis, AZEL_SCRATCH);
+  return { azDeg: AZEL_SCRATCH[0], elDeg: AZEL_SCRATCH[1], dist: AZEL_SCRATCH[2] };
 }
 
 /** Unit vector in ENU components [east, north, up] for an azimuth/elevation. Inverse of azEl. */

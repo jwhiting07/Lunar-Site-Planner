@@ -7,11 +7,11 @@
 checksums and processing are in `public/models/provenance.json`. The NASA SVS CGI
 Moon Kit colour map (`public/textures/moon-color.jpg`, R-SVS-MOON-KIT, recorded in
 `public/textures/provenance.json`, https://svs.gsfc.nasa.gov/4720/) is used only at
-build time to colour the local terrain patch (`terrain_color_<id>.png`);
-`moon-bump.jpg` is not referenced by the current `src/`. (Corrected 2026-11-14 audit:
-an earlier version of this paragraph described a textured unit sphere.)
-This globe is display-only: fixed viewing light and a small illustrative bump
-scale are not an epoch illumination model or physical terrain displacement.
+build time to colour the local terrain patch (`terrain_color_<id>.png`).
+(Corrected 2026-11-14 audit: an earlier version of this paragraph described a
+textured unit sphere; the unused `moon-bump.jpg` was later removed.)
+This globe is display-only: its fixed viewing light is not an epoch illumination
+model.
 The image is aesthetically processed and includes polar fill. Scientific analysis
 continues to use the separate LOLA horizon and SPICE pipeline below.
 Markers use the sourced site latitude/longitude via `enuBasis`; lunar body axes
@@ -81,9 +81,9 @@ V-2 quantifies the surface-observer difference. Up is radial, not a gravity mode
 
 | Output | Equation / implementation | Dependency and classification |
 |---|---|---|
-| Solar clearance, visibility flag | C=el-H(az); rho=asin(R_sun/d); visible when C+rho>0; `analysis.ts instantState` (M-SUNVIS) | Computed from M-GEOM/M-HORIZON, sourced solar radius 695700 km (R-NAIF-PCK, R-TSI) |
+| Solar clearance, visibility flag | C=el-H(az); rho=asin(R_sun/d); visible when C+rho>0; `analysis.ts instantState` for single instants and the same arithmetic in the `analyzeSite` sample loop for series (M-SUNVIS) | Computed from M-GEOM/M-HORIZON, sourced solar radius 695700 km (R-NAIF-PCK, R-TSI) |
 | Visible disk fraction | x=clamp(C/rho,-1,1); f=1-(acos(x)-x sqrt(1-x²))/pi; `power.ts diskFractionVisible` | Computed circular-segment area (R-SEGMENT); straight-edge, uniform-brightness approximation |
-| Earth clearance and flag | C=el-H(az); visible when C>C_min; `analysis.ts instantState` (M-EARTHVIS) | Computed from geometry/horizon, assumed default C_min=0° (A-DTE-MASK); Earth centre only |
+| Earth clearance and flag | C=el-H(az); visible when C>C_min; `analysis.ts instantState` for single instants and the same arithmetic in the `analyzeSite` sample loop for series (M-EARTHVIS) | Computed from geometry/horizon, assumed default C_min=0° (A-DTE-MASK); Earth centre only |
 | Sun/Earth windows | For adjacent sign-changing margins, t_cross=t_i+m_i/(m_i-m_next)×dt; `windows.ts findWindows` (M-WINDOWS) | Computed linear root; no external citation needed for algebra; physical margins come from preceding rows |
 | Darkness / blackout / simultaneous visibility | Complements/intersections of windows; `complementWindows`, `intersectWindows` | Computed interval set operations |
 | Sunlit/Earth-visible hours and percentages; both-visible hours | Sum window durations; percentage=100×hours/intervalHours; `analysis.ts analyzeSite` | Computed from M-WINDOWS; milliseconds converted to hours |
@@ -171,7 +171,7 @@ H(A) = terrain horizon [C] (M-HORIZON, horizon.ts horizonAt; moonlib.py compute_
 sunlit_pct  Sunlit time [%] = 100 * sunlit_h / interval [C] (M-SUNVIS; analysis.ts analyzeSite)
 sunlit_h    Sunlit hours [h] = sum of Sun window durations [C] (M-WINDOWS; windows.ts findWindows, totalHours)
   <- crossings t_c = t_i + m_i/(m_i - m_i+1) dt [X] (linear zero crossing, hourly samples)
-  <- m_s = C_s + rho_s, C_s = el_s - H(az_s) [C] (analysis.ts instantState)
+  <- m_s = C_s + rho_s, C_s = el_s - H(az_s) [C] (analysis.ts instantState; same arithmetic in the analyzeSite loop)
   <- rho_s = asin(R_sun / d_s) [C] <- R_sun = 695700 km [S] (R-NAIF-PCK, R-TSI)
   <- GEOM(Sun), H(A)
 earth_pct   Earth visible [%] = 100 * earth_h / interval [C] (M-EARTHVIS)

@@ -94,6 +94,7 @@ export function loadTerrain(site: SiteDoc): Promise<Float32Array> {
 }
 
 const yearCache = new Map<string, Promise<EphemerisTable>>();
+const mergedCache = new Map<string, Promise<EphemerisTable>>();
 /**
  * Ephemeris table covering [startMs, endMs]; only the year files that overlap
  * the interval are fetched.
@@ -109,10 +110,12 @@ export async function loadEphemeris(index: EphemerisIndex, startMs: number, endM
     return t1 >= startMs && t0 <= endMs;
   });
   if (needed.length === 0) throw new RangeError('requested interval is outside the ephemeris coverage');
-  const parts = await Promise.all(
-    needed.map((f) =>
-      cached(yearCache, f.file, async () => tableFromBuffer(await getBuffer(f.file), Date.parse(f.t0_utc), stepMs)),
-    ),
+  // Ranges within one year share that year's table; multi-year ranges are merged once per file set.
+  return cached(mergedCache, needed.map((f) => f.file).join('+'), async () =>
+    mergeTables(await Promise.all(
+      needed.map((f) =>
+        cached(yearCache, f.file, async () => tableFromBuffer(await getBuffer(f.file), Date.parse(f.t0_utc), stepMs)),
+      ),
+    )),
   );
-  return mergeTables(parts);
 }
