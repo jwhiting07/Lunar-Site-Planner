@@ -40,10 +40,11 @@ UTC landing date and a duration from one hour to 365 days. **Run analysis** show
 whether the scenario meets the displayed sunlight and Earth-visibility targets.
 The initial 50% minima are editable project assumptions, not NASA requirements.
 **Advanced** adds outage limits, Earth clearance and power-estimate parameters.
-For custom coordinates, enter the latitude and east-positive longitude, run the
-analysis, and open **Dashboard → Timeline**. The chart and analysis share the
-newly calculated profile where LOLA coverage is sufficient. For example, enter
-`-83` and `25`. Outside coverage, the result is labeled as a flat-horizon estimate.
+For custom coordinates, enter the latitude and east-positive longitude and run the
+analysis. Results first show a flat-horizon preview while the terrain profile
+computes in the background. Where LOLA coverage is sufficient, the results and
+the skyline under **Dashboard → Timeline** update together. Try `-83` and `25`.
+Outside coverage, the result is labeled as a flat-horizon estimate.
 
 **Find a site** optionally restricts the search to a lunar radius and/or landing-date
 range. With neither selected it samples across the Moon and shipped 2026–2028
@@ -51,9 +52,10 @@ coverage. **Find better nearby** keeps mission duration and targets fixed, testi
 date changes within seven days or locations within 50 km. Search is a bounded grid,
 with coarse screening and hourly refinement of the leading twelve candidates;
 it can miss better unsampled options. Methods in the app document spacing and ranking.
-Search uses flat-horizon screening for custom grid points. To evaluate a result
-with terrain, open it and rerun it with Check a site. A nearby date search at a
-site already analyzed with terrain reuses that profile.
+Search ranks custom grid points using flat-horizon screening. Viewing a result
+starts its terrain calculation in the background if it is in the south-polar
+region. A nearby date search at a site already analyzed with terrain reuses that
+profile.
 
 Add up to twelve scenarios to **Compare**, including different dates at the same
 location. Basic comparison shows location, landing date, duration, sunlight, Earth

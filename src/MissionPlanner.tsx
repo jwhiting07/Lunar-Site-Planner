@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, loadProvenance, loadSites } from './data/loader';
-import { analyzeSite, flatHorizon, makeSiteContext, type EphemerisIndex, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
+import { analyzeSite, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
 import { assessment, compareCandidates, coordinateSite, dateGrid, DAY, DEFAULT_TARGETS, distanceKm, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
 import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './components/ParamsPanel';
@@ -36,6 +36,7 @@ export default function MissionPlanner() {
   const [pick, setPick] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [active, setActive] = useState<Candidate | null>(null);
+  const [terrainStatus, setTerrainStatus] = useState<'pending' | 'uncovered' | 'unavailable' | null>(null);
   const [saved, setSaved] = useState<Saved[]>([]);
   const [markerScenarioId, setMarkerScenarioId] = useState<number | null>(null);
   const [options, setOptions] = useState<Candidate[]>([]);
@@ -48,6 +49,7 @@ export default function MissionPlanner() {
   const [dashboard, setDashboard] = useState<DashboardTab | null>(null);
   const [detailed, setDetailed] = useState(false);
   const abort = useRef<AbortController | null>(null);
+  const terrainRequest = useRef<AbortController | null>(null);
   const masks = useRef(new Map<string, HorizonMask>());
   const sequence = useRef(0);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -58,7 +60,7 @@ export default function MissionPlanner() {
   useEffect(() => {
     let current = true;
     Promise.all([loadSites(), loadEphemerisIndex()]).then(([sites, index]) => { if (current) setData({ sites, index }); }).catch(e => { if (current) setError(errorText(e)); });
-    return () => { current = false; abort.current?.abort(); };
+    return () => { current = false; abort.current?.abort(); terrainRequest.current?.abort(); };
   }, []);
   useEffect(() => {
     if (!sources) return;
@@ -111,8 +113,49 @@ export default function MissionPlanner() {
       || !Number.isFinite(params.earthMinClearanceDeg) || params.earthMinClearanceDeg < 0 || params.earthMinClearanceDeg > 60) throw new Error('Check the advanced targets and clearance.');
   };
 
+  const stopTerrain = () => {
+    terrainRequest.current?.abort();
+    terrainRequest.current = null;
+    setTerrainStatus(null);
+  };
+
+  function showResult(candidate: Candidate, index?: EphemerisIndex, ephemeris?: EphemerisTable) {
+    stopTerrain();
+    setActive(candidate);
+    const { result } = candidate;
+    if (result.terrainAware) return;
+    if (result.site.lat_deg > -60) {
+      setTerrainStatus('uncovered');
+      return;
+    }
+    if (!index) return;
+    const request = new AbortController();
+    terrainRequest.current = request;
+    setTerrainStatus('pending');
+    void Promise.all([
+      loadCustomHorizon(result.site, request.signal),
+      ephemeris ?? loadEphemeris(index, result.startMs, result.endMs),
+    ]).then(([terrain, eph]) => {
+      if (terrainRequest.current !== request || request.signal.aborted) return;
+      if (terrain) {
+        const { site, mask, observerHeightM } = terrain;
+        const updated = analyzeSite(makeSiteContext(site, observerHeightM, mask), eph, {
+          startMs: result.startMs, endMs: result.endMs, params: result.params,
+          earthMinClearanceDeg: result.earthMinClearanceDeg,
+        });
+        setActive({ targets: candidate.targets, result: { ...updated, horizonMask: mask } });
+      }
+      setTerrainStatus(terrain ? null : 'uncovered');
+    }).catch(() => {
+      if (terrainRequest.current === request && !request.signal.aborted) setTerrainStatus('unavailable');
+    }).finally(() => {
+      if (terrainRequest.current === request) terrainRequest.current = null;
+    });
+  }
+
   async function run(alternatives = false) {
     if (!data || busy) return;
+    if (terrainRequest.current) stopTerrain();
     const controller = new AbortController(); abort.current = controller;
     setBusy(true); setError(''); setProgress('Loading geometry…'); setOptions([]); setSearchNote('');
     try {
@@ -162,23 +205,19 @@ export default function MissionPlanner() {
         if (controller.signal.aborted) return;
         setOptions(found);
         setSearchNote(base ? `${count} nearby scenarios checked: dates within 7 days or locations within 50 km. ${found.length ? '' : 'No better option found in these samples.'}` : `${count} sampled scenarios checked. ${found.some(c => assessment(c.result, c.targets).good) ? 'Best sampled matches shown.' : 'No sampled scenario meets every target; closest matches shown.'}`);
-        if (!base && found[0]) use(found[0]);
+        if (!base && found[0]) use(found[0], data.index, eph);
       } else {
         if (start < startCoverage || start + days * DAY > endCoverage) throw new Error('The full mission must fit within January 1, 2026 and January 1, 2029 UTC.');
         const site = coordinateSite(point, data.sites.sites);
-        const custom = !site.terrain_aware && point.lat <= -60;
-        if (custom) setProgress('Computing local terrain horizon…');
-        const [eph, terrain] = await Promise.all([
+        const [eph, mask] = await Promise.all([
           loadEphemeris(data.index, start, start + days * DAY),
-          custom ? loadCustomHorizon(site, controller.signal) : Promise.resolve(null),
+          getMask(site),
         ]);
-        const mask = terrain?.mask ?? await getMask(site);
         if (controller.signal.aborted) return;
-        const context = makeSiteContext(terrain?.site ?? site, terrain?.observerHeightM ?? data.sites.observer_height_m, mask);
-        setActive({ targets: target, result: {
-          ...analyzeSite(context, eph, { startMs: start, endMs: start + days * DAY, params: lander, earthMinClearanceDeg: clearance }),
-          horizonMask: mask,
-        } });
+        const result = analyzeSite(makeSiteContext(site, data.sites.observer_height_m, mask), eph, {
+          startMs: start, endMs: start + days * DAY, params: lander, earthMinClearanceDeg: clearance,
+        });
+        showResult({ targets: target, result: { ...result, horizonMask: mask } }, data.index, eph);
       }
       setDashboard(tab => tab === 'Inputs' ? 'Results' : tab);
     } catch (e) { if (!controller.signal.aborted) setError(errorText(e)); }
@@ -188,12 +227,22 @@ export default function MissionPlanner() {
   const signature = (c: Candidate) => JSON.stringify([c.result.site.id, c.result.startMs, c.result.endMs, c.targets, c.result.params, c.result.earthMinClearanceDeg]);
   const inComparison = (c: Candidate) => saved.some(s => signature(s) === signature(c));
   const add = (candidate: Candidate) => { if (saved.length < 12 && !inComparison(candidate)) setSaved(s => [...s, { ...candidate, id: ++sequence.current }]); };
-  const use = (candidate: Candidate) => {
-    setActive(candidate); setLat(String(candidate.result.site.lat_deg)); setLon(String(normalizeLon(candidate.result.site.lon_deg)));
+  const use = (candidate: Candidate, index?: EphemerisIndex, eph?: EphemerisTable) => {
+    showResult(candidate, index, eph);
+    setLat(String(candidate.result.site.lat_deg)); setLon(String(normalizeLon(candidate.result.site.lon_deg)));
     setDate(isoDate(candidate.result.startMs)); setDuration(String((candidate.result.endMs - candidate.result.startMs) / DAY));
     setTargets({ ...candidate.targets }); setParams({ lander: { ...candidate.result.params }, earthMinClearanceDeg: candidate.result.earthMinClearanceDeg });
   };
   const verdict = active ? assessment(active.result, active.targets) : null;
+  const terrainPending = terrainStatus === 'pending';
+  const terrainNotice = terrainStatus && <p className="mission-terrain-status" role="status">
+    {terrainPending ? 'Preview using a flat horizon. Results and the skyline will update when terrain is ready.'
+      : terrainStatus === 'uncovered' ? 'LOLA coverage is insufficient here. Results use a flat horizon.'
+        : 'Terrain calculation is unavailable. Results use a flat horizon.'}
+    {terrainStatus === 'unavailable' && active && data && <>
+      {' '}<button type="button" className="btn small" onClick={() => showResult(active, data.index)}>Retry terrain</button>
+    </>}
+  </p>;
 
   const inputs = <form className="mission-form" onSubmit={e => { e.preventDefault(); void run(); }}>
         <div className="mission-mode" role="group" aria-label="Planning mode"><button type="button" disabled={busy} aria-pressed={mode === 'check'} onClick={() => { setMode('check'); setOptions([]); setSearchNote(''); }}>Check a site</button><button type="button" disabled={busy} aria-pressed={mode === 'find'} onClick={() => { setMode('find'); setOptions([]); setSearchNote(''); }}>Find a site</button></div>
@@ -233,15 +282,23 @@ export default function MissionPlanner() {
   </form>;
 
   const results = active && verdict ? <>
-          <div className="mission-verdict"><strong className={verdict.good ? 'mission-good' : 'mission-bad'}>{verdict.good ? 'Meets targets' : 'Doesn’t meet targets'}</strong><span>{active.result.terrainAware ? 'Terrain included' : 'Flat-horizon estimate'}</span><button className="btn" disabled={inComparison(active) || saved.length >= 12} onClick={() => add(active)}>{inComparison(active) ? 'Added to comparison' : 'Add to comparison'}</button></div>
+          <div className="mission-verdict"><strong className={verdict.good ? 'mission-good' : 'mission-bad'}>{verdict.good ? 'Meets targets' : 'Doesn’t meet targets'}</strong><span>{active.result.terrainAware ? 'Terrain included' : 'Flat-horizon estimate'}</span><button className="btn" disabled={terrainPending || inComparison(active) || saved.length >= 12} onClick={() => add(active)}>{inComparison(active) ? 'Added to comparison' : 'Add to comparison'}</button></div>
+          {terrainNotice}
           <p className="mission-result-coords">{coords(active.result)} · {isoDate(active.result.startMs)} · {(active.result.metrics.intervalHours / 24).toFixed(2).replace(/\.00$/, '')} days</p>
           <div className="mission-metrics"><div><span className="sun-text">Sunlight</span><strong>{percent(active.result.metrics.sunlitFraction)}</strong><small>{active.result.metrics.sunlitHours.toFixed(1)} h · target ≥ {active.targets.sunlight}%</small></div><div><span className="earth-text">Earth visible</span><strong>{percent(active.result.metrics.earthVisibleFraction)}</strong><small>{active.result.metrics.earthVisibleHours.toFixed(1)} h · target ≥ {active.targets.earth}%</small></div></div>
           {verdict.failures.length > 0 && <p className="mission-failures">{verdict.failures.map(c => `${c.label}: ${c.actual.toFixed(1)}${c.maximum ? ' h' : '%'} (${c.maximum ? '≤' : '≥'} ${c.target}${c.maximum ? ' h' : '%'} required)`).join(' · ')}</p>}
-          <div className="mission-result-actions"><button className="btn" disabled={busy} onClick={() => void run(true)}>Find better nearby ↗</button><ExportMenu results={[active.result]} primaryId={active.result.site.id} provenance={provenance} targets={[active.targets]} /></div>
+          <div className="mission-result-actions">
+            <button className="btn" onClick={() => {
+              if (!dashboard) openedFromCompare.current = false;
+              setDashboard('Timeline');
+            }}>View horizon</button>
+            <button className="btn" disabled={busy || terrainPending} onClick={() => void run(true)}>Find better nearby ↗</button>
+            <ExportMenu results={terrainPending ? [] : [active.result]} primaryId={active.result.site.id} provenance={provenance} targets={[active.targets]} />
+          </div>
           <ScenarioDetails result={active.result} />
   </> : <p>Run an analysis to see results.</p>;
 
-  const searchResults = (searchNote || options.length > 0) && <section className="mission-options" aria-label="Search results"><p>{searchNote}</p><div className="mission-table-scroll"><table><thead><tr><th>Location</th><th>Landing (UTC)</th><th>Sunlight</th><th>Earth visible</th><th>Result</th><th><span className="sr-only">Actions</span></th></tr></thead><tbody>{options.map((c, i) => <tr key={i}><td className="mono">{coords(c.result)}<small>{c.result.terrainAware ? 'Terrain included' : 'Flat-horizon estimate'}</small></td><td>{isoDate(c.result.startMs)}</td><td>{percent(c.result.metrics.sunlitFraction)}</td><td>{percent(c.result.metrics.earthVisibleFraction)}</td><td>{assessment(c.result, c.targets).good ? 'Meets targets' : 'Below targets'}<small>{active && c.result !== active.result ? `${signed((c.result.metrics.sunlitFraction - active.result.metrics.sunlitFraction) * 100)} pp sun · ${signed((c.result.metrics.earthVisibleFraction - active.result.metrics.earthVisibleFraction) * 100)} pp Earth · ${distanceKm({ lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }, { lat: c.result.site.lat_deg, lon: c.result.site.lon_deg }).toFixed(1)} km away` : 'Selected result'}</small></td><td><button className="btn small" onClick={() => use(c)}>View</button> <button className="btn small" disabled={inComparison(c) || saved.length >= 12} onClick={() => add(c)}>{inComparison(c) ? 'Added' : 'Compare'}</button></td></tr>)}</tbody></table></div></section>;
+  const searchResults = (searchNote || options.length > 0) && <section className="mission-options" aria-label="Search results"><p>{searchNote}</p><div className="mission-table-scroll"><table><thead><tr><th>Location</th><th>Landing (UTC)</th><th>Sunlight</th><th>Earth visible</th><th>Result</th><th><span className="sr-only">Actions</span></th></tr></thead><tbody>{options.map((c, i) => <tr key={i}><td className="mono">{coords(c.result)}<small>{c.result.terrainAware ? 'Terrain included' : 'Flat-horizon estimate'}</small></td><td>{isoDate(c.result.startMs)}</td><td>{percent(c.result.metrics.sunlitFraction)}</td><td>{percent(c.result.metrics.earthVisibleFraction)}</td><td>{assessment(c.result, c.targets).good ? 'Meets targets' : 'Below targets'}<small>{active && c.result !== active.result ? `${signed((c.result.metrics.sunlitFraction - active.result.metrics.sunlitFraction) * 100)} pp sun · ${signed((c.result.metrics.earthVisibleFraction - active.result.metrics.earthVisibleFraction) * 100)} pp Earth · ${distanceKm({ lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }, { lat: c.result.site.lat_deg, lon: c.result.site.lon_deg }).toFixed(1)} km away` : 'Selected result'}</small></td><td><button className="btn small" onClick={() => use(c, data?.index)}>View</button> <button className="btn small" disabled={inComparison(c) || saved.length >= 12} onClick={() => add(c)}>{inComparison(c) ? 'Added' : 'Compare'}</button></td></tr>)}</tbody></table></div></section>;
 
   const comparison = <div className="mission-comparison">
       {!!saved.length && <label className="mission-check"><input type="checkbox" checked={detailed} onChange={e => setDetailed(e.target.checked)} />Detailed</label>}
@@ -297,7 +354,9 @@ export default function MissionPlanner() {
         {dashboard === 'Inputs' && inputs}
         {dashboard === 'Results' && <>{results}{searchResults}</>}
         {dashboard === 'Compare' && comparison}
-        {dashboard === 'Timeline' && (active && data ? <ScenarioTimeline result={active.result} index={data.index} /> : <p>Run an analysis to view the timeline and local horizon.</p>)}
+        {dashboard === 'Timeline' && (active && data ? <>{terrainNotice}<ScenarioTimeline
+          key={`${active.result.site.id}:${active.result.startMs}:${active.result.endMs}`}
+          result={active.result} index={data.index} /></> : <p>Run an analysis to view the timeline and local horizon.</p>)}
       </div>
     </dialog>
     {sources && <Suspense fallback={<div role="status">Loading sources…</div>}><Sources provenance={provenance} provenanceError={provError} ephIndex={data?.index ?? null} sites={data?.sites.sites} focusMethodId={null} onClose={() => setSources(false)} /></Suspense>}

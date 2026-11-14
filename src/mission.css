@@ -61,6 +61,7 @@ body:has(.mission-app) { min-width: 0; }
 .mission-bad { color: #e8a19a; }
 .mission-verdict > span { color: var(--tx1); font-size: 11px; }
 .mission-result-coords { color: var(--tx1); font: 11px var(--mono); margin-top: 12px; }
+.mission-terrain-status { color: var(--tx1); font-size: 12px; margin: 8px 0; }
 .mission-metrics { display: grid; grid-template-columns: 1fr 1fr; max-width: 560px; gap: 24px; padding: 24px 0; }
 .mission-metrics > div { display: flex; flex-direction: column; gap: 5px; }
 .mission-metrics span { font-size: 12px; }

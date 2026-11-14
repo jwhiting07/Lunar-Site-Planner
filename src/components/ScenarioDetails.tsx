@@ -1,10 +1,9 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { loadEphemeris, loadHorizon } from '../data/loader';
 import { flatHorizon, instantState, makeSiteContext, type AnalysisResult, type EphemerisIndex, type EphemerisTable, type HorizonMask } from '../science';
 import { formatRowValue, summaryRows } from '../science/summary';
 import { TimeControls, TimelinesPanel } from './Timelines';
-
-const Horizon = lazy(() => import('./SkyView').then(m => ({ default: m.SkyView })));
+import { SkyView } from './SkyView';
 
 export function ScenarioDetails({ result }: { result: AnalysisResult }) {
   return <details className="mission-data"><summary>Detailed data</summary>
@@ -25,34 +24,42 @@ export function ScenarioDetails({ result }: { result: AnalysisResult }) {
 export function ScenarioTimeline({ result, index }: { result: AnalysisResult; index: EphemerisIndex }) {
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
   const timelineResults = useMemo(() => [result], [result]);
-  const [geometry, setGeometry] = useState<{ eph: EphemerisTable; mask: HorizonMask } | null>(null);
+  const [eph, setEph] = useState<EphemerisTable | null>(null);
+  const [loadedMask, setLoadedMask] = useState<HorizonMask | null>(null);
   const [error, setError] = useState('');
   const [cursor, setCursor] = useState(startMs);
 
   useEffect(() => {
     let current = true;
-    Promise.all([loadEphemeris(index, startMs, endMs),
-      horizonMask ?? (terrainAware ? loadHorizon(site) : flatHorizon())])
-      .then(([eph, mask]) => { if (current) setGeometry({ eph, mask }); })
+    loadEphemeris(index, startMs, endMs)
+      .then(table => { if (current) setEph(table); })
       .catch(err => { if (current) setError(String(err)); });
     return () => { current = false; };
-  }, [index, startMs, endMs, site, terrainAware, horizonMask]);
+  }, [index, startMs, endMs]);
+
+  useEffect(() => {
+    if (horizonMask || !terrainAware) return;
+    let current = true;
+    loadHorizon(site)
+      .then(mask => { if (current) setLoadedMask(mask); })
+      .catch(err => { if (current) setError(String(err)); });
+    return () => { current = false; };
+  }, [site, terrainAware, horizonMask]);
+  const referenceMask = useMemo(() => flatHorizon(), []);
+  const mask = horizonMask ?? (terrainAware ? loadedMask : referenceMask);
 
   const instant = useMemo(() => {
-    if (!geometry) return null;
-    const ctx = makeSiteContext(site, observerHeightM, geometry.mask);
-    return instantState(ctx, geometry.eph, cursor, earthMinClearanceDeg);
-  }, [site, observerHeightM, geometry, cursor, earthMinClearanceDeg]);
+    if (!eph || !mask) return null;
+    return instantState(makeSiteContext(site, observerHeightM, mask), eph, cursor, earthMinClearanceDeg);
+  }, [site, observerHeightM, eph, mask, cursor, earthMinClearanceDeg]);
 
   return <div className="mission-timeline">
     <div className="mission-timeline-controls">
       <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
     </div>
-    <TimelinesPanel results={timelineResults} primaryId={site.id} startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
     {error ? <p role="alert" className="mission-error">{error}</p> :
-      <Suspense fallback={<p role="status">Loading horizon…</p>}>
-        <Horizon result={result} mask={geometry?.mask ?? null} inst={instant} cursorMs={cursor}
-          earthMinClearanceDeg={earthMinClearanceDeg} onCursor={setCursor} />
-      </Suspense>}
+      <SkyView result={result} mask={mask} inst={instant} cursorMs={cursor}
+        earthMinClearanceDeg={earthMinClearanceDeg} onCursor={setCursor} />}
+    <TimelinesPanel results={timelineResults} primaryId={site.id} startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
   </div>;
 }

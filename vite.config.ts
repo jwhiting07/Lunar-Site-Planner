@@ -9,7 +9,7 @@ function customHorizon(): Plugin {
   const root = fileURLToPath(new URL('.', import.meta.url));
   const localPython = fileURLToPath(new URL(process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python', import.meta.url));
   const python = process.env.SERAPHIM_PYTHON || (existsSync(localPython) ? localPython : 'python');
-  let computing = false;
+  let computing: ReturnType<typeof execFile> | null = null;
   const middleware: Connect.NextHandleFunction = (req, res, next) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
     if (url.pathname !== '/api/custom-horizon') return next();
@@ -22,14 +22,20 @@ function customHorizon(): Plugin {
     const lat = Number(url.searchParams.get('lat') ?? NaN);
     const lon = Number(url.searchParams.get('lon') ?? NaN);
     if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return send(400, '{"error":"Invalid lunar coordinates."}');
-    if (computing) return send(503, '{"error":"Terrain calculator is busy. Try again."}');
-    computing = true;
-    execFile(python, ['scripts/custom_horizon.py', String(lat), String(lon)], { cwd: root, timeout: 30_000 }, (error, stdout) => {
-      computing = false;
+    if (computing) return send(409, '{"error":"Terrain calculator is busy."}');
+    const child = execFile(python, ['scripts/custom_horizon.py', String(lat), String(lon)], { cwd: root, timeout: 30_000 }, (error, stdout) => {
+      if (computing !== child) return;
+      computing = null;
       if (error) {
         console.error('Custom horizon:', error.message);
         send(503, '{"error":"Local LOLA terrain data or the Python environment is unavailable."}');
       } else send(200, stdout);
+    });
+    computing = child;
+    res.once('close', () => {
+      if (computing !== child) return;
+      computing = null;
+      child.kill();
     });
   };
   return {

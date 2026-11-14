@@ -48,7 +48,16 @@ export function loadHorizon(site: SiteDoc): Promise<HorizonMask> {
 
 export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal) {
   const query = new URLSearchParams({ lat: String(site.lat_deg), lon: String(site.lon_deg) });
-  const response = await fetch(`${import.meta.env.BASE_URL}api/custom-horizon?${query}`, { signal });
+  const url = `${import.meta.env.BASE_URL}api/custom-horizon?${query}`;
+  const deadline = Date.now() + 30_000;
+  let response = await fetch(url, { signal });
+  // A new request can arrive before the server notices the previous one was cancelled.
+  while (response.status === 409 && Date.now() < deadline) {
+    await response.body?.cancel();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    signal.throwIfAborted();
+    response = await fetch(url, { signal });
+  }
   if (!response.ok) throw new Error('The local terrain calculator is unavailable.');
   const data = await response.json();
   if (data === null) return null;
