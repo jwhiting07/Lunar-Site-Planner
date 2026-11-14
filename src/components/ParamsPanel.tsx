@@ -83,11 +83,9 @@ function ParamsForm({ value, onChange, onInfo, onReset }: Props & { onReset: () 
 
   return (
     <Panel
-      title="Assumed lander parameters"
-      className="assumed-panel"
-      right={<InfoButton label="Assumed lander parameters" onClick={() => onInfo('A-LANDER')} />}
+      title="Lander parameters"
+      right={<InfoButton label="Lander parameters" methodId="A-LANDER" onClick={() => onInfo('A-LANDER')} />}
     >
-      <p className="assumed-banner">ASSUMED {'—'} demonstration defaults, not a spacecraft specification</p>
       <div className="param-grid">
         {FIELDS.map((f) => {
           const err = errorOf(f, draft[f.id]);
@@ -138,7 +136,6 @@ function ParamsForm({ value, onChange, onInfo, onReset }: Props & { onReset: () 
         </div>
       </div>
       <div className="param-foot">
-        <span className="caption">Battery assumed full at the start of the interval. Invalid entries are ignored until fixed.</span>
         <button type="button" className="btn small" onClick={onReset}>
           Reset to defaults
         </button>
