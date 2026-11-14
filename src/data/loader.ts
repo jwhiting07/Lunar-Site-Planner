@@ -63,6 +63,9 @@ const yearCache = new Map<string, Promise<EphemerisTable>>();
  * the interval are fetched.
  */
 export async function loadEphemeris(index: EphemerisIndex, startMs: number, endMs: number): Promise<EphemerisTable> {
+  if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || startMs >= endMs || startMs < Date.parse(index.start_utc) || endMs > Date.parse(index.stop_utc)) {
+    throw new RangeError('requested interval is outside the ephemeris coverage or is empty');
+  }
   const stepMs = index.step_s * 1000;
   const needed = index.files.filter((f) => {
     const t0 = Date.parse(f.t0_utc);

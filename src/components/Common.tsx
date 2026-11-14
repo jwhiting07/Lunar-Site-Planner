@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { METHOD_BY_ID, type Classification, type ProvenanceDoc } from '../science';
+import { METRIC_INFO } from '../ui/metricInfo';
 
 export function Panel({
   title,
@@ -41,29 +42,14 @@ export function KindTag({ kind }: { kind: Classification }) {
   );
 }
 
-const SHORT_METHODS: Record<string, string> = {
-  'M-SUNVIS': 'sunlight is counted whenever any part of the Sun clears the terrain horizon',
-  'M-EARTHVIS': 'Earth visibility measures geometric line of sight above the chosen terrain clearance, without assessing radio-link quality',
-  'M-WINDOWS': 'durations are estimated from hourly visibility samples, with crossings interpolated between samples',
-  'M-GEOM': 'Sun and Earth angles are calculated relative to the site’s local horizontal plane',
-  'M-HORIZON': 'the terrain skyline is calculated from NASA LOLA elevation data with lunar curvature included',
-  'M-POWER': 'solar energy is estimated from sunlight and your assumed panel area, efficiency and pointing',
-  'M-BATTERY': 'battery charge and power shortfalls are estimated using your assumed load and capacity, starting with a full battery',
-  'A-LANDER': 'adjustable demonstration inputs model a generic lander with a full battery at the start',
-};
-
-export function InfoButton({ label, methodId, kind, onClick }: { label: string; methodId: string; kind?: Classification; onClick: () => void }) {
+export function InfoButton({ label, methodId, metricKey }: { label: string; methodId: string; metricKey?: string }) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ left: 8, top: 8 });
   const method = METHOD_BY_ID[methodId];
-  const classification = kind ?? method.kind;
-  const classificationLabel = classification[0].toUpperCase() + classification.slice(1);
-  const explanation = classification === 'approximated'
-    ? 'this comparison uses a flat horizon and leaves out terrain obstructions'
-    : SHORT_METHODS[methodId];
+  const explanation = (metricKey ? METRIC_INFO[metricKey] : undefined) ?? (methodId === 'A-LANDER' ? 'Lander parameters are assumed panel, load and battery settings used to estimate solar generation and stored energy.' : method.summary);
 
   useEffect(() => {
     if (!open) return;
@@ -88,7 +74,6 @@ export function InfoButton({ label, methodId, kind, onClick }: { label: string; 
       left: Math.max(8, Math.min(anchor.right - bounds.width, window.innerWidth - bounds.width - 8)),
       top: Math.max(8, anchor.bottom + 8 + bounds.height <= window.innerHeight - 8 ? anchor.bottom + 8 : anchor.top - bounds.height - 8),
     });
-    box.querySelector('button')?.focus({ preventScroll: true });
   };
 
   return (
@@ -98,11 +83,7 @@ export function InfoButton({ label, methodId, kind, onClick }: { label: string; 
       </button>
       {createPortal(
         <div ref={popup} id={id} popover="auto" role="dialog" aria-label={`About ${label}`} className="info-popover" style={position} onToggle={(event) => setOpen(event.newState === 'open')}>
-          <p>{explanation ? `${explanation[0].toUpperCase()}${explanation.slice(1)}.` : method.summary}</p>
-          <div className="info-popover-footer">
-            <button type="button" className="info-learn-more" onClick={() => { popup.current?.hidePopover(); trigger.current?.focus(); onClick(); }}>Learn more</button>
-            <span className="info-kind">{classificationLabel}</span>
-          </div>
+          <p>{explanation}</p>
         </div>, document.body,
       )}
     </>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { METHODS, type EphemerisIndex, type ProvenanceDoc } from '../science';
+import { METHODS, type EphemerisIndex, type ProvenanceDoc, type SiteDoc } from '../science';
 import { KindTag, RefLinks } from './Common';
+import { COORD_CLASS_LABEL, fmtLat, fmtLon, num } from '../ui/labels';
 
 type Tab = 'methods' | 'data' | 'refs' | 'conv';
 
@@ -10,6 +11,7 @@ interface Props {
   ephIndex: EphemerisIndex | null;
   focusMethodId: string | null;
   onClose: () => void;
+  sites?: SiteDoc[];
 }
 
 const TABS: [Tab, string][] = [
@@ -26,7 +28,7 @@ function shortHash(h: string): string {
 }
 const fmtBytes = (n: number): string => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : n >= 1e3 ? `${(n / 1e3).toFixed(1)} kB` : `${n} B`);
 
-export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMethodId, onClose }: Props) {
+export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMethodId, onClose, sites = [] }: Props) {
   const [tab, setTab] = useState<Tab>('methods');
   const dialogRef = useRef<HTMLDivElement>(null);
   const prev = useRef<Element | null>(null);
@@ -107,6 +109,15 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                     <span className="mono">{m.id}</span> {m.title} <KindTag kind={m.kind} />
                   </h3>
                   <p>{m.summary}</p>
+                  {m.id === 'M-SITE' && sites.map(site => <section key={site.id} className="site-source-details">
+                    <h4>{site.name}</h4>
+                    <p>{COORD_CLASS_LABEL[site.coord_class]} · {fmtLat(site.lat_deg)} · {fmtLon(site.lon_deg)}</p>
+                    <p>{site.coord_note}</p>
+                    <p>Analysis elevation: {num(site.elevation_m, 1)} m. {site.elevation_source}</p>
+                    {site.published_elevation_m !== null && <p>Published elevation: {num(site.published_elevation_m, 0)} m (not used in calculations).</p>}
+                    <p>Slope: {num(site.slope.pixel_deg, 1)}° pixel; {num(site.slope.mean3x3_deg, 1)}° mean over 3 × 3 pixels. {site.slope.note}</p>
+                    <RefLinks ids={[...site.coord_refs, ...site.context_refs]} provenance={p} full />
+                  </section>)}
                   {m.formula && <pre className="formula">{m.formula}</pre>}
                   {m.inputs && m.inputs.length > 0 && (
                     <p>
@@ -129,6 +140,13 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                   </p>
                 </article>
               ))}
+              <section className="method">
+                <h3>Moon display & local terrain</h3>
+                <p>The continuous Moon mesh and texture are from <a href="https://svs.gsfc.nasa.gov/14959/" target="_blank" rel="noreferrer">NASA GSFC / LRO</a>. Geometry is normalized for display; the local camera is anchored to the model surface with zoom and tilt limits.</p>
+                <p>The star background uses <a href="https://svs.gsfc.nasa.gov/3895/" target="_blank" rel="noreferrer">Deep Star Maps</a>, credited to NASA/Goddard Space Flight Center Scientific Visualization Studio, from the Bright Star, Tycho-2 and UCAC3 catalogs; it provides context and is not aligned to the selected lunar epoch.</p>
+                <p>The Moon overview uses a viewing light. Local terrain uses the calculated Sun direction with ambient fill for inspection; shadows and partial solar-disk visibility are not ray-traced. The model is for visual context, and its resolution does not resolve landing hazards.</p>
+                <p>Visibility and energy results use the separate LOLA horizon masks, including terrain out to 600 km. The display mesh and lighting are not inputs to those calculations. Local terrain stays at true relief; no vertical exaggeration is applied.</p>
+              </section>
             </div>
           )}
           {tab === 'data' && (
@@ -235,6 +253,7 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
               <h3>Ephemeris interpolation self-check</h3>
               {ephIndex ? (
                 <>
+                  <p>Planning dates are capped to {ephIndex.start_utc.slice(0, 10)} through {ephIndex.stop_utc.slice(0, 10)} UTC. The final timestamp is the boundary sample for the end of 2028; later times are unavailable.</p>
                   <p>{ephIndex.interpolation.method}. {ephIndex.interpolation.check}.</p>
                   <table className="doc-table">
                     <thead><tr><th>Quantity</th><th className="num">Maximum error</th></tr></thead>

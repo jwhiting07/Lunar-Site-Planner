@@ -28,7 +28,7 @@ function SiteMapImpl({ doc, primaryId, selectedIds, maxSelected, onSelectPrimary
   ];
   return (
     <Panel title="Landing sites" help="Select a primary site; check boxes to compare sites.">
-      <details className="polar-context"><summary>South pole map</summary>
+      <details className="polar-context" open><summary>South pole map</summary>
       <svg
         className="sitemap"
         viewBox={`${-hw - pad} ${-hw - pad} ${2 * hw + 2 * pad} ${2 * hw + 2 * pad}`}

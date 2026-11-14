@@ -246,7 +246,7 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 | LSK TDB parameters | DELTA_T_A 32.184 s, K 1.657e-3 s, EB 1.671e-2, M = (6.239996, 1.99096871e-7) | s, -, rad, rad/s | sourced | R-NAIF-LSK | inside SPICE |
 | Illumination map scale | 0.00004 per DN | - | sourced | R-MAZARICO-2011 (PDS label) | read via rasterio in `select_site_point` (recorded in `sites.json selection`) |
 | Build self-check tolerances | projection forward < 1e-3 m, inverse < 1e-9 deg; interpolation check 4000 random hours x {15, 30, 45} min; RNG seeds 1 and 7 | - | test parameters | - | `build_data.py:78-86, 199-213` |
-| 3-D view lighting | ambient 0.3; directional intensity 2.8 x disk fraction | - | display only | - | `src/components/TerrainView.tsx:109-112, 260` |
+| Moon model lighting | ambient 0.45; directional intensity 2.6; overview viewing light or calculated Sun direction in local terrain | - | display only; no ray-traced shadows | - | `src/components/MoonView.tsx` |
 
 ---
 
@@ -316,7 +316,7 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 | Trapezoidal energy integration | M-BATTERY |
 | Spherical reference body, radial "Up" | M-GEOM |
 | Horizon distance read at the nearest table azimuth | M-HORIZON |
-| 3-D patch limited to +/- 20 km with 200 m spacing; simple directional lighting | M-PATCH |
+| Retained DEM grid limited to +/- 20 km with 200 m spacing; active local terrain uses the separate NASA Moon model with simple directional lighting | M-PATCH; `public/models/provenance.json` |
 
 ---
 

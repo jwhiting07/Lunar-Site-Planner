@@ -28,11 +28,11 @@ server (`npm run preview` locally). Opening index.html as a file will not work.
 
 ## Use the application
 
-The app opens on the minimal **Moon** page, using NASA's LRO model. Drag to rotate,
+The app opens at the south pole on the minimal **Moon** page, using NASA's LRO model. Drag to rotate,
 scroll or use the +/− buttons to zoom, and move over the surface for east-positive
-latitude/longitude. The lower-left distance bar follows zoom (an approximate scale
-at the globe centre). Arrow keys also rotate a focused globe; +/− zoom and Home resets.
-Enable Landing sites to select a site, then open **Planning** for the existing tools
+latitude/longitude. The lower-left **Scale** popout follows zoom (an approximate scale
+at the facing surface). Arrow keys also rotate a focused globe; +/− zoom and Home resets.
+Landing sites start visible. Select a site, then open **Planning** for the existing tools
 below. Site selection is shared and Planning state stays intact when changing pages.
 
 Solar view is hidden for now; its code, assets and mockups are preserved for later.
@@ -40,10 +40,15 @@ See [parked solar work](docs/ui/SOLAR_PARKED.md).
 
 1. Choose Mons Mouton (IM-2), Malapert A (IM-1), or the representative connecting-ridge point.
 2. Select the UTC interval. Comparison checkboxes include up to three sites under identical assumptions.
-3. Scrub the timeline to inspect Sun/Earth positions against the terrain skyline and local 3-D terrain.
+3. Scrub the timeline to inspect Sun/Earth positions against the terrain skyline. Local terrain uses the full Moon model with zoom and tilt clamped around the selected site.
 4. Change panel area, efficiency, pointing, load, battery capacity or Earth clearance to recompute estimates.
 5. Open a metric's information button or Sources & methods to trace its calculation.
 6. Export the primary site's series CSV, comparison CSV, or all selected results as JSON.
+
+Planning fills the viewport without page scrolling; open panels and dialogs scroll
+internally. Its compact bottom row holds the shared cursor and scrubber. Open
+Timelines & comparison to edit the date range. Metric info buttons sit after the
+values and show one sentence explaining the meaning and calculation.
 
 CSV files begin with `#` metadata lines; skip these when importing the table.
 JSON includes references, assumptions, windows, summary values and sampled series.
@@ -54,12 +59,16 @@ The display-only NASA models are recorded with source URLs and checksums in
 `public/models/provenance.json`. NASA geometry/UVs are preserved, with embedded maps
 repacked for the web (Moon: 4096 px; Earth/Sun: 2048 px). The Moon is about 4.5 MB and
 is loaded with the Moon page. The globe uses a viewing light, not physical illumination
-for the displayed UTC. Scientific calculations still use the original terrain and
+for the displayed UTC. Local terrain uses the calculated Sun direction with ambient
+fill and no ray-traced shadows. Scientific calculations still use the original terrain and
 ephemeris pipeline below.
 
 To reproduce the models and the retained solar-only orbit data, run
 `.venv\Scripts\python.exe scripts/prepare_visuals.py` after installing requirements.
 Original model downloads and NAIF kernels are cached in ignored `data_cache/`.
+The active Moon views also use NASA SVS's Deep Star Maps 4096 × 2048 JPEG as a
+dim, contextual background; its source URL, credit and checksum are recorded in
+`public/textures/provenance.json`, and its orientation is not a simulated epoch sky.
 
 - NASA/JPL NAIF: DE440 SPK, lunar orientation/frame kernels, planetary constants and leap seconds.
 - NASA LOLA/PGDA: 80 m and 240 m elevation products, 80 m slope map and the illumination map used to select the ridge point.
@@ -101,7 +110,7 @@ This is an educational planning MVP, not flight software or a landing-safety too
 Terrain below 80 m and events between hourly samples can be missed. Earth visibility
 is geometric line of sight, not a radio link budget. Power and battery use explicitly
 assumed generic lander parameters and ideal storage, not spacecraft telemetry.
-The 3-D patch is display-only; visibility uses a larger, precomputed terrain horizon.
+The continuous Moon model is display-only; visibility uses the precomputed LOLA terrain horizon.
 The official challenge page could not be retrieved, so scope follows the supplied brief.
 See [verification status](docs/VERIFICATION.md) for checks actually performed and browser limits.
 

@@ -1,20 +1,25 @@
-.planning-workspace.app { padding-bottom: 0; }
+.mission-shell.mission-planning { display: flex; flex-direction: column; height: 100svh; min-height: 0; overflow: hidden; }
+.mission-planning .mission-header { flex-shrink: 0; }
+.mission-planning .planning-page { flex: 1; min-height: 0; overflow: hidden; }
+.mission-planning .planning-workspace.app { height: 100%; min-height: 0; padding: 0; overflow: hidden; }
+.planning-workspace .banner { flex-shrink: 0; }
 .planning-workspace .topbar { justify-content: space-between; }
-.planning-layout { display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; min-width: 0; }
+.planning-layout { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
 .planning-layout.analysis-open { grid-template-columns: minmax(0, 1fr) 350px; }
-.planning-visual { min-width: 0; }
-.planning-view-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px 8px; }
+.planning-visual { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.planning-view-tools { display: flex; flex-shrink: 0; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 20px 4px; }
+.planning-view-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; }
 .planning-view-tools select { max-width: min(55vw, 340px); min-height: 38px; padding: 8px 12px; }
 .planning-workspace .btn { background: transparent; }
 .planning-workspace .btn:hover { background: var(--bg2); }
-.planning-workspace .map-workspace { border: 0; }
-.planning-workspace .map-view-switch { padding: 8px 24px; border: 0; }
+.planning-workspace .map-workspace { display: flex; flex-direction: column; flex: 1; min-height: 0; border: 0; }
+.planning-workspace .map-view-switch { flex-shrink: 0; padding: 4px 20px; border: 0; }
 .planning-workspace .map-view-switch .btn { border: 0; color: var(--tx1); padding: 6px 0; margin-right: 20px; }
 .planning-workspace .map-view-switch [aria-pressed=true] { color: var(--tx0); background: transparent; border-bottom: 1px solid var(--tx0); }
-.planning-workspace .moon-stage { height: max(360px, calc(100svh - 360px)); }
-.planning-workspace .map-readouts { border: 0; padding: 16px 24px; }
+.planning-workspace .moon-stage { flex: 1; height: auto; min-height: 0; }
+.planning-workspace .map-readouts { flex-shrink: 0; border: 0; padding: 8px 20px; gap: 8px 20px; }
 .planning-workspace .moon-credit { color: var(--tx1); padding: 8px 24px; border: 0; }
-.planning-analysis { min-width: 0; padding: 22px; border-left: 1px solid var(--line); background: var(--bg1); }
+.planning-analysis { min-width: 0; min-height: 0; max-height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 22px; border-left: 1px solid var(--line); background: var(--bg1); }
 .planning-analysis-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .planning-analysis-header h2 { font-size: 18px; font-weight: 500; }
 .planning-analysis-site { color: var(--tx1); margin: 8px 0 20px; }
@@ -23,7 +28,8 @@
 .planning-analysis > .panel > .panel-b { padding: 0; }
 .planning-analysis .group-h { font-size: 13px; text-transform: none; letter-spacing: 0; color: var(--tx0); border: 0; margin: 20px 0 8px; }
 .planning-analysis .tiles { display: block; }
-.planning-analysis .tile { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: baseline; background: transparent; border: 0; padding: 7px 0; }
+.planning-analysis .tile { display: grid; grid-template-columns: minmax(0, 1fr) auto 22px; gap: 8px; align-items: baseline; background: transparent; border: 0; padding: 7px 0; }
+.planning-analysis .tile-info { align-self: center; display: flex; }
 .planning-analysis .tile-h { margin: 0; gap: 6px; }
 .planning-analysis .tile .field-label { font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; }
 .planning-analysis .tile-v { font-size: 14px; white-space: nowrap; }
@@ -37,9 +43,14 @@
 .planning-analysis .workspace-details > .panel > .panel-b { overflow-x: auto; }
 .planning-detail-button { display: flex; justify-content: space-between; width: 100%; padding: 14px 0; color: var(--tx0); background: transparent; border: 0; border-top: 1px solid var(--line); text-align: left; font: inherit; cursor: pointer; }
 .planning-detail-button:hover { color: var(--earth); }
-.planning-time-dock { position: sticky; bottom: 0; z-index: 15; padding: 14px 24px; background: var(--bg1); border-top: 1px solid var(--line); }
-.planning-tools-trigger { margin-bottom: 14px; }
-.planning-time-dock .timebar { margin: 0; }
+.planning-time-dock { display: flex; flex-shrink: 0; align-items: center; gap: 16px; z-index: 15; padding: 8px 20px; background: var(--bg1); border-top: 1px solid var(--line); }
+.planning-tools-trigger { flex-shrink: 0; margin: 0; }
+.planning-time-dock .timebar { flex: 1; min-width: 0; }
+.planning-workspace .timebar { flex-wrap: nowrap; gap: 12px; align-items: center; margin: 0; }
+.planning-workspace .time-now { flex-shrink: 0; min-width: 0; }
+.planning-workspace .time-val { font-size: 12px; white-space: nowrap; }
+.planning-workspace .scrubber { flex: 1 1 100px; min-width: 50px; height: 22px; }
+.planning-date-controls { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .planning-workspace .foot { padding: 10px 24px; font-size: 10px; }
 
 .planning-tools-dialog { width: min(1180px, calc(100vw - 48px)); max-width: none; max-height: calc(100svh - 48px); padding: 0; border: 1px solid var(--line); border-radius: 0; background: var(--bg1); color: var(--tx0); }
@@ -60,8 +71,18 @@
 .planning-tools-content .group-h { text-transform: none; letter-spacing: 0; }
 .planning-site-selection { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 0 0 20px; margin: 0 0 12px; border: 0; border-bottom: 1px solid var(--line-soft); }
 .planning-site-selection legend { font-size: 12px; color: var(--tx1); padding: 0 0 12px; }
-.planning-site-selection label { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.planning-site-selection label { display: grid; grid-template-columns: 16px minmax(0, 1fr); align-items: start; gap: 8px; font-size: 12px; }
 .planning-site-selection input { margin: 0; }
+.planning-site-selection small { display: block; color: var(--tx1); font-size: 10px; margin-top: 4px; }
+.site-facts { padding: 0 0 16px; }
+.site-facts-type { color: var(--tx1); font-size: 11px; margin-bottom: 14px; }
+.site-coordinates { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 16px; }
+.site-coordinates dt, .site-facts-values dt { color: var(--tx1); font-size: 11px; font-weight: 400; }
+.site-coordinates dd { margin: 6px 0 0; white-space: nowrap; font: 12px var(--mono); }
+.site-facts-values { margin: 0 0 16px; }
+.site-facts-values > div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line-soft); }
+.site-facts-values dd { margin: 0; font: 12px var(--mono); text-align: right; }
+.site-source-link { font-size: 11px; }
 .planning-tools-time { padding: 16px 24px; border-top: 1px solid var(--line); }
 .planning-tools-time .timebar { margin: 0; }
 .planning-tools-time .time-val { font-size: 13px; }
@@ -69,17 +90,28 @@
 /* Drag surfaces suppress browser selection; figures and table text remain copyable. */
 .timeline-svg, .timeline-svg *, .scrubber, .time-btns, .moon-stage, .terrain-host { -webkit-user-select: none; user-select: none; }
 .timeline-svg, .scrubber { touch-action: none; }
+body[data-timeline-dragging] *, body[data-timeline-dragging] { -webkit-user-select: none !important; user-select: none !important; }
 
 @media (max-width: 900px) {
   .planning-layout.analysis-open { grid-template-columns: minmax(0, 1fr) 310px; }
   .planning-analysis { padding: 16px; }
-  .planning-analysis .tile { grid-template-columns: 1fr; }
+  .planning-analysis .tile { grid-template-columns: minmax(0, 1fr) auto 22px; }
+  .planning-analysis .tile-v { font-size: 12px; }
 }
 @media (max-width: 680px) {
   .planning-layout.analysis-open { grid-template-columns: minmax(0, 1fr); }
-  .planning-analysis { border-left: 0; border-top: 1px solid var(--line); }
-  .planning-analysis .tile { grid-template-columns: minmax(0, 1fr) auto; }
-  .planning-view-tools, .planning-time-dock { padding: 12px 16px; }
+  .planning-analysis { position: absolute; inset: 0 0 0 auto; width: min(370px, 100%); z-index: 20; border-left: 1px solid var(--line); }
+  .planning-analysis .tile { grid-template-columns: minmax(0, 1fr) auto 22px; }
+  .planning-view-tools { padding: 8px 12px 4px; }
+  .planning-view-actions { gap: 6px; }
+  .planning-time-dock { flex-wrap: wrap; gap: 6px 12px; padding: 6px 12px; }
+  .planning-tools-trigger { font-size: 11px; padding: 4px 6px; }
+  .planning-time-dock .timebar { display: contents; }
+  .planning-time-dock .time-now { margin-left: auto; }
+  .planning-time-dock .time-btns { gap: 3px; }
+  .planning-time-dock .time-btns button { font-size: 11px; padding: 4px 6px; }
+  .planning-time-dock .scrubber { min-width: 70px; }
+  .planning-tools-time .timebar { flex-wrap: wrap; gap: 8px; }
   .planning-tools-dialog { width: calc(100vw - 16px); max-height: calc(100svh - 16px); }
   .planning-tools-header, .planning-tools-switch, .planning-tools-content, .planning-tools-time { padding: 14px 16px; }
   .planning-tools-header h2 { font-size: 16px; }

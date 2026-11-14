@@ -55,15 +55,14 @@ const fmtField = (v: number): string => String(Number(v.toPrecision(10)));
 interface Props {
   value: ParamState;
   onChange: (p: ParamState) => void;
-  onInfo: (methodId: string) => void;
 }
 
-function ParamsPanelImpl({ value, onChange, onInfo }: Props) {
+function ParamsPanelImpl({ value, onChange }: Props) {
   const [resetKey, setResetKey] = useState(0);
-  return <ParamsForm key={resetKey} value={value} onChange={onChange} onInfo={onInfo} onReset={() => { onChange(DEFAULT_PARAM_STATE); setResetKey((k) => k + 1); }} />;
+  return <ParamsForm key={resetKey} value={value} onChange={onChange} onReset={() => { onChange(DEFAULT_PARAM_STATE); setResetKey((k) => k + 1); }} />;
 }
 
-function ParamsForm({ value, onChange, onInfo, onReset }: Props & { onReset: () => void }) {
+function ParamsForm({ value, onChange, onReset }: Props & { onReset: () => void }) {
   const [draft, setDraft] = useState<Record<string, string>>(() =>
     Object.fromEntries(FIELDS.map((f) => [f.id, fmtField(f.get(value))])),
   );
@@ -84,7 +83,7 @@ function ParamsForm({ value, onChange, onInfo, onReset }: Props & { onReset: () 
   return (
     <Panel
       title="Lander parameters"
-      right={<InfoButton label="Lander parameters" methodId="A-LANDER" onClick={() => onInfo('A-LANDER')} />}
+      right={<InfoButton label="Lander parameters" methodId="A-LANDER" />}
     >
       <div className="param-grid">
         {FIELDS.map((f) => {

@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 
 export type PlanningTool = 'timelines' | 'comparison';
 
-export function PlanningToolsDialog({ initialTool, onClose, timelines, comparison, timeControls, siteSelection, interval }: {
+export function PlanningToolsDialog({ initialTool, onClose, timelines, comparison, timeControls, siteSelection, interval, dateRange }: {
   initialTool: PlanningTool;
   onClose: () => void;
   timelines: ReactNode;
@@ -10,6 +10,7 @@ export function PlanningToolsDialog({ initialTool, onClose, timelines, compariso
   timeControls: ReactNode;
   siteSelection: ReactNode;
   interval: string;
+  dateRange: ReactNode;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -40,6 +41,7 @@ export function PlanningToolsDialog({ initialTool, onClose, timelines, compariso
       <span>{interval} · UTC</span>
     </div>
     <div className="planning-tools-content">
+      <div className="planning-date-controls">{dateRange}</div>
       {siteSelection}
       {tool === 'timelines' ? timelines : comparison}
     </div>

@@ -1,5 +1,33 @@
 # Verification status — 2026-11-14
 
+## Review refinements — November 14, 2026
+
+The later viewport refinement was browser-checked at 1920 × 975 and 390 × 844:
+document dimensions matched the viewport with no page scrolling. The bottom time
+controls measured 47 px and 70 px high respectively. Date controls remained available
+inside the timeline dialog, and the analysis panel scrolled internally. Metric info
+popouts contained one explanatory sentence with no action links or classification.
+The local NASA star map loaded behind the Moon; its local HTTP asset returned 200.
+
+Based on merged main commit `1c7a8e6`. The production build (including TypeScript)
+and all 97 JavaScript tests passed. New coverage checks load the actual shipped
+ephemeris at both endpoints, reject invalid intervals, reject calendar rollover,
+and exercise zoom/tilt limits with Three.js OrbitControls at each shipped site.
+
+Browser checks on port 5200 verified the default south-pole view with visible sites,
+the scale popout and Escape dismissal, simplified site facts and their Sources &
+methods link, the comparison table without the repeated narrative, and timeline
+dragging without a text selection. Native date changes stayed within coverage.
+The continuous local Moon model loaded and remained anchored to the site.
+Metric information buttons align after the values in one right-hand column; all
+seven shared the same right edge at a 390 px viewport. There was no horizontal
+overflow at that width, and the information popout remained usable. The normal
+viewport was restored. No browser console warnings or errors were observed.
+
+These UI checks do not establish export downloads or WebGL-failure recovery.
+The existing scientific-validation limitations remain applicable. The active
+local view now uses the NASA display mesh; the retained DEM patch is not rendered.
+
 ## NASA Moon explorer and parked Solar view
 
 Moon is the default page; only Moon and Planning appear in navigation. Solar source,

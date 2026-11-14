@@ -5,5 +5,5 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   build: { chunkSizeWarningLimit: 900 },
-  test: { environment: 'node', include: ['src/**/*.test.ts'] },
+  test: { environment: 'node', include: ['src/**/*.test.{ts,tsx}'] },
 });

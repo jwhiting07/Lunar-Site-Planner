@@ -12,10 +12,10 @@ interface RangeProps {
   onChange: (startMs: number, endMs: number) => void;
 }
 
-const parseDate = (s: string): number | null => {
+export const parseDate = (s: string): number | null => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
   const t = Date.parse(`${s}T00:00:00Z`);
-  return Number.isFinite(t) ? t : null;
+  return Number.isFinite(t) && isoDate(t) === s ? t : null;
 };
 
 export function DateRange({ startMs, endMs, covStartMs, covEndMs, onChange }: RangeProps) {
@@ -46,18 +46,18 @@ export function DateRange({ startMs, endMs, covStartMs, covEndMs, onChange }: Ra
     <div className="daterange">
       <div className="field">
         <label className="field-label" htmlFor="d-start">Start (UTC)</label>
-        <input id="d-start" type="date" min={lo} max={hi} value={isoDate(startMs)} onChange={(e) => setStart(e.target.value)} />
+        <input id="d-start" type="date" min={lo} max={isoDate(covEndMs - DAY_MS)} value={isoDate(startMs)} onChange={(e) => setStart(e.target.value)} />
       </div>
       <div className="field">
         <label className="field-label" htmlFor="d-end">End (UTC)</label>
-        <input id="d-end" type="date" min={lo} max={hi} value={isoDate(endMs)} onChange={(e) => setEnd(e.target.value)} />
+        <input id="d-end" type="date" min={isoDate(covStartMs + DAY_MS)} max={hi} value={isoDate(endMs)} onChange={(e) => setEnd(e.target.value)} />
       </div>
       <div className="presets" role="group" aria-label="Range presets">
         <button type="button" className="btn small" onClick={() => preset(30)}>30 d</button>
         <button type="button" className="btn small" onClick={() => preset(90)}>90 d</button>
         <button type="button" className="btn small" onClick={() => preset(365)}>1 yr</button>
         <button type="button" className="btn small" onClick={() => onChange(covStartMs, covEndMs)} title="Full ephemeris coverage">
-          2026{'–'}2028
+          {new Date(covStartMs).getUTCFullYear()}{'–'}{new Date(covEndMs - 1).getUTCFullYear()}
         </button>
       </div>
     </div>

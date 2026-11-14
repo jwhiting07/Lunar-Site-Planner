@@ -2,6 +2,7 @@ import { memo, useMemo, useRef, type PointerEvent as RPointerEvent } from 'react
 import { HOUR_MS, windowHours, type AnalysisResult, type TimeWindow } from '../science';
 import { DAY_MS, clamp, fmtUtc, isoDate, num } from '../ui/labels';
 import { Panel } from './Common';
+import { useScrubSelection } from '../ui/useScrubSelection';
 
 const VW = 1000;
 const LX = 150; // left gutter for labels
@@ -87,6 +88,7 @@ function winTitle(label: string, w: TimeWindow): string {
 }
 
 function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor }: Props) {
+  const selection = useScrubSelection();
   const svgRef = useRef<SVGSVGElement>(null);
   const dragging = useRef<number | null>(null);
   const tx = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
@@ -227,6 +229,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
         onPointerDown={(e) => {
           if (e.button !== 0 || !e.isPrimary) return;
           e.preventDefault(); // Scrub the chart without starting browser text selection.
+          selection.start();
           e.currentTarget.focus({ preventScroll: true });
           dragging.current = e.pointerId;
           e.currentTarget.setPointerCapture(e.pointerId);
@@ -241,8 +244,8 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
           dragging.current = null;
           if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
         }}
-        onPointerCancel={() => { dragging.current = null; }}
-        onLostPointerCapture={() => { dragging.current = null; }}
+        onPointerCancel={() => { dragging.current = null; selection.stop(); }}
+        onLostPointerCapture={() => { dragging.current = null; selection.stop(); }}
       >
         {results.length === 0 ? (
           <text x={LX} y={40} className="axis-text">Computing{'…'}</text>
@@ -272,12 +275,12 @@ interface ControlsProps {
 }
 
 function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps) {
+  const selection = useScrubSelection();
   const step = (ms: number) => onCursor(clamp(cursorMs + ms, startMs, endMs));
   return (
     <div className="timebar">
       <div className="time-now">
-        <span className="field-label">Cursor time (UTC)</span>
-        <output className="mono time-val" aria-live="off">{fmtUtc(cursorMs)}</output>
+        <output className="mono time-val" aria-label="Cursor time, UTC" aria-live="off">{fmtUtc(cursorMs)}</output>
       </div>
       <div className="time-btns" role="group" aria-label="Step cursor time">
         <button type="button" className="btn small" onClick={() => step(-DAY_MS)} aria-label="Back 1 day">{'−'}1 d</button>
@@ -288,6 +291,8 @@ function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps)
       <input
         type="range"
         className="scrubber"
+        onPointerDown={event => { if (event.isPrimary && event.button === 0) selection.start(); }}
+        onLostPointerCapture={selection.stop}
         min={startMs}
         max={endMs}
         step={HOUR_MS}

@@ -64,7 +64,6 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
 
   useEffect(() => {
     if (analysisOpen && window.matchMedia('(max-width: 680px)').matches) {
-      analysisPanel.current?.scrollIntoView({ block: 'start' });
       analysisPanel.current?.focus({ preventScroll: true });
     }
   }, [analysisOpen]);
@@ -229,20 +228,6 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
 
   return (
     <div className="app planning-workspace">
-      <header className="topbar">
-        <div className="brand">
-          <h1>SERAPHIM</h1>
-          <p className="tagline">Lunar mission browser</p>
-        </div>
-        <DateRange startMs={startMs} endMs={endMs} covStartMs={covStartMs} covEndMs={covEndMs} onChange={applyRange} />
-        <div className="top-actions">
-          <ExportMenu results={results} primaryId={primaryId} provenance={provenance} />
-          <button type="button" className="btn" onClick={openProv}>
-            Sources & methods
-          </button>
-        </div>
-      </header>
-
       {loadError && (
         <div className="banner err" role="alert">
           Could not load site data: {loadError}
@@ -266,7 +251,11 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
                   {sitesDoc.sites.map(site => <option key={site.id} value={site.id}>{site.short}</option>)}
                 </select>
               </label>
-              <button ref={analysisButton} type="button" className="btn" aria-expanded={analysisOpen} aria-controls="planning-analysis" onClick={() => setAnalysisOpen(open => !open)}>Analysis</button>
+              <div className="planning-view-actions">
+                <ExportMenu results={results} primaryId={primaryId} provenance={provenance} />
+                <button type="button" className="btn" onClick={openProv}>Sources & methods</button>
+                <button ref={analysisButton} type="button" className="btn" aria-expanded={analysisOpen} aria-controls="planning-analysis" onClick={() => setAnalysisOpen(open => !open)}>Analysis</button>
+              </div>
             </div>
             <section className="map-workspace" aria-label="Lunar visualization">
               <div className="map-view-switch" role="group" aria-label="Map view">
@@ -277,14 +266,13 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
               {inst && <div className="map-readouts">
                 <span><span className="sun-text">Sun elevation</span> <strong>{inst.sun.elDeg.toFixed(2)}°</strong></span>
                 <span><span className="earth-text">Earth elevation</span> <strong>{inst.earth.elDeg.toFixed(2)}°</strong></span>
-                <span className="mono">{new Date(cursorMs).toISOString().slice(0, 16).replace('T', ' ')} UTC</span>
               </div>}
             </section>
           </div>
           <aside ref={analysisPanel} tabIndex={-1} id="planning-analysis" className="planning-analysis" aria-label="Site analysis" hidden={!analysisOpen}>
             <header className="planning-analysis-header"><h2>Analysis</h2><button type="button" className="btn small" aria-label="Close analysis" onClick={() => { setAnalysisOpen(false); analysisButton.current?.focus(); }}>Close ×</button></header>
             <p className="planning-analysis-site">{primarySite.short}</p>
-            <MetricSummary result={primaryResult} loading={computing} onInfo={openInfo} />
+            <MetricSummary result={primaryResult} loading={computing} />
             <button type="button" className="planning-detail-button" aria-haspopup="dialog" onClick={() => setTool('comparison')}>Compare sites <span aria-hidden="true">↗</span></button>
             <details className="workspace-details"><summary>Local horizon</summary><SkyView
               mask={primaryMask}
@@ -293,8 +281,8 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
               cursorMs={cursorMs}
               earthMinClearanceDeg={paramState.earthMinClearanceDeg}
             /></details>
-            <details className="workspace-details"><summary>Lander parameters</summary><ParamsPanel value={paramState} onChange={setParamState} onInfo={openInfo} /></details>
-            <details className="workspace-details"><summary>Site facts & coordinates</summary><SiteFacts site={primarySite} provenance={provenance} /></details>
+            <details className="workspace-details"><summary>Lander parameters</summary><ParamsPanel value={paramState} onChange={setParamState} /></details>
+            <details className="workspace-details"><summary>Site facts & coordinates</summary><SiteFacts site={primarySite} onDetails={() => openInfo('M-SITE')} /></details>
           </aside>
         </main>
       )}
@@ -303,13 +291,10 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
         <button type="button" className="btn planning-tools-trigger" aria-haspopup="dialog" aria-expanded={tool !== null} onClick={() => setTool('timelines')}>Timelines & comparison <span aria-hidden="true">↗</span></button>
         <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />
       </div>}
-      <footer className="foot">
-        Data: NASA LOLA / PGDA, SPICE DE440 (precomputed, shipped with the app). Planning and education tool; not a mission-design or landing-safety product.
-      </footer>
-
       {tool && sitesDoc && <PlanningToolsDialog initialTool={tool} onClose={() => setTool(null)} interval={`${isoDate(startMs)} — ${isoDate(endMs)}`}
+        dateRange={<DateRange startMs={startMs} endMs={endMs} covStartMs={covStartMs} covEndMs={covEndMs} onChange={applyRange} />}
         siteSelection={<fieldset className="planning-site-selection"><legend>Sites · select up to {MAX_SITES}</legend>
-          {sitesDoc.sites.map(site => <label key={site.id}><input type="checkbox" checked={selectedIds.includes(site.id)} disabled={site.id === primaryId || (!selectedIds.includes(site.id) && selectedIds.length >= MAX_SITES)} onChange={() => toggleSite(site.id)} />{site.short}{site.id === primaryId && <span className="muted"> · primary</span>}</label>)}
+          {sitesDoc.sites.map(site => <label key={site.id}><input type="checkbox" checked={selectedIds.includes(site.id)} disabled={site.id === primaryId || (!selectedIds.includes(site.id) && selectedIds.length >= MAX_SITES)} onChange={() => toggleSite(site.id)} /><span>{site.short}<small>{site.coord_class === 'verified_landing' ? 'Verified landing' : 'Representative point'}{site.id === primaryId ? ' · primary' : ''}</small></span></label>)}
         </fieldset>}
         timelines={<TimelinesPanel results={results} primaryId={primaryId} startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />}
         comparison={<Comparison results={results} primaryId={primaryId} />}
@@ -317,7 +302,7 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
       />}
 
       {provOpen && (
-        <ProvenancePanel provenance={provenance} provenanceError={provError} ephIndex={ephIndex} focusMethodId={provFocus} onClose={closeProv} />
+        <ProvenancePanel provenance={provenance} provenanceError={provError} ephIndex={ephIndex} sites={sitesDoc?.sites} focusMethodId={provFocus} onClose={closeProv} />
       )}
     </div>
   );

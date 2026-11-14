@@ -11,10 +11,10 @@ keep its source, NASA assets, orbital data and mockups, but hide it from navigat
 and do not load it on startup. The production entry point exposes Moon and Planning.
 
 The Moon page uses NASA's LRO GLB, with a minimal view selector, optional landing-site
-markers, reset and zoom controls. Add the NASA-style distance scale and cursor
+markers, reset and zoom controls. Keep a Scale popout button and cursor
 latitude/longitude at the lower left, on the Moon page only. Compute coordinates
 from the pointer's intersection with the Moon, updating during pointer movement and
-camera changes; update the distance bar when zoom or viewport changes. The viewing
+camera changes; update the popout's distance bar when zoom or viewport changes. The viewing
 light is contextual, not a simulated epoch's illumination. Site selection carries
 between Moon and Planning. All existing planning data and calculations remain available.
 
@@ -42,8 +42,8 @@ The saved HTML below preserves the earlier layout reference.
 
 The Planning view follows the approved minimal Moon workspace concept. Analysis is
 closed initially and opens a right-hand inspector with interval metrics and expandable
-local horizon, lander parameters, and site facts. On narrow screens it opens below
-the Moon and is brought into view.
+local horizon, lander parameters, and site facts. On narrow screens it opens over
+the Moon; its contents scroll inside the panel.
 
 Keep detailed timelines and site comparison out of the default workspace. One
 `Timelines & comparison` button beside the time controls opens a modal with two
@@ -51,10 +51,42 @@ views and shared site checkboxes. The inspector's `Compare sites` action opens t
 same modal directly to comparison. Escape or Close dismisses it and returns focus
 to the initiating button. Date range, chosen sites, parameters, and cursor remain shared.
 
+Planning fills the viewport without page scrolling. Keep one compact time-control
+row at the bottom, without a footer or a repeated timestamp over the map. Date-range
+editing belongs inside the Timelines & comparison popout. Only open inspectors and
+dialogs scroll their contents.
+
+Metric info popouts contain one sentence explaining what the value means and how
+it is calculated; omit classification labels and Learn more links. Detailed sources
+remain in Sources & methods. Use NASA's Deep Star Maps image as a dim background
+in both active Moon views, with credit and its contextual purpose in Sources & methods.
+
 Timeline and 3D drag surfaces must not select browser text while tracking. Keep
 metric values, comparison tables, and explanatory text selectable for copying.
 Timeline keyboard controls are arrow keys (one hour), Shift + arrow (one day),
 and Home / End (interval bounds).
+
+## Review refinements — November 14, 2026
+
+- Start the Moon explorer at the south pole with landing sites visible. Remove
+  the near-side preset. Reset returns to the south pole.
+- Use clear site-name rows with the coordinate type beneath the name. Keep
+  comparison checkboxes aligned with their names and types.
+- Keep the scale in a dismissible popout. Cap zoom for buttons, keyboard,
+  wheel and pinch, including after resizing the viewport.
+- Local terrain uses the continuous NASA Moon model with the camera anchored
+  to the selected site. Clamp zoom and tilt above the surface and disable panning.
+  This display mesh does not replace the LOLA horizon masks used by the science.
+- Site facts show coordinates once, then elevation, regional slope and horizon
+  range. Put published elevations, coordinate notes, references, model details and
+  limitations in Sources & methods, available on both active pages.
+- Remove the repetitive “Why the sites differ” narrative. Keep the comparison table.
+- Align metric information buttons in one column at the far right, after the values.
+- Planning dates stay within the shipped ephemeris: January 1, 2026 through the
+  January 1, 2029 boundary sample. The end boundary closes the 2028 interval;
+  it does not provide coverage for 2029 scenarios.
+- Timeline drags suppress browser text selection throughout the gesture, including
+  outside the chart. Other values and explanations remain selectable.
 
 ## Open the reference
 

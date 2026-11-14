@@ -6,7 +6,6 @@ import { InfoButton, Panel } from './Common';
 interface Props {
   result: AnalysisResult | null;
   loading: boolean;
-  onInfo: (methodId: string) => void;
 }
 
 const unitText = (u: string): string => (u === 'deg' ? '°' : u);
@@ -29,23 +28,23 @@ function Value({ row }: { row: SummaryRow }) {
   );
 }
 
-function Tile({ row, sub, onInfo }: { row: SummaryRow; sub?: string | null; onInfo: (id: string) => void }) {
+function Tile({ row, sub }: { row: SummaryRow; sub?: string | null }) {
   return (
     <div className="tile">
       <div className="tile-h">
         <span className="field-label">{row.label}</span>
-        <InfoButton label={row.label} methodId={row.methodId} kind={row.kind} onClick={() => onInfo(row.methodId)} />
       </div>
       <div className="tile-v">
         <Value row={row} />
       </div>
+      <div className="tile-info"><InfoButton label={row.label} methodId={row.methodId} metricKey={row.key} /></div>
       {row.truncated && <div className="tile-f"><span className="trunc" title={TRUNC_TIP}>cut by interval</span></div>}
       {sub && <div className="tile-sub mono">{sub}</div>}
     </div>
   );
 }
 
-function MetricSummaryImpl({ result, loading, onInfo }: Props) {
+function MetricSummaryImpl({ result, loading }: Props) {
   const rows = useMemo(() => (result ? summaryRows(result) : []), [result]);
   const by = useMemo(() => new Map(rows.map((r) => [r.key, r])), [rows]);
 
@@ -73,19 +72,19 @@ function MetricSummaryImpl({ result, loading, onInfo }: Props) {
       )}
       <h3 className="group-h">Sunlight</h3>
       <div className="tiles">
-        <Tile row={g('sunlit_pct')} onInfo={onInfo} />
-        <Tile row={g('longest_dark_h')} sub={windowSpan(m.longestDarkness)} onInfo={onInfo} />
+        <Tile row={g('sunlit_pct')} />
+        <Tile row={g('longest_dark_h')} sub={windowSpan(m.longestDarkness)} />
       </div>
       <h3 className="group-h">Earth line of sight</h3>
       <div className="tiles">
-        <Tile row={g('earth_pct')} onInfo={onInfo} />
-        <Tile row={g('longest_blackout_h')} sub={windowSpan(m.longestBlackout)} onInfo={onInfo} />
+        <Tile row={g('earth_pct')} />
+        <Tile row={g('longest_blackout_h')} sub={windowSpan(m.longestBlackout)} />
       </div>
       <h3 className="group-h">Energy</h3>
       <div className="tiles three">
-        <Tile row={g('generated_kwh')} onInfo={onInfo} />
-        <Tile row={g('deficit_h')} onInfo={onInfo} />
-        <Tile row={g('min_battery_pct')} onInfo={onInfo} />
+        <Tile row={g('generated_kwh')} />
+        <Tile row={g('deficit_h')} />
+        <Tile row={g('min_battery_pct')} />
       </div>
       <details className="all-metrics"><summary>All metrics</summary>
       <table className="metric-table">
@@ -104,7 +103,7 @@ function MetricSummaryImpl({ result, loading, onInfo }: Props) {
                 <Value row={r} />
               </td>
               <td>
-                <InfoButton label={r.label} methodId={r.methodId} kind={r.kind} onClick={() => onInfo(r.methodId)} />
+                <InfoButton label={r.label} methodId={r.methodId} metricKey={r.key} />
               </td>
             </tr>
           ))}

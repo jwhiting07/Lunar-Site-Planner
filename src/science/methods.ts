@@ -90,7 +90,7 @@ export const METHODS: MethodDoc[] = [
       'Terrain smaller than the DEM pixel (80 m near the site, 240 m far away) is not represented: boulders, small craters and the lander itself are ignored.',
       'Azimuth sampling is 0.5 deg; narrow distant peaks between rays can be missed.',
       'The same horizon is used for the whole solar disk width (0.53 deg).',
-      'The 3-D view shows only +/- 20 km of terrain; the horizon often comes from farther away (distance shown in the sky view).',
+      'The continuous Moon display is separate from the LOLA horizon calculation; use the local horizon chart for terrain clearance and horizon distance.',
     ],
     code: ['scripts/moonlib.py compute_horizon, elevation_angle_deg', 'src/science/horizon.ts horizonAt'],
   },
@@ -186,16 +186,16 @@ export const METHODS: MethodDoc[] = [
   },
   {
     id: 'M-PATCH',
-    title: '3-D terrain patch',
+    title: 'Retained local DEM grid',
     kind: 'computed',
     summary:
-      'A 201 x 201 grid of LOLA heights covering +/- 20 km around the site (200 m spacing), drawn with true lunar curvature and no vertical exaggeration unless stated in the view.',
+      'A precomputed 201 x 201 grid of LOLA heights covering +/- 20 km around the site (200 m spacing), retained with the shipped data. The active local terrain view displays the continuous NASA Moon model instead of this grid.',
     formula: 'node at arc s, azimuth A: horizontal = (R + h) sin(s / R), up = (R + h) cos(s / R) - (R + h_site)',
     inputs: ['LDEM_80S_80MPP_ADJ.TIF', 'LDEM_60S_240MPP_ADJ.TIF'],
     refs: ['R-LOLA-PGDA'],
     limitations: [
       'Display only. Visibility is computed from the horizon mask, which uses terrain out to 600 km.',
-      'Shading in the 3-D view is a simple directional light and does not ray-trace shadows.',
+      'This grid is not rendered in the active Moon views. The displayed NASA model uses simple directional lighting without ray-traced shadows.',
     ],
     code: ['scripts/build_data.py terrain_patch', 'src/science/geometry.ts terrainNodeEnu'],
   },
