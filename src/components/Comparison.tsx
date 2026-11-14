@@ -97,7 +97,7 @@ function ComparisonImpl({ results, primaryId }: Props) {
   if (results.length < 2) {
     return (
       <Panel title="Site comparison">
-        <p className="muted">Select at least two sites (checkboxes in the site list) to compare them over the same dates and parameters.</p>
+        <p className="muted">Select at least two sites using the checkboxes above to compare them over the same dates and parameters.</p>
       </Panel>
     );
   }

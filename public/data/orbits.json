@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "file": "orbits.bin",
+  "start_utc": "2026-01-01T00:00:00Z",
+  "stop_utc": "2029-01-01T00:00:00Z",
+  "step_s": 3600,
+  "n": 26305,
+  "stride": 14,
+  "frame": "ECLIPJ2000",
+  "center": "SUN",
+  "aberration_correction": "NONE",
+  "layout": "float64 little-endian: earth_xyz_km, moon_xyz_km, moon_ME_to_ecliptic_quaternion_wxyz, earth_IAU_to_ecliptic_quaternion_wxyz",
+  "interpolation": "Linear positions; shortest-arc quaternion slerp. Display-only; planning uses existing Moon-fixed LT+S tables.",
+  "midpoint_validation": {
+    "samples": 240,
+    "max_position_error_vs_direct_spice": {
+      "earth_km": 9.98219943256299,
+      "moon_km": 14.910610472059636
+    }
+  },
+  "radii_km": {
+    "sun": 695700,
+    "earth": 6378.1366,
+    "moon": 1737.4
+  },
+  "source_kernels": [
+    {
+      "file": "naif0012.tls",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+    },
+    {
+      "file": "pck00011.tpc",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+      "sha256": "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1"
+    },
+    {
+      "file": "de440s.bsp",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp",
+      "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+    },
+    {
+      "file": "moon_pa_de440_200625.bpc",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc",
+      "sha256": "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f"
+    },
+    {
+      "file": "moon_de440_250416.tf",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "sha256": "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768"
+    }
+  ],
+  "bytes": 2946160,
+  "sha256": "887a251c903a4fa856358dcd8fa5e7f084b8929b2ff61f514987968753913aa0",
+  "generated_utc": "2026-11-14T20:06:09.940653+00:00",
+  "generator_sha256": "e48066e90f0bb06edfed1668b25b3bf13cab463acd3bca915c0e2f607a310155"
+}

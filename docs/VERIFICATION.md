@@ -1,5 +1,40 @@
 # Verification status — 2026-11-14
 
+## NASA Moon explorer and parked Solar view
+
+Moon is the default page; only Moon and Planning appear in navigation. Solar source,
+NASA assets, orbital tables, and mockups are retained but not imported by the active
+app. See `docs/ui/SOLAR_PARKED.md` for what remains unfinished before re-enabling it.
+
+The active Moon uses the actual NASA GSFC/LRO GLB, with preserved geometry/UVs and
+web-sized embedded imagery. `public/models/provenance.json` records original and
+derived checksums; all three derived GLB sizes/checksums and the retained orbital
+table checksum were verified. The Moon's native axes are aligned with the existing
+ME site coordinates. Its viewing light is contextual, not epoch illumination.
+
+The Moon-only cursor HUD raycasts a reference sphere, reports east-positive
+latitude/longitude, and clears when the pointer leaves the globe. The distance bar
+updates with zoom and resize; it is approximate at the globe centre in perspective,
+not a terrain measurement. Site coordinates use the existing data catalogue.
+
+Passed: 91 JavaScript tests, TypeScript and production Vite build. Python: 26 passed,
+4 skipped because optional source-data fixtures were absent. The new tests cover
+coordinate round trips including landing-site/polar/date-line cases and distance
+bar units/zoom/invalid inputs. Existing science and export tests still pass.
+
+Browser verification on the local Vite server: NASA model near/far-side appearance,
+cursor coordinate changes while moving and dragging, distance bar change from
+500 km to 200 km on zoom, keyboard rotation and reset, and optional landing-site
+markers. Selected Malapert A on Moon and verified the same site in Planning; advanced
+the planning cursor one hour and opened/closed its detailed timeline dialog.
+No console warnings/errors were observed. At a 375 CSS-pixel viewport there was no
+horizontal overflow (document width and scroll width both 375). The responsive Moon
+framing leaves room for its controls. Restored the normal viewport after testing.
+
+Proof image: `output/ui/moon-explorer.jpg`. Current browser checks do not establish
+actual export downloads or the WebGL/context-loss fallback; those paths are not
+claimed as browser-verified. Scientific validation limits below still apply.
+
 ## Globe and Trek UI update
 
 Implemented against AGENTS.md and docs/ui/README.md: square controls, approved

@@ -88,7 +88,7 @@ function winTitle(label: string, w: TimeWindow): string {
 
 function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const dragging = useRef(false);
+  const dragging = useRef<number | null>(null);
   const tx = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
 
   const layout = useMemo(() => {
@@ -208,23 +208,41 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
         ref={svgRef}
         viewBox={`0 0 ${VW} ${Hh}`}
         className="timeline-svg"
-        role="img"
+        role="slider"
+        tabIndex={0}
+        aria-valuemin={startMs}
+        aria-valuemax={endMs}
+        aria-valuenow={cursorMs}
+        aria-valuetext={`${fmtUtc(cursorMs)} UTC`}
         aria-label="Timelines of Sun visibility, Earth line of sight, battery energy and array power. Click or drag to set the cursor time."
+        onKeyDown={(e) => {
+          const step = e.shiftKey ? DAY_MS : HOUR_MS;
+          const next = e.key === 'Home' ? startMs : e.key === 'End' ? endMs
+            : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? cursorMs - step
+              : e.key === 'ArrowRight' || e.key === 'ArrowUp' ? cursorMs + step : null;
+          if (next === null) return;
+          e.preventDefault();
+          onCursor(clamp(next, startMs, endMs));
+        }}
         onPointerDown={(e) => {
-          dragging.current = true;
+          if (e.button !== 0 || !e.isPrimary) return;
+          e.preventDefault(); // Scrub the chart without starting browser text selection.
+          e.currentTarget.focus({ preventScroll: true });
+          dragging.current = e.pointerId;
           e.currentTarget.setPointerCapture(e.pointerId);
           setFromEvent(e);
         }}
         onPointerMove={(e) => {
-          if (dragging.current) setFromEvent(e);
+          if (dragging.current === e.pointerId) setFromEvent(e);
         }}
         onPointerUp={(e) => {
-          dragging.current = false;
-          e.currentTarget.releasePointerCapture(e.pointerId);
+          if (dragging.current !== e.pointerId) return;
+          setFromEvent(e);
+          dragging.current = null;
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
         }}
-        onPointerCancel={() => {
-          dragging.current = false;
-        }}
+        onPointerCancel={() => { dragging.current = null; }}
+        onLostPointerCapture={() => { dragging.current = null; }}
       >
         {results.length === 0 ? (
           <text x={LX} y={40} className="axis-text">Computing{'…'}</text>

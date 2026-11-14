@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { formatRowValue, summaryRows, type AnalysisResult, type SummaryRow, type TimeWindow } from '../science';
-import { EARTH_DISCLAIMER, ENERGY_DISCLAIMER, FLAT_WARNING, fmtUtc } from '../ui/labels';
-import { InfoButton, KindTag, Panel } from './Common';
+import { FLAT_WARNING, fmtUtc } from '../ui/labels';
+import { InfoButton, Panel } from './Common';
 
 interface Props {
   result: AnalysisResult | null;
@@ -34,15 +34,12 @@ function Tile({ row, sub, onInfo }: { row: SummaryRow; sub?: string | null; onIn
     <div className="tile">
       <div className="tile-h">
         <span className="field-label">{row.label}</span>
-        <InfoButton label={row.label} onClick={() => onInfo(row.methodId)} />
+        <InfoButton label={row.label} methodId={row.methodId} kind={row.kind} onClick={() => onInfo(row.methodId)} />
       </div>
       <div className="tile-v">
         <Value row={row} />
       </div>
-      <div className="tile-f">
-        <KindTag kind={row.kind} />
-        {row.truncated && <span className="trunc" title={TRUNC_TIP}>cut by interval</span>}
-      </div>
+      {row.truncated && <div className="tile-f"><span className="trunc" title={TRUNC_TIP}>cut by interval</span></div>}
       {sub && <div className="tile-sub mono">{sub}</div>}
     </div>
   );
@@ -84,21 +81,18 @@ function MetricSummaryImpl({ result, loading, onInfo }: Props) {
         <Tile row={g('earth_pct')} onInfo={onInfo} />
         <Tile row={g('longest_blackout_h')} sub={windowSpan(m.longestBlackout)} onInfo={onInfo} />
       </div>
-      <p className="disclaimer">{EARTH_DISCLAIMER}</p>
-      <h3 className="group-h">Energy (assumed lander)</h3>
+      <h3 className="group-h">Energy</h3>
       <div className="tiles three">
         <Tile row={g('generated_kwh')} onInfo={onInfo} />
         <Tile row={g('deficit_h')} onInfo={onInfo} />
         <Tile row={g('min_battery_pct')} onInfo={onInfo} />
       </div>
-      <p className="disclaimer">{ENERGY_DISCLAIMER}</p>
       <details className="all-metrics"><summary>All metrics</summary>
       <table className="metric-table">
         <thead>
           <tr>
             <th scope="col">Metric</th>
             <th scope="col" className="num">Value</th>
-            <th scope="col">Kind</th>
             <th scope="col"><span className="sr-only">Details</span></th>
           </tr>
         </thead>
@@ -110,10 +104,7 @@ function MetricSummaryImpl({ result, loading, onInfo }: Props) {
                 <Value row={r} />
               </td>
               <td>
-                <KindTag kind={r.kind} />
-              </td>
-              <td>
-                <InfoButton label={r.label} onClick={() => onInfo(r.methodId)} />
+                <InfoButton label={r.label} methodId={r.methodId} kind={r.kind} onClick={() => onInfo(r.methodId)} />
               </td>
             </tr>
           ))}

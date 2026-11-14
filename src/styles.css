@@ -107,8 +107,14 @@ input[aria-invalid='true'] { border-color: var(--warn); }
 .menu { position: relative; }
 .menu-pop { position: absolute; right: 0; top: calc(100% + 4px); z-index: 20; display: flex; flex-direction: column; min-width: 220px; background: var(--bg1); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px; gap: 4px; }
 .menu-pop button { text-align: left; }
-.info-btn { font: inherit; font-size: 15px; line-height: 1; color: var(--tx2); background: transparent; border: 0; cursor: pointer; padding: 0 2px; }
-.info-btn:hover { color: var(--tx0); }
+.info-btn { position: relative; flex: 0 0 auto; display: inline-grid; place-items: center; width: 22px; height: 22px; font: 600 12px/1 var(--sans); color: var(--tx1); background: transparent; border: 1px solid var(--line); border-radius: 50%; cursor: pointer; padding: 0; }
+.info-btn:hover, .info-btn[aria-expanded=true] { color: var(--tx0); background: var(--bg2); border-color: var(--tx1); }
+.info-popover { position: fixed; inset: auto; margin: 0; width: 280px; max-width: calc(100vw - 16px); padding: 12px; border: 1px solid var(--line); border-radius: 0; background: var(--bg1); color: var(--tx0); font: 13px/1.5 var(--sans); }
+.info-popover p { margin: 0 0 8px; }
+.info-popover-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.info-kind { border: 1px solid var(--line); padding: 2px 6px; font-size: 11px; color: var(--tx1); }
+.info-learn-more { padding: 0; border: 0; background: transparent; color: var(--earth); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (pointer: coarse) { .info-btn::after { content: ''; position: absolute; inset: -11px; } .info-learn-more { min-height: 44px; } }
 
 /* ---------- tags & badges ---------- */
 .tag { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; padding: 0 5px; border: 1px solid; border-radius: 2px; line-height: 15px; font-weight: 600; white-space: nowrap; }
@@ -293,6 +299,7 @@ input[aria-invalid='true'] { border-color: var(--warn); }
 .moon-stage { position: relative; height: clamp(380px, 58vh, 620px); overflow: hidden; }
 .moon-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .moon-stage canvas:active { cursor: grabbing; }
+.moon-stage canvas:focus-visible { outline-offset: -3px; }
 .moon-toolbar { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 2; }
 .moon-pin { position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; background: #15181c; color: #eff1f3; border: 1px solid #a6afb9; font: 12px var(--mono); cursor: pointer; z-index: 1; padding: 0; }
 .moon-pin.selected { background: #eff1f3; color: #0d0f12; border-color: white; z-index: 2; }
@@ -321,4 +328,82 @@ input[aria-invalid='true'] { border-color: var(--warn); }
 @media (pointer: coarse) {
   .btn, .seg, .site-name, input, select { min-height: 44px; }
   .moon-pin { width: 32px; height: 32px; }
+}
+
+/* Approved solar + Moon pages. Planning keeps its existing scientific controls. */
+.mission-shell { min-height: 100svh; background: var(--bg0); }
+.mission-header { height: 78px; display: flex; align-items: center; gap: 82px; padding: 0 36px; border-bottom: 1px solid var(--line); background: var(--bg0); }
+.mission-brand { color: var(--tx0); font-size: 21px; font-weight: 600; text-decoration: none; letter-spacing: .015em; }
+.mission-header nav { display: flex; align-self: stretch; gap: 46px; }
+.mission-header nav a { position: relative; display: flex; align-items: center; color: var(--tx1); text-decoration: none; font-size: 17px; font-weight: 500; }
+.mission-header nav a:hover { color: var(--tx0); }
+.mission-header nav a[aria-current=page] { color: var(--tx0); }
+.mission-header nav a[aria-current=page]::after { content: ''; position: absolute; height: 3px; bottom: 14px; left: 0; right: 0; background: var(--sun); }
+.solar-page { position: relative; height: calc(100svh - 78px); min-height: 470px; }
+.solar-stage { position: absolute; inset: 0 0 74px; overflow: hidden; }
+.solar-stage canvas { display: block; width: 100%; height: 100%; }
+.body-label { position: absolute; transform: translateY(-50%); font: 15px var(--sans); color: var(--tx0); white-space: nowrap; pointer-events: none; }
+.body-link { border: 0; padding: 8px 0; background: none; cursor: pointer; pointer-events: auto; }
+.body-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+.solar-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 34px; }
+.explorer-button { background: transparent; border: 1px solid #626b74; padding: 7px 15px; font-size: 14px; }
+.explorer-clock { display: flex; gap: 30px; align-items: center; font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scale-popover { position: fixed; inset: auto auto 74px 34px; margin: 0; width: 320px; max-width: calc(100vw - 32px); padding: 18px; border: 1px solid #626b74; background: var(--bg1); color: var(--tx0); font-size: 14px; }
+.scale-popover::backdrop { background: transparent; }
+.scale-popover dl { margin: 0; }
+.scale-popover dl > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 6px 0; }
+.scale-popover dd { margin: 0; font-variant-numeric: tabular-nums; }
+.scale-popover > p { font-size: 11px; color: var(--tx1); margin-top: 16px; }
+.scale-popover details { font-size: 11px; color: var(--tx1); margin-top: 12px; }
+.scale-popover summary { cursor: pointer; }
+.scale-popover details p { margin-top: 10px; line-height: 1.6; }
+.explorer-message { position: absolute; left: 50%; bottom: 110px; transform: translateX(-50%); max-width: min(80vw, 600px); color: var(--tx1); font-size: 13px; text-align: center; }
+.explorer-message button { display: block; margin: 12px auto 0; }
+.view-loading { padding: 40px; color: var(--tx1); font-size: 13px; }
+.moon-page { position: relative; }
+.moon-stage-full { height: calc(100svh - 148px); min-height: 440px; }
+.moon-simple-controls { position: absolute; top: 26px; left: 26px; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; width: 224px; padding: 18px; background: var(--bg1); border: 1px solid var(--line); }
+.moon-simple-controls select { width: 100%; padding: 9px 10px; font-size: 13px; }
+.moon-sites-toggle { display: flex; gap: 10px; align-items: center; font-size: 13px; }
+.moon-hide-sites .moon-pin { display: none; }
+.moon-stage-full .moon-hint { left: 50%; transform: translateX(-50%); bottom: 20px; white-space: nowrap; font-size: 12px; }
+.moon-zoom { position: absolute; right: 26px; bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+.moon-zoom button { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; font-size: 20px; }
+.moon-coordinate-hud { position: absolute; left: 26px; bottom: 26px; pointer-events: none; color: var(--tx0); font: 11px var(--sans); font-variant-numeric: tabular-nums; text-shadow: 0 1px 2px #0d0f12; }
+.moon-scale-bar { display: flex; align-items: baseline; gap: 7px; margin-bottom: 5px; }
+.moon-scale-bar > span { display: inline-block; width: 100px; height: 6px; border: 1px solid var(--tx1); border-top: 0; }
+.moon-scale-bar output { white-space: nowrap; }
+.moon-bottom { min-height: 70px; padding: 18px 26px; border-top: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.moon-bottom > span { font-size: 10px; color: var(--tx1); }
+.moon-bottom > span a { color: var(--tx1); text-decoration-color: var(--line); }
+.moon-planning-link { margin-left: 16px; }
+.planning-page .brand { display: none; }
+.planning-page .topbar { justify-content: space-between; }
+.planning-page .app { min-height: calc(100svh - 78px); }
+@media (max-width: 760px) {
+  .mission-header { padding: 0 16px; gap: 28px; height: 64px; }
+  .mission-brand { font-size: 16px; }
+  .mission-header nav { gap: 24px; }
+  .mission-header nav a { font-size: 13px; }
+  .mission-header nav a[aria-current=page]::after { bottom: 10px; height: 2px; }
+  .solar-page { height: calc(100svh - 64px); min-height: 400px; }
+  .solar-bottom { padding: 0 16px; }
+  .explorer-clock { gap: 12px; font-size: 11px; }
+  .body-label { font-size: 12px; }
+  .scale-popover { left: 16px; }
+  .moon-simple-controls { top: 16px; left: 16px; width: 184px; padding: 12px; gap: 12px; }
+  .moon-stage-full { height: calc(100svh - 160px); min-height: 600px; }
+  .moon-stage-full .moon-hint { bottom: 80px; font-size: 10px; }
+  .moon-coordinate-hud { left: 16px; bottom: 20px; font-size: 10px; }
+  .moon-zoom { right: 16px; bottom: 20px; }
+  .moon-bottom { padding: 12px 16px; flex-wrap: wrap; gap: 10px; }
+  .moon-bottom .explorer-clock { width: 100%; justify-content: flex-end; }
+  .planning-page .app { min-height: calc(100svh - 64px); }
+}
+@media (max-width: 390px) {
+  .mission-header { gap: 20px; padding: 0 12px; }
+  .mission-header nav { gap: 17px; }
+  .mission-brand { font-size: 14px; }
+  .solar-bottom { gap: 8px; padding: 0 12px; }
+  .explorer-clock { gap: 8px; font-size: 10px; }
 }
