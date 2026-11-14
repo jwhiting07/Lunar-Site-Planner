@@ -12,11 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "katex": "^0.19.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.170.0"
   },
   "devDependencies": {
+    "@types/katex": "^0.16.8",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { METHODS, type EphemerisIndex, type ProvenanceDoc, type SiteDoc } from '../science';
 import { KindTag, RefLinks } from './Common';
 import { COORD_CLASS_LABEL, fmtLat, fmtLon, num } from '../ui/labels';
+import './ProvenancePanel.css';
+import { MethodCalculation } from './MethodCalculation';
 
 type Tab = 'methods' | 'data' | 'refs' | 'conv';
 
@@ -31,7 +33,25 @@ const fmtBytes = (n: number): string => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB`
 export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMethodId, onClose, sites = [] }: Props) {
   const [tab, setTab] = useState<Tab>('methods');
   const dialogRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const prev = useRef<Element | null>(null);
+
+  const selectTab = (id: Tab) => {
+    setTab(id);
+    bodyRef.current?.scrollTo({ top: 0 });
+  };
+
+  const onTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next: number;
+    if (e.key === 'ArrowRight') next = (index + 1) % TABS.length;
+    else if (e.key === 'ArrowLeft') next = (index + TABS.length - 1) % TABS.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = TABS.length - 1;
+    else return;
+    e.preventDefault();
+    selectTab(TABS[next][0]);
+    document.getElementById(`tab-${TABS[next][0]}`)?.focus();
+  };
 
   useEffect(() => {
     prev.current = document.activeElement;
@@ -73,9 +93,9 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
 
   const p = provenance;
   return (
-    <div className="drawer-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="provenance-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div
-        className="drawer"
+        className="provenance-dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby="prov-title"
@@ -83,31 +103,39 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
         ref={dialogRef}
         onKeyDown={onKeyDown}
       >
-        <header className="drawer-h">
+        <header className="provenance-header">
           <h2 id="prov-title">Sources & methods</h2>
-          <button type="button" className="btn small" onClick={onClose} aria-label="Close sources and methods panel">
-            Close (Esc)
+          <button type="button" className="provenance-close" onClick={onClose} aria-label="Close sources and methods panel">
+            <span>Close <kbd>Esc</kbd></span><span className="provenance-cross" aria-hidden="true">×</span>
           </button>
         </header>
-        <div className="tabs" role="tablist" aria-label="Sections">
-          {TABS.map(([id, label]) => (
-            <button key={id} type="button" role="tab" id={`tab-${id}`} aria-selected={tab === id} aria-controls={`pane-${id}`} className={tab === id ? 'tab on' : 'tab'} onClick={() => setTab(id)}>
+        <div className="provenance-tabs" role="tablist" aria-label="Sections">
+          {TABS.map(([id, label], index) => (
+            <button key={id} type="button" role="tab" id={`tab-${id}`} aria-selected={tab === id} aria-controls={`pane-${id}`} tabIndex={tab === id ? 0 : -1} onKeyDown={(e) => onTabKeyDown(e, index)} onClick={() => selectTab(id)}>
               {label}
             </button>
           ))}
         </div>
-        <div className="drawer-b" role="tabpanel" id={`pane-${tab}`} aria-labelledby={`tab-${tab}`}>
+        <div className="provenance-body" ref={bodyRef} role="tabpanel" id={`pane-${tab}`} aria-labelledby={`tab-${tab}`} tabIndex={0}>
           {provenanceError && <p className="warn-box">provenance.json could not be loaded: {provenanceError}. Reference links are unavailable.</p>}
           {tab === 'methods' && (
             <div>
-              <p className="muted">
-                Every displayed quantity traces to one of these entries. Classification: see the Conventions tab.
-              </p>
+              <div className="provenance-method-tools">
+                <p className="provenance-intro">
+                  Every displayed quantity traces to one of these entries. Classification: see the Conventions tab.
+                </p>
+                <select aria-label="Jump to method" defaultValue="" onChange={(e) => document.getElementById(e.target.value)?.scrollIntoView({ block: 'start' })}>
+                  <option value="" disabled>Jump to method</option>
+                  {METHODS.map((m) => <option key={m.id} value={`method-${m.id}`}>{m.title}</option>)}
+                  <option value="method-display">Moon display &amp; local terrain</option>
+                </select>
+              </div>
               {METHODS.map((m) => (
                 <article key={m.id} id={`method-${m.id}`} className={`method${focusMethodId === m.id ? ' focus' : ''}`}>
-                  <h3>
-                    <span className="mono">{m.id}</span> {m.title} <KindTag kind={m.kind} />
-                  </h3>
+                  <header className="provenance-method-header">
+                    <div className="provenance-method-meta"><span className="mono">{m.id}</span><KindTag kind={m.kind} /></div>
+                    <h3>{m.title}</h3>
+                  </header>
                   <p>{m.summary}</p>
                   {m.id === 'M-SITE' && sites.map(site => <section key={site.id} className="site-source-details">
                     <h4>{site.name}</h4>
@@ -118,13 +146,13 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                     <p>Slope: {num(site.slope.pixel_deg, 1)}° pixel; {num(site.slope.mean3x3_deg, 1)}° mean over 3 × 3 pixels. {site.slope.note}</p>
                     <RefLinks ids={[...site.coord_refs, ...site.context_refs]} provenance={p} full />
                   </section>)}
-                  {m.formula && <pre className="formula">{m.formula}</pre>}
+                  {m.formula && <MethodCalculation methodId={m.id} original={m.formula} />}
                   {m.inputs && m.inputs.length > 0 && (
-                    <p>
-                      <span className="field-label">Inputs</span> {m.inputs.join(', ')}
-                    </p>
+                    <div className="provenance-field">
+                      <span className="field-label">Inputs</span><p>{m.inputs.join(', ')}</p>
+                    </div>
                   )}
-                  <div>
+                  <div className="provenance-field">
                     <span className="field-label">Limitations</span>
                     <ul>
                       {m.limitations.map((l, i) => (
@@ -132,15 +160,15 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                       ))}
                     </ul>
                   </div>
-                  <p className="code-loc">
+                  <div className="provenance-field code-loc">
                     <span className="field-label">Code</span> <span className="mono">{m.code.join('; ')}</span>
-                  </p>
-                  <p>
+                  </div>
+                  <div className="provenance-field">
                     <span className="field-label">References</span> <RefLinks ids={m.refs} provenance={p} />
-                  </p>
+                  </div>
                 </article>
               ))}
-              <section className="method">
+              <section className="method" id="method-display">
                 <h3>Moon display & local terrain</h3>
                 <p>The continuous Moon mesh and texture are from <a href="https://svs.gsfc.nasa.gov/14959/" target="_blank" rel="noreferrer">NASA GSFC / LRO</a>. Geometry is normalized for display; the local camera is anchored to the model surface with zoom and tilt limits.</p>
                 <p>The star background uses positions and magnitudes from the <a href="https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html" target="_blank" rel="noreferrer">Yale Bright Star Catalog hosted by NASA/GSFC HEASARC</a> (Hoffleit and Warren, 1991), retaining stars through magnitude 5.8 and drawing small, dim points at screen resolution; it provides context and is not aligned to the selected lunar epoch.</p>
