@@ -1,0 +1,201 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-11-14T18:54:22Z",
+ "frame": "Lunar Mean-Earth/Polar-Axis (ME, DE421-aligned); planetocentric latitude, east-positive longitude",
+ "reference_radius_m": 1737400.0,
+ "observer_height_m": 2.0,
+ "overview": {
+  "file": "overview_80S.png",
+  "bytes": 371185,
+  "sha256": "b745a75a1f708e7a28d9c507c97578653cee978f0b755579c6dee63fcceadda6",
+  "px": 760,
+  "half_width_m": 304000.0,
+  "meters_per_px": 800.0,
+  "projection": "south polar stereographic, sphere 1737.4 km, +y toward lon 0, +x toward lon 90E; image row 0 = +y edge",
+  "note": "Shaded relief with a fixed artificial light direction; display only, not a physical illumination state."
+ },
+ "sites": [
+  {
+   "id": "im2-athena",
+   "name": "Mons Mouton — IM-2 Athena landing site",
+   "short": "Mons Mouton (IM-2)",
+   "lat_deg": -84.7906,
+   "lon_deg": 29.1957,
+   "coord_class": "verified_landing",
+   "coord_refs": [
+    "R-LROC-1408"
+   ],
+   "coord_note": "As-landed position of Intuitive Machines IM-2 'Athena' (CLPS PRIME-1 delivery, 2025-03-06) reported by the LROC team: 84.7906°S, 29.1957°E. NASA's CP-22 delivery (Intuitive Machines IM-4) also targets Mons Mouton, but NASA has published no CP-22 coordinates; this point is NOT a CP-22 landing target.",
+   "context_refs": [
+    "R-LROC-1401",
+    "R-CP22",
+    "R-CLPS"
+   ],
+   "selection": null,
+   "elevation_m": 5321.5,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 2.22,
+    "mean3x3_deg": 2.44,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    77108.2,
+    137993.3
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_im2-athena.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -1.469,
+    "max_deg": 4.063,
+    "mean_deg": 1.167,
+    "max_obstruction_distance_km": 29.7,
+    "fraction_azimuths_beyond_patch": 0.121,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 7.9,
+    "samples_from_240m_dem_fraction": 0.188
+   },
+   "terrain": {
+    "file": "terrain_im2-athena.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": 1145.6,
+    "max_m": 6798.5,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "im1-odysseus",
+   "name": "Malapert A — IM-1 Odysseus landing site",
+   "short": "Malapert A (IM-1)",
+   "lat_deg": -80.13,
+   "lon_deg": 1.44,
+   "coord_class": "verified_landing",
+   "coord_refs": [
+    "R-LROC-1360",
+    "R-NASA-IM1"
+   ],
+   "coord_note": "As-landed position of Intuitive Machines IM-1 'Odysseus' (CLPS TO2-IM delivery, 2024-02-22) reported by the LROC team and NASA: 80.13°S, 1.44°E, 2579 m elevation. Published to 0.01° (about 300 m), so the analysis point may be up to a few hundred metres from the actual lander.",
+   "context_refs": [
+    "R-CLPS"
+   ],
+   "selection": null,
+   "elevation_m": 2591.9,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": 2579,
+   "slope": {
+    "pixel_deg": 11.19,
+    "mean3x3_deg": 11.34,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    7539.9,
+    299939.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_im1-odysseus.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -0.244,
+    "max_deg": 11.053,
+    "mean_deg": 4.799,
+    "max_obstruction_distance_km": 49.1,
+    "fraction_azimuths_beyond_patch": 0.078,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 8.86,
+    "samples_from_240m_dem_fraction": 0.501
+   },
+   "terrain": {
+    "file": "terrain_im1-odysseus.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": 1052.4,
+    "max_m": 3168.1,
+    "samples_from_240m_dem_fraction": 0.401
+   }
+  },
+  {
+   "id": "connecting-ridge",
+   "name": "Shackleton–de Gerlache connecting ridge (PGDA Site 01)",
+   "short": "Connecting ridge (Site 01)",
+   "lat_deg": -89.445496,
+   "lon_deg": 222.686278,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-LOLA-SITES",
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project: the centre of the 240 m pixel with the highest 18.6-year average solar illumination (Mazarico et al. 2011 map AVGVISIB_65S_240M_201608) inside the footprint of NASA PGDA 'Site01: Connecting ridge'. It is not a mission landing target.",
+   "context_refs": [
+    "R-ARTEMIS3-REGIONS"
+   ],
+   "selection": {
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "map_pixel_raw_value": 23369.0,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     -11400.0,
+     -12360.0
+    ],
+    "box_stereo_m": {
+     "x_min": -19000,
+     "x_max": -3000,
+     "y_min": -20000,
+     "y_max": -4000
+    }
+   },
+   "elevation_m": 1955.0,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 0.81,
+    "mean3x3_deg": 1.36,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    -11400.0,
+    -12360.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_connecting-ridge.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -2.523,
+    "max_deg": 0.204,
+    "mean_deg": -1.072,
+    "max_obstruction_distance_km": 138.1,
+    "fraction_azimuths_beyond_patch": 0.231,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 6.53,
+    "samples_from_240m_dem_fraction": 0.155
+   },
+   "terrain": {
+    "file": "terrain_connecting-ridge.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -2863.7,
+    "max_m": 1957.0,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  }
+ ]
+}

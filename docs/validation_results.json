@@ -1,0 +1,1197 @@
+{
+ "generated_utc": "2026-11-14T18:55:39Z",
+ "command": "python scripts/validate.py",
+ "environment": {
+  "python": "3.12.10",
+  "numpy": "2.5.4",
+  "spiceypy": "8.4.0",
+  "cspice": "CSPICE_N0067"
+ },
+ "inputs": {
+  "sites_json_generated_utc": "2026-11-14T18:54:22Z",
+  "observer_height_m": 2.0,
+  "kernels_de440": [
+   "naif0012.tls",
+   "pck00011.tpc",
+   "de440s.bsp",
+   "moon_pa_de440_200625.bpc",
+   "moon_de440_250416.tf"
+  ],
+  "kernels_de421": [
+   "moon_pa_de421_1900-2050.bpc",
+   "moon_080317.tf",
+   "de421.bsp"
+  ]
+ },
+ "V-1": {
+  "id": "V-1",
+  "refs": [
+   "R-HORIZONS",
+   "R-DE440"
+  ],
+  "per_site": {
+   "im2-athena": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -6.618357485,
+      6.653696453
+     ],
+     "spice": {
+      "daz": {
+       "max": 3.12548991132644e-08,
+       "rms": 7.440631866898066e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.112347873746251e-08,
+       "rms": 7.4232445325294945e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.384297280779492e-08,
+       "rms": 4.994436536506323e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0025041699409484863,
+       "rms": 0.0016586975447417523,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 4.006377309906384e-06,
+       "rms": 1.3014995674636391e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 4.00615481400232e-06,
+       "rms": 1.2997372419920445e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.4856609192426262e-05,
+       "rms": 7.686450197490715e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.1945514380932,
+       "rms": 1071.1637433562573,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -2.552929793,
+      11.04980819
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.557495796892908e-07,
+       "rms": 3.7379477412203386e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.555820133195333e-07,
+       "rms": 3.7151765700614465e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 6.921288475680853e-08,
+       "rms": 3.500985846539723e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0040663277031853795,
+       "rms": 0.0023352493569902535,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010915799219901601,
+       "rms": 4.5017246012090534e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010804234749226312,
+       "rms": 4.473039482813676e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011628638941729719,
+       "rms": 4.3729674891663294e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.27410078869434074,
+       "rms": 0.11879821302625948,
+       "n": 160
+      }
+     }
+    }
+   },
+   "im1-odysseus": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -11.260128652,
+      11.3774729
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.987957259392715e-08,
+       "rms": 7.331490949626459e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.935924256189148e-08,
+       "rms": 7.265553449193173e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.490251903632725e-08,
+       "rms": 5.22199211030688e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0025040507316589355,
+       "rms": 0.0016586655419208263,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 5.05823265939398e-06,
+       "rms": 1.5133335940148373e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.042701999260108e-06,
+       "rms": 1.5051445985284077e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.463517806499226e-05,
+       "rms": 7.647184987571981e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.1778973340988,
+       "rms": 1071.163950148323,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      2.775297036,
+      16.397286301
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.562776266287983e-07,
+       "rms": 3.786193842508183e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.550444420262761e-07,
+       "rms": 3.719053704832948e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 5.407791192624245e-08,
+       "rms": 3.170198196879629e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004067016998305917,
+       "rms": 0.002334873304919958,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.0001097806999155182,
+       "rms": 4.473293641958057e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010662382356970167,
+       "rms": 4.389660734294641e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011433908814950655,
+       "rms": 4.4436266400339294e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2836388210998848,
+       "rms": 0.120024595715213,
+       "n": 160
+      }
+     }
+    }
+   },
+   "connecting-ridge": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -2.055842915,
+      2.065221582
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.835230361597496e-08,
+       "rms": 7.287917773290736e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.8351258821546645e-08,
+       "rms": 7.286519259782041e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.537429615369959e-08,
+       "rms": 5.166685506542697e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.002503037452697754,
+       "rms": 0.001658719255070832,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.2594709011846135e-06,
+       "rms": 1.1987179628656533e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.258500532591453e-06,
+       "rms": 1.1984064096051361e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.5176126300531223e-05,
+       "rms": 7.699861509356433e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.2029457092285,
+       "rms": 1071.163897144796,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -7.490829245,
+      6.159680855
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.579695994128997e-07,
+       "rms": 3.728500225389411e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.544116260068416e-07,
+       "rms": 3.715904215131243e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 5.449049195194178e-08,
+       "rms": 3.188795922962773e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004071656439919025,
+       "rms": 0.002336780416177611,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.0001053873108105563,
+       "rms": 4.370109560124595e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010517318340146603,
+       "rms": 4.354970265899308e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011495043926590398,
+       "rms": 4.479440390571354e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2796999339479953,
+       "rms": 0.11933016109254671,
+       "n": 160
+      }
+     }
+    }
+   }
+  },
+  "headers": [
+   {
+    "site": "im2-athena",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:28:07 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "29.1957, -84.7906, 5.3235",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "im2-athena",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:53:58 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "29.1957, -84.7906, 5.3235",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "im1-odysseus",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:54:00 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "1.44, -80.13, 2.5939",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "im1-odysseus",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:54:02 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "1.44, -80.13, 2.5939",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "connecting-ridge",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:54:04 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "222.686278, -89.445496, 1.957",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "connecting-ridge",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 10:54:06 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "222.686278, -89.445496, 1.957",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   }
+  ],
+  "queries": [
+   {
+    "cache_file": "data_cache\\horizons\\im2-athena_10_e7e86c4325c6bea3.txt",
+    "fetched": false,
+    "site": "im2-athena",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'29.195700,-84.790600,5.323500'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\im2-athena_399_60db9fd7ee8b69c4.txt",
+    "fetched": false,
+    "site": "im2-athena",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'29.195700,-84.790600,5.323500'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\im1-odysseus_10_569c04fd216a1dbc.txt",
+    "fetched": false,
+    "site": "im1-odysseus",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'1.440000,-80.130000,2.593900'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\im1-odysseus_399_441dc2ae0bb57c5f.txt",
+    "fetched": false,
+    "site": "im1-odysseus",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'1.440000,-80.130000,2.593900'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\connecting-ridge_10_f4a40dc12760ddcd.txt",
+    "fetched": false,
+    "site": "connecting-ridge",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'222.686278,-89.445496,1.957000'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\connecting-ridge_399_f7044bc1e94a8d03.txt",
+    "fetched": false,
+    "site": "connecting-ridge",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'222.686278,-89.445496,1.957000'"
+   }
+  ],
+  "summary": {
+   "sun": {
+    "spice": {
+     "daz": {
+      "max": 3.12548991132644e-08,
+      "rms": 7.353627394998124e-09,
+      "n": 480
+     },
+     "dazcos": {
+      "max": 3.112347873746251e-08,
+      "rms": 7.3254394461125776e-09,
+      "n": 480
+     },
+     "del": {
+      "max": 4.537429615369959e-08,
+      "rms": 5.128620251127163e-09,
+      "n": 480
+     },
+     "drange_km": {
+      "max": 0.0025041699409484863,
+      "rms": 0.0016586941140578593,
+      "n": 480
+     }
+    },
+    "app": {
+     "daz": {
+      "max": 5.05823265939398e-06,
+      "rms": 1.344247552273351e-06,
+      "n": 480
+     },
+     "dazcos": {
+      "max": 5.042701999260108e-06,
+      "rms": 1.340516701783682e-06,
+      "n": 480
+     },
+     "del": {
+      "max": 1.5176126300531223e-05,
+      "rms": 7.677864766889297e-06,
+      "n": 480
+     },
+     "drange_km": {
+      "max": 1502.2029457092285,
+      "rms": 1071.1638635497957,
+      "n": 480
+     }
+    }
+   },
+   "earth": {
+    "spice": {
+     "daz": {
+      "max": 5.579695994128997e-07,
+      "rms": 3.75096570053944e-07,
+      "n": 480
+     },
+     "dazcos": {
+      "max": 5.555820133195333e-07,
+      "rms": 3.7167118775514174e-07,
+      "n": 480
+     },
+     "del": {
+      "max": 6.921288475680853e-08,
+      "rms": 3.29016098610561e-08,
+      "n": 480
+     },
+     "drange_km": {
+      "max": 0.004071656439919025,
+      "rms": 0.0023356345049959084,
+      "n": 480
+     }
+    },
+    "app": {
+     "daz": {
+      "max": 0.0001097806999155182,
+      "rms": 4.448735324404213e-05,
+      "n": 480
+     },
+     "dazcos": {
+      "max": 0.00010804234749226312,
+      "rms": 4.406168766395786e-05,
+      "n": 480
+     },
+     "del": {
+      "max": 0.00011628638941729719,
+      "rms": 4.432232266402072e-05,
+      "n": 480
+     },
+     "drange_km": {
+      "max": 0.2836388210998848,
+      "rms": 0.11938537925726919,
+      "n": 480
+     }
+    }
+   }
+  },
+  "status": "completed"
+ },
+ "V-2": {
+  "id": "V-2",
+  "refs": [
+   "R-NAIF-ABCORR",
+   "R-NAIF-SPKPOS"
+  ],
+  "n_epochs_per_site": 1000,
+  "per_body": {
+   "sun": {
+    "max": 1.65743638862912e-07,
+    "rms": 7.690365171215674e-08,
+    "n": 3000
+   },
+   "earth": {
+    "max": 2.7056226273382796e-05,
+    "rms": 1.7767229490851142e-05,
+    "n": 3000
+   }
+  },
+  "metric_effect_2026_2028": {
+   "im2-athena": {
+    "sunlit_hours": 2.668932211236097e-06,
+    "earth_visible_hours": 0.002066037261101883,
+    "sunlit_fraction": 1.0146489204387876e-10,
+    "earth_visible_fraction": 7.854460393197371e-08
+   },
+   "im1-odysseus": {
+    "sunlit_hours": 3.8566086004721e-06,
+    "earth_visible_hours": 0.0,
+    "sunlit_fraction": 1.4661677427696418e-10,
+    "earth_visible_fraction": 0.0
+   },
+   "connecting-ridge": {
+    "sunlit_hours": 4.422199708642438e-06,
+    "earth_visible_hours": 0.0001769055161275901,
+    "sunlit_fraction": 1.681188521729382e-10,
+    "earth_visible_fraction": 6.7254226632229575e-09
+   }
+  },
+  "status": "completed"
+ },
+ "V-3": {
+  "id": "V-3",
+  "refs": [
+   "R-NAIF-MOONFK",
+   "R-DE440",
+   "R-DE421"
+  ],
+  "n_epochs_per_site": 300,
+  "azel_de421_minus_de440": {
+   "sun": {
+    "daz": {
+     "max": 8.710980097248466e-06,
+     "rms": 4.152827472980659e-06,
+     "n": 900
+    },
+    "dazcos": {
+     "max": 8.606737437955912e-06,
+     "rms": 4.1381742816737095e-06,
+     "n": 900
+    },
+    "del": {
+     "max": 1.4063790687912636e-05,
+     "rms": 7.465562577098899e-06,
+     "n": 900
+    }
+   },
+   "earth": {
+    "daz": {
+     "max": 9.214412159508356e-06,
+     "rms": 4.483403193601573e-06,
+     "n": 900
+    },
+    "dazcos": {
+     "max": 9.21251983725912e-06,
+     "rms": 4.4440165846283555e-06,
+     "n": 900
+    },
+    "del": {
+     "max": 1.2457469273030597e-05,
+     "rms": 8.720804527370562e-06,
+     "n": 900
+    }
+   }
+  },
+  "frame_rotation_angle_deg": {
+   "max": 1.5366468687320933e-05,
+   "rms": 1.1429030047170468e-05,
+   "n": 300
+  },
+  "frame_rotation_angle_arcsec": {
+   "max": 0.05531928727435536,
+   "rms": 0.04114450816981368,
+   "n": 300
+  },
+  "surface_displacement_m": {
+   "im2-athena": {
+    "max": 0.4614665201306296,
+    "rms": 0.3202843480101217,
+    "n": 300
+   },
+   "im1-odysseus": {
+    "max": 0.4622836133260917,
+    "rms": 0.3184915614973428,
+    "n": 300
+   },
+   "connecting-ridge": {
+    "max": 0.45188342642571994,
+    "rms": 0.3262051782347445,
+    "n": 300
+   }
+  },
+  "note": "az/el differences combine the DE421 vs DE440 ephemerides and the frame realizations; the pxform rotation isolates the frame part.",
+  "status": "completed"
+ },
+ "V-4": {
+  "id": "V-4",
+  "refs": [
+   "R-NAIF-SPKPOS"
+  ],
+  "n_epochs": 20000,
+  "sun": {
+   "moon_centred_direction_deg": {
+    "max": 1.5413644058972238e-05,
+    "rms": 7.795793040876338e-06,
+    "n": 20000
+   },
+   "moon_centred_distance_rel": {
+    "max": 9.8986931478251e-06,
+    "rms": 7.174876408239166e-06,
+    "n": 20000
+   },
+   "topocentric_elevation_deg_all_sites": {
+    "max": 1.540157581247925e-05,
+    "rms": 7.676101289422197e-06,
+    "n": 60000
+   }
+  },
+  "earth": {
+   "moon_centred_direction_deg": {
+    "max": 0.00013292969143634747,
+    "rms": 5.633335552356044e-05,
+    "n": 20000
+   },
+   "moon_centred_distance_rel": {
+    "max": 9.508897147458839e-07,
+    "rms": 3.547273595854695e-07,
+    "n": 20000
+   },
+   "topocentric_elevation_deg_all_sites": {
+    "max": 9.940985362000276e-05,
+    "rms": 4.017184781344607e-05,
+    "n": 60000
+   }
+  },
+  "shipped_self_check": {
+   "sun_dir_deg": 1.5440623538464254e-05,
+   "earth_dir_deg": 0.00013296108021038192,
+   "sun_dist_rel": 9.89926329630908e-06,
+   "earth_dist_rel": 9.567622741846193e-07
+  },
+  "status": "completed"
+ },
+ "V-5": {
+  "id": "V-5",
+  "refs": [
+   "R-MAZARICO-2011",
+   "R-LOLA-PGDA"
+  ],
+  "maps": {
+   "sun": {
+    "file": "AVGVISIB_65S_240M_201608.TIF",
+    "dtype": "int16",
+    "scale": 4e-05,
+    "offset": 0.0,
+    "nodata": -32768.0,
+    "pixel_m": 240.0,
+    "label_scaling_factor": 4e-05,
+    "label_note": "LBL: SCALING_FACTOR = 0.00004, OFFSET = 0.0, DN 0..25000 -> 0..1; computed from LDEM_65S_240M"
+   },
+   "earth": {
+    "file": "AVGVISIB_65S_240M_201608_EARTH.TIF",
+    "dtype": "int16",
+    "scale": 4e-05,
+    "offset": 0.0,
+    "nodata": -32768.0,
+    "pixel_m": 240.0,
+    "label_scaling_factor": 4e-05,
+    "label_note": "LBL: SCALING_FACTOR = 0.00004, OFFSET = 0.0, DN 0..25000 -> 0..1; computed from LDEM_65S_240M"
+   }
+  },
+  "per_site": {
+   "im2-athena": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       2635,
+       3531
+      ],
+      "nearest_raw_dn": 11252.0,
+      "nearest": 0.4500799775123596,
+      "bilinear": 0.4558377539530597,
+      "nbhd3x3_min": 0.4262000024318695,
+      "nbhd3x3_max": 0.4671599864959717
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       2635,
+       3531
+      ],
+      "nearest_raw_dn": 23162.0,
+      "nearest": 0.9264799952507019,
+      "bilinear": 0.922820228873301,
+      "nbhd3x3_min": 0.8037999868392944,
+      "nbhd3x3_max": 0.9401599764823914
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 5320.484083290975,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.47108914655008555,
+       "sun_mean_disk_fraction": 0.4543921191771355,
+       "earth_center_fraction": 0.8146740163467021,
+       "earth_any_part_fraction": 0.9413799657859723
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.46777022717236644,
+       "sun_mean_disk_fraction": 0.4507111142086228,
+       "earth_center_fraction": 0.8110249742407144,
+       "earth_any_part_fraction": 0.9323634757862715
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.45706139517202055,
+       "sun_mean_disk_fraction": 0.442507543726492,
+       "earth_center_fraction": 0.8138376734461129,
+       "earth_any_part_fraction": 0.9403535449534309
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.4537620823315833,
+       "sun_mean_disk_fraction": 0.43883036738768183,
+       "earth_center_fraction": 0.8097063441440557,
+       "earth_any_part_fraction": 0.9281561258034444
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": 0.017690249660006818,
+     "earth_any_part": 0.005883480535569641,
+     "earth_center": -0.1154550210099875
+    }
+   },
+   "im1-odysseus": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       1960,
+       3241
+      ],
+      "nearest_raw_dn": 10268.0,
+      "nearest": 0.41071999073028564,
+      "bilinear": 0.4054227899035036,
+      "nbhd3x3_min": 0.3471599817276001,
+      "nbhd3x3_max": 0.4294799864292145
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       1960,
+       3241
+      ],
+      "nearest_raw_dn": 25000.0,
+      "nearest": 1.0,
+      "bilinear": 1.0,
+      "nbhd3x3_min": 1.0,
+      "nbhd3x3_max": 1.0
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 2591.9232101407147,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.4012545143508839,
+       "sun_mean_disk_fraction": 0.3947135903961313,
+       "earth_center_fraction": 1.0,
+       "earth_any_part_fraction": 1.0
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.3983182866395172,
+       "sun_mean_disk_fraction": 0.391859888791979,
+       "earth_center_fraction": 1.0,
+       "earth_any_part_fraction": 1.0
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.38905151111955905,
+       "sun_mean_disk_fraction": 0.38246249159355594,
+       "earth_center_fraction": 1.0,
+       "earth_any_part_fraction": 1.0
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.3860764928119327,
+       "sun_mean_disk_fraction": 0.37957591880615404,
+       "earth_center_fraction": 1.0,
+       "earth_any_part_fraction": 1.0
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.012401704090768462,
+     "earth_any_part": 0.0,
+     "earth_center": 0.0
+    }
+   },
+   "connecting-ridge": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       3261,
+       3162
+      ],
+      "nearest_raw_dn": 23369.0,
+      "nearest": 0.9347599744796753,
+      "bilinear": 0.9347333876227917,
+      "nbhd3x3_min": 0.5031999945640564,
+      "nbhd3x3_max": 0.9347599744796753
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       3261,
+       3162
+      ],
+      "nearest_raw_dn": 14419.0,
+      "nearest": 0.5767599940299988,
+      "bilinear": 0.5767556831467073,
+      "nbhd3x3_min": 0.34703999757766724,
+      "nbhd3x3_max": 0.5819599628448486
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 1954.2604450355832,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8368751187987075,
+       "sun_mean_disk_fraction": 0.7789417398093503,
+       "earth_center_fraction": 0.5266299182664893,
+       "earth_any_part_fraction": 0.5705379205474245
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8276887787645356,
+       "sun_mean_disk_fraction": 0.7658705785451032,
+       "earth_center_fraction": 0.5291447917177764,
+       "earth_any_part_fraction": 0.5752416466316668
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8653107774187417,
+       "sun_mean_disk_fraction": 0.7920581946698989,
+       "earth_center_fraction": 0.5141227903440411,
+       "earth_any_part_fraction": 0.5588291199391751
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8597713556744027,
+       "sun_mean_disk_fraction": 0.7792746496573291,
+       "earth_center_fraction": 0.5153145086109612,
+       "earth_any_part_fraction": 0.5610311074039547
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.10707119571513968,
+     "earth_any_part": -0.0015183473983320095,
+     "earth_center": -0.04761520231222238
+    }
+   }
+  },
+  "long_span": {
+   "start_utc": "2010-01-01T00:00:00Z",
+   "n_hours": 163048,
+   "years": 18.6,
+   "method": "SPICE spkpos Moon-centre LT+S at uniform TAI hours minus the site vector (DE440s, MOON_ME_DE440_ME421)"
+  },
+  "status": "completed"
+ },
+ "V-6": {
+  "id": "V-6",
+  "refs": [
+   "R-LOLA-PGDA"
+  ],
+  "per_site": {
+   "im2-athena": {
+    "shipped": {
+     "sunlit_fraction": 0.47111684021350336,
+     "earth_visible_fraction": 0.8147289859747933
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 1.9184705202235364e-07,
+      "rms": 4.509136342469988e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.019046418090445716,
+      "rms": 0.0020719695663140576,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -5.621464712002311e-06,
+     "d_earth_visible_fraction": 1.0211628488132618e-05
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.025954888923880315,
+      "rms": 0.0038242534306849605,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.025954888923880315,
+      "rms": 0.0038242534306849605,
+      "n": 720
+     },
+     "d_sunlit_fraction": -1.9938752970238838e-05,
+     "d_earth_visible_fraction": -2.4810736102831576e-05
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.025954888923880315,
+      "rms": 0.0038242534306849605,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.025954888923880315,
+      "rms": 0.004320233112167277,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -2.250068019227225e-05,
+     "d_earth_visible_fraction": -1.8893331407698888e-05
+    }
+   },
+   "im1-odysseus": {
+    "shipped": {
+     "sunlit_fraction": 0.40121302092610195,
+     "earth_visible_fraction": 1.0
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 4.7578178552498684e-07,
+      "rms": 1.655355377918507e-07,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.021748231691931186,
+      "rms": 0.0014842052659309684,
+      "n": 1440
+     },
+     "d_sunlit_fraction": 7.872876658931993e-07,
+     "d_earth_visible_fraction": 0.0
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.0519363117813576,
+      "rms": 0.010203133652036333,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.0519363117813576,
+      "rms": 0.010203133652036333,
+      "n": 720
+     },
+     "d_sunlit_fraction": -1.9731187235194625e-05,
+     "d_earth_visible_fraction": 0.0
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.0519363117813576,
+      "rms": 0.010203133652036333,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.0519363117813576,
+      "rms": 0.010288641431863376,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -2.0131793392164088e-05,
+     "d_earth_visible_fraction": 0.0
+    }
+   },
+   "connecting-ridge": {
+    "shipped": {
+     "sunlit_fraction": 0.8369176260603115,
+     "earth_visible_fraction": 0.5265814833080501
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 1.1904356966851992e-07,
+      "rms": 3.395819523979129e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.036927430734466915,
+      "rms": 0.00269961640076466,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -5.630816581592146e-05,
+     "d_earth_visible_fraction": -1.0302695748531931e-05
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.2347496071069698,
+      "rms": 0.03749649822407186,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.2347496071069698,
+      "rms": 0.03749649822407186,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.0026825486546975252,
+     "d_earth_visible_fraction": -4.0073374021343255e-06
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.2347496071069698,
+      "rms": 0.03749649822407186,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.23615416486235752,
+      "rms": 0.0375721982981562,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.00272883300089255,
+     "d_earth_visible_fraction": -1.3639357835715238e-05
+    }
+   }
+  },
+  "variants": {
+   "az0.25": "0.25 deg azimuth step, default rays",
+   "rays_half": "0.5 deg step, rays start 20 m, min step 20 m, rel step 0.0005",
+   "az0.25_rays_half": "both"
+  },
+  "status": "completed"
+ },
+ "V-7": {
+  "id": "V-7",
+  "refs": [
+   "R-LROC-1360",
+   "R-NASA-IM1",
+   "R-LOLA-PGDA"
+  ],
+  "published": {
+   "elevation_m": 2579,
+   "slope_deg": 12,
+   "slope_note": "LROC 1360 and NASA: local terrain 'sloped at 12 degrees'; baseline not stated on either page"
+  },
+  "dem_at_published_point_m": 2591.947755256703,
+  "sites_json_elevation_m": 2591.9,
+  "box": "lat/lon +/- 0.005 deg (rounding of the published 0.01 deg coordinates); about +/-152 m N-S, +/-26 m E-W",
+  "dem_box_min_m": 2573.5825481993006,
+  "dem_box_max_m": 2615.472167280706,
+  "slope_ldsm_pixel_deg": 11.19,
+  "slope_ldsm_mean3x3_deg": 11.34,
+  "slope_box_min_deg": 10.486659623400401,
+  "slope_box_max_deg": 13.425810330757121,
+  "elevation_diff_m": 12.947755256703203,
+  "published_within_box_range": true,
+  "status": "completed"
+ },
+ "V-8": {
+  "id": "V-8",
+  "commands": {
+   "vitest": "npx vitest run",
+   "tsc": "npx tsc --noEmit",
+   "pytest": "python -m pytest scripts/tests -q"
+  },
+  "pytest": {
+   "exit_code": 0,
+   "summary": "30 passed in 7.99s",
+   "passed": 30
+  },
+  "vitest": {
+   "exit_code": 0,
+   "files": 9,
+   "total": 88,
+   "passed": 88,
+   "failed": 0,
+   "skipped": 0,
+   "failed_tests": []
+  },
+  "tsc": {
+   "exit_code": 0,
+   "errors": 0
+  },
+  "status": "completed"
+ },
+ "not_validated": [
+  "Power and battery model (M-POWER, M-BATTERY): only analytic unit tests (hand-computed values, energy conservation). No independent model or measured data was compared; the lander parameters are assumed (A-LANDER).",
+  "No comparison with real lander telemetry (IM-1 / IM-2 power or illumination records) was made.",
+  "Terrain below the 80 m DEM resolution (boulders, the small crater IM-2 rested in) is not represented; no validation at that scale.",
+  "The horizon beyond 600 km is bounded (sites.json unseen_terrain_margin_min_deg) but not computed.",
+  "Earth visibility is geometric line of sight only; no link budget, antenna pattern or ground-station availability.",
+  "The Space Apps challenge page (R-CHALLENGE) could not be fetched on the build machine (TLS certificate error), so requirement wording was not re-checked against it.",
+  "V-5: the map's simulation epoch span and time step are not stated in the PDS labels; our 18.6-year span start is an arbitrary choice.",
+  "Export consistency (CSV/JSON vs displayed numbers) is covered by src/export/exporters.test.ts; see V-8. Browser download behavior is separate from these builder tests."
+ ]
+}

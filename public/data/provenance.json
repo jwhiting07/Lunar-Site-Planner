@@ -1,0 +1,896 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-11-14T18:54:22Z",
+ "pipeline": {
+  "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
+  "scripts": {
+   "build_data.py": "ee409dda18f40ae6c7b639939bebe7b977f32c06c5f7ad1f591562ca638bef97",
+   "moonlib.py": "0689a740304d38108e1ca7624efc07e1a2ffd9a8e331691af2d72f721ac3cba6",
+   "fetch_sources.py": "17122a7596c7c566c818a836257fc3f363046908a2ffd95e57384fdf4e9769ad",
+   "sites_input.json": "c9b15c62e62296c1e5873f69ecce7af025c77ba308939f0179ca4cf8b9944309",
+   "references.json": "1d5146d1fbcab856e7ca65787044ed9df579b9d3ffdf9e1eb892e06da700bcd4"
+  },
+  "python": "3.12.10",
+  "packages": {
+   "numpy": "2.5.4",
+   "spiceypy": "8.4.0",
+   "cspice_toolkit": "CSPICE_N0067",
+   "rasterio": "1.5.2",
+   "pyproj": "3.8.0"
+  }
+ },
+ "conventions": {
+  "body_fixed_frame": "MOON_ME_DE440_ME421",
+  "latitude": "planetocentric, degrees",
+  "longitude": "east-positive, degrees",
+  "reference_sphere_radius_m": 1737400.0,
+  "local_frame": "East-North-Up; Up = planetocentric radial direction",
+  "azimuth": "clockwise from north, [0, 360) deg",
+  "elevation": "above the local horizontal plane, deg",
+  "time": "UTC; TDB via naif0012.tls inside SPICE",
+  "units": "SPICE vectors km; terrain and engineering quantities m, W, Wh"
+ },
+ "parameters": {
+  "observer_height_m": {
+   "value": 2.0,
+   "class": "assumed",
+   "id": "A-OBS-HEIGHT"
+  },
+  "horizon_az_step_deg": {
+   "value": 0.5,
+   "class": "approximated",
+   "id": "M-HORIZON"
+  },
+  "horizon_ray_m": {
+   "value": {
+    "start": 40.0,
+    "min_step": 40.0,
+    "rel_step": 0.001,
+    "max": 600000.0
+   },
+   "class": "approximated",
+   "id": "M-HORIZON"
+  },
+  "unseen_terrain_height_m": {
+   "value": 11000.0,
+   "class": "assumed",
+   "id": "A-HMAX",
+   "note": "Conservative ceiling; highest value in the DEMs used is 7026 m"
+  },
+  "ephemeris_step_s": {
+   "value": 3600,
+   "class": "approximated",
+   "id": "M-EPHEM"
+  }
+ },
+ "self_checks": {
+  "stereographic_formulas_vs_proj_max_m": 1.6463612699567982e-10,
+  "ephemeris_linear_interpolation_max_error": {
+   "sun_dir_deg": 1.5440623538464254e-05,
+   "earth_dir_deg": 0.00013296108021038192,
+   "sun_dist_rel": 9.89926329630908e-06,
+   "earth_dist_rel": 9.567622741846193e-07
+  }
+ },
+ "sources": [
+  {
+   "file": "AVGVISIB_65S_240M_201608.TIF",
+   "url": "https://pgda.gsfc.nasa.gov/data/MoonIllumination/AVGVISIB_65S_240M_201608.TIF",
+   "role": "Average solar illumination 65S-90S, 240 m/pix, 18.6-yr mean (validation, site selection)",
+   "ref": "R-MAZARICO-2011",
+   "bytes": 60394652,
+   "sha256": "822fbf4618852311d4f494012e74e9cfb0147807a54ecb3302293c4266d2068d",
+   "retrieved_utc": "2026-11-14T17:58:07Z",
+   "used_for": [
+    "site_selection"
+   ]
+  },
+  {
+   "file": "LDEM_60S_240MPP_ADJ.TIF",
+   "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_240MPP_ADJ.TIF",
+   "role": "LOLA DEM 60S-90S, 240 m/pix (far-field terrain horizon)",
+   "ref": "R-LOLA-PGDA",
+   "bytes": 218961039,
+   "sha256": "3f9663257b63022f2b0d5a623482ff3cadddceb91594a4e4ca14a94d8cec8b34",
+   "retrieved_utc": "2026-11-14T17:53:18Z",
+   "used_for": [
+    "terrain"
+   ]
+  },
+  {
+   "file": "LDEM_80S_80MPP_ADJ.TIF",
+   "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_80MPP_ADJ.TIF",
+   "role": "LOLA DEM 80S-90S, 80 m/pix (near-field terrain, meshes, site elevation)",
+   "ref": "R-LOLA-PGDA",
+   "bytes": 189158392,
+   "sha256": "82030dcbdd7c4bb0c7d858e9b4b293b9f2cda5a543ba31ec0f42784bd6beee5a",
+   "retrieved_utc": "2026-11-14T17:51:11Z",
+   "used_for": [
+    "terrain"
+   ]
+  },
+  {
+   "file": "LDSM_80S_80MPP_ADJ.TIF",
+   "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDSM_80S_80MPP_ADJ.TIF",
+   "role": "LOLA slope map 80S-90S, 80 m/pix (site slope context)",
+   "ref": "R-LOLA-PGDA",
+   "bytes": 241594035,
+   "sha256": "d1270c4a69d01a8e4eb5503bd25713f0b2251dbb4ffee6c3161ef7a792c8f059",
+   "retrieved_utc": "2026-11-14T17:57:12Z",
+   "used_for": [
+    "slope"
+   ]
+  },
+  {
+   "file": "de440s.bsp",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp",
+   "role": "Planetary/lunar ephemeris DE440 (short span 1849-2150)",
+   "ref": "R-DE440",
+   "bytes": 32726016,
+   "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+   "retrieved_utc": "2026-11-14T17:49:11Z",
+   "used_for": [
+    "ephemeris"
+   ]
+  },
+  {
+   "file": "moon_de440_250416.tf",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+   "role": "Lunar frame kernel: MOON_PA_DE440, MOON_ME_DE440_ME421",
+   "ref": "R-NAIF-MOONFK",
+   "bytes": 19478,
+   "sha256": "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768",
+   "retrieved_utc": "2026-11-14T17:49:14Z",
+   "used_for": [
+    "ephemeris"
+   ]
+  },
+  {
+   "file": "moon_pa_de440_200625.bpc",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc",
+   "role": "Binary PCK: lunar principal-axis orientation from DE440",
+   "ref": "R-DE440",
+   "bytes": 12863488,
+   "sha256": "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f",
+   "retrieved_utc": "2026-11-14T17:49:13Z",
+   "used_for": [
+    "ephemeris"
+   ]
+  },
+  {
+   "file": "naif0012.tls",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+   "role": "Leap-seconds kernel (UTC <-> TDB)",
+   "ref": "R-NAIF-GK",
+   "bytes": 5257,
+   "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+   "retrieved_utc": "2026-11-14T17:49:07Z",
+   "used_for": [
+    "ephemeris"
+   ]
+  },
+  {
+   "file": "pck00011.tpc",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+   "role": "Text PCK: body radii (Sun, Earth, Moon)",
+   "ref": "R-NAIF-GK",
+   "bytes": 131226,
+   "sha256": "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1",
+   "retrieved_utc": "2026-11-14T17:49:08Z",
+   "used_for": [
+    "ephemeris"
+   ]
+  }
+ ],
+ "products": [
+  {
+   "file": "ephemeris_2026.bin",
+   "bytes": 420528,
+   "sha256": "9ed1a247f15d33f72bc8c37d526472c34502ca537b0e92533e53fe8ad72ed81c",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Hourly apparent Sun and Earth position vectors relative to the Moon's centre",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at uniform UTC hours (M-EPHEM)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "ephemeris_2027.bin",
+   "bytes": 420528,
+   "sha256": "6828203a94bec4c9d7c0cecb49de141f3d03fa27f3ae762e01fe4739667b1930",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Hourly apparent Sun and Earth position vectors relative to the Moon's centre",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at uniform UTC hours (M-EPHEM)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "ephemeris_2028.bin",
+   "bytes": 421680,
+   "sha256": "374d135adeae1047f29fedb385afbd26a480c41f0fd8fbba8973d3c5c268503f",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Hourly apparent Sun and Earth position vectors relative to the Moon's centre",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at uniform UTC hours (M-EPHEM)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "horizon_connecting-ridge.bin",
+   "bytes": 5760,
+   "sha256": "80f7526812c564ecbdf886cb856b2119e993c461ab53c48e222d8b367bcb6ede",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "horizon_im1-odysseus.bin",
+   "bytes": 5760,
+   "sha256": "d90ef7a857ae08765c9b75c9ff8dc064c60a038d0f5556a0eafcb302e87f6534",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "horizon_im2-athena.bin",
+   "bytes": 5760,
+   "sha256": "94e50e5517241a2ac81b13253a58aba39442992bb2f7b3f6305109bfd6d9b68f",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "overview_80S.png",
+   "bytes": 371185,
+   "sha256": "b745a75a1f708e7a28d9c507c97578653cee978f0b755579c6dee63fcceadda6",
+   "description": "Shaded-relief context map of the region south of 80S (display only)",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF"
+   ],
+   "method": "10x10 block mean, analytical hillshade with fixed artificial light",
+   "frame": "south polar stereographic",
+   "units": "8-bit grey",
+   "refs": [
+    "R-LOLA-PGDA"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "terrain_connecting-ridge.bin",
+   "bytes": 161604,
+   "sha256": "3bb539fde345fa6edf76c202ed7742408ef7dfc67a95286f00a203e528d862b4",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "terrain_im1-odysseus.bin",
+   "bytes": 161604,
+   "sha256": "4fe9e230e3884bf3f88337913fa423e513792dd1017a5f422aff6c13032d545f",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "terrain_im2-athena.bin",
+   "bytes": 161604,
+   "sha256": "5dfd5f99f784990b72da7ca098f36c8ac79770c11d370483a130deef98652951",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "sites.json",
+   "description": "Site coordinates (sourced), DEM elevation and slope (sampled), horizon/terrain statistics (computed)",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF",
+    "LDSM_80S_80MPP_ADJ.TIF",
+    "AVGVISIB_65S_240M_201608.TIF",
+    "scripts/sites_input.json"
+   ],
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-LROC-1360",
+    "R-NASA-IM1",
+    "R-LROC-1408",
+    "R-LOLA-SITES",
+    "R-MAZARICO-2011"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  },
+  {
+   "file": "ephemeris.json",
+   "description": "Index and conventions of the ephemeris sample files; body radii from the PCK",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS",
+    "R-NAIF-PCK"
+   ],
+   "generated_utc": "2026-11-14T18:54:22Z"
+  }
+ ],
+ "references": [
+  {
+   "id": "R-NAIF-GK",
+   "authority": "NASA/JPL Navigation and Ancillary Information Facility (NAIF)",
+   "title": "SPICE generic kernels (LSK, PCK, SPK, FK)",
+   "url": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+   "version": "files as listed in provenance.sources (SHA-256 recorded)",
+   "kind": "dataset",
+   "role": "computational input",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; kernel files downloaded from the linked generic_kernels tree",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-DE440",
+   "authority": "Park, R.S., Folkner, W.M., Williams, J.G., Boggs, D.H. (JPL)",
+   "title": "The JPL Planetary and Lunar Ephemerides DE440 and DE441",
+   "url": "https://doi.org/10.3847/1538-3881/abd414",
+   "doi": "https://doi.org/10.3847/1538-3881/abd414",
+   "version": "The Astronomical Journal 161(3):105 (2021); kernels de440s.bsp, moon_pa_de440_200625.bpc",
+   "kind": "dataset+paper",
+   "role": "computational input",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (authors, title, AJ 161, issue 3, page 105, 2021); also cited as ref. [1] in moon_de440_250416.tf",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-DE421",
+   "authority": "Folkner, W.M., Williams, J.G., Boggs, D.H. (JPL)",
+   "title": "The Planetary and Lunar Ephemeris DE 421",
+   "url": "https://ipnpr.jpl.nasa.gov/progress_report/42-178/178C.pdf",
+   "version": "IPN Progress Report 42-178, 2009-08-15; kernels de421.bsp, moon_pa_de421_1900-2050.bpc, moon_080317.tf",
+   "kind": "dataset+paper",
+   "role": "validation",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; title, authors and report number read from the PDF first page. Used only for the frame-consistency check (docs/VALIDATION.md V-3)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-MOONFK",
+   "authority": "NASA/JPL NAIF (N. Bachman)",
+   "title": "Lunar frame kernel moon_de440_250416.tf (defines MOON_PA_DE440 and MOON_ME_DE440_ME421)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+   "version": "created 2025-04-16",
+   "kind": "dataset+documentation",
+   "role": "computational input",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; header comments read from the downloaded file (creation date 2025 April 16)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-MOONFK-README",
+   "authority": "NASA/JPL NAIF",
+   "title": "aareadme.txt for lunar frame kernels (which FK pairs with which binary PCK)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+   "version": "latest revision 2025-04-16",
+   "kind": "documentation",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; states moon_de440_250416.tf is to be used with moon_pa_de440_200625.bpc and moon_080317.tf with moon_pa_de421_1900-2050.bpc",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-LSK",
+   "authority": "NASA/JPL NAIF",
+   "title": "Leapseconds kernel naif0012.tls",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+   "version": "naif0012 (last leap second 2017-01-01, DELTA_AT = 37 s)",
+   "kind": "dataset",
+   "role": "computational input",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; DELTET/DELTA_AT table read from the downloaded file",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-PCK",
+   "authority": "NASA/JPL NAIF (N. Bachman)",
+   "title": "Planetary constants kernel pck00011.tpc (body radii)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+   "version": "pck00011 (2022-12-27); BODY10_RADII = 695700 km, BODY399_RADII = 6378.1366/6378.1366/6356.7519 km, BODY301_RADII = 1737.4 km",
+   "kind": "dataset",
+   "role": "computational input; source value",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; values and stated sources (primary source: Archinal et al. 2018) read from the downloaded file",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-IAU-WGCCRE",
+   "authority": "Archinal, B.A., Acton, C.H., A'Hearn, M.F., Conrad, A., Consolmagno, G.J., Duxbury, T., Hestroffer, D., Hilton, J.L., Kirk, R.L., Klioner, S.A., McCarthy, D., Meech, K., Oberst, J., Ping, J., Seidelmann, P.K., Tholen, D.J., Thomas, P.C., Williams, I.P. (IAU WGCCRE)",
+   "title": "Report of the IAU Working Group on Cartographic Coordinates and Rotational Elements: 2015",
+   "url": "https://doi.org/10.1007/s10569-017-9805-5",
+   "doi": "https://doi.org/10.1007/s10569-017-9805-5",
+   "version": "Celestial Mechanics and Dynamical Astronomy 130(3), article 22 (2018); lunar mean radius 1737.4 km",
+   "kind": "paper",
+   "role": "source value",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14. The 1737.4 km lunar radius was confirmed indirectly (pck00011.tpc BODY301_RADII = 1737.4 km, 'Values are unchanged in the 2015 IAU report'; USGS lunar data standards page). The report's table itself could not be opened (publisher full text not retrievable from the build machine): table number not verified",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-ABCORR",
+   "authority": "NASA/JPL NAIF (E. D. Wright)",
+   "title": "Aberration Corrections Required Reading (abcorr.req)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/abcorr.html",
+   "version": "CSPICE toolkit documentation, last revised 2020-05-26",
+   "kind": "documentation",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; describes 'LT+S' (one-way light time plus stellar aberration) and recommends it for apparent directions",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-SPKPOS",
+   "authority": "NASA/JPL NAIF",
+   "title": "spkpos_c API documentation (position of a target relative to an observer)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkpos_c.html",
+   "version": "CSPICE routine version 3.0.2, 2021-11-01",
+   "kind": "documentation",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-SPKCPO",
+   "authority": "NASA/JPL NAIF",
+   "title": "spkcpo_c API documentation (state of a target relative to an observer with constant position in a specified frame)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkcpo_c.html",
+   "version": "CSPICE routine version 1.0.2, 2021-08-05",
+   "kind": "documentation",
+   "role": "method; validation",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; used in scripts/moonlib.py topocentric_exact_km (surface-observer reference for validation V-2)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-FRAMES",
+   "authority": "NASA/JPL NAIF (N. J. Bachman)",
+   "title": "Frames Required Reading (frames.req)",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html",
+   "version": "CSPICE toolkit documentation, last revised 2021-12-31",
+   "kind": "documentation",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NAIF-TIME",
+   "authority": "NASA/JPL NAIF (B. V. Semenov)",
+   "title": "Time Required Reading (time.req): UTC, TDB and leap seconds",
+   "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html",
+   "version": "CSPICE toolkit documentation, last revised 2021-12-23",
+   "kind": "documentation",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SPICE",
+   "authority": "Acton, C.H.",
+   "title": "Ancillary data services of NASA's Navigation and Ancillary Information Facility",
+   "url": "https://doi.org/10.1016/0032-0633(95)00107-7",
+   "doi": "https://doi.org/10.1016/0032-0633(95)00107-7",
+   "version": "Planetary and Space Science 44(1), 65-70 (1996)",
+   "kind": "paper",
+   "role": "method",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SPICE-2018",
+   "authority": "Acton, C., Bachman, N., Semenov, B., Wright, E.",
+   "title": "A look towards the future in the handling of space science mission geometry",
+   "url": "https://doi.org/10.1016/j.pss.2017.02.013",
+   "doi": "https://doi.org/10.1016/j.pss.2017.02.013",
+   "version": "Planetary and Space Science 150, 9-12 (2018)",
+   "kind": "paper",
+   "role": "method",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (NAIF's requested citation for the SPICE system together with Acton 1996)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SPICEYPY",
+   "authority": "Annex, A.M., Pearson, B., Seignovert, B., Carcich, B.T., Eichhorn, H., Mapel, J.A., von Forstner, J.L.F., McAuliffe, J., del Rio, J.D., Berry, K.L., Aye, K.-M., Stefko, M., de Val-Borro, M., Kulumani, S., Murakami, S.",
+   "title": "SpiceyPy: a Pythonic Wrapper for the SPICE Toolkit",
+   "url": "https://doi.org/10.21105/joss.02050",
+   "doi": "https://doi.org/10.21105/joss.02050",
+   "version": "Journal of Open Source Software 5(46), 2050 (2020); software version used: spiceypy 8.4.0 with CSPICE N0067 (provenance.pipeline)",
+   "kind": "software",
+   "role": "method",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LOLA-PGDA",
+   "authority": "Barker, M.K., Mazarico, E., Neumann, G.A., Smith, D.E., Zuber, M.T., Head, J.W., Sun, X. (NASA GSFC Planetary Geodesy Data Archive)",
+   "title": "A New View of the Lunar South Pole from the Lunar Orbiter Laser Altimeter (LOLA); data: PGDA product 90 'A New View of the Lunar South Pole from LOLA'",
+   "url": "https://pgda.gsfc.nasa.gov/products/90",
+   "doi": "https://doi.org/10.3847/PSJ/acf3e1",
+   "data_doi": "https://doi.org/10.60903/gsfcpgda-lola-spole",
+   "version": "The Planetary Science Journal 4(9):183 (2023); files LDEM_80S_80MPP_ADJ.TIF, LDEM_60S_240MPP_ADJ.TIF, LDSM_80S_80MPP_ADJ.TIF; frame MOON_ME of DE421 (product page)",
+   "kind": "dataset+paper",
+   "role": "computational input",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (paper); DataCite record of the data DOI resolves to PGDA product 90 (publisher Goddard Space Flight Center, 2023); product page fetched 2026-11-14 (asks users to cite Barker et al. 2023)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LOLA-SITES",
+   "authority": "Barker, M.K., Mazarico, E., Neumann, G.A., Smith, D.E., Zuber, M.T., Head, J.W. (NASA GSFC Planetary Geodesy Data Archive)",
+   "title": "Improved LOLA elevation maps for south pole landing sites: Error estimates and their impact on illumination conditions; data: PGDA product 78 'High-Resolution LOLA Topography for Lunar South Pole Sites'",
+   "url": "https://pgda.gsfc.nasa.gov/products/78",
+   "doi": "https://doi.org/10.1016/j.pss.2020.105119",
+   "version": "Planetary and Space Science 203, 105119 (2021); footprint of Site01 'Connecting ridge' DEM Site01_final_adj_5mpp_surf.tif (x -19000..-3000 m, y -20000..-4000 m, 5 m/pix)",
+   "kind": "dataset+paper",
+   "role": "source value (site footprint)",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (paper); product page fetched 2026-11-14 (Site01 = 'Connecting ridge'); GeoTIFF bounds of https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site01/Site01_final_adj_5mpp_surf.tif read remotely with GDAL /vsicurl/ 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-MAZARICO-2011",
+   "authority": "Mazarico, E., Neumann, G.A., Smith, D.E., Zuber, M.T., Torrence, M.H. (NASA GSFC / MIT)",
+   "title": "Illumination conditions of the lunar polar regions using LOLA topography; data: PGDA product 69 'Lunar Polar Illumination' (maps AVGVISIB_65S_240M_201608, AVGVISIB_65S_240M_201608_EARTH)",
+   "url": "https://pgda.gsfc.nasa.gov/products/69",
+   "doi": "https://doi.org/10.1016/j.icarus.2010.10.030",
+   "version": "Icarus 211(2), 1066-1081 (2011); map PRODUCT_VERSION_ID V1.05, PRODUCT_CREATION_TIME 2016-09-15 (PDS labels); averages over hourly time steps spanning ~18.6 years (product page)",
+   "kind": "dataset+paper",
+   "role": "validation; site selection (connecting-ridge point)",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (paper); product page fetched 2026-11-14; PDS labels read from data_cache/illumination/*.LBL",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LROC-1360",
+   "authority": "Robinson, M. (LROC team, Arizona State University)",
+   "title": "Intuitive Machines IM-1 On The Moon! (landed coordinates of Odysseus: 80.13 S, 1.44 E, 2579 m elevation)",
+   "url": "https://lroc.im-ldi.com/images/1360",
+   "version": "2024-02-26",
+   "kind": "mission record",
+   "role": "source value",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; coordinates and elevation read on the page (lroc.asu.edu redirects to lroc.im-ldi.com)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-NASA-IM1",
+   "authority": "NASA (Goddard Digital Team)",
+   "title": "NASA's LRO Images Intuitive Machine's Odysseus Lander (80.13 S, 1.44 E, 2,579 m)",
+   "url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
+   "version": "2024-02-26",
+   "kind": "mission record",
+   "role": "source value",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; coordinates and elevation read on the page",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LROC-1408",
+   "authority": "Robinson, M. (LROC team, Arizona State University)",
+   "title": "IM-2 Athena Seen Obliquely (landed coordinates of Athena: 84.7906 S, 29.1957 E; no elevation given)",
+   "url": "https://lroc.im-ldi.com/images/1408",
+   "version": "2025-03-10",
+   "kind": "mission record",
+   "role": "source value",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; coordinates read on the page; page states the lander came to rest on its side in a 20 m diameter crater",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LROC-1401",
+   "authority": "Robinson, M. (LROC team, Arizona State University)",
+   "title": "IM-2 Landing Region (intended landing site -84.78, 29.13 E)",
+   "url": "https://lroc.im-ldi.com/images/1401",
+   "version": "2025-02-26",
+   "kind": "mission record",
+   "role": "background",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; coordinates read on the page",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-CLPS",
+   "authority": "NASA Science Mission Directorate",
+   "title": "Commercial Lunar Payload Services (CLPS) Deliveries",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/",
+   "version": "page last updated 2026-10-23",
+   "kind": "mission record",
+   "role": "background",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; TO2-IM (Malapert A, landed 2024-02-22), PRIME-1, CP-22 (Mons Mouton) entries read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-CP22",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CLPS CP-22 Science (Intuitive Machines Nova-C lander IM-4 to Mons Mouton; no coordinates published)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/",
+   "version": "page last updated 2026-06-10",
+   "kind": "mission record",
+   "role": "background",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; page gives no landing coordinates or dates",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-ARTEMIS3-REGIONS",
+   "authority": "NASA",
+   "title": "NASA Provides Update on Artemis III Moon Landing Regions (release 24-136)",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/",
+   "version": "2024-10-28",
+   "kind": "background",
+   "role": "background",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; nine regions listed incl. 'Mons Mouton' and 'Mons Mouton Plateau'; 'connecting ridge' is not among them",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-HORIZONS",
+   "authority": "NASA/JPL Solar System Dynamics",
+   "title": "Horizons On-Line Ephemeris System and API",
+   "url": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+   "version": "API responses report 'API VERSION: 1.2' (documentation page states version 1.3, 2025 June); Sun/Earth/Moon source DE441; lunar site frame MEAN_ME (high precision), radius 1737.4 km",
+   "kind": "validation",
+   "role": "validation",
+   "verified": "URL fetched (HTTP 200) 2026-11-14; a test observer query (CENTER='coord@301') returned the header fields quoted in 'version'",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SVS-5027",
+   "authority": "NASA Scientific Visualization Studio (E. Wright, N. Petro)",
+   "title": "Illumination at the Moon's South Pole to 80S, 2025 to 2028",
+   "url": "https://svs.gsfc.nasa.gov/5027",
+   "version": "released 2022-10-05 (page updated 2025-02-18); uses LOLA DEM and DE421",
+   "kind": "background",
+   "role": "background",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-TSI",
+   "authority": "Prsa, A., Harmanec, P., Torres, G., Mamajek, E., et al. (IAU Inter-Division A-G Working Group on Nominal Units for Stellar and Planetary Astronomy)",
+   "title": "Nominal Values for Selected Solar and Planetary Quantities: IAU 2015 Resolution B3",
+   "url": "https://doi.org/10.3847/0004-6256/152/2/41",
+   "doi": "https://doi.org/10.3847/0004-6256/152/2/41",
+   "version": "The Astronomical Journal 152(2):41 (2016); nominal solar radius 1 R_sun^N = 6.957e8 m, nominal total solar irradiance 1 S_sun^N = 1361 W m^-2",
+   "kind": "paper",
+   "role": "source value",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14; nominal values read from the resolution text (arXiv:1510.07674)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-TSI-MEAS",
+   "authority": "Kopp, G., Lean, J.L.",
+   "title": "A new, lower value of total solar irradiance: Evidence and climate significance",
+   "url": "https://doi.org/10.1029/2010GL045777",
+   "doi": "https://doi.org/10.1029/2010GL045777",
+   "version": "Geophysical Research Letters 38(1), L01706 (2011); TSI at the 2008 solar minimum 1360.8 +/- 0.5 W m^-2",
+   "kind": "paper",
+   "role": "validation (consistency of the adopted solar constant)",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14 (title, authors, GRL 38, issue 1, 2011); article number L01706 and the 1360.8 +/- 0.5 W m^-2 value confirmed from the abstract as reproduced by NASA ESPO / DTIC copies",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-AU",
+   "authority": "International Astronomical Union",
+   "title": "IAU 2012 Resolution B2 on the re-definition of the astronomical unit of length (1 au = 149 597 870 700 m exactly)",
+   "url": "https://doi.org/10.1017/S1743921315005463",
+   "doi": "https://doi.org/10.1017/S1743921315005463",
+   "version": "Transactions IAU XXVIIIB, Proceedings of the IAU 10(T28B), Chapter IV: Twenty Eighth General Assembly, pp. 35-47 (Cambridge University Press); adopted 2012-08 (Beijing)",
+   "kind": "standard",
+   "role": "source value",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14; resolution text read from the Cambridge PDF. The former URL https://www.iau.org/static/resolutions/IAU2012_English.pdf now redirects to a login page (HTTP 404); the IAU archive mirror iauarchive.eso.org returned HTTP 502",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SNYDER",
+   "authority": "Snyder, J.P. (U.S. Geological Survey)",
+   "title": "Map Projections: A Working Manual (ch. 21 Stereographic projection, sphere, polar aspect)",
+   "url": "https://doi.org/10.3133/pp1395",
+   "doi": "https://doi.org/10.3133/pp1395",
+   "version": "USGS Professional Paper 1395 (1987); south polar aspect forward: eqs. (21-9) x, (21-10) y, (21-11) k, (21-12) rho, (20-12) theta, p. 158; inverse for the sphere: (20-14) latitude, (20-17) longitude for the south polar case, (20-18) rho, (21-15) c = 2 arctan[rho/(2 R k0)], pp. 158-159",
+   "kind": "method",
+   "role": "method",
+   "verified": "Crossref API metadata (api.crossref.org/works/<doi>) checked 2026-11-14; equations read from the text layer of the USGS scan https://pubs.usgs.gov/pp/1395/report.pdf (PDF pages 170-171)",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SEGMENT",
+   "authority": "Weisstein, E.W. (MathWorld, Wolfram Research)",
+   "title": "Circular Segment",
+   "url": "https://mathworld.wolfram.com/CircularSegment.html",
+   "version": "n/a; area of a segment A = R^2 acos(r/R) - r sqrt(R^2 - r^2) (MathWorld eq. 17); derivation reproduced in docs/REFERENCES_AND_ASSUMPTIONS.md",
+   "kind": "method",
+   "role": "method",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-USGS-LUNAR-STD",
+   "authority": "U.S. Geological Survey Astrogeology Science Center, Planetary Spatial Data Infrastructure",
+   "title": "Lunar Data Interoperability Standards",
+   "url": "https://psdi.astrogeology.usgs.gov/moon/standards/data_standards/",
+   "version": "no date on page; vertical datum: sphere of radius 1737.4 km (WGCCRE, Archinal et al. 2018); horizontal datum: DE421 rotated to the ME frame, expected to shift to DE440 rotated to the DE421 ME frame",
+   "kind": "background",
+   "role": "background (supports the frame and datum conventions)",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-USGS-GAZ-MOUTON",
+   "authority": "IAU / USGS Gazetteer of Planetary Nomenclature",
+   "title": "Mons Mouton (Moon), feature 16070",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/16070",
+   "version": "adopted by IAU 2022-05-13; centre -84.60, 31.00 E; diameter 130 km",
+   "kind": "background",
+   "role": "background (geographic context only)",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-SST-SOA-POWER",
+   "authority": "NASA Small Spacecraft Systems Virtual Institute (S3VI)",
+   "title": "State-of-the-Art of Small Spacecraft Technology, chapter 3.0 Power",
+   "url": "https://www.nasa.gov/smallsat-institute/sst-soa/power-subsystems/",
+   "version": "page dated 2026-05-07; Table 3-1 lists beginning-of-life efficiencies of space multi-junction cells of 26.8-30.7 % (3-junction products) and up to 32.2 % (4-5 junction / IMM products)",
+   "kind": "background",
+   "role": "background (plausibility of the assumed array efficiency only)",
+   "verified": "URL fetched (HTTP 200) 2026-11-14",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-CHALLENGE",
+   "authority": "NASA Space Apps Challenge",
+   "title": "Lunar Landing Site Navigator (2026 challenge statement)",
+   "url": "https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/",
+   "version": "2026 (page could not be retrieved from the build machine on 2026-11-14: TLS certificate verification failed, curl exit 60; requirements taken from the team's transcription)",
+   "kind": "background",
+   "role": "background",
+   "verified": "NOT VERIFIED: page not retrievable (TLS certificate verification failure); certificate checks were not bypassed",
+   "accessed": "2026-11-14"
+  }
+ ]
+}

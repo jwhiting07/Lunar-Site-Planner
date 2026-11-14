@@ -1,0 +1,10 @@
+.venv/
+node_modules/
+dist/
+data_cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.tsbuildinfo
+.vite/
+.claude/launch.json

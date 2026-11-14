@@ -1,0 +1,56 @@
+{
+ "schema": 1,
+ "frame": "MOON_ME_DE440_ME421",
+ "frame_description": "Lunar Mean-Earth/Polar-Axis body-fixed frame (DE440 orientation aligned to DE421 ME). +Z = mean rotation pole (north), +X = mean sub-Earth direction (lon 0), +Y = lon 90E.",
+ "center": "Moon centre (NAIF 301)",
+ "aberration_correction": "LT+S",
+ "units": "km",
+ "layout": "row-major float64 little-endian, 6 values per sample: sun_x, sun_y, sun_z, earth_x, earth_y, earth_z",
+ "time_system": "UTC (uniform steps; no leap second inside the window per naif0012.tls)",
+ "step_s": 3600,
+ "start_utc": "2026-01-01T00:00:00Z",
+ "stop_utc": "2029-01-01T00:00:00Z",
+ "files": [
+  {
+   "file": "ephemeris_2026.bin",
+   "t0_utc": "2026-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2027.bin",
+   "t0_utc": "2027-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2028.bin",
+   "t0_utc": "2028-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  }
+ ],
+ "body_radii_km": {
+  "sun": 695700.0,
+  "earth_equatorial": 6378.1366,
+  "moon": 1737.4,
+  "source": "pck00011.tpc BODY10_RADII / BODY399_RADII / BODY301_RADII [R-NAIF-PCK]"
+ },
+ "interpolation": {
+  "method": "linear in the Moon-centred body-fixed vectors between hourly samples",
+  "max_error_vs_spice": {
+   "sun_dir_deg": 1.5440623538464254e-05,
+   "earth_dir_deg": 0.00013296108021038192,
+   "sun_dist_rel": 9.89926329630908e-06,
+   "earth_dist_rel": 9.567622741846193e-07
+  },
+  "check": "4000 random hours x {15, 30, 45} min against direct SPICE evaluation"
+ },
+ "refs": [
+  "R-DE440",
+  "R-NAIF-MOONFK",
+  "R-NAIF-LSK",
+  "R-NAIF-ABCORR",
+  "R-NAIF-PCK"
+ ]
+}

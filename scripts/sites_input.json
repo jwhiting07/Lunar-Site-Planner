@@ -1,0 +1,45 @@
+{
+  "_comment": "Analysis locations. Coordinates are planetocentric, east-positive, lunar Mean-Earth/Polar-Axis frame. coord_class: 'verified_landing' = published as-landed coordinates of a spacecraft; 'representative_point' = analysis point chosen by this project inside a NASA-defined site (not a mission target).",
+  "sites": [
+    {
+      "id": "im2-athena",
+      "name": "Mons Mouton — IM-2 Athena landing site",
+      "short": "Mons Mouton (IM-2)",
+      "lat_deg": -84.7906,
+      "lon_deg": 29.1957,
+      "coord_class": "verified_landing",
+      "coord_refs": ["R-LROC-1408"],
+      "coord_note": "As-landed position of Intuitive Machines IM-2 'Athena' (CLPS PRIME-1 delivery, 2025-03-06) reported by the LROC team: 84.7906°S, 29.1957°E. NASA's CP-22 delivery (Intuitive Machines IM-4) also targets Mons Mouton, but NASA has published no CP-22 coordinates; this point is NOT a CP-22 landing target.",
+      "context_refs": ["R-LROC-1401", "R-CP22", "R-CLPS"],
+      "published_elevation_m": null
+    },
+    {
+      "id": "im1-odysseus",
+      "name": "Malapert A — IM-1 Odysseus landing site",
+      "short": "Malapert A (IM-1)",
+      "lat_deg": -80.13,
+      "lon_deg": 1.44,
+      "coord_class": "verified_landing",
+      "coord_refs": ["R-LROC-1360", "R-NASA-IM1"],
+      "coord_note": "As-landed position of Intuitive Machines IM-1 'Odysseus' (CLPS TO2-IM delivery, 2024-02-22) reported by the LROC team and NASA: 80.13°S, 1.44°E, 2579 m elevation. Published to 0.01° (about 300 m), so the analysis point may be up to a few hundred metres from the actual lander.",
+      "context_refs": ["R-CLPS"],
+      "published_elevation_m": 2579
+    },
+    {
+      "id": "connecting-ridge",
+      "name": "Shackleton–de Gerlache connecting ridge (PGDA Site 01)",
+      "short": "Connecting ridge (Site 01)",
+      "select": {
+        "method": "max_avg_illumination_in_box",
+        "box_stereo_m": {"x_min": -19000, "x_max": -3000, "y_min": -20000, "y_max": -4000},
+        "box_source": "Footprint of the NASA PGDA 5 m/pix 'Site01: Connecting ridge' DEM (Site01_final_adj_5mpp_surf.tif GeoTIFF bounds, south polar stereographic metres)",
+        "map": "AVGVISIB_65S_240M_201608.TIF"
+      },
+      "coord_class": "representative_point",
+      "coord_refs": ["R-LOLA-SITES", "R-MAZARICO-2011"],
+      "coord_note": "Representative analysis point chosen by this project: the centre of the 240 m pixel with the highest 18.6-year average solar illumination (Mazarico et al. 2011 map AVGVISIB_65S_240M_201608) inside the footprint of NASA PGDA 'Site01: Connecting ridge'. It is not a mission landing target.",
+      "context_refs": ["R-ARTEMIS3-REGIONS"],
+      "published_elevation_m": null
+    }
+  ]
+}
