@@ -198,6 +198,8 @@ export interface Metrics {
 
 export interface AnalysisResult {
   site: SiteDoc;
+  /** Runtime terrain profile used by this analysis, also shared by the sky chart. */
+  horizonMask?: HorizonMask;
   terrainAware: boolean;
   startMs: number;
   endMs: number;

@@ -591,6 +591,23 @@ def render_md(R: dict) -> str:
       "The column \"240 m, 0 m obs\" uses a horizon recomputed from LDEM_60S_240MPP with the observer on the surface, closer "
       "to the map's set-up. Whether the differences count as agreement is left to the numbers; no tolerance was set in advance.")
     a("")
+    for sid, s in v["per_site"].items():
+        o2 = s["ours"]["mask_240m_only_obs0m"]["long_18p6yr"]
+        a(f"- Evaluated the map's way (240 m DEM, observer on the surface, 18.6 yr), {sid}: ours − map nearest = "
+          f"{f(o2['sun_any_part_fraction'] - s['map']['sun']['nearest'], 4)} (Sun, any part), "
+          f"{f(o2['earth_any_part_fraction'] - s['map']['earth']['nearest'], 4)} (Earth, any part); "
+          f"with the shipped mask: {f(s['diff_ours_long_shipped_minus_map_nearest']['sun_any_part'], 4)} and "
+          f"{f(s['diff_ours_long_shipped_minus_map_nearest']['earth_any_part'], 4)}.")
+    a("")
+    cr = v["per_site"].get("connecting-ridge")
+    if cr:
+        a(f"**Selection effect (connecting-ridge).** This point was chosen as the pixel with the MAXIMUM map value "
+          f"(Sun {f(cr['map']['sun']['nearest'], 4)}) inside the PGDA Site01 footprint, so the map value there is biased high "
+          "relative to any independent estimate (\"winner's curse\": the maximum of a noisy field is preferentially a pixel "
+          "whose error is positive). A negative ours − map difference at this site is therefore expected in part from the "
+          "selection itself, on top of the DEM, observer-height and epoch-span differences, and should not be read as a "
+          "deficit of our model alone. The IM-1 and IM-2 points are published landing coordinates and carry no such bias.")
+        a("")
     # V-6
     v = R["V-6"]
     a("## V-6 Horizon sampling convergence [M-HORIZON]")
@@ -610,6 +627,14 @@ def render_md(R: dict) -> str:
             a(f"| {sid} | {name} | {f(x['dH_common_az_deg']['max'],4)} | {f(x['dH_common_az_deg']['rms'],4)} | "
               f"{f(x['dH_vs_interpolated_shipped_deg']['max'],4)} | {f(x['d_sunlit_fraction'],2,True)} | {f(x['d_earth_visible_fraction'],2,True)} |")
     a("")
+    cr = v["per_site"].get("connecting-ridge", {}).get("rays_half")
+    if cr and "status" not in cr:
+        a(f"**Not fully converged.** At the connecting ridge, halving the ray step changes H(A) by up to "
+          f"{f(cr['dH_common_az_deg']['max'], 3)}° (rms {f(cr['dH_common_az_deg']['rms'], 3)}°) and the 2026–2028 sunlit "
+          f"fraction by {f(cr['d_sunlit_fraction'], 4)} ({f(100 * cr['d_sunlit_fraction'], 2)} percentage points; Earth-visible "
+          f"fraction by {f(cr['d_earth_visible_fraction'], 2, True)}). Near-field sampling of the bilinear DEM surface on a sharp crest "
+          "is not converged at the shipped ray step, so the shipped mask carries a sampling uncertainty of this order there.")
+        a("")
     # V-7
     v = R["V-7"]
     a("## V-7 IM-1 site elevation and slope [R-LROC-1360] [R-NASA-IM1]")

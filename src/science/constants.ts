@@ -7,13 +7,21 @@
  * specification unless explicitly marked SOURCED.
  */
 
-/** SOURCED. Lunar reference sphere radius of the LOLA products, metres. [R-LOLA-PGDA] [R-IAU-WGCCRE] */
+/**
+ * SOURCED. Lunar reference sphere radius of the LOLA products, metres: the
+ * sphere radius in the CRS of the LOLA GeoTIFFs (checked by scripts/build_data.py
+ * at build time) and BODY301_RADII of pck00011.tpc. [R-LOLA-PGDA] [R-NAIF-PCK] [R-IAU-WGCCRE]
+ */
 export const R_MOON_M = 1_737_400;
 
 /** SOURCED. Solar radius, km: pck00011.tpc BODY10_RADII = IAU 2015 nominal solar radius. [R-NAIF-PCK] [R-TSI] */
 export const R_SUN_KM = 695_700;
 
-/** SOURCED. Earth equatorial radius, km: pck00011.tpc BODY399_RADII. Display only. [R-NAIF-PCK] */
+/**
+ * SOURCED. Earth equatorial radius, km: pck00011.tpc BODY399_RADII. [R-NAIF-PCK]
+ * Not used by any runtime calculation (Earth visibility uses Earth's centre);
+ * the validation script uses the same value for its any-part-of-disc comparison (V-5).
+ */
 export const R_EARTH_KM = 6378.1366;
 
 /** SOURCED. Astronomical unit, km (exact by definition). [R-AU] */

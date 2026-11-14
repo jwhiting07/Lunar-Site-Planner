@@ -219,6 +219,23 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
   }, []);
   const closeProv = useCallback(() => setProvOpen(false), []);
 
+  const landingSitePicker = (
+    <label className="landing-site-picker">
+      <span className="sr-only">Landing site</span>
+      <select value={primaryId} onChange={event => selectPrimary(event.target.value)}>
+        {sitesDoc?.sites.map(site => <option key={site.id} value={site.id}>{site.short}</option>)}
+      </select>
+    </label>
+  );
+
+  const localHorizon = <SkyView
+    mask={primaryMask}
+    result={primaryResult}
+    inst={inst}
+    cursorMs={cursorMs}
+    earthMinClearanceDeg={paramState.earthMinClearanceDeg}
+  />;
+
   const computing = !!sitesDoc && !loadError && results.length < selectedIds.length && !ephError && !analysisError;
 
   const banners: string[] = [];
@@ -245,12 +262,7 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
         <main className={`planning-layout${analysisOpen ? ' analysis-open' : ''}`}>
           <div className="planning-visual">
             <div className="planning-view-tools">
-              <label>
-                <span className="sr-only">Landing site</span>
-                <select value={primaryId} onChange={event => selectPrimary(event.target.value)}>
-                  {sitesDoc.sites.map(site => <option key={site.id} value={site.id}>{site.short}</option>)}
-                </select>
-              </label>
+              {landingSitePicker}
               <div className="planning-view-actions">
                 <ExportMenu results={results} primaryId={primaryId} provenance={provenance} />
                 <button type="button" className="btn" onClick={openProv}>Sources & methods</button>
@@ -274,13 +286,7 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
             <p className="planning-analysis-site">{primarySite.short}</p>
             <MetricSummary result={primaryResult} loading={computing} />
             <button type="button" className="planning-detail-button" aria-haspopup="dialog" onClick={() => setTool('comparison')}>Compare sites <span aria-hidden="true">↗</span></button>
-            <details className="workspace-details"><summary>Local horizon</summary><SkyView
-              mask={primaryMask}
-              result={primaryResult}
-              inst={inst}
-              cursorMs={cursorMs}
-              earthMinClearanceDeg={paramState.earthMinClearanceDeg}
-            /></details>
+            <details className="workspace-details"><summary>Local horizon</summary>{localHorizon}</details>
             <details className="workspace-details"><summary>Lander parameters</summary><ParamsPanel value={paramState} onChange={setParamState} /></details>
             <details className="workspace-details"><summary>Site facts & coordinates</summary><SiteFacts site={primarySite} onDetails={() => openInfo('M-SITE')} /></details>
           </aside>
@@ -289,15 +295,17 @@ export default function PlanningView({ selectedSiteId, onSelectSite }: { selecte
 
       {sitesDoc && <div className="planning-time-dock">
         <button type="button" className="btn planning-tools-trigger" aria-haspopup="dialog" aria-expanded={tool !== null} onClick={() => setTool('timelines')}>Timelines & comparison <span aria-hidden="true">↗</span></button>
-        <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />
+        {!tool && <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />}
       </div>}
       {tool && sitesDoc && <PlanningToolsDialog initialTool={tool} onClose={() => setTool(null)} interval={`${isoDate(startMs)} — ${isoDate(endMs)}`}
         dateRange={<DateRange startMs={startMs} endMs={endMs} covStartMs={covStartMs} covEndMs={covEndMs} onChange={applyRange} />}
+        primarySitePicker={landingSitePicker}
         siteSelection={<fieldset className="planning-site-selection"><legend>Sites · select up to {MAX_SITES}</legend>
           {sitesDoc.sites.map(site => <label key={site.id}><input type="checkbox" checked={selectedIds.includes(site.id)} disabled={site.id === primaryId || (!selectedIds.includes(site.id) && selectedIds.length >= MAX_SITES)} onChange={() => toggleSite(site.id)} /><span>{site.short}<small>{site.coord_class === 'verified_landing' ? 'Verified landing' : 'Representative point'}{site.id === primaryId ? ' · primary' : ''}</small></span></label>)}
         </fieldset>}
         timelines={<TimelinesPanel results={results} primaryId={primaryId} startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />}
         comparison={<Comparison results={results} primaryId={primaryId} />}
+        horizon={localHorizon}
         timeControls={<TimeControls startMs={startMs} endMs={endMs} cursorMs={cursorMs} onCursor={setCursorMs} />}
       />}
 

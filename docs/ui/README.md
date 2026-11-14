@@ -10,9 +10,14 @@ The latest request supersedes the separate Moon/Planning pages below. Keep one
 Planning workspace without page tabs or preset locations. Accept entered coordinates
 or a click on the Moon, landing date and mission duration. Show a target-based verdict,
 sunlight and Earth visibility first; place custom minima, outage limits, clearance and
-power assumptions behind Advanced. Detailed data retains timelines, terrain and the
-local horizon. Scale, zoom, far-side and south-pole controls, sources and the UTC clock
-are carried into Planning. Keep the approved typography, palette and square controls.
+power assumptions behind Advanced. Opening Advanced also reveals the power estimate.
+Open Dashboard from the right side to show Inputs, Results, Timeline, and Compare
+in a dialog and hide the workspace side panels. The Timeline tab shows the timeline
+and the Sun and Earth tracks over a 2D local horizon. Where available, the chart
+uses the site’s LOLA terrain skyline. Drag either chart horizontally or use the
+shared slider to update both charts. The Moon shows its scale beside the cursor coordinates. The
+compact footer has credits and a clickable clock with a display time-zone selector.
+Mission dates and the timeline use UTC. Keep the approved typography, palette and square controls.
 
 Find a site supports independent optional location-radius and landing-date limits;
 neither selected means a sampled search across the Moon and available dates. Offer
@@ -29,8 +34,8 @@ Moon is now the default application page. Solar view is parked at the user's req
 keep its source, NASA assets, orbital data and mockups, but hide it from navigation
 and do not load it on startup. The production entry point exposes Moon and Planning.
 
-The Moon page uses NASA's LRO GLB, with a minimal view selector, optional landing-site
-markers, reset and zoom controls. Keep a Scale popout button and cursor
+The Moon page uses NASA's LRO GLB, with optional landing-site markers, Focus site,
+and zoom controls. Keep a Scale popout button and cursor
 latitude/longitude at the lower left, on the Moon page only. Compute coordinates
 from the pointer's intersection with the Moon, updating during pointer movement and
 camera changes; update the popout's distance bar when zoom or viewport changes. The viewing
@@ -65,10 +70,13 @@ local horizon, lander parameters, and site facts. On narrow screens it opens ove
 the Moon; its contents scroll inside the panel.
 
 Keep detailed timelines and site comparison out of the default workspace. One
-`Timelines & comparison` button beside the time controls opens a modal with two
-views and shared site checkboxes. The inspector's `Compare sites` action opens the
+`Timelines & comparison` button beside the time controls opens a modal with
+Timelines, Compare sites, and Local horizon. The first two share site checkboxes.
+Timelines and Local horizon let you select the primary site. Local horizon shows
+that site at the shared cursor time. The inspector's `Compare sites` action opens the
 same modal directly to comparison. Escape or Close dismisses it and returns focus
-to the initiating button. Date range, chosen sites, parameters, and cursor remain shared.
+to the initiating button. The background scrubber is hidden while the modal is open.
+Date range, chosen sites, parameters, and cursor remain shared.
 
 Planning fills the viewport without page scrolling. Keep one compact time-control
 row at the bottom, without a footer or a repeated timestamp over the map. Date-range
@@ -89,15 +97,14 @@ and Home / End (interval bounds).
 
 ## Review refinements — November 14, 2026
 
-- Start the Moon explorer at the south pole with landing sites visible. Remove
-  the near-side preset. Reset returns to the south pole.
+- Start the Moon explorer at the south pole with landing sites visible. Use Focus
+  site to center the selected site.
 - Use clear site-name rows with the coordinate type beneath the name. Keep
   comparison checkboxes aligned with their names and types.
 - Keep the scale in a dismissible popout. Cap zoom for buttons, keyboard,
   wheel and pinch, including after resizing the viewport.
-- Local terrain uses the continuous NASA Moon model with the camera anchored
-  to the selected site. Clamp zoom and tilt above the surface and disable panning.
-  This display mesh does not replace the LOLA horizon masks used by the science.
+- Local terrain uses the textured 40 km LOLA terrain patch centered on the selected
+  site. Scientific visibility uses the separate LOLA horizon masks.
 - Site facts show coordinates once, then elevation, regional slope and horizon
   range. Put published elevations, coordinate notes, references, model details and
   limitations in Sources & methods, available on both active pages.

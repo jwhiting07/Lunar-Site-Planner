@@ -114,6 +114,22 @@ Roles: **computational input** = file read by the pipeline (listed in `provenanc
 | CLPS / CP-22 pages, Artemis III regions release, SVS 5027 | **background** only |
 | NASA Moon Trek | **not used** |
 | LRO data products page | **not used** |
+| NASA SVS CGI Moon Kit colour map (R-SVS-MOON-KIT) | **display only**: read at build time to colour the local terrain patch (`terrain_color_<id>.png`) |
+| NASA SVS 14959 Moon GLB, NASA Sun/Earth GLBs, HEASARC Yale Bright Star Catalog | **display only** (Section 2.5) |
+
+### 2.5 Display-only assets (not inputs to any calculation)
+
+These assets are shipped under `public/` for visual context. Their provenance is recorded in their own manifests (not in `public/data/provenance.json`). Only R-SVS-MOON-KIT has an entry in `scripts/references.json`; the others are described here only from what their manifests record (no reference ID yet, see Section 10).
+
+| Asset | Source (as recorded in the manifest) | Credit (manifest) | Processing (manifest) | Manifest | Used by |
+|---|---|---|---|---|---|
+| `public/textures/moon-color.jpg` | https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg (page https://svs.gsfc.nasa.gov/4720/) [R-SVS-MOON-KIT] | NASA's Scientific Visualization Studio | none recorded; equirectangular, centred on longitude 0; "aesthetically processed, with polar fill" | `public/textures/provenance.json` | `build_data.py terrain_texture` (build time) |
+| `public/textures/moon-bump.jpg` | https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg [R-SVS-MOON-KIT] | as above | none recorded | `public/textures/provenance.json` | no runtime reference found in `src/` at the time of writing |
+| `public/data/terrain_color_<id>.png` (3 files, 201 x 201 RGB) | derived from `moon-color.jpg` | - | bilinear reprojection onto the terrain patch grid | `public/data/provenance.json products` | `src/components/TerrainView.tsx` |
+| `public/models/moon.glb` | https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/moon_small.glb (page https://svs.gsfc.nasa.gov/14959/) | NASA's Goddard Space Flight Center / LRO | geometry/UVs preserved; embedded maps resized to 4096 px, JPEG quality 92; runtime centring and radius normalisation | `public/models/provenance.json` (source and derived SHA-256, bytes) | `src/components/MoonView.tsx` via `src/visuals/models.ts` |
+| `public/models/sun.glb`, `earth.glb` | NASA Science 3-D model pages (URLs in manifest) | NASA/JPL-Caltech | maps resized to 2048 px; body sizes and separations exaggerated | `public/models/provenance.json` | parked Solar view (`docs/ui/SOLAR_PARKED.md`) |
+| `public/data/stars.json` (4103 stars) | https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_bsc5p.tdat.gz | "Yale Bright Star Catalog, 5th Revised Edition (Preliminary), Hoffleit and Warren (1991); hosted by NASA/GSFC HEASARC" | J2000 RA/Dec and magnitude, V <= 5.8, non-stellar entries removed; no epoch alignment | `public/data/stars.provenance.json` | `src/visuals/stars.ts` |
+| `public/data/orbits.bin` / `orbits.json` | computed with SPICE from naif0012.tls, pck00011.tpc, de440s.bsp, moon_pa_de440_200625.bpc, moon_de440_250416.tf (hashes in manifest) | - | hourly ECLIPJ2000 Sun-centred positions and orientation quaternions, aberration NONE; midpoint interpolation check recorded | `public/data/orbits.json` | parked Solar view |
 
 The challenge page itself could not be retrieved (Section 10). Requirements were taken from the team's transcription: select south-pole sites; select dates; geographic context; visualise Sun and Earth positions relative to the local horizon over time; terrain obstruction; sunlight availability; geometric direct-to-Earth communication windows; approximate solar power; compare sites; explain differences; export results. No other content of the challenge page is described here.
 
@@ -218,7 +234,7 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 
 | Name | Value | Units | Class | Source / ID | Code location |
 |---|---|---|---|---|---|
-| R_MOON (reference sphere) | 1,737,400 | m | sourced | R-IAU-WGCCRE, R-NAIF-PCK, R-LOLA-PGDA (CRS) | `constants.ts:11 R_MOON_M`; `moonlib.py:31`; asserted vs DEM CRS (`build_data.py:75`) and PCK (`build_data.py:236`) |
+| R_MOON (reference sphere) | 1,737,400 | m | sourced | R-IAU-WGCCRE, R-NAIF-PCK, R-LOLA-PGDA (CRS) | `constants.ts:11 R_MOON_M`; `moonlib.py:31`; asserted vs DEM CRS (`build_data.py check_dem_crs`) and PCK (`build_data.py build_ephemeris`, `assert radii["MOON"]`) |
 | R_SUN | 695,700 | km | sourced | R-NAIF-PCK BODY10_RADII = R-TSI nominal 6.957e8 m | `constants.ts:14`; `scripts/vcommon.py:24` |
 | R_EARTH (equatorial) | 6378.1366 | km | sourced | R-NAIF-PCK BODY399_RADII | `constants.ts:17` (defined; not used by any runtime calculation at the time of writing) |
 | AU | 149,597,870.7 | km | sourced (exact) | R-AU | `constants.ts:20` |
@@ -227,15 +243,15 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 | HOUR_MS | 3,600,000 | ms | definition | - | `constants.ts:29` |
 | Body-fixed frame | `MOON_ME_DE440_ME421` | - | sourced (convention) | R-NAIF-MOONFK | `moonlib.py:35` |
 | Aberration correction | `LT+S` | - | approximated (Moon-centre observer) | R-NAIF-ABCORR | `moonlib.py:39` |
-| Ephemeris interval | 2026-01-01T00:00:00 to 2029-01-01T00:00:00 | UTC | assumed (scope) | - | `build_data.py:51` |
-| Ephemeris step | 3600 | s | approximated | M-EPHEM | `build_data.py:51`; default analysis step `analysis.ts:241` |
+| Ephemeris interval | 2026-01-01T00:00:00 to 2029-01-01T00:00:00 | UTC | assumed (scope) | - | `build_data.py EPHEM_START_UTC, EPHEM_STOP_UTC` |
+| Ephemeris step | 3600 | s | approximated | M-EPHEM | `build_data.py EPHEM_STEP_S`; default analysis step `analysis.ts analyzeSite` (`opts.stepMs ?? eph.stepMs`) |
 | Observer height h_obs | 2.0 | m | assumed | A-OBS-HEIGHT | `build_data.py:39` |
 | Horizon azimuth step | 0.5 (720 azimuths) | deg | approximated | M-HORIZON | `build_data.py:41` |
 | Ray first sample / min step / relative step / max range | 40 / 40 / 0.001 / 600,000 | m / m / - / m | approximated | M-HORIZON | `build_data.py:43`; `moonlib.py:205 ray_distances_m` |
 | Unseen-terrain bound height | 11,000 | m | assumed (bound only) | A-HMAX; build asserts max DEM height (7026 m) < 11,000 m | `build_data.py:47` |
-| Terrain patch | 201 x 201 nodes, half-width 20,000 m (200 m spacing) | - , m | approximated (display) | M-PATCH | `build_data.py:49` |
-| Overview map | 760 px, 10 x 10 block mean of the 80 m DEM = 800 m/px | px, m | display only | - | `build_data.py:52, 142-157` |
-| Overview hillshade | vertical exaggeration 2, light azimuth 315 deg, altitude 35 deg, grey = clip(40 + 200 shade) | - | display only (artificial light) | - | `build_data.py:153-157` |
+| Terrain patch | 201 × 201 nodes, half-width 20,000 m (200 m spacing) | - , m | approximated (display) | M-PATCH | `build_data.py PATCH_N, PATCH_HALF_M` |
+| Overview map | 760 px, 10 x 10 block mean of the 80 m DEM = 800 m/px | px, m | display only | - | `build_data.py OVERVIEW_PX, build_overview` |
+| Overview hillshade | vertical exaggeration 2, light azimuth 315 deg, altitude 35 deg, grey = clip(40 + 200 shade) | - | display only (artificial light) | - | `build_data.py build_overview` |
 | Lander array area | 2.0 | m^2 | assumed | A-LANDER | `constants.ts:54` |
 | Array efficiency | 0.28 | - | assumed | A-LANDER (plausibility: R-SST-SOA-POWER) | `constants.ts:55` |
 | Load | 150 | W | assumed | A-LANDER | `constants.ts:56` |
@@ -245,8 +261,21 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 | Earth minimum clearance | 0 | deg | assumed | A-DTE-MASK | `constants.ts:68` |
 | LSK TDB parameters | DELTA_T_A 32.184 s, K 1.657e-3 s, EB 1.671e-2, M = (6.239996, 1.99096871e-7) | s, -, rad, rad/s | sourced | R-NAIF-LSK | inside SPICE |
 | Illumination map scale | 0.00004 per DN | - | sourced | R-MAZARICO-2011 (PDS label) | read via rasterio in `select_site_point` (recorded in `sites.json selection`) |
-| Build self-check tolerances | projection forward < 1e-3 m, inverse < 1e-9 deg; interpolation check 4000 random hours x {15, 30, 45} min; RNG seeds 1 and 7 | - | test parameters | - | `build_data.py:78-86, 199-213` |
+| Build self-check tolerances | projection forward < 1e-3 m, inverse < 1e-9 deg; interpolation check 4000 random hours x {15, 30, 45} min; RNG seeds 1 and 7 | - | test parameters | - | `build_data.py check_dem_crs, build_ephemeris` |
 | Moon model lighting | ambient 0.45; directional intensity 2.6; overview viewing light or calculated Sun direction in local terrain | - | display only; no ray-traced shadows | - | `src/components/MoonView.tsx` |
+| Mission targets (default) | sunlight >= 50 %, Earth visible >= 50 %; darkness and blackout limits off | %, h | assumed (editable; not NASA requirements) | M-PLAN | `src/science/planner.ts DEFAULT_TARGETS` |
+| Target comparison tolerance | 1e-7 | % or h | numerical tolerance | M-PLAN | `planner.ts assessment` |
+| Arbitrary-coordinate site | elevation 0 m on the 1737.4 km sphere; flat horizon H = 0 with 1 deg table step; `terrain_aware = false` | m, deg | assumed / approximated | M-PLAN, M-SUNVIS, M-EARTHVIS | `planner.ts coordinateSite`; `horizon.ts flatHorizon` |
+| Search grid | local: centre + 8 bearings (45 deg) on rings at r/2 and r; global: 48-point Fibonacci sphere (longitude step 137.507764 deg) + the entered point; dates: at most about 30 steps of whole days plus the last date | - | approximated (bounded search) | M-PLAN | `planner.ts locationGrid, dateGrid` |
+| Search screening / refinement | screening step ceil(duration h / 168) h (>= 1 h); keep 12 best, refine hourly, show 5 | h | approximated | M-PLAN | `planner.ts searchCandidates` |
+| "Find better nearby" | dates within +/- 7 days; 16 points within 50 km | d, km | assumed (search scope) | M-PLAN | `src/MissionPlanner.tsx run` |
+| Input limits | duration 1 h to 365 d; Earth clearance 0-60 deg; search radius (0, 1000] km | - | UI validation | - | `src/MissionPlanner.tsx run, validateTargets` |
+| Great-circle distance (search ranking) | haversine on the 1737.4 km sphere | km | computed (identity) | M-PLAN | `planner.ts distanceKm` |
+| Moon globe scale readout | 1737.4 km per model unit (literal, equals R_MOON) | km | display only | - | `src/components/MoonView.tsx` (scale bar) |
+| Local terrain colour | NASA SVS CGI Moon Kit `lroc_color_2k.jpg` (2048 x 1024 px, about 0.176 deg = 5.3 km per pixel in latitude), bilinearly reprojected onto the 201 x 201 patch | - | display only | R-SVS-MOON-KIT | `build_data.py terrain_texture` |
+| Local terrain view | vertical exaggeration x1 or x3 (relief above the curved reference only); ambient 0.3; directional intensity 2.8 x disk fraction, direction = computed Sun az/el | - | display only | M-PATCH | `src/components/TerrainView.tsx` |
+| Star background | catalog stars with V <= 5.8 (4103 stars); display brightness clamp((5.8 - V)/7.3, 0, 1) | mag | display only | `public/data/stars.provenance.json` | `scripts/prepare_stars.mjs`; `src/visuals/stars.ts` |
+| Sky view track span | +/- 15 days around the cursor | d | display only | - | `src/components/SkyView.tsx PATH_DAYS` |
 
 ---
 
@@ -275,7 +304,7 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 |---|---|---|
 | Connecting-ridge analysis point (-89.445496, 222.686278 E) by the selection rule (rule itself: Section 8) | M-SITE | R-MAZARICO-2011, R-LOLA-SITES, R-SNYDER |
 | Stereographic x, y of sites | M-SITE | R-SNYDER |
-| Moon-centred Sun/Earth vectors (hourly samples) and their interpolation | M-EPHEM | R-DE440, R-NAIF-* |
+| Moon-centred Sun/Earth vectors (hourly samples) and their interpolation | M-EPHEM | R-DE440, R-NAIF-MOONFK, R-NAIF-LSK, R-NAIF-PCK, R-NAIF-SPKPOS, R-NAIF-ABCORR |
 | Observer position, ENU basis, azimuth, elevation, distance of Sun and Earth | M-GEOM | R-NAIF-FRAMES |
 | Terrain horizon H(A), horizon distance, coverage, horizon min/max/mean, fraction of azimuths beyond patch, 240 m DEM sample fraction | M-HORIZON | R-LOLA-PGDA |
 | Unseen-terrain margin (bound only) | A-HMAX | R-LOLA-PGDA |
@@ -301,6 +330,8 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 | Ideal storage (100 % efficiency), constant load | M-BATTERY (assumption) |
 | Connecting-ridge selection rule (maximum of the average-illumination map inside the Site01 box) | M-SITE (no separate ID) |
 | Analysis interval and step chosen by the user (within 2026-2028, default step 1 h) | - |
+| Mission targets (default sunlight >= 50 %, Earth visible >= 50 %, optional darkness/blackout limits) and the "Meets targets" verdict rule | M-PLAN |
+| Zero elevation on the 1737.4 km sphere for user-entered coordinates | M-PLAN |
 
 ### 6.4 Approximated
 
@@ -316,7 +347,9 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 | Trapezoidal energy integration | M-BATTERY |
 | Spherical reference body, radial "Up" | M-GEOM |
 | Horizon distance read at the nearest table azimuth | M-HORIZON |
-| Retained DEM grid limited to +/- 20 km with 200 m spacing; active local terrain uses the separate NASA Moon model with simple directional lighting | M-PATCH; `public/models/provenance.json` |
+| All results for user-entered coordinates (any point other than the three shipped sites, matched exactly): flat horizon H = 0, no terrain, labelled "Flat-horizon estimate" | M-PLAN |
+| Site search: bounded location/date grid, coarse screening step, hourly refinement of the 12 leading candidates | M-PLAN |
+| 3-D patch covers ±20 km at 200 m spacing with a NASA SVS display texture and simple directional lighting | M-PATCH |
 
 ---
 
@@ -419,7 +452,7 @@ r(t) = (1 - w) r_i + w r_{i+1}, w = (t - t_i)/step, never extrapolated (`ephemer
 
 ### 7.14 Terrain patch geometry (M-PATCH)
 
-Node (i, j): east = -20 km + 200 m i, north = -20 km + 200 m j; arc s = hypot(east, north), azimuth atan2(east, north); height from 7.3 and the DEM. ENU position: horizontal = (R + h) sin(s/R) along the azimuth, up = (R + h) cos(s/R) - (R + h_site) (`geometry.ts terrainNodeEnu`, same derivation as 7.5).
+Node (i, j): east = -20 km + 200 m i, north = -20 km + 200 m j. Arc s = hypot(east, north), azimuth atan2(east, north), height from §7.3 and the DEM. ENU position: horizontal = (R + h) sin(s/R) along the azimuth, up = (R + h) cos(s/R) - (R + h_site) (`geometry.ts terrainNodeEnu`, same derivation as §7.5). The display reprojects the [NASA SVS CGI Moon Kit color map](https://svs.gsfc.nasa.gov/4720/) onto the same grid (R-SVS-MOON-KIT).
 
 ### 7.15 Connecting-ridge site-selection rule (M-SITE)
 
@@ -445,6 +478,8 @@ All assumed values are **configurable demonstration defaults chosen by this proj
 | Ideal storage | 100 % charge/discharge efficiency | - | simplest energy balance | - | code |
 | Constant load | P_load constant in time | - | no operating modes, heaters or hibernation | - | code |
 | Ridge selection rule | maximum average illumination in the Site01 box | - | reproducible, documented choice of a representative point; not a mission target | R-MAZARICO-2011, R-LOLA-SITES | `sites_input.json` |
+| Mission targets (M-PLAN) | sunlight >= 50 %, Earth visible >= 50 %; darkness/blackout limits off | %, h | neutral editable starting point for the verdict; **not NASA or CLPS requirements** | - | UI parameter |
+| User-entered coordinates (M-PLAN) | elevation 0 m on the 1737.4 km sphere, flat horizon | m | no terrain mask exists for arbitrary points; only the three shipped sites (exact coordinate match) use LOLA masks | - | code (`planner.ts coordinateSite`) |
 
 No verifiable NASA or vendor figures for CLPS lander array area, load or battery capacity were found: the NASA IM-1 and IM-2 press kits contain none, and secondary sources (e.g. encyclopaedia entries) were not used.
 
@@ -473,8 +508,14 @@ Measured magnitudes are in `docs/VALIDATION.md` (V-1 JPL Horizons, V-2 Moon-cent
 | Energy model | no thermal effects, degradation, dust, self-shadowing, reflected light, charge/discharge losses or operating modes | - |
 | Geometric DTE is not a radio link | no antenna pattern, pointing, power, data rate, multipath or ground-station availability | - |
 | Slope | 80 m-baseline context only; not a landing-hazard or safety assessment | V-7 |
-| 3-D view | shows +/- 20 km only (horizon is often defined farther away; distance shown separately); lighting is a simple directional light and does not ray-trace shadows | - |
+| 3-D view | shows terrain within a 40 km square. The horizon may be defined farther away, with distance shown separately. The imagery includes low-resolution polar fill and the shading uses a directional light. | - |
 | Overview map | hillshade with a fixed artificial light; not an illumination state | - |
+| Ridge point selection effect | the connecting-ridge point is the **maximum** pixel of the published Sun map inside the Site01 box, so the published map value there is biased high relative to any independent estimate; part of the negative "ours - map" difference at that site is expected from the selection itself | V-5 (exact numbers there) |
+| Near-field horizon convergence at the ridge | halving the ray step changes H(A) at the connecting ridge by up to about 0.23 deg and the 2026-2028 sunlit fraction by about -0.27 percentage points; the near-field horizon on the sharp crest is not fully converged at the shipped sampling (other sites: much smaller changes) | V-6 (exact numbers there) |
+| User-entered coordinates | flat horizon on the reference sphere: terrain shadowing and terrain blocking of Earth are ignored, so sunlight and Earth-visibility percentages at polar sites are generally not representative of real terrain; results are labelled "Flat-horizon estimate" | not quantified for arbitrary points; compare "Sunlit time" with "Sunlit time, flat horizon" at the three shipped sites |
+| Site search | bounded grid (Section 5); unsampled locations, dates and short events can be missed; global search points use the flat-horizon approximation | M-PLAN |
+| Local terrain colour | the source colour map has about 5.3 km per pixel in latitude, so the 40 km patch spans only about 7-8 source pixels north-south; colour is context, not 200 m surface detail | Section 5 |
+| Moon globe orientation | `src/visuals/models.ts` maps the GLB's native axes to the ME site convention by a fixed rotation; the GLB's body-fixed frame is not stated in `public/models/provenance.json` (display only; site markers may be offset if the model frame differs) | not verified (Section 10) |
 
 ---
 
@@ -490,3 +531,5 @@ Measured magnitudes are in `docs/VALIDATION.md` (V-1 JPL Horizons, V-2 Moon-cent
 8. **Height reference of the PGDA 90 DEMs**: the product page states heights in metres and the frame, but not the reference radius; the 1737.4 km sphere is stated by the GeoTIFF CRS, by the PGDA illumination page and by USGS lunar standards.
 9. **Lander parameters**: no verifiable CLPS lander power, load or battery figures were found (Section 8).
 10. **NASA data licensing**: the data providers' citation requests were verified (PGDA 90: cite Barker et al. 2023; PGDA 69: cite Mazarico et al. 2011; SVS: credit "NASA's Scientific Visualization Studio"). A general public-domain statement for these datasets was not verified from the source pages and is not asserted here.
+11. **Display assets without a reference ID**: the SVS 14959 Moon GLB, the NASA Sun/Earth GLBs and the Yale Bright Star Catalog (Hoffleit and Warren 1991, via HEASARC) are documented only through their manifests (Section 2.5); their bibliographic details were not independently verified by this document. The body-fixed frame of the Moon GLB is not recorded.
+12. **Text-asset checksums and line endings**: with `core.autocrlf = true` on Windows, a checked-out `public/data/stars.json` carries CRLF line endings and its SHA-256 no longer equals `product_sha256` in `stars.provenance.json` (the LF content does). Manifest hashes of text assets are therefore only reproducible when the files are checked out without line-ending conversion.

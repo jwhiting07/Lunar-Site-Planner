@@ -1,14 +1,14 @@
 {
  "schema": 1,
- "generated_utc": "2026-11-14T18:54:22Z",
+ "generated_utc": "2026-11-14T21:14:41Z",
  "pipeline": {
   "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
   "scripts": {
-   "build_data.py": "ee409dda18f40ae6c7b639939bebe7b977f32c06c5f7ad1f591562ca638bef97",
-   "moonlib.py": "0689a740304d38108e1ca7624efc07e1a2ffd9a8e331691af2d72f721ac3cba6",
+   "build_data.py": "bb1eebf906370a1e97bc9b0767e98cc095423bbe3a104fe84eab6d87bd02adff",
+   "moonlib.py": "6932b8ea1003c6ab81568ebb25429fb93a5f13119cc3368d770bb0053d929e33",
    "fetch_sources.py": "17122a7596c7c566c818a836257fc3f363046908a2ffd95e57384fdf4e9769ad",
    "sites_input.json": "c9b15c62e62296c1e5873f69ecce7af025c77ba308939f0179ca4cf8b9944309",
-   "references.json": "1d5146d1fbcab856e7ca65787044ed9df579b9d3ffdf9e1eb892e06da700bcd4"
+   "references.json": "91ece37fe230637cf8b522cf9cb51d89e4d0520340224a9ff2f04788942631e8"
   },
   "python": "3.12.10",
   "packages": {
@@ -211,7 +211,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "ephemeris_2027.bin",
@@ -241,7 +241,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "ephemeris_2028.bin",
@@ -271,7 +271,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "horizon_connecting-ridge.bin",
@@ -294,7 +294,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "horizon_im1-odysseus.bin",
@@ -317,7 +317,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "horizon_im2-athena.bin",
@@ -340,7 +340,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "overview_80S.png",
@@ -356,7 +356,55 @@
    "refs": [
     "R-LOLA-PGDA"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
+  },
+  {
+   "file": "terrain_color_connecting-ridge.png",
+   "bytes": 20588,
+   "sha256": "6257822e1399a78635e2e609f5328eafba2b85b55ad0352a516b9d143626db23",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-14T21:14:41Z"
+  },
+  {
+   "file": "terrain_color_im1-odysseus.png",
+   "bytes": 4982,
+   "sha256": "cbc7de9f3e987d824cd5c0b8a30cd1769a67917655c6912ba37e09c3e9256bc9",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-14T21:14:41Z"
+  },
+  {
+   "file": "terrain_color_im2-athena.png",
+   "bytes": 6998,
+   "sha256": "82e525cf5a8f3b50276ad193bf0152c7fac2ac91128b5b1240389eb8ab03ad7a",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "terrain_connecting-ridge.bin",
@@ -380,7 +428,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "terrain_im1-odysseus.bin",
@@ -404,7 +452,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "terrain_im2-athena.bin",
@@ -428,7 +476,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "sites.json",
@@ -448,7 +496,7 @@
     "R-LOLA-SITES",
     "R-MAZARICO-2011"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   },
   {
    "file": "ephemeris.json",
@@ -468,10 +516,21 @@
     "R-NAIF-SPKPOS",
     "R-NAIF-PCK"
    ],
-   "generated_utc": "2026-11-14T18:54:22Z"
+   "generated_utc": "2026-11-14T21:14:41Z"
   }
  ],
  "references": [
+  {
+   "id": "R-SVS-MOON-KIT",
+   "authority": "NASA Scientific Visualization Studio (Ernie Wright)",
+   "title": "CGI Moon Kit",
+   "url": "https://svs.gsfc.nasa.gov/4720/",
+   "version": "2025 color map, lroc_color_2k.jpg",
+   "kind": "imagery",
+   "role": "display only",
+   "verified": "Source and texture checksum recorded in public/textures/provenance.json",
+   "accessed": "2026-11-14"
+  },
   {
    "id": "R-NAIF-GK",
    "authority": "NASA/JPL Navigation and Ancillary Information Facility (NAIF)",

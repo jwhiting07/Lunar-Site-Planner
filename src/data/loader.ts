@@ -1,7 +1,6 @@
 /**
- * Loading of the shipped, precomputed assets in public/data/. No other network
- * access happens at runtime. Site terrain and ephemeris years are fetched
- * lazily and cached.
+ * Loads the shipped data and, when available, queries the local terrain calculator.
+ * Site terrain and ephemeris years are fetched lazily and cached.
  */
 import { mergeTables, tableFromBuffer, type EphemerisTable } from '../science/ephemeris';
 import { parseHorizon, type HorizonMask } from '../science/horizon';
@@ -45,6 +44,34 @@ export function loadHorizon(site: SiteDoc): Promise<HorizonMask> {
   return cached(horizonCache, site.id, async () =>
     parseHorizon(await getBuffer(site.horizon.file), site.horizon.n_az, site.horizon.az_step_deg),
   );
+}
+
+export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal) {
+  const query = new URLSearchParams({ lat: String(site.lat_deg), lon: String(site.lon_deg) });
+  const response = await fetch(`${import.meta.env.BASE_URL}api/custom-horizon?${query}`, { signal });
+  if (!response.ok) throw new Error('The local terrain calculator is unavailable.');
+  const data = await response.json();
+  if (data === null) return null;
+  const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM } = data;
+  if (![elevationM, observerHeightM, coverageKm].every(Number.isFinite) ||
+      !(azStepDeg > 0) || !Array.isArray(elevDeg) || !Array.isArray(distM) ||
+      elevDeg.length !== 360 / azStepDeg || elevDeg.length !== distM.length ||
+      !elevDeg.every(Number.isFinite) || !distM.every(Number.isFinite)) {
+    throw new Error('The local terrain calculator returned an invalid horizon.');
+  }
+  const mask: HorizonMask = { azStepDeg, elevDeg: Float32Array.from(elevDeg), distM: Float32Array.from(distM), terrainAware: true };
+  const resolvedSite: SiteDoc = {
+    ...site, terrain_aware: true, elevation_m: elevationM,
+    elevation_source: 'LOLA DEM bilinear sample [R-LOLA-PGDA]',
+    coord_note: 'User-selected coordinates with a computed LOLA horizon [M-HORIZON].',
+    horizon: {
+      ...site.horizon, n_az: elevDeg.length, az_step_deg: azStepDeg, coverage_min_km: coverageKm,
+      min_deg: Math.min(...elevDeg), max_deg: Math.max(...elevDeg),
+      mean_deg: (elevDeg as number[]).reduce((total, elevation) => total + elevation, 0) / elevDeg.length,
+      max_obstruction_distance_km: Math.max(...distM) / 1000,
+    },
+  };
+  return { site: resolvedSite, mask, observerHeightM };
 }
 
 /** Terrain patch heights (m above the 1737.4 km sphere), row-major [j][i], n x n. */

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { enuBasis, type InstantState, type SiteDoc } from '../science';
@@ -30,23 +30,22 @@ export function moonScaleBar(kmPerPixel: number, maxWidth = 100) {
   return { km, pixels: km / kmPerPixel };
 }
 
-export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick }: {
+export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
   compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
+  savedSiteIds?: ReadonlySet<string>;
 }) {
   const pick = useRef(onPick);
   pick.current = onPick;
   const host = useRef<HTMLDivElement>(null);
   const pins = useRef(new Map<string, HTMLButtonElement>());
+  const positions = useMemo(() => sites.map(site => ({ id: site.id, point: globePosition(site.lat_deg, site.lon_deg) })), [sites]);
+  const positionsRef = useRef(positions);
   const focus = useRef<(id: string | null) => void>(() => {});
   const zoom = useRef<(factor: number) => void>(() => {});
   const hoverReadout = useRef<HTMLOutputElement>(null);
   const scaleReadout = useRef<HTMLOutputElement>(null);
   const scaleLine = useRef<HTMLSpanElement>(null);
-  const scalePopup = useRef<HTMLDivElement>(null);
-  const scaleTrigger = useRef<HTMLButtonElement>(null);
-  const scaleId = useId();
-  const [scaleOpen, setScaleOpen] = useState(false);
   const illumination = useRef(inst);
   illumination.current = inst;
   const redraw = useRef(() => {});
@@ -71,7 +70,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     element.prepend(renderer.domElement);
     renderer.domElement.tabIndex = 0;
     renderer.domElement.setAttribute('role', 'img');
-    renderer.domElement.setAttribute('aria-label', 'NASA Moon globe. Drag or use arrow keys to rotate. Use plus and minus to zoom, Home to reset.');
+    renderer.domElement.setAttribute('aria-label', 'NASA Moon globe. Drag or use arrow keys to rotate. Use plus and minus to zoom.');
     const scene = new THREE.Scene();
     let stars: Awaited<ReturnType<typeof loadStarfield>> | undefined;
     loadStarfield().then(points => {
@@ -101,7 +100,6 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     const light = new THREE.DirectionalLight(0xffffff, 2.6);
     scene.add(light);
     let model: THREE.Group | undefined;
-    const positions = sites.map(site => ({ id: site.id, point: globePosition(site.lat_deg, site.lon_deg) }));
     const raycaster = new THREE.Raycaster();
     const sphere = new THREE.Sphere(new THREE.Vector3(), 1);
     const hit = new THREE.Vector3();
@@ -143,7 +141,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
             } else hoverReadout.current.textContent = 'Lat: —, Lon: —';
           }
         }
-        for (const { id, point } of positions) {
+        for (const { id, point } of positionsRef.current) {
           const pin = pins.current.get(id);
           if (!pin) continue;
           const screen = point.clone().multiplyScalar(1.006).project(camera);
@@ -157,7 +155,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     redraw.current = draw;
     focus.current = (id) => {
       activeFocus.current = id;
-      const point = id === 'far' ? globePosition(0, 180) : positions.find(p => p.id === id)?.point ?? globePosition(-90, 0);
+      const point = positionsRef.current.find(p => p.id === id)?.point ?? globePosition(-90, 0);
       const coords = globeCoordinates(point);
       const north = enuBasis(coords.lat, coords.lon).north;
       const northVector = new THREE.Vector3(north[0], north[2], -north[1]);
@@ -232,7 +230,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         camera.position.setFromSpherical(spherical).applyQuaternion(rotation.invert()).add(controls.target); controls.update(); draw();
       } else if (event.key === '+' || event.key === '=') { event.preventDefault(); zoom.current(0.85); }
       else if (event.key === '-') { event.preventDefault(); zoom.current(1.18); }
-      else if (event.key === 'Home') { event.preventDefault(); if (explorer) setOrientation('south'); focus.current(local ? sites[0]?.id ?? null : null); }
+      else if (event.key === 'Home') { event.preventDefault(); if (explorer) setOrientation('south'); focus.current(local ? positionsRef.current[0]?.id ?? null : null); }
       else if (event.key === 'Enter' && pick.current) { event.preventDefault(); selectAt(new THREE.Vector2(0, 0)); }
     };
     renderer.domElement.addEventListener('pointerdown', onDown);
@@ -281,44 +279,37 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [sites, explorer, local, compact]);
+  }, [explorer, local, compact]);
 
-  useEffect(() => { focus.current(explorer ? null : primaryId); }, [sites, explorer, local]);
+  useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions]);
+  useEffect(() => { if (explorer) focus.current(null); }, [explorer, local, compact]);
   useEffect(() => { if (!explorer || orientation === 'site') focus.current(primaryId); }, [primaryId, sites, explorer, orientation]);
   useEffect(() => { redraw.current(); }, [inst]);
 
   return <>
     <div className={`moon-stage${explorer ? ' moon-stage-full' : ''}${showSites ? '' : ' moon-hide-sites'}`} ref={host}>
       {explorer && !compact ? <div className="moon-simple-controls">
-        <label className="sr-only" htmlFor="moon-orientation">Moon view</label>
-        <select id="moon-orientation" value={orientation} onChange={event => { setOrientation(event.target.value); focus.current(event.target.value === 'site' ? primaryId : event.target.value === 'far' ? 'far' : null); }}>
-          <option value="south">South pole</option><option value="far">Far side</option><option value="site">Selected landing site</option>
-        </select>
         <label className="moon-sites-toggle"><input type="checkbox" checked={showSites} onChange={event => setShowSites(event.target.checked)} />Landing sites</label>
         {showSites && <ul className="moon-site-list">{sites.map(site => <li key={site.id}><button type="button" aria-pressed={site.id === primaryId} onClick={() => { onSelect(site.id); setOrientation('site'); focus.current(site.id); }}><span>{site.short}</span><small>{COORD_CLASS_LABEL[site.coord_class]}</small></button></li>)}</ul>}
-        <button className="btn explorer-button" onClick={() => { setOrientation('south'); focus.current(null); }}>Reset view</button>
+        <button className="btn explorer-button" onClick={() => { setShowSites(true); setOrientation('site'); focus.current(primaryId); }}>Focus site</button>
       </div> :
       <div className="moon-toolbar">
         <button className="btn small" disabled={!local && !primaryId} onClick={() => focus.current(primaryId)}>{local ? 'Reset view' : 'Focus site'}</button>
-        {!local && <button className="btn small" onClick={() => focus.current(null)}>South pole</button>}
-        {compact && <button className="btn small" onClick={() => focus.current('far')}>Far side</button>}
       </div>}
       {!local && sites.map((site, i) => <button key={site.id} ref={el => { if (el) pins.current.set(site.id, el); else pins.current.delete(site.id); }}
-        className={`moon-pin${site.id === primaryId ? ' selected' : ''}`} hidden
-        aria-label={`Select ${site.short}`} aria-pressed={site.id === primaryId}
-        title={site.short} onClick={() => { onSelect(site.id); setOrientation('site'); focus.current(site.id); }}>{i + 1}</button>)}
+        className={`moon-pin${site.id === primaryId ? ' selected' : ''}${savedSiteIds?.has(site.id) ? ' saved' : ''}`} hidden
+        aria-label={savedSiteIds?.has(site.id) ? `Saved scenarios at ${site.lat_deg.toFixed(4)}°, ${site.lon_deg.toFixed(4)}°` : `Select ${site.short}`}
+        aria-pressed={site.id === primaryId}
+        title={site.short} onClick={() => { onSelect(site.id); if (!compact) focus.current(site.id); }}>
+        {explorer && !compact ? i + 1 : <span aria-hidden="true" className={`planning-site-marker ${site.coord_class}`} />}
+      </button>)}
       {loading && <div className="moon-message" role="status">Loading Moon…</div>}
       {error && <div className="moon-message" role="alert">{error}</div>}
       <span className="moon-hint">{onPick ? 'Click to select · Enter selects center · ' : ''}Drag to rotate · Scroll to zoom</span>
       {local && <span className="moon-local-reticle" aria-label="Selected landing site" />}
       {explorer && <div className="moon-coordinate-hud" aria-label="Moon surface scale and cursor coordinates">
-        <button ref={scaleTrigger} type="button" className="btn" aria-expanded={scaleOpen} aria-controls={scaleId} onClick={() => { if (scaleOpen) scalePopup.current?.hidePopover(); else { scalePopup.current?.showPopover(); redraw.current(); } }}>Scale</button>
-        <div ref={scalePopup} id={scaleId} popover="auto" className="moon-scale-popover" role="dialog" aria-label="Moon scale" onToggle={event => setScaleOpen(event.newState === 'open')}>
-          <div className="moon-scale-bar"><span ref={scaleLine} /><output ref={scaleReadout} aria-label="Moon distance scale" /></div>
-          <p>Approximate surface distance at the center of the visible Moon. Scale varies toward the limb.</p>
-          <button type="button" className="btn small" onClick={() => { scalePopup.current?.hidePopover(); scaleTrigger.current?.focus(); }}>Close</button>
-        </div>
         <output ref={hoverReadout} aria-label="Moon cursor latitude and longitude" aria-live="off">Lat: —, Lon: —</output>
+        <div className="moon-scale-bar"><span ref={scaleLine} /><output ref={scaleReadout} aria-label="Moon distance scale" /></div>
       </div>}
       {explorer && <div className="moon-zoom"><button className="btn explorer-button" aria-label="Zoom in on Moon" onClick={() => zoom.current(0.85)}>+</button><button className="btn explorer-button" aria-label="Zoom out from Moon" onClick={() => zoom.current(1.18)}>−</button></div>}
     </div>

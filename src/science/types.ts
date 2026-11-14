@@ -38,6 +38,7 @@ export interface SiteDoc {
     samples_from_240m_dem_fraction: number;
   };
   terrain: {
+    texture_file?: string;
     file: string;
     n: number;
     half_width_m: number;

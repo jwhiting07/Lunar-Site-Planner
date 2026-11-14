@@ -101,7 +101,8 @@ def destination(lat_deg: float, lon_deg: float, az_deg, dist_m, radius_m: float 
 
 
 # --------------------------------------------------------------------------
-# South polar stereographic projection on a sphere  [R-SNYDER] eqs. 21-9..21-12
+# South polar stereographic projection on a sphere  [R-SNYDER]
+# forward: eqs. 21-9 (x), 21-10 (y), 21-12 (rho); inverse: eqs. 20-14, 20-17, 20-18, 21-15
 # (polar aspect, true scale at the pole, central meridian 0 deg, k0 = 1)
 # --------------------------------------------------------------------------
 def stereo_south_forward(lat_deg, lon_deg, radius_m: float = R_MOON_M):

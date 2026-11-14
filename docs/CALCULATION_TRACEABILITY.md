@@ -2,9 +2,14 @@
 
 ## Context globe (UI update)
 
-`src/components/MoonView.tsx` renders a unit sphere with NASA SVS CGI Moon Kit
-color and JPEG elevation textures. Source URLs, checksums, credit and conventions
-are recorded in `public/textures/provenance.json`. Source: https://svs.gsfc.nasa.gov/4720/.
+`src/components/MoonView.tsx` renders the NASA GSFC/LRO Moon GLB
+(`public/models/moon.glb`, SVS 14959) loaded by `src/visuals/models.ts`; source URL,
+checksums and processing are in `public/models/provenance.json`. The NASA SVS CGI
+Moon Kit colour map (`public/textures/moon-color.jpg`, R-SVS-MOON-KIT, recorded in
+`public/textures/provenance.json`, https://svs.gsfc.nasa.gov/4720/) is used only at
+build time to colour the local terrain patch (`terrain_color_<id>.png`);
+`moon-bump.jpg` is not referenced by the current `src/`. (Corrected 2026-11-14 audit:
+an earlier version of this paragraph described a textured unit sphere.)
 This globe is display-only: fixed viewing light and a small illustrative bump
 scale are not an epoch illumination model or physical terrain displacement.
 The image is aesthetically processed and includes polar fill. Scientific analysis
@@ -45,7 +50,7 @@ result in this chain is a direct NASA prediction unless identified as sourced.
 | Site elevation / sampled source | Bilinear DEM height at projected coordinates; `moonlib.py Dem`, `build_data.py` | LDEM_80S_80MPP_ADJ.TIF, R-LOLA-PGDA, R-SNYDER | 80 m grid and spherical height datum; interpolation smooths relief |
 | Slope / sourced pixel and computed mean | Pixel containing the site and mean of its 3×3 neighborhood; `build_data.py slope_at` (M-SLOPE) | LDSM_80S_80MPP_ADJ.TIF, R-LOLA-PGDA | 80 m context, not hazard clearance or touchdown attitude |
 | Horizon angle and defining distance / computed | For arc s, theta=s/R; elevation=atan2((R+h)cos(theta)-r_o,(R+h)sin(theta)); maximum along each ray; `moonlib.py compute_horizon, elevation_angle_deg`; runtime `horizon.ts horizonAt` (M-HORIZON) | Near 80 m DEM, far LDEM_60S_240MPP_ADJ.TIF; observer radius R+h_site+h_obs; R-LOLA-PGDA, R-SNYDER | 0.5° azimuth grid, finite ray spacing, 600 km range; circular linear interpolation in azimuth |
-| Retained local DEM grid | Horizontal=(R+h)sin(s/R), up=(R+h)cos(s/R)-(R+h_site); `build_data.py terrain_patch`, `geometry.ts terrainNodeEnu` (M-PATCH) | Same DEMs; 201×201 samples at 200 m spacing, ±20 km | Retained data product; active local terrain uses the continuous NASA Moon display model, without vertical exaggeration; shading does not drive visibility |
+| 3-D terrain / computed display | Horizontal=(R+h)sin(s/R), up=(R+h)cos(s/R)-(R+h_site); `build_data.py terrain_patch`, `geometry.ts terrainNodeEnu` (M-PATCH) | Same DEMs, 201×201 samples at 200 m spacing, covering ±20 km around the site. Surface color comes from the reprojected NASA SVS CGI Moon Kit (R-SVS-MOON-KIT). | Optional ×3 display exaggeration. Color includes lower resolution polar fill. Directional shading provides visual context. |
 | Overview map / computed display | Block-mean DEM hillshade with artificial lighting; `build_data.py` | 80 m LOLA DEM, R-LOLA-PGDA | Geographic context, not current illumination |
 
 The spherical polar stereographic forward/inverse transformations and bilinear
@@ -136,3 +141,153 @@ agreement between scientific results, display strings and both export formats.
 Measured discrepancies and unvalidated physics are in `VALIDATION.md`.
 Bibliographic qualifications and missing source facts remain explicitly disclosed
 in References §10; this document does not elevate them to verified claims.
+
+## Per-output dependency chains
+
+One chain per `summaryRows` key (`src/science/summary.ts`), per instantaneous
+readout and per verdict/site value. Read right to left as "is computed from".
+Link classes: [C] computed, [S] directly sourced, [A] assumed, [X] approximated.
+Common tail used below:
+
+```
+GEOM(body) = az, el, d of body [C] (M-GEOM, geometry.ts azEl, enuBasis; analysis.ts bodyState)
+  <- v = r_body(t) - r_obs [C]
+  <- r_body(t): linear interpolation of hourly LT+S Moon-centred vectors [X] (M-EPHEM, ephemeris.ts bodyVectorKm)
+       <- ephemeris_<year>.bin <- spkpos(.., MOON_ME_DE440_ME421, LT+S, MOON) [C] (build_data.py build_ephemeris)
+       <- de440s.bsp, moon_pa_de440_200625.bpc, moon_de440_250416.tf, naif0012.tls [S]
+       <- R-DE440, R-NAIF-MOONFK, R-NAIF-LSK, R-NAIF-ABCORR, R-NAIF-SPKPOS
+  <- r_obs = (R + h_site + h_obs) U [C] (analysis.ts makeSiteContext)
+       <- R = 1737.4 km [S] (R-IAU-WGCCRE, R-NAIF-PCK); h_site [S] (LDEM_80S_80MPP_ADJ, R-LOLA-PGDA;
+          0 m [A] for user-entered points); h_obs = 2 m [A] (A-OBS-HEIGHT); lat/lon [S] (M-SITE)
+H(A) = terrain horizon [C] (M-HORIZON, horizon.ts horizonAt; moonlib.py compute_horizon)
+  <- horizon_<id>.bin <- ray sampling of LDEM_80S_80MPP_ADJ / LDEM_60S_240MPP_ADJ [S] with curvature [C]
+  <- 0.5 deg table, ray step rule, 600 km range [X] <- R-LOLA-PGDA, R-SNYDER
+  (H = 0 [X] for user-entered points: horizon.ts flatHorizon)
+```
+
+### Summary rows
+
+```
+sunlit_pct  Sunlit time [%] = 100 * sunlit_h / interval [C] (M-SUNVIS; analysis.ts analyzeSite)
+sunlit_h    Sunlit hours [h] = sum of Sun window durations [C] (M-WINDOWS; windows.ts findWindows, totalHours)
+  <- crossings t_c = t_i + m_i/(m_i - m_i+1) dt [X] (linear zero crossing, hourly samples)
+  <- m_s = C_s + rho_s, C_s = el_s - H(az_s) [C] (analysis.ts instantState)
+  <- rho_s = asin(R_sun / d_s) [C] <- R_sun = 695700 km [S] (R-NAIF-PCK, R-TSI)
+  <- GEOM(Sun), H(A)
+earth_pct   Earth visible [%] = 100 * earth_h / interval [C] (M-EARTHVIS)
+earth_h     Earth-visible hours [h] = sum of Earth windows [C] (M-WINDOWS)
+  <- m_e = C_e - C_min, C_e = el_e - H(az_e) [C] <- C_min = 0 deg default [A] (A-DTE-MASK)
+  <- GEOM(Earth) (Earth centre only [X]), H(A)
+both_h      Sun and Earth both visible [h] = sum of intersectWindows(Sun, Earth) [C] (windows.ts intersectWindows)
+longest_dark_h      Longest darkness [h] = max complement of Sun windows [C] (complementWindows, longestWindow);
+                    ">=" lower bound when cut by the interval edge (truncated flag)
+longest_blackout_h  Longest Earth blackout [h] = max complement of Earth windows [C] (same rules)
+sunlit_pct_flat     Sunlit time, flat horizon [%]: as sunlit_pct with m_s = el_s + rho_s (H = 0) [X]
+earth_pct_flat      Earth visible, flat horizon [%]: as earth_pct with m_e = el_e - C_min [X]
+mean_disk_pct       Mean visible solar disk [%] = 100 * trapezoidal time mean of f [C] (analysis.ts timeMean)
+  <- f = 1 - (acos x - x sqrt(1 - x^2))/pi, x = clamp(C_s/rho_s) [C][X straight level edge, uniform disk]
+     (power.ts diskFractionVisible) <- R-SEGMENT; C_s, rho_s as above
+sun_el_min_deg / sun_el_max_deg      extrema of sampled el_s [C] (analysis.ts minMax) <- GEOM(Sun)
+earth_el_min_deg / earth_el_max_deg  extrema of sampled el_e [C] <- GEOM(Earth)
+horizon_at_sun_deg    trapezoidal time mean of H(az_s(t)) over the whole interval [C] <- H(A), GEOM(Sun)
+horizon_at_earth_deg  trapezoidal time mean of H(az_e(t)) [C] <- H(A), GEOM(Earth)
+generated_kwh  Energy generated [kWh] = sum (P_i + P_i+1)/2 dt / 1000 [C] (M-BATTERY; power.ts simulateBattery)
+  <- P = S(d) A eta cos(i) f [C] (M-POWER; power.ts panelPowerW)
+  <- S(d) = 1361 W m^-2 (1 au / d_s)^2 [C] <- S0 [S] (R-TSI; R-TSI-MEAS consistency), 1 au [S] (R-AU)
+  <- A = 2.0 m^2, eta = 0.28, panel mode [A] (A-LANDER) ; cos(i) [C] from el_s ; f as above
+load_kwh       Energy demanded by load [kWh] = P_load * interval / 1000 [A] (A-LANDER, 150 W default)
+unserved_kwh   Unserved load energy [kWh] = sum of energy below 0 [C] (M-BATTERY)
+deficit_h      Time in power deficit [h]: per step (-E')/(-n) dt, constant net rate within a step [C][X]
+min_battery_pct  Minimum battery charge [%] = 100 min(E)/E_cap [C]
+  <- E_i+1 = clamp(E_i + E_gen - E_load, 0, E_cap) [C]; E_0 = E_cap [A] (A-BATT-INIT); E_cap = 1500 Wh [A];
+     ideal storage, constant load [A]
+```
+
+### Instantaneous readouts (Local horizon / sky view, Local terrain, Timelines cursor)
+
+```
+Sun / Earth azimuth, elevation [deg]   <- GEOM(body) at the cursor time (analysis.ts instantState; SkyView.tsx readout)
+Terrain horizon [deg]                   <- H(az) at the body azimuth (horizon.ts horizonAt)
+Clearance [deg]                         <- C = el - H(az) [C]
+Visible solar disk [%]                  <- 100 f (power.ts diskFractionVisible)
+Status chips ("Sun visible", "blocked by terrain", "below horizon"; Earth "line of sight", "below min. clearance")
+                                        <- signs of C_s + rho_s, el_s + rho_s, C_e - C_min, el_e (SkyView.tsx sunState, earthState)
+Min. clearance setting [deg]            <- C_min [A] (A-DTE-MASK)
+Horizon distance note ("set by terrain N km away") <- distance of the horizon-defining sample at the nearest
+                                        table azimuth (horizon.ts horizonDistanceAt) <- horizon_<id>.bin [C]
+Skyline curve                           <- H(A) table (horizon_<id>.bin); for user-entered points H = 0 [X]
+Sun / Earth tracks                      <- GEOM(body) sampled over +/- 15 days (SkyView.tsx PATH_DAYS, display)
+Timelines bars / power / battery curves <- Series.sunVisible, earthVisible, powerW, batteryWh (analysis.ts analyzeSite)
+```
+
+### Site facts, terrain and maps
+
+```
+Latitude / longitude          [S] sites_input.json <- R-LROC-1408 (IM-2), R-LROC-1360 + R-NASA-IM1 (IM-1);
+                              ridge [C] by the selection rule (build_data.py select_site_point) <- AVGVISIB_65S_240M_201608 [S]
+                              (R-MAZARICO-2011), Site01 box [S] (R-LOLA-SITES); user-entered [A]
+Elevation above sphere [m]    [S] bilinear LDEM_80S_80MPP_ADJ sample (build_data.py; sites.json elevation_m) <- R-LOLA-PGDA
+Published elevation [m]       [S] IM-1 2579 m (R-LROC-1360, R-NASA-IM1); display only; comparison in V-7
+Regional slope [deg]          [S] LDSM_80S_80MPP_ADJ pixel and 3x3 mean (build_data.py slope_at) <- R-LOLA-PGDA; context only
+Horizon range / mean [deg], max obstruction distance [km], coverage [km], unseen-terrain margin [deg]
+                              [C] sites.json horizon.* (build_data.py main) <- H(A) table; margin uses A-HMAX [A]
+Local terrain (3-D)           [C] terrain_<id>.bin heights (build_data.py terrain_patch) -> geometry.ts terrainNodeEnu
+                              (curvature exact, optional x3 exaggeration, display) ; colour terrain_color_<id>.png
+                              <- R-SVS-MOON-KIT (display) ; light direction = enuDirection(az_s, el_s) [C], intensity 2.8 f (display)
+Moon globe                    display only: moon.glb (public/models/provenance.json); site markers from lat/lon via enuBasis
+Overview hillshade            display only (build_data.py build_overview) <- LDEM_80S_80MPP_ADJ, artificial light
+```
+
+### Verdict, search and comparison
+
+```
+"Meets targets" / failures    [C] planner.ts assessment: sunlitFraction, earthVisibleFraction, longest darkness/blackout
+                              compared with targets [A] (M-PLAN; default 50 % / 50 %, limits off)
+"Terrain included" / "Flat-horizon estimate"  <- SiteDoc.terrain_aware (exact match to a shipped site)
+Search results / ranking      [C][X] planner.ts searchCandidates, compareCandidates (bounded grid, coarse screening,
+                              hourly refinement) <- analyzeSite for each candidate (chains above)
+Comparison table              same AnalysisResult values and summaryRows (MissionPlanner.tsx compare dialog)
+```
+
+### Exports
+
+```
+CSV/JSON summary values  <- summaryRows(r) (same rows as on screen) via src/export/exporters.ts
+CSV/JSON series          <- AnalysisResult.series (4 decimals angles/disk fraction, 2 decimals power/energy: formatting only)
+JSON references          <- public/data/provenance.json references (= scripts/references.json)
+```
+
+## How to reproduce
+
+```sh
+python -m venv .venv
+# activate the venv, then:
+python -m pip install -r requirements.txt
+python scripts/fetch_sources.py      # NASA downloads into git-ignored data_cache/ (about 0.80 GB)
+python scripts/build_data.py         # regenerates public/data/ and provenance.json
+python scripts/make_fixtures.py      # SPICE reference cases for the TypeScript tests
+python scripts/validate.py           # V-1 ... V-8 -> docs/VALIDATION.md
+npm install
+npm test
+python -m pytest scripts/tests -q
+```
+
+Display assets have their own generators: `scripts/prepare_visuals.py` (models,
+orbits) and `node scripts/prepare_stars.mjs` (stars).
+
+## Reference IDs and where they are used
+
+| ID | Used in |
+|---|---|
+| R-DE440, R-NAIF-MOONFK, R-NAIF-LSK, R-NAIF-PCK, R-NAIF-ABCORR, R-NAIF-SPKPOS, R-NAIF-TIME, R-NAIF-FRAMES, R-NAIF-GK | M-EPHEM, M-GEOM; `build_data.py build_ephemeris`; `moonlib.py`; `ephemeris.json` |
+| R-NAIF-SPKCPO, R-HORIZONS, R-DE421 | validation only (V-1, V-2, V-3) |
+| R-SPICE, R-SPICE-2018, R-SPICEYPY | software citations for every SPICE call |
+| R-IAU-WGCCRE | R_MOON (`constants.ts`, `moonlib.py`) |
+| R-LOLA-PGDA, R-SNYDER | M-SITE, M-HORIZON, M-SLOPE, M-PATCH; `moonlib.py`; `build_data.py` |
+| R-LOLA-SITES, R-MAZARICO-2011 | ridge selection (M-SITE); V-5 |
+| R-LROC-1360, R-NASA-IM1, R-LROC-1408 | site coordinates (`sites_input.json`) |
+| R-LROC-1401, R-CLPS, R-CP22, R-ARTEMIS3-REGIONS, R-SVS-5027, R-USGS-GAZ-MOUTON, R-USGS-LUNAR-STD, R-CHALLENGE | background / context notes only |
+| R-TSI, R-TSI-MEAS, R-AU | M-POWER (`constants.ts`, `power.ts`); R-TSI also R_SUN |
+| R-SEGMENT | M-SUNVIS (`power.ts diskFractionVisible`) |
+| R-SST-SOA-POWER | plausibility note for A-LANDER efficiency only |
+| R-SVS-MOON-KIT | display colour of the local terrain (M-PATCH) |

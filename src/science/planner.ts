@@ -95,9 +95,11 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
   const evaluate = (point: Point, startMs: number, stepMs: number): Candidate => {
     const site = coordinateSite(point, o.known);
     const mask = o.masks.get(site.id) ?? flat;
-    return { targets: { ...o.targets }, result: analyzeSite(makeSiteContext(site, o.observerHeight, mask), eph, {
+    const result = analyzeSite(makeSiteContext(site, o.observerHeight, mask), eph, {
       startMs, endMs: startMs + o.durationDays * DAY, stepMs, params: o.lander, earthMinClearanceDeg: o.clearance,
-    }) };
+    });
+    if (mask.terrainAware && !site.horizon.file) result.horizonMask = mask;
+    return { targets: { ...o.targets }, result };
   };
   const total = o.points.length * o.dates.length;
   let done = 0;

@@ -14,7 +14,7 @@ export const ENERGY_DISCLAIMER =
 export const SAFETY_DISCLAIMER = 'Favourable light and line of sight do not make a site safe to land on.';
 export const SLOPE_DISCLAIMER = '80 m baseline, context only — not a landing-safety assessment.';
 export const TERRAIN_CAPTION =
-  'Terrain ±20 km from LOLA DEM. Shading is a simple directional light: shadows are not ray-traced. Visibility is computed from the horizon mask (terrain out to 600 km).';
+  'LOLA elevation with contextual shading. Visibility uses the horizon mask (terrain out to 600 km).';
 export const MAP_CAPTION = 'Shaded relief from LOLA 80 m DEM — artificial lighting, display only';
 export const FLAT_WARNING = 'Flat-horizon approximation — no terrain data for this site; results ignore terrain.';
 

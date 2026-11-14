@@ -47,6 +47,7 @@ RAY_START_M, RAY_MIN_STEP_M, RAY_REL_STEP, RAY_MAX_M = 40.0, 40.0, 0.001, 600_00
 UNSEEN_TERRAIN_HEIGHT_M = 11_000.0
 #: Local terrain patch shipped for 3-D display: n x n nodes, +/- half-width. [M-PATCH]
 PATCH_N, PATCH_HALF_M = 201, 20_000.0
+MOON_COLOR = ROOT / "public" / "textures" / "moon-color.jpg"
 #: Ephemeris sampling. [M-EPHEM]
 EPHEM_START_UTC, EPHEM_STOP_UTC, EPHEM_STEP_S = "2026-01-01T00:00:00", "2029-01-01T00:00:00", 3600
 OVERVIEW_PX = 760  # 80S DEM (7600 px) block-averaged 10x -> 800 m/pix
@@ -126,7 +127,7 @@ def slope_at(lat: float, lon: float) -> dict:
     return {"pixel_deg": round(float(win[1, 1]), 2), "mean3x3_deg": round(float(np.nanmean(win)), 2)}
 
 
-def terrain_patch(dems: list[ml.Dem], lat: float, lon: float) -> tuple[np.ndarray, float]:
+def terrain_patch(dems: list[ml.Dem], lat: float, lon: float) -> tuple[np.ndarray, float, np.ndarray]:
     """Heights (m above the reference sphere) on an n x n grid of local
     azimuthal-equidistant coordinates: node (i, j) is the point reached from the
     site by travelling arc length hypot(e, n) along azimuth atan2(e, n), with
@@ -139,7 +140,21 @@ def terrain_patch(dems: list[ml.Dem], lat: float, lon: float) -> tuple[np.ndarra
     h, idx = ml.sample_terrain(dems, lat2, lon2)
     if np.isnan(h).any():
         raise ValueError("terrain patch has gaps")
-    return h.astype("<f4"), float((idx > 0).mean())
+    return h.astype("<f4"), float((idx > 0).mean()), np.stack((lat2, lon2))
+
+
+def terrain_texture(color: np.ndarray, coordinates: np.ndarray) -> np.ndarray:
+    """Bilinearly reproject the NASA SVS equirectangular color map onto the DEM grid."""
+    lat, lon = coordinates
+    _, height, width = color.shape
+    x = ((lon + 180) % 360) / 360 * width - 0.5
+    y = np.clip((90 - lat) / 180 * height - 0.5, 0, height - 1)
+    col, row = np.floor(x).astype(int), np.floor(y).astype(int)
+    dx, dy = x - col, y - row
+    next_col, next_row = (col + 1) % width, np.minimum(row + 1, height - 1)
+    top = color[:, row, col % width] * (1 - dx) + color[:, row, next_col] * dx
+    bottom = color[:, next_row, col % width] * (1 - dx) + color[:, next_row, next_col] * dx
+    return np.rint(top * (1 - dy) + bottom * dy).astype(np.uint8)
 
 
 def build_overview(dem80: ml.Dem) -> dict:
@@ -180,7 +195,7 @@ def build_ephemeris() -> tuple[dict, dict, dict]:
     n_total = round((et1 - et0) / EPHEM_STEP_S)
     # No leap second inside the window according to the LSK, so uniform UTC steps
     # are uniform TAI steps. TDB differs from TAI + 32.184 s by a periodic term of
-    # ~1.7 ms amplitude [R-NAIF-TIME], hence the loose tolerance here and the
+    # 1.657 ms amplitude (DELTET/K in naif0012.tls) [R-NAIF-LSK] [R-NAIF-TIME], hence the loose tolerance here and the
     # per-sample TAI -> TDB conversion below.
     assert abs((et1 - et0) - n_total * EPHEM_STEP_S) < 0.01
     tai0 = sp.unitim(et0, "TDB", "TAI")
@@ -247,6 +262,9 @@ def build_ephemeris() -> tuple[dict, dict, dict]:
 
 # --------------------------------------------------------------------------
 def main() -> None:
+    import rasterio
+    from rasterio.io import MemoryFile
+
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((CACHE / "sources_manifest.json").read_text(encoding="utf-8"))
     references = json.loads((Path(__file__).parent / "references.json").read_text(encoding="utf-8"))
@@ -267,6 +285,8 @@ def main() -> None:
     print("  interpolation error:", interp)
 
     distances = ml.ray_distances_m(RAY_START_M, RAY_MIN_STEP_M, RAY_REL_STEP, RAY_MAX_M)
+    with rasterio.open(MOON_COLOR, GEOREF_SOURCES="NONE") as image:
+        moon_color = image.read()
     sites_out = []
     for s in sites_in:
         lat, lon, sel = select_site_point(s)
@@ -275,8 +295,15 @@ def main() -> None:
         bound = ml.unseen_terrain_bound_deg(hz.obs_radius_m, hz.coverage_m, UNSEEN_TERRAIN_HEIGHT_M)
         hz_meta = write_bin(f"horizon_{s['id']}.bin",
                             np.concatenate([hz.elev_deg, hz.dist_m]).astype("<f4"))
-        patch, patch_far = terrain_patch(dems, lat, lon)
+        patch, patch_far, coordinates = terrain_patch(dems, lat, lon)
         tr_meta = write_bin(f"terrain_{s['id']}.bin", patch)
+        texture_path = OUT / f"terrain_color_{s['id']}.png"
+        with MemoryFile() as png:
+            with png.open(driver="PNG", width=PATCH_N, height=PATCH_N, count=3, dtype="uint8") as image:
+                image.write(terrain_texture(moon_color, coordinates))
+            texture_path.write_bytes(png.read())
+        products[texture_path.name] = {"file": texture_path.name, "bytes": texture_path.stat().st_size,
+                                       "sha256": sha256(texture_path)}
         products[hz_meta["file"]] = hz_meta
         products[tr_meta["file"]] = tr_meta
         x, y = ml.stereo_south_forward(lat, lon)
@@ -308,6 +335,7 @@ def main() -> None:
             },
             "terrain": {
                 "file": tr_meta["file"], "n": PATCH_N, "half_width_m": PATCH_HALF_M,
+                "texture_file": texture_path.name,
                 "spacing_m": 2 * PATCH_HALF_M / (PATCH_N - 1),
                 "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
                 "min_m": round(float(patch.min()), 1), "max_m": round(float(patch.max()), 1),
@@ -351,6 +379,11 @@ def main() -> None:
                    "method": f"Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step {AZ_STEP_DEG} deg, samples from {RAY_START_M} m to {RAY_MAX_M / 1000:.0f} km (step max({RAY_MIN_STEP_M} m, {RAY_REL_STEP} x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer {OBSERVER_HEIGHT_M} m above the DEM surface",
                    "frame": "local East-North-Up at the site; azimuth clockwise from north", "units": "deg, m",
                    "refs": ["R-LOLA-PGDA", "R-SNYDER"]}
+        elif name.startswith("terrain_color_"):
+            doc = {"description": "Local terrain display texture",
+                   "inputs": ["public/textures/moon-color.jpg"], "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+                   "frame": "local azimuthal-equidistant grid, rows run south to north", "units": "8-bit RGB",
+                   "refs": ["R-SVS-MOON-KIT"]}
         elif name.startswith("terrain_"):
             doc = {"description": "Reduced local terrain patch for 3-D display",
                    "inputs": used["terrain"],

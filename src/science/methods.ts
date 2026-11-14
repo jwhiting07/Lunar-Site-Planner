@@ -33,7 +33,7 @@ export const METHODS: MethodDoc[] = [
     formula: 'Rank by all targets met, then sum of normalized target shortfalls, then total sunlight + Earth-visible fractions. Break ties by distance (km) + date offset (days).',
     refs: [],
     limitations: [
-      'Arbitrary coordinates assume zero elevation on the 1737.4 km reference sphere and a flat horizontal skyline. Only exact matches to the shipped points use LOLA terrain masks. This estimates lighting and geometric Earth visibility, not landing safety.',
+      'Check a site can compute a LOLA horizon for custom coordinates within sufficient south-polar coverage. Other custom coordinates and sampled search locations use zero elevation and a flat skyline unless an existing terrain profile is available.',
       'Local search samples the center and 8 bearings on each of two radius rings. Unrestricted search samples 48 equal-area sphere points and a neutral equatorial point. Dates sample daily or at a whole-day spacing that limits the grid to 32 dates, including both boundaries.',
       'Search screens each mission at a whole-hour spacing of ceil(duration hours / 168), at least one hour, and refines its leading 12 candidates hourly. The best five refined candidates are shown; unsampled sites, dates and brief visibility events may be missed.',
       'Nearby alternatives test date offsets within 7 days at the same site, and 16 points within 50 km on the original date. Duration and targets are preserved. The search is bounded, not a global optimum guarantee.',
@@ -45,7 +45,7 @@ export const METHODS: MethodDoc[] = [
     title: 'Site coordinates and elevation',
     kind: 'sourced',
     summary:
-      'Coordinates may be entered or selected on the Moon. Arbitrary coordinates use zero reference-sphere elevation and a flat horizon. Exact shipped points retain their published or documented coordinates and LOLA DEM elevations.',
+      'Coordinates may be entered or selected on the Moon. Shipped points use precomputed LOLA profiles. The local calculator samples the same DEMs for custom locations with sufficient coverage. Flat-horizon estimates use zero reference-sphere elevation.',
     formula: 'h_site = bilinear(LDEM_80S_80MPP_ADJ, stereo(lat, lon)); observer radius r_o = 1737.4 km + h_site + h_obs',
     inputs: ['scripts/sites_input.json', 'LDEM_80S_80MPP_ADJ.TIF', 'A-OBS-HEIGHT'],
     refs: ['R-LROC-1408', 'R-LROC-1360', 'R-NASA-IM1', 'R-LOLA-SITES', 'R-MAZARICO-2011', 'R-LOLA-PGDA'],
@@ -103,7 +103,7 @@ export const METHODS: MethodDoc[] = [
       'Terrain smaller than the DEM pixel (80 m near the site, 240 m far away) is not represented: boulders, small craters and the lander itself are ignored.',
       'Azimuth sampling is 0.5 deg; narrow distant peaks between rays can be missed.',
       'The same horizon is used for the whole solar disk width (0.53 deg).',
-      'The continuous Moon display is separate from the LOLA horizon calculation; use the local horizon chart for terrain clearance and horizon distance.',
+      'The 3-D view covers +/- 20 km around the site; the horizon can come from farther away (distance shown in the sky view).',
     ],
     code: ['scripts/moonlib.py compute_horizon, elevation_angle_deg', 'src/science/horizon.ts horizonAt'],
   },
@@ -135,7 +135,7 @@ export const METHODS: MethodDoc[] = [
     refs: ['R-MAZARICO-2011'],
     limitations: [
       'Not a radio link assessment: no antenna pattern, pointing, transmitter power, data rate or ground-station availability.',
-      'Uses the centre of Earth (apparent radius about 0.95 deg); a station near the limb could appear or disappear earlier or later.',
+      'Uses the centre of Earth (apparent radius about 0.9 to 1.0 deg); a station near the limb could appear or disappear earlier or later. The NASA LOLA Earth-visibility maps instead count Earth as visible when any part of its disc is unobscured, which gives higher fractions (docs/VALIDATION.md V-5).',
       'Which Earth ground station faces the Moon at a given time is not modelled.',
     ],
     code: ['src/science/analysis.ts instantState'],
@@ -199,16 +199,16 @@ export const METHODS: MethodDoc[] = [
   },
   {
     id: 'M-PATCH',
-    title: 'Retained local DEM grid',
+    title: '3-D terrain patch',
     kind: 'computed',
     summary:
-      'A precomputed 201 x 201 grid of LOLA heights covering +/- 20 km around the site (200 m spacing), retained with the shipped data. The active local terrain view displays the continuous NASA Moon model instead of this grid.',
+      'A 201 x 201 grid of LOLA heights at 200 m spacing, covering +/- 20 km around the site with lunar curvature and a NASA SVS color texture.',
     formula: 'node at arc s, azimuth A: horizontal = (R + h) sin(s / R), up = (R + h) cos(s / R) - (R + h_site)',
     inputs: ['LDEM_80S_80MPP_ADJ.TIF', 'LDEM_60S_240MPP_ADJ.TIF'],
-    refs: ['R-LOLA-PGDA'],
+    refs: ['R-LOLA-PGDA', 'R-SVS-MOON-KIT'],
     limitations: [
-      'Display only. Visibility is computed from the horizon mask, which uses terrain out to 600 km.',
-      'This grid is not rendered in the active Moon views. The displayed NASA model uses simple directional lighting without ray-traced shadows.',
+      'Display only. The color texture includes lower resolution polar fill. Visibility is computed from the horizon mask, which uses terrain out to 600 km.',
+      'Shading in the 3-D view is a simple directional light and does not ray-trace shadows.',
     ],
     code: ['scripts/build_data.py terrain_patch', 'src/science/geometry.ts terrainNodeEnu'],
   },

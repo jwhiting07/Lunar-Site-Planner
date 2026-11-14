@@ -1,6 +1,6 @@
-import { memo, useMemo } from 'react';
+import { memo, useId, useMemo, useRef } from 'react';
 import { HOUR_MS, type AnalysisResult, type HorizonMask, type InstantState } from '../science';
-import { DAY_MS, deg, fmtUtc, num } from '../ui/labels';
+import { DAY_MS, clamp, deg, fmtUtc, num } from '../ui/labels';
 import { Panel } from './Common';
 
 const W = 960;
@@ -19,6 +19,7 @@ interface Props {
   inst: InstantState | null;
   cursorMs: number;
   earthMinClearanceDeg: number;
+  onCursor?: (time: number) => void;
 }
 
 /** Split an az/el series into polyline strings, breaking at the 0/360 wrap. */
@@ -49,7 +50,11 @@ function earthState(inst: InstantState, minClear: number): { label: string; cls:
   return { label: 'Earth: below horizon', cls: 'off' };
 }
 
-function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Props) {
+function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCursor }: Props) {
+  const clipId = useId();
+  const drag = useRef<{ pointerId: number; x: number; time: number; width: number } | null>(null);
+  const canScrub = Boolean(onCursor && result);
+  const terrainMask = mask?.terrainAware ? mask : null;
   const hourKey = Math.floor(cursorMs / HOUR_MS);
   const geo = useMemo(() => {
     let lo = -4;
@@ -74,8 +79,8 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Pro
         }
       }
     }
-    if (mask) {
-      for (const e of mask.elevDeg) {
+    if (terrainMask) {
+      for (const e of terrainMask.elevDeg) {
         if (e - 1 < lo) lo = Math.floor(e - 1);
         if (e + 1 > hi) hi = Math.ceil(e + 1);
       }
@@ -87,15 +92,15 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Pro
       sunSegs = pathSegments(s.sunAzDeg, s.sunElDeg, i0, i1, x, y);
       earthSegs = pathSegments(s.earthAzDeg, s.earthElDeg, i0, i1, x, y);
     }
-    let skyline = '';
-    if (mask) {
-      const n = mask.elevDeg.length;
+    let ridge = '';
+    if (terrainMask) {
+      const n = terrainMask.elevDeg.length;
       const pts: string[] = [];
-      for (let i = 0; i <= n; i++) pts.push(`${x(i * mask.azStepDeg)} ${y(mask.elevDeg[i % n])}`);
-      skyline = `M${ML} ${MT + PH}L${pts.join('L')}L${ML + PW} ${MT + PH}Z`;
+      for (let i = 0; i <= n; i++) pts.push(`${x(i * terrainMask.azStepDeg)} ${y(terrainMask.elevDeg[i % n])}`);
+      ridge = pts.join('L');
     }
-    return { lo, hi, x, y, sunSegs, earthSegs, skyline };
-  }, [mask, result, hourKey]);
+    return { lo, hi, x, y, sunSegs, earthSegs, ridge };
+  }, [terrainMask, result, hourKey]);
 
   const { lo, hi, x, y } = geo;
   const step = hi - lo > 30 ? 5 : hi - lo > 14 ? 2 : 1;
@@ -105,18 +110,59 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Pro
   const cardinal: Record<number, string> = { 0: 'N', 90: 'E', 180: 'S', 270: 'W', 360: 'N' };
   const sun = inst ? sunState(inst) : null;
   const earth = inst ? earthState(inst, earthMinClearanceDeg) : null;
-  const sunPx = inst ? Math.max(5, (inst.sun.angularRadiusDeg / (hi - lo)) * PH) : 5;
+  const sunRadiusY = inst ? (inst.sun.angularRadiusDeg / (hi - lo)) * PH : 0;
+  const sunRadiusX = inst ? inst.sun.angularRadiusDeg * PW / 360 : 0;
+  const sunPartlyHidden = Boolean(inst && inst.sun.diskFraction > 0 && inst.sun.diskFraction < 1);
+  const skyId = `${clipId}-sky`;
+  const groundId = `${clipId}-ground`;
 
   return (
     <Panel
       title="Sky view from the lander"
       help="What the horizon looks like from the site: terrain skyline, and where the Sun and Earth are in the sky. Azimuth is the compass direction measured clockwise from north."
     >
-      <svg viewBox={`0 0 ${W} ${H}`} className="sky-svg" role="img" aria-label="Sky view: terrain horizon with Sun and Earth tracks and current positions">
+      <svg viewBox={`0 0 ${W} ${H}`} className={`sky-svg${canScrub ? ' sky-scrub' : ''}`}
+        role={canScrub ? 'slider' : 'img'} tabIndex={canScrub ? 0 : undefined}
+        aria-label={canScrub ? 'Local horizon time' : 'Sky view: terrain horizon with Sun and Earth tracks and current positions'}
+        aria-valuemin={canScrub ? result?.startMs : undefined} aria-valuemax={canScrub ? result?.endMs : undefined}
+        aria-valuenow={canScrub ? cursorMs : undefined} aria-valuetext={canScrub ? fmtUtc(cursorMs) : undefined}
+        onPointerDown={event => {
+          if (!canScrub || event.button !== 0 || !event.isPrimary) return;
+          const width = event.currentTarget.getBoundingClientRect().width;
+          if (!width) return;
+          drag.current = { pointerId: event.pointerId, x: event.clientX, time: cursorMs, width };
+          event.currentTarget.setPointerCapture(event.pointerId);
+        }}
+        onPointerMove={event => {
+          const start = drag.current;
+          if (!start || start.pointerId !== event.pointerId || !result || !onCursor) return;
+          // The chart's horizontal axis is azimuth. A drag adjusts time relative to its start.
+          const offset = (event.clientX - start.x) / start.width * (result.endMs - result.startMs);
+          onCursor(clamp(start.time + Math.round(offset / 60_000) * 60_000, result.startMs, result.endMs));
+        }}
+        onLostPointerCapture={() => { drag.current = null; }}
+        onKeyDown={event => {
+          if (!result || !onCursor) return;
+          const step = event.shiftKey ? DAY_MS : HOUR_MS;
+          const next = event.key === 'Home' ? result.startMs : event.key === 'End' ? result.endMs
+            : event.key === 'ArrowLeft' || event.key === 'ArrowDown' ? cursorMs - step
+            : event.key === 'ArrowRight' || event.key === 'ArrowUp' ? cursorMs + step : null;
+          if (next === null) return;
+          event.preventDefault();
+          onCursor(clamp(next, result.startMs, result.endMs));
+        }}>
         <defs>
-          <clipPath id="sky-clip">
+          <clipPath id={clipId}>
             <rect x={ML} y={MT} width={PW} height={PH} />
           </clipPath>
+          <clipPath id={skyId}>
+            <path d={geo.ridge ? `M${ML} ${MT}L${geo.ridge}L${ML + PW} ${MT}Z`
+              : `M${ML} ${MT}H${ML + PW}V${y(0)}H${ML}Z`} />
+          </clipPath>
+          <linearGradient id={groundId} x2="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stopColor="#595b61" />
+            <stop offset="1" stopColor="#282b31" />
+          </linearGradient>
         </defs>
         <rect x={ML} y={MT} width={PW} height={PH} className="plot-bg" />
         <g className="grid">
@@ -127,23 +173,28 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Pro
             <line key={e} x1={ML} x2={ML + PW} y1={y(e)} y2={y(e)} />
           ))}
         </g>
-        <g clipPath="url(#sky-clip)">
-          {geo.skyline && <path d={geo.skyline} className="skyline" />}
-          <line x1={ML} x2={ML + PW} y1={y(0)} y2={y(0)} className="flat-horizon" />
-          {geo.sunSegs.map((d, i) => (
-            <path key={`s${i}`} d={d} className="track track-sun" />
-          ))}
-          {geo.earthSegs.map((d, i) => (
-            <path key={`e${i}`} d={d} className="track track-earth" />
-          ))}
+        <g clipPath={`url(#${clipId})`}>
+          {geo.ridge && <>
+            <path d={`M${ML} ${MT + PH}L${geo.ridge}L${ML + PW} ${MT + PH}Z`} fill={`url(#${groundId})`} />
+            <path d={`M${geo.ridge}`} className="skyline" />
+          </>}
+          {!terrainMask && <line x1={ML} x2={ML + PW} y1={y(0)} y2={y(0)} className="flat-horizon" />}
+          {[false, true].map(above => <g key={String(above)} opacity={above ? 1 : 0.28}
+            clipPath={above ? `url(#${skyId})` : undefined} aria-hidden="true">
+            {geo.sunSegs.map((d, i) => <path key={`s${i}`} d={d} className="track track-sun" />)}
+            {geo.earthSegs.map((d, i) => <path key={`e${i}`} d={d} className="track track-earth" />)}
+          </g>)}
           {inst && (
             <>
-              <g>
+              <g className={`horizon-body${inst.earth.clearanceDeg <= 0 ? ' horizon-body-hidden' : ''}`}>
                 <circle cx={x(inst.earth.azDeg)} cy={y(inst.earth.elDeg)} r={6} className="mark-earth" />
               </g>
-              <g>
-                <circle cx={x(inst.sun.azDeg)} cy={y(inst.sun.elDeg)} r={sunPx} className="mark-sun" />
+              <g className={`horizon-body${inst.sun.diskFraction === 0 || sunPartlyHidden ? ' horizon-body-hidden' : ''}`}>
+                <circle cx={x(inst.sun.azDeg)} cy={y(inst.sun.elDeg)} r={Math.max(5, sunRadiusY)} className="mark-sun" />
               </g>
+              {sunPartlyHidden &&
+                <ellipse cx={x(inst.sun.azDeg)} cy={y(inst.sun.elDeg)} rx={sunRadiusX} ry={sunRadiusY}
+                  className="horizon-sun-limb" clipPath={`url(#${skyId})`} />}
             </>
           )}
         </g>
@@ -163,14 +214,18 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg }: Pro
           <text transform={`translate(11 ${MT + PH / 2}) rotate(-90)`} textAnchor="middle">Elevation</text>
         </g>
         <g className="annot">
-          <text x={ML + 6} y={Number(y(0)) - 4}>0{'°'} flat horizon</text>
-          {mask && <text x={ML + PW - 6} y={MT + 14} textAnchor="end">terrain horizon {'—'} LOLA</text>}
+          {!terrainMask && <text x={ML + 6} y={Number(y(0)) - 4}>0° reference horizon</text>}
+          {terrainMask && <text x={ML + PW - 6} y={MT + 14} textAnchor="end">LOLA terrain skyline</text>}
           <text x={ML + 6} y={MT + 14} className="annot-sun">{'●'} Sun track</text>
           <text x={ML + 78} y={MT + 14} className="annot-earth">{'●'} Earth track</text>
         </g>
       </svg>
       <p className="caption">
-        Tracks show {PATH_DAYS} days either side of the cursor. Filled grey = terrain skyline out to 600 km (LOLA). Markers = Sun (amber) and Earth (cyan) at the cursor time.
+        {canScrub && 'Drag left or right to move through time. '}
+        Tracks show {PATH_DAYS} days either side of the cursor. {terrainMask
+          ? 'The ridge line comes from LOLA terrain. Hollow markers show bodies hidden by the skyline.'
+          : result?.terrainAware ? 'Loading the site’s terrain skyline…'
+            : 'Terrain skyline unavailable for these coordinates. The analysis uses a flat, 0° horizon.'} Markers show the Sun (amber) and Earth (blue).
       </p>
       {inst ? (
         <div className="readout" aria-live="polite">

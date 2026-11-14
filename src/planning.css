@@ -9,13 +9,21 @@
 .planning-visual { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 .planning-view-tools { display: flex; flex-shrink: 0; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 20px 4px; }
 .planning-view-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; }
-.planning-view-tools select { max-width: min(55vw, 340px); min-height: 38px; padding: 8px 12px; }
+.landing-site-picker select { max-width: min(55vw, 340px); min-height: 38px; padding: 8px 12px; }
 .planning-workspace .btn { background: transparent; }
 .planning-workspace .btn:hover { background: var(--bg2); }
 .planning-workspace .map-workspace { display: flex; flex-direction: column; flex: 1; min-height: 0; border: 0; }
 .planning-workspace .map-view-switch { flex-shrink: 0; padding: 4px 20px; border: 0; }
-.planning-workspace .map-view-switch .btn { border: 0; color: var(--tx1); padding: 6px 0; margin-right: 20px; }
-.planning-workspace .map-view-switch [aria-pressed=true] { color: var(--tx0); background: transparent; border-bottom: 1px solid var(--tx0); }
+.planning-workspace .map-view-switch .btn { border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--tx1); padding: 8px 12px; }
+.planning-workspace .map-view-switch .btn:hover { background: transparent; color: var(--tx0); border-bottom-color: var(--tx2); }
+.planning-workspace .map-view-switch .btn[aria-pressed=true] { color: var(--tx0); border-bottom-color: var(--earth); }
+.planning-workspace .terrain-panel { overflow-y: auto; min-height: 0; }
+.planning-workspace .terrain-panel .panel-h, .planning-workspace .terrain-panel .panel-tools { flex-wrap: wrap; }
+.planning-workspace .moon-pin { display: grid; place-items: center; color: #eff1f3; background: transparent; border: 0; }
+.planning-site-marker { width: 12px; height: 12px; background: #15181c; border: 2px solid currentColor; box-shadow: 0 0 0 1px #15181c; border-radius: 50%; }
+.planning-site-marker.representative_point { border-radius: 0; transform: rotate(45deg); }
+.planning-workspace .moon-pin:hover { outline: none; color: var(--earth); }
+.planning-workspace .moon-pin.selected .planning-site-marker { background: var(--earth); border-color: white; }
 .planning-workspace .moon-stage { flex: 1; height: auto; min-height: 0; }
 .planning-workspace .map-readouts { flex-shrink: 0; border: 0; padding: 8px 20px; gap: 8px 20px; }
 .planning-workspace .moon-credit { color: var(--tx1); padding: 8px 24px; border: 0; }
@@ -69,6 +77,7 @@
 .planning-tools-content > .panel > .panel-b { padding: 0; }
 .planning-tools-content .cmp-table th { text-transform: none; letter-spacing: 0; }
 .planning-tools-content .group-h { text-transform: none; letter-spacing: 0; }
+.planning-tools-site-picker { margin-bottom: 16px; }
 .planning-site-selection { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 0 0 20px; margin: 0 0 12px; border: 0; border-bottom: 1px solid var(--line-soft); }
 .planning-site-selection legend { font-size: 12px; color: var(--tx1); padding: 0 0 12px; }
 .planning-site-selection label { display: grid; grid-template-columns: 16px minmax(0, 1fr); align-items: start; gap: 8px; font-size: 12px; }
