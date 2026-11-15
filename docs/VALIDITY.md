@@ -1,6 +1,6 @@
 # Mission-level validity report
 
-Generated 2026-11-15T18:12:11.381278+00:00 by `python scripts/validate_validity.py`.
+Generated 2026-11-15T19:13:42.977187+00:00 by `python scripts/validate_validity.py`.
 
 Status: **passed**. Numerical budgets are project choices, not NASA specifications.
 
@@ -50,11 +50,11 @@ Each effect changes one factor with coordinates, dates and visibility rule held 
 
 | Shortlist | Same top five as exhaustive 147-scenario reference | Cached runtime (ms) |
 |---|---|---:|
-| 12 | True | 57.7 |
-| 24 | True | 50.6 |
-| 48 | True | 114.0 |
+| 12 | True | 62.8 |
+| 24 | True | 80.7 |
+| 48 | True | 146.9 |
 
-Default-grid sampled search: 1519 scenarios in 536.4 ms with exact precomputed horizons available. This is local calculation time, excluding downloads and cold custom terrain requests.
+Default-grid sampled search: 1519 scenarios in 522.9 ms with exact precomputed horizons available. This is local calculation time, excluding downloads and cold custom terrain requests.
 
 Battery reference: separate Python midpoint integration with 20,000 subdivisions per segment. Acceptance: 0.02 Wh and 0.002 h; full case inputs and errors in JSON. This validates numerical ideal-storage behavior, not real spacecraft performance.
 

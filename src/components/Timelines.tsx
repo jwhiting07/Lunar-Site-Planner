@@ -3,11 +3,8 @@ import { HOUR_MS, windowHours, type AnalysisResult, type TimeWindow } from '../s
 import { DAY_MS, clamp, isoDate, num } from '../ui/labels';
 import { useTimeZone, type TimeZoneValue } from '../ui/timeZone';
 import { useScrubSelection } from '../ui/useScrubSelection';
+import { useChartWidth } from '../ui/useChartWidth';
 
-const VW = 1000;
-const LX = 150; // left gutter for labels
-const RX = 990;
-const PWID = RX - LX;
 const BAR_H = 11;
 const BAR_GAP = 3;
 const SITE_GAP = 10;
@@ -95,22 +92,30 @@ function TimelinesImpl({ missions, primaryId, part = 'all', startMs, endMs, curs
   const tz = useTimeZone();
   const selection = useScrubSelection();
   const svgRef = useRef<SVGSVGElement>(null);
+  const VW = useChartWidth(svgRef, 1000);
+  const compact = VW < 560;
+  const LX = compact ? (part === 'power' ? 104 : 48) : 150;
+  const RX = VW - 20;
+  const PWID = Math.max(1, RX - LX);
+  const rowHeight = compact ? 58 : 2 * BAR_H + BAR_GAP + SITE_GAP;
   const dragging = useRef<number | null>(null);
   const tx = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
 
   const showRows = part !== 'power';
   const showPower = part !== 'visibility';
   const layout = useMemo(() => {
-    const rowsH = showRows ? missions.length * (2 * BAR_H + BAR_GAP + SITE_GAP) : 0;
+    const rowsH = showRows ? missions.length * rowHeight : 0;
     const chart1Y = AXIS_H + rowsH + (showRows ? 14 : 6);
     const batH = 86;
     const powY = chart1Y + batH + 22;
     const powH = 58;
     return { rowsH, chart1Y, batH, powY, powH, total: showPower ? powY + powH + 8 : AXIS_H + rowsH + 8 };
-  }, [missions.length, showRows, showPower]);
+  }, [missions.length, showRows, showPower, rowHeight]);
 
   const staticPart = useMemo(() => {
-    const ticks = makeTicks(startMs, endMs);
+    const candidates = makeTicks(startMs, endMs);
+    const stride = Math.max(1, Math.ceil(candidates.length / Math.max(1, Math.floor(PWID / 66))));
+    const ticks = candidates.filter((_, i) => i % stride === 0);
     const x = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
     const primary = missions.find(mission => mission.id === primaryId) ?? missions[0];
     const { chart1Y, batH, powY, powH, total } = layout;
@@ -157,20 +162,22 @@ function TimelinesImpl({ missions, primaryId, part = 'all', startMs, endMs, curs
               {k.label}
             </text>
           ))}
-          <text x={LX - 28} y={AXIS_H - 8} textAnchor="end">UTC</text>
+          <text x={LX - 8} y={AXIS_H - 8} textAnchor="end">UTC</text>
         </g>
         {showRows && missions.map(({ id, label, result: r }, idx) => {
-          const y0 = AXIS_H + 6 + idx * (2 * BAR_H + BAR_GAP + SITE_GAP);
+          const rowY = AXIS_H + 6 + idx * rowHeight;
+          const y0 = rowY + (compact ? 18 : 0);
           const left = x(r.startMs), width = x(r.endMs) - left;
           return (
             <g key={id}>
               <title>{label} · {tz.dateTime(r.startMs)} to {tz.dateTime(r.endMs)}</title>
-              <text x={LX - 8} y={y0 + BAR_H - 2} textAnchor="end" className={id === primaryId ? 'row-label primary' : 'row-label'}>
+              <text x={compact ? 8 : LX - 8} y={compact ? rowY + 10 : y0 + BAR_H - 2} textAnchor={compact ? 'start' : 'end'} className={id === primaryId ? 'row-label primary' : 'row-label'}>
                 {label.length > 23 ? `${label.slice(0, 22)}…` : label}
               </text>
               <text x={LX - 8} y={y0 + 2 * BAR_H + BAR_GAP - 2} textAnchor="end" className="axis-text-small">
-                Sun / Earth
+                {compact ? 'Earth' : 'Sun / Earth'}
               </text>
+              {compact && <text x={LX - 8} y={y0 + BAR_H - 2} textAnchor="end" className="axis-text-small">Sun</text>}
               <rect x={left} y={y0} width={width} height={BAR_H} className="bar-track" />
               <rect x={left} y={y0 + BAR_H + BAR_GAP} width={width} height={BAR_H} className="bar-track" />
               {bars(r.metrics.sunWindows, y0, 'bar-sun', `${label} Sun visible`)}
@@ -198,7 +205,7 @@ function TimelinesImpl({ missions, primaryId, part = 'all', startMs, endMs, curs
         )}
       </g>
     );
-  }, [missions, primaryId, startMs, endMs, layout, tz, showRows, showPower]);
+  }, [missions, primaryId, startMs, endMs, layout, tz, showRows, showPower, compact, LX, RX, PWID, rowHeight]);
 
   const setFromEvent = (e: RPointerEvent<SVGSVGElement>) => {
     const el = svgRef.current;

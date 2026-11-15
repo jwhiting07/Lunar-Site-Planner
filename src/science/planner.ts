@@ -50,6 +50,12 @@ export function distanceKm(a: Point, b: Point) {
 
 export function destination(p: Point, km: number, bearingDeg: number): Point {
   const d = km / (R_MOON_M / 1000), b = bearingDeg * DEG, lat = p.lat * DEG;
+  // The usual longitude formula is 0/0 at a pole and collapses distinct
+  // bearings. Use the limiting ENU convention, also used by the terrain rays.
+  if (Math.abs(p.lat) === 90) return {
+    lat: Math.sign(p.lat) * (90 - d / DEG),
+    lon: normalizeLon(p.lon + (p.lat < 0 ? bearingDeg : 180 - bearingDeg)),
+  };
   const next = Math.asin(Math.max(-1, Math.min(1, Math.sin(lat) * Math.cos(d) + Math.cos(lat) * Math.sin(d) * Math.cos(b))));
   return { lat: next / DEG, lon: normalizeLon(p.lon + Math.atan2(Math.sin(b) * Math.sin(d) * Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(next)) / DEG) };
 }
@@ -122,8 +128,10 @@ function yieldToUi(): Promise<void> {
 /** Work slice between yields, ms: short enough to keep the UI at 60 fps. */
 const SLICE_MS = 12;
 
+export type SearchPhase = 'screening' | 'refining';
+
 /** Bounded screening, then hourly refinement. Yields every SLICE_MS of work to keep the UI responsive. */
-export async function searchCandidates(eph: EphemerisTable, options: SearchOptions, signal: AbortSignal, progress: (done: number, total: number) => void): Promise<Candidate[]> {
+export async function searchCandidates(eph: EphemerisTable, options: SearchOptions, signal: AbortSignal, progress: (done: number, total: number, phase: SearchPhase) => void): Promise<Candidate[]> {
   const best: Candidate[] = [];
   const shortlistSize = options.shortlistSize ?? 48;
   let sliceStart = performance.now();
@@ -174,11 +182,13 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
       }
       done++;
       if (done < total && sliceOver()) {
-        progress(done, total);
+        progress(done, total, 'screening');
         await rest();
       }
     }
   }
+  progress(total, total, 'screening');
+  progress(0, best.length, 'refining');
   const refined: Candidate[] = [];
   const resolved = new Map<string, Awaited<ReturnType<NonNullable<SearchOptions['resolveTerrain']>>>>();
   for (const candidate of best) {
@@ -196,9 +206,9 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
     });
     result.horizonMask = terrain?.mask ?? options.masks.get(site.id) ?? flat;
     refined.push({ targets: candidate.targets, result });
+    progress(refined.length, best.length, 'refining');
     if (sliceOver()) await rest();
   }
-  progress(total, total);
   // At most two dates per location and mission length, so the list is not five copies of one point.
   const countsBySiteAndDuration = new Map<string, number>();
   const shown = new Set<string>();

@@ -36,6 +36,11 @@ export function missionEntries(sampled: Candidate[], saved: SavedComparison[], a
   return [...entries.values()];
 }
 
+/** The mission picker and comparison timeline share exactly the checked missions. */
+export function comparedMissionEntries(entries: ReturnType<typeof missionEntries>) {
+  return entries.filter(entry => entry.saved);
+}
+
 export function horizonModel(result: AnalysisResult): string {
   if (result.horizonMask?.resolutionM) return 'Regional LOLA';
   return result.terrainAware ? 'LOLA terrain' : 'Flat horizon';

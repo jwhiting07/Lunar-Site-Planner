@@ -1,0 +1,736 @@
+{
+  "checked_utc": "2026-11-15T18:32:14.068955+00:00",
+  "note": "Unauthenticated HTTP probes with TLS verification enabled. Errors may reflect server filtering or transient failures; they do not prove that a page is private. Success does not establish reuse rights.",
+  "results": [
+    {
+      "url": "https://darts.isas.jaxa.jp/en/missions/slim",
+      "status": 200,
+      "final_url": "https://darts.isas.jaxa.jp/en/missions/slim",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://docs.pytest.org/",
+      "status": 200,
+      "final_url": "https://docs.pytest.org/en/stable/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.1007/s10569-017-9805-5",
+      "status": 200,
+      "final_url": "https://link.springer.com/article/10.1007/s10569-017-9805-5",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.1016/0032-0633(95)00107-7",
+      "status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/0032063395001077",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.1016/j.pss.2017.02.013",
+      "status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0032063316303129",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.1017/S1743921315005463",
+      "status": 200,
+      "final_url": "https://www.cambridge.org/core/journals/proceedings-of-the-international-astronomical-union/article/chapter-iv-twenty-eighth-general-assembly/E6AD53DC379EBCC8C1D49F83DBE3791B",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.1029/2010GL045777",
+      "status": 403,
+      "final_url": "http://doi.wiley.com/10.1029/2010GL045777",
+      "accessible_by_probe": false
+    },
+    {
+      "url": "https://doi.org/10.21105/joss.02050",
+      "status": 200,
+      "final_url": "https://joss.theoj.org/papers/10.21105/joss.02050",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.3133/pp1395",
+      "status": 200,
+      "final_url": "https://pubs.usgs.gov/publication/pp1395",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.3847/0004-6256/152/2/41",
+      "status": 200,
+      "final_url": "https://iopscience.iop.org/article/10.3847/0004-6256/152/2/41",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://doi.org/10.3847/1538-3881/abd414",
+      "status": 200,
+      "final_url": "https://iopscience.iop.org/article/10.3847/1538-3881/abd414",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://english.spacechina.com/n17212/c4320459/content.html",
+      "status": 200,
+      "final_url": "https://english.spacechina.com/n17212/c4320459/content.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://fireflyspace.com/blue-ghost-mission-2/",
+      "status": 200,
+      "final_url": "https://fireflyspace.com/missions/blue-ghost-mission-2/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://fireflyspace.com/missions/blue-ghost-mission-3/",
+      "status": 200,
+      "final_url": "https://fireflyspace.com/missions/blue-ghost-elytra-gruithuisen-domes/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://git-scm.com/",
+      "status": 200,
+      "final_url": "https://git-scm.com/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://github.com/",
+      "status": 200,
+      "final_url": "https://github.com/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://github.com/jwhiting07/Seraphim-Landing",
+      "status": 404,
+      "final_url": "https://github.com/jwhiting07/Seraphim-Landing",
+      "accessible_by_probe": false
+    },
+    {
+      "url": "https://github.com/rsms/inter",
+      "status": 200,
+      "final_url": "https://github.com/rsms/inter",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html",
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ipnpr.jpl.nasa.gov/progress_report/42-178/178C.pdf",
+      "status": 200,
+      "final_url": "https://ipnpr.jpl.nasa.gov/progress_report/42-178/178C.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ira.lib.polyu.edu.hk/bitstream/10397/117857/1/remotesensing-17-01121-v2.pdf",
+      "status": 200,
+      "final_url": "https://ira.lib.polyu.edu.hk/bitstream/10397/117857/1/remotesensing-17-01121-v2.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ispace-inc.com/wp-content/uploads/2026/03/20260327-ULTRA.pdf",
+      "status": 200,
+      "final_url": "https://ispace-inc.com/wp-content/uploads/2026/03/20260327-ULTRA.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://katex.org/",
+      "status": 200,
+      "final_url": "https://katex.org/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://lroc.im-ldi.com/data/support/downloads/2016_LROC_Coordinates_of_Robotic_Spacecraft.pdf",
+      "status": 200,
+      "final_url": "https://lroc.im-ldi.com/data/support/downloads/2016_LROC_Coordinates_of_Robotic_Spacecraft.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://lroc.im-ldi.com/images/1314",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='lroc.im-ldi.com', port=443): Read timed out. (read timeout=12)"
+    },
+    {
+      "url": "https://lroc.im-ldi.com/images/1360",
+      "status": 200,
+      "final_url": "https://lroc.im-ldi.com/images/1360",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://lroc.im-ldi.com/images/1374",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='lroc.im-ldi.com', port=443): Read timed out. (read timeout=12)"
+    },
+    {
+      "url": "https://lroc.im-ldi.com/images/1401",
+      "status": 200,
+      "final_url": "https://lroc.im-ldi.com/images/1401",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://lroc.im-ldi.com/images/1408",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='lroc.im-ldi.com', port=443): Read timed out. (read timeout=12)"
+    },
+    {
+      "url": "https://mathworld.wolfram.com/CircularSegment.html",
+      "status": 200,
+      "final_url": "https://mathworld.wolfram.com/CircularSegment.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkcpo_c.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkcpo_c.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkpos_c.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkpos_c.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/abcorr.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/abcorr.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html",
+      "status": 200,
+      "final_url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nodejs.org/",
+      "status": 200,
+      "final_url": "https://nodejs.org/en",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html",
+      "status": 200,
+      "final_url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html",
+      "status": 200,
+      "final_url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunarussr.html",
+      "status": 200,
+      "final_url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunarussr.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/ranger.html",
+      "status": 200,
+      "final_url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/ranger.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/surveyor.html",
+      "status": 200,
+      "final_url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/surveyor.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19650003678/downloads/19650003678.pdf",
+      "status": 200,
+      "final_url": "https://ntrs.nasa.gov/api/citations/19650003678/downloads/19650003678.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19680022029/downloads/19680022029.pdf",
+      "status": 200,
+      "final_url": "https://ntrs.nasa.gov/api/citations/19680022029/downloads/19680022029.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/20260003150/downloads/MSolo%20PRIME-1%20overview%20and%20results%20-%20LSSW.pdf",
+      "status": 200,
+      "final_url": "https://ntrs.nasa.gov/api/citations/20260003150/downloads/MSolo%20PRIME-1%20overview%20and%20results%20-%20LSSW.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ntrs.nasa.gov/citations/20250011660",
+      "status": 200,
+      "final_url": "https://ntrs.nasa.gov/citations/20250011660",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://numpy.org/",
+      "status": 200,
+      "final_url": "https://numpy.org/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://openai.com/codex/",
+      "status": 403,
+      "final_url": "https://openai.com/codex/",
+      "accessible_by_probe": false
+    },
+    {
+      "url": "https://openai.com/index/image-generation/",
+      "status": 403,
+      "final_url": "https://openai.com/index/image-generation/",
+      "accessible_by_probe": false
+    },
+    {
+      "url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=EAR-L-APO3.5M_AGILE-2-EDR-LCROSS-V1.0",
+      "status": 200,
+      "final_url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=EAR-L-APO3.5M_AGILE-2-EDR-LCROSS-V1.0",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://pgda.gsfc.nasa.gov/products/69",
+      "status": 200,
+      "final_url": "https://pgda.gsfc.nasa.gov/products/69",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://pgda.gsfc.nasa.gov/products/78",
+      "status": 200,
+      "final_url": "https://pgda.gsfc.nasa.gov/products/78",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://pgda.gsfc.nasa.gov/products/90",
+      "status": 200,
+      "final_url": "https://pgda.gsfc.nasa.gov/products/90",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/1439",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/1439",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/14502",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/14502",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/16070",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/16070",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/16338",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/16338",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/3982",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/3982",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/4159",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/4159",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/4321",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/4321",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/4987",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/4987",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/5381",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/5381",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/5450",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/5450",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://planetarynames.wr.usgs.gov/Feature/8058",
+      "status": 200,
+      "final_url": "https://planetarynames.wr.usgs.gov/Feature/8058",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://psdi.astrogeology.usgs.gov/moon/standards/data_standards/",
+      "status": 200,
+      "final_url": "https://psdi.astrogeology.usgs.gov/moon/standards/data_standards/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://pyproj4.github.io/pyproj/",
+      "status": 200,
+      "final_url": "https://pyproj4.github.io/pyproj/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://python-pillow.github.io/",
+      "status": 200,
+      "final_url": "https://python-pillow.org/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://rasterio.readthedocs.io/",
+      "status": 200,
+      "final_url": "https://rasterio.readthedocs.io/en/stable/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://react.dev/",
+      "status": 200,
+      "final_url": "https://react.dev/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://requests.readthedocs.io/",
+      "status": 200,
+      "final_url": "https://requests.readthedocs.io/en/latest/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-11/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-11/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-21-science/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-21-science/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-11/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-11/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-3/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-3/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/ct-3-science/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/ct-3-science/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/clps-deliveries/to20a-astrobotic/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/clps-deliveries/to20a-astrobotic/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/lunar-science/programs/clps/cs-6-science/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/lunar-science/programs/clps/cs-6-science/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/mission/lunar-prospector/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/mission/lunar-prospector/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://science.nasa.gov/mission/viper/",
+      "status": 200,
+      "final_url": "https://science.nasa.gov/mission/viper/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://scientificamerican.com/article/china-delays-ambitious-change-7-moon-mission-until-2027",
+      "status": 200,
+      "final_url": "https://www.scientificamerican.com/article/china-delays-ambitious-change-7-moon-mission-until-2027/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://spiceypy.readthedocs.io/",
+      "status": 200,
+      "final_url": "https://spiceypy.readthedocs.io/en/stable/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+      "status": 200,
+      "final_url": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://static1.squarespace.com/static/56d74e9c4c2f85996d16a562/t/5ff342080f9679460523c65e/1609777692371/Aharonson_2020_PSS.pdf",
+      "status": 200,
+      "final_url": "https://static1.squarespace.com/static/56d74e9c4c2f85996d16a562/t/5ff342080f9679460523c65e/1609777692371/Aharonson_2020_PSS.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://svs.gsfc.nasa.gov/14959/",
+      "status": 200,
+      "final_url": "https://svs.gsfc.nasa.gov/14959/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://svs.gsfc.nasa.gov/4720/",
+      "status": 200,
+      "final_url": "https://svs.gsfc.nasa.gov/4720/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://svs.gsfc.nasa.gov/5027",
+      "status": 200,
+      "final_url": "https://svs.gsfc.nasa.gov/5027",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://theprint.in/india/isro-identifies-site-for-chandrayaan-4-lander/2850080",
+      "status": 200,
+      "final_url": "https://theprint.in/india/isro-identifies-site-for-chandrayaan-4-lander/2850080/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://threejs.org/",
+      "status": 200,
+      "final_url": "https://threejs.org/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://vite.dev/",
+      "status": 200,
+      "final_url": "https://vite.dev/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://vitest.dev/",
+      "status": 200,
+      "final_url": "https://vitest.dev/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c10541840/content.html",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='www.cnsa.gov.cn', port=443): Max retries exceeded with url: /english/n6465652/n6465653/c10541840/content.html (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.cnsa.gov.cn', port=443) at 0x1805f81fb90>, 'Connection to www.cnsa.gov.cn timed out. (connect timeout=5)'))"
+    },
+    {
+      "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c6478763/content.html",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='www.cnsa.gov.cn', port=443): Read timed out. (read timeout=5)"
+    },
+    {
+      "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c6805049/content.html",
+      "accessible_by_probe": false,
+      "error": "('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+    },
+    {
+      "url": "https://www.cnsa.gov.cn/n6758968/n6758972/c6798565/content.html",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='www.cnsa.gov.cn', port=443): Read timed out. (read timeout=5)"
+    },
+    {
+      "url": "https://www.cnsa.gov.cn/n6759533/c6810683/content.html",
+      "status": 200,
+      "final_url": "https://www.cnsa.gov.cn/n6759533/c6810683/content.html",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.esa.int/esapub/annuals/annual06/ar6_activities.pdf",
+      "status": 404,
+      "final_url": "https://www.esa.int/esapub/annuals/annual06/ar6_activities.pdf",
+      "accessible_by_probe": false
+    },
+    {
+      "url": "https://www.hou.usra.edu/meetings/lpsc2026/pdf/1198.pdf",
+      "status": 200,
+      "final_url": "https://www.hou.usra.edu/meetings/lpsc2026/pdf/1198.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.isro.gov.in/media_isro/pdf/APXS_CH3.pdf",
+      "status": 200,
+      "final_url": "https://www.isro.gov.in/media_isro/pdf/APXS_CH3.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.kaguya.jaxa.jp/en/communication/KAGUYA_Lunar_Impact_e.htm",
+      "status": 200,
+      "final_url": "https://www.kaguya.jaxa.jp/en/communication/KAGUYA_Lunar_Impact_e.htm",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.lpi.usra.edu/meetings/lpsc2013/pdf/3004.pdf",
+      "status": 200,
+      "final_url": "https://www.lpi.usra.edu/meetings/lpsc2013/pdf/3004.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/event/clps-flight-intuitive-machines-im-4-2/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/event/clps-flight-intuitive-machines-im-4-2/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/history/60-years-ago-luna-2-makes-impact-in-moon-race/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/history/60-years-ago-luna-2-makes-impact-in-moon-race/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/image-article/blue-ghost-lands-on-moon/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/image-article/blue-ghost-lands-on-moon/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/mission/artemis-iii/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/mission/artemis-iii/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/mission/artemis-iv/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/mission/artemis-iv/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/moonbase-phases/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/moonbase-phases/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/smallsat-institute/sst-soa/power-subsystems/",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/smallsat-institute/sst-soa/power-subsystems/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/wp-content/uploads/2018/09/beyond-earth-tagged.pdf",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/wp-content/uploads/2018/09/beyond-earth-tagged.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_18-27_LM_Lunar_Landing.htm",
+      "status": 200,
+      "final_url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_18-27_LM_Lunar_Landing.htm",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.planetary.org/space-missions/change-7",
+      "status": 200,
+      "final_url": "https://www.planetary.org/space-missions/change-7",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.python.org/",
+      "status": 200,
+      "final_url": "https://www.python.org/",
+      "accessible_by_probe": true
+    },
+    {
+      "url": "https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/",
+      "accessible_by_probe": false,
+      "error": "HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/lunar-landing-site-navigator/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "url": "https://www.typescriptlang.org/",
+      "status": 200,
+      "final_url": "https://www.typescriptlang.org/",
+      "accessible_by_probe": true
+    }
+  ]
+}

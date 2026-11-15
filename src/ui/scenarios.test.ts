@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { analyzeSite, DEFAULT_LANDER, flatHorizon, makeSiteContext } from '../science';
 import { coordinateSite, DAY, DEFAULT_TARGETS, type Candidate } from '../science/planner';
 import { shippedEphemeris } from '../science/__fixtures__/shipped';
-import { horizonModel, missionEntries, scenarioKey } from './scenarios';
+import { comparedMissionEntries, horizonModel, missionEntries, scenarioKey } from './scenarios';
 
 const startMs = Date.UTC(2026, 11, 1);
 const result = analyzeSite(
@@ -57,5 +57,12 @@ describe('scenario identity and model labels', () => {
     ]);
     expect(entries[1].candidate.result.startMs).toBe(startMs + DAY);
     expect(entries[1].saved?.id).toBe(12);
+  });
+
+  it('includes only checked comparisons, even when an unchecked mission is open', () => {
+    const later = { ...candidate, result: { ...result, startMs: startMs + DAY, endMs: result.endMs + DAY }, id: 2 };
+    const sampled = [candidate, later];
+    expect(comparedMissionEntries(missionEntries(sampled, [later], candidate)).map(entry => entry.id)).toEqual([scenarioKey(later)]);
+    expect(comparedMissionEntries(missionEntries(sampled, [], candidate))).toEqual([]);
   });
 });

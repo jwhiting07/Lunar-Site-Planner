@@ -50,8 +50,19 @@ def test_site_position_km():
 # --------------------------------------------------------------------------- destination
 def test_destination_from_the_south_pole():
     for az in (0, 37, 180, 300):
-        lat2, _ = ml.destination(-90.0, 0.0, az, 100_000.0)
+        lat2, lon2 = ml.destination(-90.0, 0.0, az, 100_000.0)
         assert math.isclose(lat2, -90 + math.degrees(100_000 / R), abs_tol=1e-9)
+        assert math.isclose(lon2, az, abs_tol=1e-9)
+
+
+def test_destination_polar_rays_keep_every_azimuth_and_distance():
+    az = np.arange(0, 360, 45)[:, None]
+    distance = np.array([25_000, 50_000])[None, :]
+    for pole in (-90, 90):
+        lat, lon = ml.destination(pole, 15, az, distance)
+        assert lat.shape == lon.shape == (8, 2)
+        assert np.allclose(lat, np.sign(pole) * (90 - np.degrees(distance / R)))
+        assert np.allclose(lon, 15 + (az if pole < 0 else 180 - az))
 
 
 def test_destination_quarter_circles():

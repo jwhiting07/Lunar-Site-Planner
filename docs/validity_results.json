@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-15T18:12:11.381278+00:00",
+ "generated_utc": "2026-11-15T19:13:42.977187+00:00",
  "specification": {
   "schema": 1,
   "selection": "Coordinates and intervals fixed before evaluating this benchmark. Geographic coverage cases, not statistically representative mission sites. Do not tune these cases or acceptance limits to make a result pass.",
@@ -86,10 +86,11 @@
   },
   "generator_sha256": {
    "scripts/custom_horizon.py": "b86bc5673f919c633b34dc41b5c44d7e37eced9e5334da0fd9f92b97d2ded498",
-   "scripts/moonlib.py": "eeb5031d9d426c4c5ce218ce7033bf92508cd044747ce5bb4e8e3b22a0992ea6",
+   "scripts/moonlib.py": "7832472d54ee2da8a10a2a4ff68f197f67678f03f3664df77e3022d966e04520",
    "scripts/build_data.py": "46bd61adca8388d6e337a4382156f062ee0a96a0b62415f967ffe1f6a29fd0cc"
   },
   "observer_height_m": 2,
+  "text_hash_convention": "SHA-256 after CRLF-to-LF normalization; binary source hashes are unchanged",
   "azimuth_step_deg": 0.5,
   "ray_range_km": 600,
   "credits": [
@@ -100,12 +101,11 @@
    "R-LOLA-PGDA",
    "R-SVS-MOON-KIT",
    "M-HORIZON"
-  ],
-  "text_hash_convention": "SHA-256 after CRLF-to-LF normalization; binary source hashes are unchanged"
+  ]
  },
  "runtime_source_sha256": {
   "src/science/analysis.ts": "d04fc2db2bd0214b949f6f0436ca86118be345ee7f8f71a5f8a20762be98c73c",
-  "src/science/planner.ts": "4e7cd200f5e4f8ba1bd65de3f362dfd7a18fed579c5f0238a5acc1518b21d053",
+  "src/science/planner.ts": "209aa41e7e711e4bb44843a4fdf42c68b5409b54f07e9fb428f46b66c2f3d751",
   "src/science/power.ts": "500e966511e7d310f7adef3030da33a88529999818eda14b74e57c2d1f1ca204",
   "src/data/loader.ts": "332e7b2a2d362b5267b450e29bc45085f39a296bd1b1e64a3c9ee2d39798f6fc"
  },
@@ -116,7 +116,7 @@
   "cases": [
    {
     "id": "polar-interior",
-    "elapsed_ms": 4.270199999999932,
+    "elapsed_ms": 4.126099999999951,
     "actual": {
      "sunlit_fraction": 0,
      "earth_visible_fraction": 0,
@@ -301,7 +301,7 @@
    },
    {
     "id": "polar-offset",
-    "elapsed_ms": 15.227499999999964,
+    "elapsed_ms": 12.389599999999973,
     "actual": {
      "sunlit_fraction": 0.15810850883964256,
      "earth_visible_fraction": 0,
@@ -486,7 +486,7 @@
    },
    {
     "id": "polar-custom",
-    "elapsed_ms": 0.42590000000018335,
+    "elapsed_ms": 0.6559999999999491,
     "actual": {
      "sunlit_fraction": 0,
      "earth_visible_fraction": 0,
@@ -671,7 +671,7 @@
    },
    {
     "id": "polar-edge",
-    "elapsed_ms": 0.48090000000001965,
+    "elapsed_ms": 0.45460000000002765,
     "actual": {
      "sunlit_fraction": 0,
      "earth_visible_fraction": 1,
@@ -856,7 +856,7 @@
    },
    {
     "id": "global-east-seam",
-    "elapsed_ms": 4.878099999999904,
+    "elapsed_ms": 4.959899999999834,
     "actual": {
      "sunlit_fraction": 0.473445347070953,
      "earth_visible_fraction": 0,
@@ -1041,7 +1041,7 @@
    },
    {
     "id": "global-west-seam",
-    "elapsed_ms": 0.8494000000000597,
+    "elapsed_ms": 0.7995999999998276,
     "actual": {
      "sunlit_fraction": 0.8713680738031296,
      "earth_visible_fraction": 0,
@@ -1226,7 +1226,7 @@
    },
    {
     "id": "regression-ridge",
-    "elapsed_ms": 8.773799999999937,
+    "elapsed_ms": 8.570600000000013,
     "actual": {
      "sunlit_fraction": 0.48172523685059726,
      "earth_visible_fraction": 0.4435639613838667,
@@ -1411,7 +1411,7 @@
    },
    {
     "id": "regression-peak-5",
-    "elapsed_ms": 7.541200000000117,
+    "elapsed_ms": 4.1107999999999265,
     "actual": {
      "sunlit_fraction": 0.6068949180608679,
      "earth_visible_fraction": 0.5833140035214837,
@@ -1602,7 +1602,7 @@
    },
    {
     "id": "regression-im2",
-    "elapsed_ms": 3.8074000000001433,
+    "elapsed_ms": 3.9002000000000407,
     "actual": {
      "sunlit_fraction": 0.39004795457270114,
      "earth_visible_fraction": 0.7722420652178542,
@@ -1795,7 +1795,7 @@
   "searches": [
    {
     "size": 12,
-    "elapsed_ms": 57.69990000000007,
+    "elapsed_ms": 62.769900000000234,
     "matches_exhaustive": true,
     "top_five": [
      {
@@ -1872,7 +1872,7 @@
    },
    {
     "size": 24,
-    "elapsed_ms": 50.567099999999755,
+    "elapsed_ms": 80.67020000000002,
     "matches_exhaustive": true,
     "top_five": [
      {
@@ -1949,7 +1949,7 @@
    },
    {
     "size": 48,
-    "elapsed_ms": 113.9952000000003,
+    "elapsed_ms": 146.91930000000002,
     "matches_exhaustive": true,
     "top_five": [
      {
@@ -2092,8 +2092,8 @@
     "curtailedWh": 103.4375
    }
   ],
-  "search_reference_ms": 319.9204,
-  "default_search_ms": 536.3573000000001,
+  "search_reference_ms": 381.73279999999977,
+  "default_search_ms": 522.9398000000001,
   "default_search_count": 1519,
   "default_terrain_results": 5
  },

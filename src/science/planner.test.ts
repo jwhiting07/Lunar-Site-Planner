@@ -40,6 +40,16 @@ describe('coordinate planning and mission targets', () => {
     expect(() => dateGrid(end, start)).toThrow();
   });
 
+  it('samples all eight bearings on each radius at both poles', () => {
+    for (const lat of [-90, 90]) {
+      const grid = locationGrid({ lat, lon: 0 }, 50);
+      expect(new Set(grid.map(p => `${p.lat},${p.lon}`)).size).toBe(17);
+      for (const ring of [grid.slice(1, 9), grid.slice(9)]) {
+        expect(ring.map(p => p.lon).sort((a, b) => a - b)).toEqual([-180, -135, -90, -45, 0, 45, 90, 135]);
+      }
+    }
+  });
+
   it('bounds duration exploration, preserves fractional and endpoint durations, and rejects invalid ranges', () => {
     expect(durationGrid(7, 14)).toEqual([7, 8, 9, 10, 11, 12, 13, 14]);
     expect(durationGrid(0.5)).toEqual([0.5]);
@@ -82,7 +92,7 @@ describe('coordinate planning and mission targets', () => {
       dates: [start, start], durationDays: 1, durationsDays: [1, 1, 2],
       targets: DEFAULT_TARGETS, lander: DEFAULT_LANDER, clearance: 0,
       origin: point, startMs: start, known: [], observerHeight: 2, masks: new Map(),
-    }, new AbortController().signal, (done, total) => progress.push([done, total]));
+    }, new AbortController().signal, (done, total, phase) => { if (phase === 'screening') progress.push([done, total]); });
 
     expect(progress.at(-1)).toEqual([4, 4]);
     expect(out.map(({ result }) => result.endMs).sort()).toEqual([start + DAY, start + 2 * DAY]);
@@ -135,6 +145,7 @@ describe('coordinate planning and mission targets', () => {
   it('refines a broader shortlist with terrain before ranking, and requests each skyline only once', async () => {
     const points = Array.from({ length: 17 }, (_, i) => ({ lat: -85, lon: i }));
     const calls = new Map<string, number>();
+    const phases: [number, number, string][] = [];
     const resolveTerrain = async (site: ReturnType<typeof coordinateSite>) => {
       calls.set(site.id, (calls.get(site.id) ?? 0) + 1);
       const mask: HorizonMask = { ...flatHorizon(), terrainAware: true };
@@ -143,11 +154,15 @@ describe('coordinate planning and mission targets', () => {
     };
     const config = { points, dates: [start, start + DAY], durationDays: 3, targets: DEFAULT_TARGETS,
       lander: DEFAULT_LANDER, clearance: 0, origin: null, startMs: start, known: [], observerHeight: 2, masks: new Map(), resolveTerrain };
-    const out = await searchCandidates(eph, config, new AbortController().signal, () => {});
+    const out = await searchCandidates(eph, config, new AbortController().signal,
+      (done, total, phase) => phases.push([done, total, phase]));
     expect(out[0].result.site.lon_deg).toBe(16);
     expect(out.every(c => c.result.terrainAware)).toBe(true);
     expect(out[0].result.calculation).toBeDefined();
     expect([...calls.values()].every(count => count === 1)).toBe(true);
+    expect(phases).toContainEqual([34, 34, 'screening']);
+    expect(phases).toContainEqual([0, 34, 'refining']);
+    expect(phases.at(-1)).toEqual([34, 34, 'refining']);
     const controller = new AbortController();
     await expect(searchCandidates(eph, { ...config, resolveTerrain: async () => { controller.abort(); return null; } }, controller.signal, () => {})).rejects.toMatchObject({ name: 'AbortError' });
   });

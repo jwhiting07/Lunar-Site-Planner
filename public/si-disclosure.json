@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "project": "Project Seraphim / Lunar Site Planner",
+  "reviewed_date": "2026-11-15",
+  "tools": [
+    {
+      "name": "OpenAI Codex",
+      "uses": ["code assistance", "interface development", "documentation", "submission preparation"],
+      "evidence": ["docs/ui/README.md", "docs/submission/02-SUBMISSION-TEXT.md"]
+    },
+    {
+      "name": "OpenAI image generation (image_gen)",
+      "uses": ["historical interface concept image"],
+      "assets": ["docs/ui/mockups/moon-view-v1.png"],
+      "evidence": ["docs/ui/mockups/prompts-v1.md"],
+      "runtime_asset": false,
+      "publication_requirement": "Apply a visible SI-generated watermark before including this generated image in the submission or its public project materials."
+    }
+  ],
+  "code": "Project code was developed with SI assistance; third-party source licenses remain applicable.",
+  "data": "NASA and other source datasets retain their recorded provenance. Derived science products are numerical calculations from those sources; no generative fabrication of scientific values is asserted.",
+  "media": "No final demonstration video, synthetic narration, or music was found in the inspected project files; final video assets require a separate check.",
+  "branding": "The supplied submission rules prohibit generated content using, containing or modifying NASA branding and design elements, including logos, flags and mission identifiers."
+}

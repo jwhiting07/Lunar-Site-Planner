@@ -93,6 +93,12 @@ def destination(lat_deg: float, lon_deg: float, az_deg, dist_m, radius_m: float 
     lat1, lon1 = lat_deg * DEG, lon_deg * DEG
     az = np.asarray(az_deg) * DEG
     delta = np.asarray(dist_m) / radius_m
+    # At either pole the standard longitude formula is numerically 0/0.
+    # Use the limiting east/north basis so every azimuth remains distinct.
+    if abs(lat_deg) == 90:
+        lat2 = np.sign(lat_deg) * (90 - delta / DEG)
+        lon2 = lon_deg + (np.asarray(az_deg) if lat_deg < 0 else 180 - np.asarray(az_deg))
+        return np.broadcast_arrays(lat2, lon2)
     sin_lat2 = np.sin(lat1) * np.cos(delta) + np.cos(lat1) * np.sin(delta) * np.cos(az)
     lat2 = np.arcsin(np.clip(sin_lat2, -1.0, 1.0))
     lon2 = lon1 + np.arctan2(np.sin(az) * np.sin(delta) * np.cos(lat1),

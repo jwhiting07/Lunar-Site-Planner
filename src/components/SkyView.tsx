@@ -2,15 +2,12 @@ import { memo, useId, useMemo, useRef } from 'react';
 import { HOUR_MS, type AnalysisResult, type HorizonMask, type InstantState } from '../science';
 import { DAY_MS, clamp, deg, num } from '../ui/labels';
 import { useTimeZone } from '../ui/timeZone';
+import { useChartWidth } from '../ui/useChartWidth';
 
-const W = 760;
-const H = 340;
 const ML = 46;
 const MR = 14;
 const MT = 12;
 const MB = 34;
-const PW = W - ML - MR;
-const PH = H - MT - MB;
 const PATH_DAYS = 15;
 
 interface Props {
@@ -50,6 +47,12 @@ function earthState(inst: InstantState, minClear: number): { label: string; cls:
 }
 
 function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const W = useChartWidth(svgRef, 760);
+  const compact = W < 560;
+  const H = compact ? 250 : 340;
+  const PW = Math.max(1, W - ML - MR);
+  const PH = H - MT - MB;
   const tz = useTimeZone();
   const clipId = useId();
   const drag = useRef<{ pointerId: number; x: number; time: number; width: number } | null>(null);
@@ -100,13 +103,14 @@ function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
       ridge = pts.join('L');
     }
     return { lo, hi, x, y, sunSegs, earthSegs, ridge };
-  }, [terrainMask, result, hourKey]);
+  }, [terrainMask, result, hourKey, PW, PH]);
 
   const { lo, hi, x, y } = geo;
-  const step = hi - lo > 30 ? 5 : hi - lo > 14 ? 2 : 1;
+  const baseStep = hi - lo > 30 ? 5 : hi - lo > 14 ? 2 : 1;
+  const step = compact ? Math.max(baseStep, Math.ceil((hi - lo) / 6)) : baseStep;
   const elTicks: number[] = [];
   for (let e = Math.ceil(lo / step) * step; e <= hi; e += step) elTicks.push(e);
-  const azTicks = [0, 45, 90, 135, 180, 225, 270, 315, 360];
+  const azTicks = compact ? [0, 90, 180, 270, 360] : [0, 45, 90, 135, 180, 225, 270, 315, 360];
   const cardinal: Record<number, string> = { 0: 'N', 90: 'E', 180: 'S', 270: 'W', 360: 'N' };
   const sunRadiusY = inst ? (inst.sun.angularRadiusDeg / (hi - lo)) * PH : 0;
   const sunRadiusX = inst ? inst.sun.angularRadiusDeg * PW / 360 : 0;
@@ -116,7 +120,7 @@ function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
 
   return (
     <>
-      <svg viewBox={`0 0 ${W} ${H}`} className={`sky-svg${canScrub ? ' sky-scrub' : ''}`}
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className={`sky-svg${canScrub ? ' sky-scrub' : ''}`}
         role={canScrub ? 'slider' : 'img'} tabIndex={canScrub ? 0 : undefined}
         aria-label={canScrub ? 'Local horizon time' : 'Sky view: terrain horizon with Sun and Earth tracks and current positions'}
         aria-valuemin={canScrub ? result?.startMs : undefined} aria-valuemax={canScrub ? result?.endMs : undefined}
@@ -202,8 +206,8 @@ function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
         <rect x={ML} y={MT} width={PW} height={PH} className="plot-frame" />
         <g className="axis-text">
           {azTicks.map((a) => (
-            <text key={a} x={x(a)} y={MT + PH + 14} textAnchor="middle">
-              {cardinal[a] ? `${cardinal[a]} ${a}°` : `${a}°`}
+            <text key={a} x={x(a)} y={MT + PH + 14} textAnchor={a === 0 ? 'start' : a === 360 ? 'end' : 'middle'}>
+              {compact ? `${cardinal[a]}` : cardinal[a] ? `${cardinal[a]} ${a}°` : `${a}°`}
             </text>
           ))}
           {elTicks.map((e) => (
@@ -216,7 +220,7 @@ function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
         </g>
         <g className="annot">
           {!terrainMask && <text x={ML + 6} y={Number(y(0)) - 4}>0° reference horizon</text>}
-          {terrainMask && <text x={ML + PW - 6} y={MT + 14} textAnchor="end">LOLA terrain skyline</text>}
+          {terrainMask && <text x={ML + PW - 6} y={MT + (compact ? 30 : 14)} textAnchor="end">{compact ? 'LOLA skyline' : 'LOLA terrain skyline'}</text>}
           <text x={ML + 6} y={MT + 14} className="annot-sun">{'●'} Sun track</text>
           <text x={ML + 78} y={MT + 14} className="annot-earth">{'●'} Earth track</text>
         </g>

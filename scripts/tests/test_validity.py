@@ -20,7 +20,8 @@ def test_published_report_matches_science_and_frozen_benchmark():
 def test_search_profiles_are_finite_complete_and_traceable():
     pack = json.loads((ROOT/'public/data/search_horizons.json').read_text())
     assert pack['schema'] == 1
-    assert len(pack['profiles']) == 49
+    assert len(pack['profiles']) == 66
+    assert '-90.000000000,0.000000000' in pack['profiles']
     for path, expected in pack['provenance']['generator_sha256'].items():
         assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == expected
     for profile in pack['profiles'].values():

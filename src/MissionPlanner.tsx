@@ -8,7 +8,7 @@ import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
 import { ExportMenu, parseDate } from './components/Controls';
 import { deg, fmtLat, fmtLon, isoDate } from './ui/labels';
-import { horizonModel, missionEntries, scenarioKey } from './ui/scenarios';
+import { comparedMissionEntries, horizonModel, missionEntries, scenarioKey } from './ui/scenarios';
 import { ScenarioDetails, ScenarioOverview, ScenarioTimeline, type TerrainState } from './components/ScenarioDetails';
 import { UtcClock } from './components/UtcClock';
 import { firstDayOnOrAfter, lastDayOnOrBefore, useTimeZone, zoneDate, zoneDayStart } from './ui/timeZone';
@@ -296,9 +296,9 @@ export default function MissionPlanner() {
         const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: query.location === 'any' ? null : point, startMs: start,
           known, observerHeight: data.sites.observer_height_m, masks: new Map(masks.current) };
         let count = 0;
-        const update = (done: number, total: number) => {
-          count = total;
-          setProgress(`Checking ${done} / ${total}…`);
+        const update = (done: number, total: number, phase: 'screening' | 'refining') => {
+          if (phase === 'screening') count = total;
+          setProgress(`${phase === 'screening' ? 'Checking' : 'Refining'} ${done} / ${total}…`);
         };
         const found = await searchCandidates(eph, config, controller.signal, update);
         if (controller.signal.aborted) return;
@@ -415,7 +415,7 @@ export default function MissionPlanner() {
   const viewedMission = active ?? saved[0];
   const viewedId = viewedMission ? scenarioKey(viewedMission) : '';
   const viewedLabel = missions.find(entry => entry.id === viewedId)?.label ?? 'Open mission';
-  const comparedMissions = missions.filter(entry => entry.saved);
+  const comparedMissions = comparedMissionEntries(missions);
   const missionChoices = comparedMissions.map(({ id, label, candidate: { result } }) => ({
     value: id, label: `${label} · ${tz.dateTime(result.startMs)} · ${Number((result.metrics.intervalHours / 24).toFixed(3))} d`,
   }));

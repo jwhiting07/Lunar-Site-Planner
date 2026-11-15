@@ -100,11 +100,15 @@ export function ScenarioTimeline({ mission, comparedMissions, index, terrain = n
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
   const compareStart = Math.min(...comparedMissions.map(entry => entry.result.startMs));
   const compareEnd = Math.max(...comparedMissions.map(entry => entry.result.endMs));
+  const rangeStart = Math.min(startMs, compareStart);
+  const rangeEnd = Math.max(endMs, compareEnd);
   const powerMission = useMemo(() => [mission], [mission]);
   const [eph, setEph] = useState<EphemerisTable | null>(null);
   const [loadedMask, setLoadedMask] = useState<HorizonMask | null>(null);
   const [error, setError] = useState('');
   const [cursor, setCursor] = useState(startMs);
+
+  useEffect(() => { setCursor(current => Math.max(rangeStart, Math.min(rangeEnd, current))); }, [rangeStart, rangeEnd]);
 
   useEffect(() => {
     let current = true;
@@ -133,7 +137,7 @@ export function ScenarioTimeline({ mission, comparedMissions, index, terrain = n
 
   return <div className="mission-timeline tl">
     <div className="mission-timeline-controls">
-      <TimeControls startMs={Math.min(startMs, compareStart)} endMs={Math.max(endMs, compareEnd)} cursorMs={cursor} onCursor={setCursor} />
+      <TimeControls startMs={rangeStart} endMs={rangeEnd} cursorMs={cursor} onCursor={setCursor} />
     </div>
     <section className="tl-panel" aria-label="Sky view from the lander">
       <header className="tl-panel-h"><h3>Sky view from the lander</h3><span className="tl-state">{horizonState(mask, terrain)}</span></header>
