@@ -292,8 +292,7 @@ npm test
 python -m pytest scripts/tests -q
 ```
 
-Display assets have their own generators: `scripts/prepare_visuals.py` (models,
-orbits) and `node scripts/prepare_stars.mjs` (stars).
+Display assets have their own generators: `scripts/prepare_visuals.py` (Moon model) and `node scripts/prepare_stars.mjs` (stars).
 
 ## Reference IDs and where they are used
 

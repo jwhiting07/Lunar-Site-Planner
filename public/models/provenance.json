@@ -1,24 +1,6 @@
 {
   "assets": [
     {
-      "file": "sun.glb",
-      "url": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/s/Sun_1_1391000.glb",
-      "source": "https://science.nasa.gov/learn/heat/resource/sun-3d-model/",
-      "credit": "NASA/JPL-Caltech",
-      "source_sha256": "a178f5c43c2c9a6ee6c011c315149a7ab5a2594fd5aa9119ee219625a18da1dd",
-      "bytes": 718736,
-      "sha256": "b69512eacfba84ac48978357087a76677da34b3953c445713069da916c84fe65"
-    },
-    {
-      "file": "earth.glb",
-      "url": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/e/Earth_1_12756.glb",
-      "source": "https://science.nasa.gov/learn/heat/resource/earth-3d-model/",
-      "credit": "NASA/JPL-Caltech",
-      "source_sha256": "05a5aea99db8ab472487a06debc3b5d0b2cae7636a1a6b9ecfa40b7d1722ba23",
-      "bytes": 569712,
-      "sha256": "cf53475fc83f9b572a7a812dd9ebe538e5e6816b0999bbf05f8c171d99c16cee"
-    },
-    {
       "file": "moon.glb",
       "url": "https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/moon_small.glb",
       "source": "https://svs.gsfc.nasa.gov/14959/",
@@ -28,7 +10,7 @@
       "sha256": "9348c1dc3cdf6c7e8a346ae0aab054e2e2f0bea904cb98d118db1af0e0dce02f"
     }
   ],
-  "purpose": "Display-only NASA 3D assets, not inputs to planning calculations.",
-  "modifications": "NASA geometry/UVs preserved; embedded maps resized to 2048px (Sun/Earth) or 4096px (Moon), JPEG quality 92. Runtime centering/radius normalization and relighting. Body sizes and lunar separation exaggerated.",
+  "purpose": "Display-only NASA Moon model, not an input to planning calculations.",
+  "modifications": "NASA geometry/UVs preserved; embedded maps resized to 4096px, JPEG quality 92. Runtime centering/radius normalization and relighting.",
   "accessed_utc": "2026-11-14T20:06:08.238118+00:00"
 }

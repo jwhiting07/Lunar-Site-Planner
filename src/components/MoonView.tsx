@@ -4,7 +4,7 @@ import { landmarkBasis, landmarkTone, type LandingSite, type LandmarkTone } from
 import { loadEphemeris } from '../data/loader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { bodyVectorKm, enuBasis, type EphemerisIndex, type InstantState, type SiteDoc, type Vec3 } from '../science';
-import { loadNasaModel, disposeModel, smoothMoonLighting } from '../visuals/models';
+import { loadMoonModel, disposeModel, smoothMoonLighting } from '../visuals/models';
 import { clampMoonCamera, markerOffset, moonZoomLimits } from '../visuals/moonNavigation';
 import { COORD_CLASS_LABEL } from '../ui/labels';
 import { disposeStarfield, loadStarfield } from '../visuals/stars';
@@ -585,7 +585,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       render(); // before paint, so the resized canvas is never shown empty
     });
     resize.observe(element);
-    const modelReady = loadNasaModel('moon').then(loaded => {
+    const modelReady = loadMoonModel().then(loaded => {
       if (disposed) { disposeModel(loaded); return; }
       if (!local) smoothMoonLighting(loaded);
       model = loaded; scene.add(loaded); if (local) focus.current(activeFocus.current);

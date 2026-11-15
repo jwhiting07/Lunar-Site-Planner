@@ -1,3 +1,18 @@
+# Solar removal — November 15, 2026
+
+Removed the unused Solar component, orbit loader and generated orbit tables,
+Sun/Earth GLBs, exclusive styles, and Solar mockups/prompts. The model loader and
+visual generator now handle only the Moon. Shared Moon controls, clock, starfield,
+scientific ephemerides, and terrain products remain.
+
+All 152 JavaScript tests and the production build (including TypeScript) pass.
+Python tests pass 26 with the same four missing-DEM skips. Running the reduced
+Moon generator against the cached original in a temporary output directory
+reproduces the shipped GLB byte for byte and matches its source/output checksums;
+it emits only `moon.glb` and model provenance. The removal deletes 9,601,640 bytes
+of binary assets, including 4,234,608 bytes of shipped models/orbit data. Earlier
+Solar preservation notes below are historical and superseded by this removal.
+
 # Code cleanup — November 15, 2026
 
 `npm test` passes all 152 tests, including three regression tests for scenario
@@ -89,7 +104,7 @@ local view now uses the NASA display mesh; the retained DEM patch is not rendere
 
 Moon is the default page; only Moon and Planning appear in navigation. Solar source,
 NASA assets, orbital tables, and mockups are retained but not imported by the active
-app. See `docs/ui/SOLAR_PARKED.md` for what remains unfinished before re-enabling it.
+app. This historical status was superseded by the Solar removal on November 15, 2026.
 
 The active Moon uses the actual NASA GSFC/LRO GLB, with preserved geometry/UVs and
 web-sized embedded imagery. `public/models/provenance.json` records original and
