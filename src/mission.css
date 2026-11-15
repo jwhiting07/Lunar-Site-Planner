@@ -303,6 +303,12 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .tl-panel { border: 1px solid var(--line); }
 .tl-panel-h { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line-soft); }
 .tl-panel-h h3 { margin: 0; font-size: 14px; font-weight: 500; }
+.tl-mission-picker { width: min(100%, 240px); min-width: 0; }
+.tl-mission-options { max-width: calc(100vw - 16px); }
+.tl-mission-options label { display: flex; align-items: center; gap: 12px; padding: 10px 14px; cursor: pointer; font-size: 13px; }
+.tl-mission-options label:hover, .tl-mission-options label:focus-within { background: var(--bg2); }
+.tl-mission-options input { flex: none; }
+.tl-mission-options small { display: block; margin-top: 3px; color: var(--tx1); font-size: 11px; }
 .tl-state { font-size: 12px; color: var(--tx1); text-align: right; }
 .tl-body { padding: 14px 18px 18px; }
 .tl-sky { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; padding: 16px 18px 18px; }
@@ -342,6 +348,7 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
   .tl-panel-h { padding: 12px; gap: 8px; }
   .tl-body, .tl-sky { padding: 12px; }
   .tl-sky { gap: 20px; }
+  .tl-mission-picker { width: 100%; }
   .tl .time-val { font-size: clamp(13px, 4vw, 18px); white-space: normal; overflow-wrap: anywhere; }
   .tl .time-btns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .tl .time-btns button { min-height: 44px; }

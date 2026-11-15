@@ -5,6 +5,8 @@ import { formatRowValue, summaryRows } from '../science/summary';
 import type { Targets } from '../science/planner';
 import { TimeControls, TimelineChart, type TimelineMission } from './Timelines';
 import { SkyReadout, SkyView } from './SkyView';
+import { TimelineMissionPicker } from './TimelineMissionPicker';
+import { timelineSelection } from '../ui/scenarios';
 
 function ResultBar({ fraction, target }: { fraction: number; target?: number }) {
   return <div className="mission-result-track" aria-hidden="true">
@@ -93,16 +95,14 @@ function horizonState(mask: HorizonMask | null, terrain: TerrainState): string {
   return 'Flat 0° horizon · No terrain data for this site';
 }
 
-export function ScenarioTimeline({ mission, comparedMissions, index, terrain = null }: {
-  mission: TimelineMission; comparedMissions: TimelineMission[]; index: EphemerisIndex; terrain?: TerrainState;
+export function ScenarioTimeline({ result, missionId, missions, selectedIds, onSelectionChange, index, terrain = null }: {
+  result: AnalysisResult; missionId: string; missions: TimelineMission[]; index: EphemerisIndex; terrain?: TerrainState;
+  selectedIds: string[]; onSelectionChange: (ids: string[]) => void;
 }) {
-  const { result, id: missionId } = mission;
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
-  const compareStart = Math.min(...comparedMissions.map(entry => entry.result.startMs));
-  const compareEnd = Math.max(...comparedMissions.map(entry => entry.result.endMs));
-  const rangeStart = Math.min(startMs, compareStart);
-  const rangeEnd = Math.max(endMs, compareEnd);
-  const powerMission = useMemo(() => [mission], [mission]);
+  const chartMissions = useMemo(() => timelineSelection(missions, missionId, selectedIds), [missions, missionId, selectedIds]);
+  const rangeStart = Math.min(startMs, ...chartMissions.map(mission => mission.result.startMs));
+  const rangeEnd = Math.max(endMs, ...chartMissions.map(mission => mission.result.endMs));
   const [eph, setEph] = useState<EphemerisTable | null>(null);
   const [loadedMask, setLoadedMask] = useState<HorizonMask | null>(null);
   const [error, setError] = useState('');
@@ -151,14 +151,16 @@ export function ScenarioTimeline({ mission, comparedMissions, index, terrain = n
       </div>
     </section>
     <section className="tl-panel" aria-label="Mission timeline">
-      <header className="tl-panel-h"><h3>Mission timeline</h3>{comparedMissions.length > 0 && <span className="tl-state">Drag to change time</span>}</header>
-      <div className="tl-body">{comparedMissions.length > 0
-        ? <TimelineChart missions={comparedMissions} primaryId={missionId} part="visibility" startMs={compareStart} endMs={compareEnd} cursorMs={cursor} onCursor={setCursor} />
-        : <p className="muted">Check missions in the results table to add them to the timeline.</p>}</div>
+      <header className="tl-panel-h"><h3>Mission timeline</h3>
+        <TimelineMissionPicker missions={missions} selectedIds={selectedIds} onChange={onSelectionChange} />
+      </header>
+      <div className="tl-body">{chartMissions.length
+        ? <TimelineChart missions={chartMissions} primaryId={missionId} part="visibility" startMs={rangeStart} endMs={rangeEnd} cursorMs={cursor} onCursor={setCursor} />
+        : <p className="muted">Select a site to show it on the timeline.</p>}</div>
     </section>
     <section className="tl-panel" aria-label="Selected mission power">
       <header className="tl-panel-h"><h3>Power details</h3><span className="tl-state">Selected mission</span></header>
-      <div className="tl-body"><TimelineChart missions={powerMission} primaryId={missionId} part="power" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
+      <div className="tl-body"><TimelineChart missions={missions} primaryId={missionId} part="power" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
     </section>
   </div>;
 }

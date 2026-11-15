@@ -35,6 +35,19 @@ most eight lengths; search results are sampled candidates, not a global optimum.
 Flat-horizon previews and terrain-aware refinements remain explicitly identified.
 The saved index.html remains the earlier typography/palette reference.
 
+## Timeline comparison controls — November 15, 2026
+
+- The Results mission selector lists only missions checked for Compare. A directly
+  opened mission remains viewable even when it is not checked.
+- The Timeline mission selector offers the examined mission and checked comparisons.
+  Do not include every sampled search result.
+- Keep the separate **Sites on timeline** checkbox dropdown on the Gantt chart.
+  Start with only the examined mission selected; allow checking and unchecking
+  individual rows independently of the main Compare selections.
+- Preserve Gantt selections when switching the examined mission or analysis tabs,
+  including an originally opened mission that is not checked for Compare.
+- Retain the responsive charts, stacked mobile time controls, and touch targets.
+
 ## Current planning flow — November 14, 2026
 
 The latest request supersedes the separate Moon/Planning pages below. Keep one
