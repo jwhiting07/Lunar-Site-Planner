@@ -77,7 +77,7 @@ describe('simulateBattery', () => {
     expect(r.unservedWh).toBeCloseTo(750, 9);
     expect(r.loadWh).toBeCloseTo(2250, 9);
     expect(r.minEnergyWh).toBe(0);
-    expect(r.minEnergyTimeMs).toBe(H(10.5));
+    expect(r.minEnergyTimeMs).toBeCloseTo(H(10), 3);
   });
 
   it('conserves energy: E_end - E_start = generated - load + unserved - curtailed', () => {
@@ -105,5 +105,24 @@ describe('simulateBattery', () => {
     expect(r.generatedWh).toBeCloseTo(325, 9);
     expect(r.loadWh).toBeCloseTo(375, 9);
     expect(r.energyWh[3]).toBeCloseTo(1e6 - 50, 6);
+  });
+
+  it('does not cancel a discharge/charge cycle inside one step', () => {
+    // Net power rises -100 -> +100 W: the interior minimum is at 0.5 h.
+    // With only 10 Wh capacity, the first negative triangle empties the battery.
+    const r = simulateBattery([0, H(1)], [0, 200], { ...P, loadW: 100, batteryCapacityWh: 10 });
+    expect(r.minEnergyWh).toBe(0);
+    expect(r.unservedWh).toBeCloseTo(15, 9);
+    expect(r.curtailedWh).toBeCloseTo(15, 9);
+    expect(r.energyWh[1]).toBeCloseTo(10, 9);
+    expect(r.firstDeficitMs! / HOUR_MS).toBeCloseTo((1 - Math.sqrt(0.6)) / 2, 9);
+    expect(r.deficitHours).toBeCloseTo(Math.sqrt(0.6) / 2, 9);
+  });
+
+  it('records an interior battery minimum even if both sampled endpoints are full', () => {
+    const r = simulateBattery([0, H(1)], [0, 200], { ...P, loadW: 100, batteryCapacityWh: 100 });
+    expect(r.energyWh[1]).toBeCloseTo(100, 9);
+    expect(r.minEnergyWh).toBeCloseTo(75, 9);
+    expect(r.minEnergyTimeMs).toBe(H(0.5));
   });
 });

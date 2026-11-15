@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } 
 import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, loadLandingSites, loadProvenance, loadSites } from './data/loader';
 import { landmarkBasis, landmarkStart, type LandingSite } from './data/landingSites';
 import { readComparison, storeComparison, storedHorizon, type SavedComparison as Saved, type StoredComparison } from './data/comparisonStorage';
-import { analyzeSite, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
+import { analyzeMission, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
 import { assessment, compareCandidates, coordinateSite, dateGrid, distanceKm, durationGrid, DAY, DEFAULT_TARGETS, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
 import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
@@ -129,7 +129,7 @@ export default function MissionPlanner() {
         loadEphemeris(data.index, startMs, endMs),
         snapshot ? storedHorizon(snapshot) : site.terrain_aware && site.horizon.file ? loadHorizon(site) : flatHorizon(),
       ]);
-      const result = analyzeSite(makeSiteContext(site, observerHeightM, mask), eph, geometry);
+      const result = analyzeMission(makeSiteContext(site, observerHeightM, mask), eph, geometry);
       return { id, mission, targets, result: { ...result, horizonMask: mask } };
     })).then(results => {
       if (!current) return;
@@ -233,7 +233,7 @@ export default function MissionPlanner() {
       if (terrain) {
         const { site, mask, observerHeightM } = terrain;
         const namedSite = { ...site, name: result.site.name, short: result.site.short };
-        const updated = analyzeSite(makeSiteContext(namedSite, observerHeightM, mask), eph, {
+        const updated = analyzeMission(makeSiteContext(namedSite, observerHeightM, mask), eph, {
           startMs: result.startMs, endMs: result.endMs, params: result.params,
           earthMinClearanceDeg: result.earthMinClearanceDeg,
         });
@@ -292,7 +292,16 @@ export default function MissionPlanner() {
         const customBase = base?.result.horizonMask?.terrainAware && !base.result.site.horizon.file ? base.result : null;
         const searchMasks = new Map(masks.current);
         if (customBase?.horizonMask) searchMasks.set(customBase.site.id, customBase.horizonMask);
-        const config = { points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: !base && query.location === 'any' ? null : point, startMs: start,
+        let terrainUnavailable = false;
+        const resolveTerrain = async (site: ReturnType<typeof coordinateSite>, signal: AbortSignal) => {
+          try { return await loadCustomHorizon(site, signal, !terrainUnavailable); }
+          catch (error) {
+            if (signal.aborted) throw error;
+            terrainUnavailable = true;
+            return null; // Keep the existing explicitly labelled preview when the service is absent.
+          }
+        };
+        const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: !base && query.location === 'any' ? null : point, startMs: start,
           known: customBase ? [...known, customBase.site] : known,
           observerHeight: data.sites.observer_height_m, masks: searchMasks };
         const update = (done: number, total: number) => setProgress(`Checking ${done} / ${total}…`);
@@ -325,7 +334,7 @@ export default function MissionPlanner() {
         ]);
         if (controller.signal.aborted) return;
         const namedSite = siteSelection ? missionSite(site, siteSelection) : site;
-        const result = analyzeSite(makeSiteContext(namedSite, data.sites.observer_height_m, mask), eph, {
+        const result = analyzeMission(makeSiteContext(namedSite, data.sites.observer_height_m, mask), eph, {
           startMs: start, endMs: start + days * DAY, params: lander, earthMinClearanceDeg: clearance,
         });
         const candidate = { targets: target, result: { ...result, horizonMask: mask } };

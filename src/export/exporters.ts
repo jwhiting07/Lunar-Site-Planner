@@ -85,6 +85,7 @@ export function buildSeriesCsv(result: AnalysisResult): string {
     metaLine(`terrain_aware: ${result.terrainAware}${result.terrainAware ? '' : ' (flat-horizon approximation, no terrain data)'}`),
     metaLine(`interval_utc: ${iso(result.startMs)} to ${iso(result.endMs)}`),
     metaLine(`step_s: ${result.stepMs / 1000}`),
+    ...(result.calculation ? [metaLine(`integration: base_step_s=${result.calculation.baseStepMs / 1000}; near_horizon_step_s=${result.calculation.minStepMs / 1000}; samples=${result.calculation.samples}; exported series is hourly display samples; summaries use refined integration`)] : []),
     metaLine('time_system: UTC'),
     metaLine(
       'reference_frame: lunar Mean-Earth/Polar-Axis body-fixed frame (MOON_ME_DE440_ME421); local East-North-Up at the site; azimuth clockwise from north, elevation above the local horizontal plane',
@@ -116,7 +117,7 @@ export function buildSummaryCsv(results: AnalysisResult[]): string {
   if (results.length > 0) {
     lines.push(metaLine('time_system: UTC; dates and assumptions are recorded per scenario below'));
     lines.push(metaLine(`Earth metrics: ${EARTH_DISCLAIMER} Energy metrics: ${ENERGY_DISCLAIMER}`));
-    results.forEach((r, i) => lines.push(metaLine(`${columnIds[i]}: ${r.site.name}; lat_deg=${r.site.lat_deg}; lon_deg_east=${r.site.lon_deg}; interval_utc=${iso(r.startMs)} to ${iso(r.endMs)}; step_s=${r.stepMs / 1000}; terrain_aware=${r.terrainAware}; earth_min_clearance_deg=${r.earthMinClearanceDeg}; ${landerText(r)}`)));
+    results.forEach((r, i) => lines.push(metaLine(`${columnIds[i]}: ${r.site.name}; lat_deg=${r.site.lat_deg}; lon_deg_east=${r.site.lon_deg}; interval_utc=${iso(r.startMs)} to ${iso(r.endMs)}; step_s=${r.stepMs / 1000}; terrain_aware=${r.terrainAware}; earth_min_clearance_deg=${r.earthMinClearanceDeg}; ${landerText(r)}${r.calculation ? `; integration_base_step_s=${r.calculation.baseStepMs / 1000}; integration_near_horizon_step_s=${r.calculation.minStepMs / 1000}` : ''}`)));
   }
   const rowsBySite = results.map((r) => new Map(summaryRows(r).map((row) => [row.key, row])));
   const head = ['key', 'label', 'unit', 'kind', 'method_id', ...columnIds, 'truncated_sites'];
@@ -151,6 +152,7 @@ export interface ExportSite {
   site: SiteDoc;
   terrain_aware: boolean;
   interval: { start_utc: string; end_utc: string; step_s: number };
+  calculation?: AnalysisResult['calculation'];
   observer_height_m: number;
   earth_min_clearance_deg: number;
   lander_params: {
@@ -249,6 +251,7 @@ export function buildExportJson(
         site: r.site,
         terrain_aware: r.terrainAware,
         interval: { start_utc: iso(r.startMs), end_utc: iso(r.endMs), step_s: r.stepMs / 1000 },
+        calculation: r.calculation,
         observer_height_m: r.observerHeightM,
         earth_min_clearance_deg: r.earthMinClearanceDeg,
         lander_params: {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { analyzeSite, makeSiteContext, DEFAULT_LANDER, summaryRows, formatRowValue, type ProvenanceDoc } from '../science';
+import { analyzeMission, analyzeSite, makeSiteContext, DEFAULT_LANDER, summaryRows, formatRowValue, type ProvenanceDoc } from '../science';
 import { sitesDoc, shippedMask, shippedEphemeris, readJson, DATA_DIR } from '../science/__fixtures__/shipped';
 import { buildExportJson, buildSeriesCsv, buildSummaryCsv, SERIES_COLUMNS } from './exporters';
 
@@ -11,6 +11,17 @@ const provenance = readJson<ProvenanceDoc>(`${DATA_DIR}/provenance.json`);
 const json = buildExportJson(results, provenance, '2026-11-14T00:00:00Z');
 
 describe('scientific exports', () => {
+  it('exports refined summary metrics with an explicitly separate hourly series', () => {
+    const site = doc.sites[0];
+    const r = analyzeMission(makeSiteContext(site, doc.observer_height_m, shippedMask(site)), shippedEphemeris(), {
+      startMs: Date.UTC(2026, 5, 1), endMs: Date.UTC(2026, 5, 8), params: DEFAULT_LANDER,
+    });
+    const output = buildExportJson([r], provenance, '2026-11-15T00:00:00Z').sites[0];
+    expect(output.calculation).toEqual(r.calculation);
+    expect(output.summary).toEqual(summaryRows(r).map(row => ({ ...row, display: formatRowValue(row) })));
+    expect(output.series.time_utc.length).toBe(r.series.tMs.length);
+    expect(buildSeriesCsv(r)).toContain('summaries use refined integration');
+  });
   it('distinguishes repeated locations with different mission dates and parameters', () => {
     const first = results[0];
     const next = { ...first, startMs: first.startMs + 86400000, earthMinClearanceDeg: 5, params: { ...first.params, loadW: 300 } };

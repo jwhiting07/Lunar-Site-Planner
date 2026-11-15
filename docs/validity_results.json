@@ -1,0 +1,2669 @@
+{
+ "generated_utc": "2026-11-15T18:12:11.381278+00:00",
+ "specification": {
+  "schema": 1,
+  "selection": "Coordinates and intervals fixed before evaluating this benchmark. Geographic coverage cases, not statistically representative mission sites. Do not tune these cases or acceptance limits to make a result pass.",
+  "acceptance": {
+   "fraction_pp": 0.25,
+   "outage_hours": 0.25,
+   "energy_relative": 0.01,
+   "meaning": "Project numerical regression budgets for a demonstration planning tool, not NASA requirements or physical accuracy guarantees. Report verdict changes separately, even when differences fit the budgets."
+  },
+  "stress_cases": [
+   {
+    "id": "regression-ridge",
+    "lat": -89.445496,
+    "lon": -137.313722,
+    "start": "2026-06-01T00:00:00Z",
+    "days": 30
+   },
+   {
+    "id": "regression-peak-5",
+    "lat": -85.830426,
+    "lon": -116.297657,
+    "start": "2026-01-01T00:00:00Z",
+    "days": 30
+   },
+   {
+    "id": "regression-im2",
+    "lat": -84.7906,
+    "lon": 29.1957,
+    "start": "2026-06-01T00:00:00Z",
+    "days": 30
+   }
+  ],
+  "cases": [
+   {
+    "id": "polar-interior",
+    "lat": -88.5,
+    "lon": 30,
+    "start": "2026-01-15T00:00:00Z",
+    "days": 7
+   },
+   {
+    "id": "polar-offset",
+    "lat": -85,
+    "lon": 45,
+    "start": "2026-06-15T00:00:00Z",
+    "days": 30
+   },
+   {
+    "id": "polar-custom",
+    "lat": -83,
+    "lon": 25,
+    "start": "2026-12-01T00:00:00Z",
+    "days": 7
+   },
+   {
+    "id": "polar-edge",
+    "lat": -75,
+    "lon": 15,
+    "start": "2027-03-01T00:00:00Z",
+    "days": 7
+   },
+   {
+    "id": "global-east-seam",
+    "lat": -20,
+    "lon": 179.9,
+    "start": "2026-06-01T00:00:00Z",
+    "days": 30
+   },
+   {
+    "id": "global-west-seam",
+    "lat": 12,
+    "lon": -179.9,
+    "start": "2026-12-01T00:00:00Z",
+    "days": 7
+   }
+  ]
+ },
+ "input_provenance": {
+  "source_sha256": {
+   "ldem_16_uint.tif": "45a2b32d56e81ed30db07fead8abc842b249b6511219d9ca2c53f81bc2dc5d62",
+   "LDEM_60S_240MPP_ADJ.TIF": "3f9663257b63022f2b0d5a623482ff3cadddceb91594a4e4ca14a94d8cec8b34",
+   "LDEM_80S_80MPP_ADJ.TIF": "82030dcbdd7c4bb0c7d858e9b4b293b9f2cda5a543ba31ec0f42784bd6beee5a",
+   "LDSM_80S_80MPP_ADJ.TIF": "d1270c4a69d01a8e4eb5503bd25713f0b2251dbb4ffee6c3161ef7a792c8f059"
+  },
+  "generator_sha256": {
+   "scripts/custom_horizon.py": "b86bc5673f919c633b34dc41b5c44d7e37eced9e5334da0fd9f92b97d2ded498",
+   "scripts/moonlib.py": "eeb5031d9d426c4c5ce218ce7033bf92508cd044747ce5bb4e8e3b22a0992ea6",
+   "scripts/build_data.py": "46bd61adca8388d6e337a4382156f062ee0a96a0b62415f967ffe1f6a29fd0cc"
+  },
+  "observer_height_m": 2,
+  "azimuth_step_deg": 0.5,
+  "ray_range_km": 600,
+  "credits": [
+   "NASA LOLA/PGDA: Barker et al. 2023",
+   "NASA SVS CGI Moon Kit: regional global LOLA"
+  ],
+  "reference_ids": [
+   "R-LOLA-PGDA",
+   "R-SVS-MOON-KIT",
+   "M-HORIZON"
+  ],
+  "text_hash_convention": "SHA-256 after CRLF-to-LF normalization; binary source hashes are unchanged"
+ },
+ "runtime_source_sha256": {
+  "src/science/analysis.ts": "d04fc2db2bd0214b949f6f0436ca86118be345ee7f8f71a5f8a20762be98c73c",
+  "src/science/planner.ts": "4e7cd200f5e4f8ba1bd65de3f362dfd7a18fed579c5f0238a5acc1518b21d053",
+  "src/science/power.ts": "500e966511e7d310f7adef3030da33a88529999818eda14b74e57c2d1f1ca204",
+  "src/data/loader.ts": "332e7b2a2d362b5267b450e29bc45085f39a296bd1b1e64a3c9ee2d39798f6fc"
+ },
+ "status": "passed",
+ "failures": [],
+ "verdict_sensitivity": [],
+ "runtime": {
+  "cases": [
+   {
+    "id": "polar-interior",
+    "elapsed_ms": 4.270199999999932,
+    "actual": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 168,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999993847,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992767,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 168,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0.25,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 169,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 673
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 11100,
+      "deficit_hours": 147.9999999999327,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 48900,
+      "deficit_hours": 162.99999999992588,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "polar-interior",
+     "metrics": {
+      "interval_hours": 168.0,
+      "sunlit_hours": 0.0,
+      "sunlit_fraction": 0.0,
+      "earth_visible_hours": 0.0,
+      "earth_visible_fraction": 0.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 168.0,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": 168.0,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.5570328834561948,
+      "earth_visible_fraction_flat": 0.08239022010238083,
+      "mean_disk_fraction": 0.0,
+      "n_sun_windows": 0,
+      "n_earth_windows": 0
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 0,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 0.0,
+       "longest_blackout_hours": 0.0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 0.0
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "polar-offset",
+    "elapsed_ms": 15.227499999999964,
+    "actual": {
+     "sunlit_fraction": 0.15810850883964256,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 563.8030588492838,
+     "longest_blackout_hours": 720,
+     "generated_wh": 75810.29041191685,
+     "unserved_wh": 88267.24417275234,
+     "deficit_hours": 589.7780110151691,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.1581085080748193,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030576804606,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.24203146306,
+      "unserved_wh": 88267.36302840305,
+      "deficit_hours": 589.7785745643231,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.15810850883964256,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030588492838,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.3362474449,
+      "unserved_wh": 88267.24417275234,
+      "deficit_hours": 589.7780110151803,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.1580895247624715,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030654914008,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.13173082295,
+      "unserved_wh": 88266.34350087956,
+      "deficit_hours": 589.7730370895152,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.15797767310644079,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8029764169651,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75804.45382214697,
+      "unserved_wh": 88253.70010954444,
+      "deficit_hours": 589.7258512994631,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.15810928404640856,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 563.8032327842882,
+     "longest_blackout_hours": 720,
+     "generated_wh": 75801.63890736463,
+     "unserved_wh": 88266.53557637693,
+     "deficit_hours": 589.8600581384039,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 15.56085080748193,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 15.81085080748193,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 16.06085080748193,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 721,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 3145
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.15810850883964256,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030588492838,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.29041191685,
+      "unserved_wh": 42559.106414057416,
+      "deficit_hours": 568.0702053614093,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.15810850883964256,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030588492838,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.29041191685,
+      "unserved_wh": 88267.24417275234,
+      "deficit_hours": 589.7780110151691,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.15810850883964256,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 563.8030588492838,
+      "longest_blackout_hours": 720,
+      "generated_wh": 75810.29041191685,
+      "unserved_wh": 180086.0012679749,
+      "deficit_hours": 602.2287373220483,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "polar-offset",
+     "metrics": {
+      "interval_hours": 720.0,
+      "sunlit_hours": 113.83830801093208,
+      "sunlit_fraction": 0.15810876112629454,
+      "earth_visible_hours": 0.0,
+      "earth_visible_fraction": 0.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 563.8029771503363,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": 720.0,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.4256221989455046,
+      "earth_visible_fraction_flat": 0.6711548121002574,
+      "mean_disk_fraction": 0.14225337383418166,
+      "n_sun_windows": 1,
+      "n_earth_windows": 0
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": 7.648232602797123e-10,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 1.1688232461892767e-06,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": -2.522866519860667e-07,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 8.16989474969887e-05,
+       "longest_blackout_hours": 0.0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 6.381783318182876e-07
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "polar-custom",
+    "elapsed_ms": 0.42590000000018335,
+    "actual": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 168,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999993847,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992767,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 168,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0.25,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 169,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 673
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 11100,
+      "deficit_hours": 147.9999999999327,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 168,
+      "generated_wh": 0,
+      "unserved_wh": 48900,
+      "deficit_hours": 162.99999999992588,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "polar-custom",
+     "metrics": {
+      "interval_hours": 168.0,
+      "sunlit_hours": 0.0,
+      "sunlit_fraction": 0.0,
+      "earth_visible_hours": 0.0,
+      "earth_visible_fraction": 0.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 168.0,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": 168.0,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.0,
+      "earth_visible_fraction_flat": 0.6879526741015722,
+      "mean_disk_fraction": 0.0,
+      "n_sun_windows": 0,
+      "n_earth_windows": 0
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 0,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 0.0,
+       "longest_blackout_hours": 0.0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 0.0
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "polar-edge",
+    "elapsed_ms": 0.48090000000001965,
+    "actual": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 1,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 0,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999993847,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992767,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0,
+     "earth_visible_fraction": 1,
+     "both_hours": 0,
+     "longest_darkness_hours": 168,
+     "longest_blackout_hours": 0,
+     "generated_wh": 0,
+     "unserved_wh": 23700,
+     "deficit_hours": 157.99999999992815,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 0.25,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 169,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 673
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 11100,
+      "deficit_hours": 147.9999999999327,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 23700,
+      "deficit_hours": 157.99999999992815,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0,
+      "earth_visible_fraction": 1,
+      "both_hours": 0,
+      "longest_darkness_hours": 168,
+      "longest_blackout_hours": 0,
+      "generated_wh": 0,
+      "unserved_wh": 48900,
+      "deficit_hours": 162.99999999992588,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "polar-edge",
+     "metrics": {
+      "interval_hours": 168.0,
+      "sunlit_hours": 0.0,
+      "sunlit_fraction": 0.0,
+      "earth_visible_hours": 168.0,
+      "earth_visible_fraction": 1.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 168.0,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": null,
+      "longest_blackout_truncated": null,
+      "sunlit_fraction_flat": 0.0,
+      "earth_visible_fraction_flat": 1.0,
+      "mean_disk_fraction": 0.0,
+      "n_sun_windows": 0,
+      "n_earth_windows": 1
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 0,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": 0,
+       "earth_visible_fraction": 0.0,
+       "longest_darkness_hours": 0.0,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 0.0
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "global-east-seam",
+    "elapsed_ms": 4.878099999999904,
+    "actual": {
+     "sunlit_fraction": 0.473445347070953,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 212.21165376234268,
+     "longest_blackout_hours": 720,
+     "generated_wh": 251744.25617194554,
+     "unserved_wh": 53917.70862544942,
+     "deficit_hours": 359.57312947419075,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.4734453471259599,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.2116537556288,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.594045617,
+      "unserved_wh": 53918.493995861245,
+      "deficit_hours": 359.57704504273283,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.473445347070953,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165376234268,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.4396517347,
+      "unserved_wh": 53917.70862544942,
+      "deficit_hours": 359.5731294742028,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.47344534602129895,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165375054252,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.9784522331,
+      "unserved_wh": 53911.59452068081,
+      "deficit_hours": 359.5484654163136,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.47344534371863467,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165711642794,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251766.11013771244,
+      "unserved_wh": 53866.16299665782,
+      "deficit_hours": 359.3048698710503,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.4734453887118116,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 212.2116214428711,
+     "longest_blackout_hours": 720,
+     "generated_wh": 251744.26367790482,
+     "unserved_wh": 53917.704954409855,
+     "deficit_hours": 359.5731062922253,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 47.094534712595994,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 47.344534712595994,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 47.594534712595994,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 721,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 2913
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.473445347070953,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165376234268,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.25617194554,
+      "unserved_wh": 25448.976231949167,
+      "deficit_hours": 339.39637636471275,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.473445347070953,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165376234268,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.25617194554,
+      "unserved_wh": 53917.70862544942,
+      "deficit_hours": 359.57312947419075,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.473445347070953,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 212.21165376234268,
+      "longest_blackout_hours": 720,
+      "generated_wh": 251744.25617194554,
+      "unserved_wh": 110900.20958283517,
+      "deficit_hours": 369.8725171508427,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "global-east-seam",
+     "metrics": {
+      "interval_hours": 720.0,
+      "sunlit_hours": 340.8806583628337,
+      "sunlit_fraction": 0.473445358837269,
+      "earth_visible_hours": 0.0,
+      "earth_visible_fraction": 0.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 212.2116477347141,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": 720.0,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.48889992906951907,
+      "earth_visible_fraction_flat": 0.0,
+      "mean_disk_fraction": 0.4718972778752357,
+      "n_sun_windows": 1,
+      "n_earth_windows": 0
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": -5.500694344462431e-11,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 6.713889888487756e-09,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": -1.1766316032613133e-08,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 6.027628586480205e-06,
+       "longest_blackout_hours": 0.0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 1.342128806168375e-06
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "global-west-seam",
+    "elapsed_ms": 0.8494000000000597,
+    "actual": {
+     "sunlit_fraction": 0.8713680738031296,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 21.61016360107422,
+     "longest_blackout_hours": 168,
+     "generated_wh": 114819.91980946215,
+     "unserved_wh": 1765.4326099661628,
+     "deficit_hours": 11.884847561457045,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.8713680738616622,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.610163591240777,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114820.00201891657,
+      "unserved_wh": 1765.9141688009436,
+      "deficit_hours": 11.88586713370233,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.8713680738031296,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016360107422,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114820.00256752338,
+      "unserved_wh": 1765.4326099661628,
+      "deficit_hours": 11.884847561457033,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.8713680732460628,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016369466146,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114820.8435344186,
+      "unserved_wh": 1761.3110796207195,
+      "deficit_hours": 11.875529202181928,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.8713680739972958,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016356845432,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114802.664283419,
+      "unserved_wh": 1696.3461655581477,
+      "deficit_hours": 11.617948874103352,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.8713508030393894,
+     "earth_visible_fraction": 0,
+     "both_hours": 0,
+     "longest_darkness_hours": 21.613065089382594,
+     "longest_blackout_hours": 168,
+     "generated_wh": 114817.5270354567,
+     "unserved_wh": 1765.8738944727352,
+     "deficit_hours": 11.887862233478646,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 86.88680738616621,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 87.13680738616621,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 87.38680738616621,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 169,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 689
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.8713680738031296,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016360107422,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114819.91980946215,
+      "unserved_wh": 127.92130947682112,
+      "deficit_hours": 1.7782908472529064,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.8713680738031296,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016360107422,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114819.91980946215,
+      "unserved_wh": 1765.4326099661628,
+      "deficit_hours": 11.884847561457045,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.8713680738031296,
+      "earth_visible_fraction": 0,
+      "both_hours": 0,
+      "longest_darkness_hours": 21.61016360107422,
+      "longest_blackout_hours": 168,
+      "generated_wh": 114819.91980946215,
+      "unserved_wh": 5062.074748122648,
+      "deficit_hours": 17.06606796888103,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "global-west-seam",
+     "metrics": {
+      "interval_hours": 168.0,
+      "sunlit_hours": 146.38984418280708,
+      "sunlit_fraction": 0.8713681201357565,
+      "earth_visible_hours": 0.0,
+      "earth_visible_fraction": 0.0,
+      "both_hours": 0.0,
+      "longest_darkness_hours": 21.610155817192926,
+      "longest_darkness_truncated": true,
+      "longest_blackout_hours": 168.0,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.8825366476488871,
+      "earth_visible_fraction_flat": 0.0,
+      "mean_disk_fraction": 0.8680336361208192,
+      "n_sun_windows": 1,
+      "n_earth_windows": 0
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": -5.853251217047273e-11,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 9.833442504714185e-09,
+       "longest_blackout_hours": 0
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": -4.633262684627937e-08,
+       "earth_visible_fraction": 0,
+       "longest_darkness_hours": 7.783881294187722e-06,
+       "longest_blackout_hours": 0.0
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 7.159854813385296e-07
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "regression-ridge",
+    "elapsed_ms": 8.773799999999937,
+    "actual": {
+     "sunlit_fraction": 0.48172523685059726,
+     "earth_visible_fraction": 0.4435639613838667,
+     "both_hours": 116.93577190714518,
+     "longest_darkness_hours": 202.43028028923882,
+     "longest_blackout_hours": 267.7005646871609,
+     "generated_wh": 180017.09307369206,
+     "unserved_wh": 53627.00398686057,
+     "deficit_hours": 369.3532099672728,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.4817252114011034,
+      "earth_visible_fraction": 0.4435639590761161,
+      "both_hours": 116.93576100056966,
+      "longest_darkness_hours": 202.43028953423394,
+      "longest_blackout_hours": 267.7005658294678,
+      "generated_wh": 180016.96306447595,
+      "unserved_wh": 53627.437897033466,
+      "deficit_hours": 369.3548563282069,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.48172523685059726,
+      "earth_visible_fraction": 0.4435639613838667,
+      "both_hours": 116.93577190714518,
+      "longest_darkness_hours": 202.43028028923882,
+      "longest_blackout_hours": 267.7005646871609,
+      "generated_wh": 180017.11597300356,
+      "unserved_wh": 53627.00398686057,
+      "deficit_hours": 369.35320996729007,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.4817270804520596,
+      "earth_visible_fraction": 0.4435639764247941,
+      "both_hours": 116.93578663479275,
+      "longest_darkness_hours": 202.43027639105904,
+      "longest_blackout_hours": 267.7005590396457,
+      "generated_wh": 180017.99242462215,
+      "unserved_wh": 53623.952725022566,
+      "deficit_hours": 369.3386548909955,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.4819312883317736,
+      "earth_visible_fraction": 0.4435641991474481,
+      "both_hours": 116.93671138427734,
+      "longest_darkness_hours": 202.4295120018853,
+      "longest_blackout_hours": 267.7004220222982,
+      "generated_wh": 180009.2208999516,
+      "unserved_wh": 53576.544226473474,
+      "deficit_hours": 369.15827767847077,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.4810889027782487,
+     "earth_visible_fraction": 0.4435143662982517,
+     "both_hours": 116.9001185715739,
+     "longest_darkness_hours": 202.4302251631673,
+     "longest_blackout_hours": 267.7364222207303,
+     "generated_wh": 178450.41365660416,
+     "unserved_wh": 53848.607089824385,
+     "deficit_hours": 370.3178900585708,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 47.92252114011034,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 48.17252114011034,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 48.42252114011034,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 721,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 5695
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.48172523685059726,
+      "earth_visible_fraction": 0.4435639613838667,
+      "both_hours": 116.93577190714518,
+      "longest_darkness_hours": 202.43028028923882,
+      "longest_blackout_hours": 267.7005646871609,
+      "generated_wh": 180017.09307369206,
+      "unserved_wh": 23601.83982181919,
+      "deficit_hours": 320.13852363964344,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.48172523685059726,
+      "earth_visible_fraction": 0.4435639613838667,
+      "both_hours": 116.93577190714518,
+      "longest_darkness_hours": 202.43028028923882,
+      "longest_blackout_hours": 267.7005646871609,
+      "generated_wh": 180017.09307369206,
+      "unserved_wh": 53627.00398686057,
+      "deficit_hours": 369.3532099672728,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.48172523685059726,
+      "earth_visible_fraction": 0.4435639613838667,
+      "both_hours": 116.93577190714518,
+      "longest_darkness_hours": 202.43028028923882,
+      "longest_blackout_hours": 267.7005646871609,
+      "generated_wh": 180017.09307369206,
+      "unserved_wh": 120210.20838255019,
+      "deficit_hours": 417.4764703492623,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "regression-ridge",
+     "metrics": {
+      "interval_hours": 720.0,
+      "sunlit_hours": 346.845082524075,
+      "sunlit_fraction": 0.4817292812834375,
+      "earth_visible_hours": 319.36595626620823,
+      "earth_visible_fraction": 0.44356382814751144,
+      "both_hours": 116.93733787963868,
+      "longest_darkness_hours": 202.42861838656955,
+      "longest_darkness_truncated": false,
+      "longest_blackout_hours": 267.7002482994927,
+      "longest_blackout_truncated": true,
+      "sunlit_fraction_flat": 0.0,
+      "earth_visible_fraction_flat": 0.3859132972204891,
+      "mean_disk_fraction": 0.3386098163878022,
+      "n_sun_windows": 6,
+      "n_earth_windows": 1
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": 2.544949384564177e-08,
+       "earth_visible_fraction": 2.3077506017266103e-09,
+       "longest_darkness_hours": -9.244995112567267e-06,
+       "longest_blackout_hours": -1.142306871315668e-06
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": -4.044432840244472e-06,
+       "earth_visible_fraction": 1.3323635528195155e-07,
+       "longest_darkness_hours": 0.001661902669269466,
+       "longest_blackout_hours": 0.00031638766819241937
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 7.222053627488186e-07
+    },
+    "boundary_sensitive": []
+   },
+   {
+    "id": "regression-peak-5",
+    "elapsed_ms": 7.541200000000117,
+    "actual": {
+     "sunlit_fraction": 0.6068949180608679,
+     "earth_visible_fraction": 0.5833140035214837,
+     "both_hours": 274.7242591264513,
+     "longest_darkness_hours": 150.1938701772054,
+     "longest_blackout_hours": 300.0139174645318,
+     "generated_wh": 278724.3065107325,
+     "unserved_wh": 42321.715635432054,
+     "deficit_hours": 290.4296473098298,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.6068950886160768,
+      "earth_visible_fraction": 0.5833140016004775,
+      "both_hours": 274.7243612706163,
+      "longest_darkness_hours": 150.19373740356446,
+      "longest_blackout_hours": 300.01391884765627,
+      "generated_wh": 278724.4158734799,
+      "unserved_wh": 42321.72350106022,
+      "deficit_hours": 290.4293679757852,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.6068949180608679,
+      "earth_visible_fraction": 0.5833140035214837,
+      "both_hours": 274.7242591264513,
+      "longest_darkness_hours": 150.1938701772054,
+      "longest_blackout_hours": 300.0139174645318,
+      "generated_wh": 278724.46940098505,
+      "unserved_wh": 42321.715635432054,
+      "deficit_hours": 290.42964730983107,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.6069118847108064,
+      "earth_visible_fraction": 0.5833140093075787,
+      "both_hours": 274.736557016805,
+      "longest_darkness_hours": 150.19516773186578,
+      "longest_blackout_hours": 300.0139132985433,
+      "generated_wh": 278722.75065080787,
+      "unserved_wh": 42322.47981124393,
+      "deficit_hours": 290.4332172057867,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.6070129953452216,
+      "earth_visible_fraction": 0.5833040013002937,
+      "both_hours": 274.80223962212455,
+      "longest_darkness_hours": 150.19715519700793,
+      "longest_blackout_hours": 300.02111906378855,
+      "generated_wh": 278695.68637832947,
+      "unserved_wh": 42331.302707772295,
+      "deficit_hours": 290.5081884707531,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.572064345742308,
+     "earth_visible_fraction": 0.583313073951627,
+     "both_hours": 249.64647011691625,
+     "longest_darkness_hours": 173.8487971609158,
+     "longest_blackout_hours": 300.01458675482854,
+     "generated_wh": 268564.77729729237,
+     "unserved_wh": 50733.41856466152,
+     "deficit_hours": 344.29966325080863,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 60.43950886160768,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 60.68950886160768,
+      "actual": false,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 60.93950886160768,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 721,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 4479
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.6068949180608679,
+      "earth_visible_fraction": 0.5833140035214837,
+      "both_hours": 274.7242591264513,
+      "longest_darkness_hours": 150.1938701772054,
+      "longest_blackout_hours": 300.0139174645318,
+      "generated_wh": 278724.3065107325,
+      "unserved_wh": 18286.516044749445,
+      "deficit_hours": 247.79413211043405,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.6068949180608679,
+      "earth_visible_fraction": 0.5833140035214837,
+      "both_hours": 274.7242591264513,
+      "longest_darkness_hours": 150.1938701772054,
+      "longest_blackout_hours": 300.0139174645318,
+      "generated_wh": 278724.3065107325,
+      "unserved_wh": 42321.715635432054,
+      "deficit_hours": 290.4296473098298,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.6068949180608679,
+      "earth_visible_fraction": 0.5833140035214837,
+      "both_hours": 274.7242591264513,
+      "longest_darkness_hours": 150.1938701772054,
+      "longest_blackout_hours": 300.0139174645318,
+      "generated_wh": 278724.3065107325,
+      "unserved_wh": 96171.78172609312,
+      "deficit_hours": 360.89012836777374,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "regression-peak-5",
+     "metrics": {
+      "interval_hours": 720.0,
+      "sunlit_hours": 436.96276521884494,
+      "sunlit_fraction": 0.606892729470618,
+      "earth_visible_hours": 419.9855901502821,
+      "earth_visible_fraction": 0.5833133196531696,
+      "both_hours": 274.72238872599286,
+      "longest_darkness_hours": 150.19447405510797,
+      "longest_darkness_truncated": false,
+      "longest_blackout_hours": 300.0144098497179,
+      "longest_blackout_truncated": false,
+      "sunlit_fraction_flat": 0.6019707892708485,
+      "earth_visible_fraction_flat": 0.42169016939507,
+      "mean_disk_fraction": 0.49223584253054214,
+      "n_sun_windows": 4,
+      "n_earth_windows": 2
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": -1.705552088449025e-07,
+       "earth_visible_fraction": 1.921006131944125e-09,
+       "longest_darkness_hours": 0.00013277364095642952,
+       "longest_blackout_hours": -1.3831244700668321e-06
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": 2.188590249918576e-06,
+       "earth_visible_fraction": 6.838683140886204e-07,
+       "longest_darkness_hours": -0.0006038779025629992,
+       "longest_blackout_hours": -0.0004923851860780815
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 3.923687383506279e-07
+    },
+    "boundary_sensitive": [
+     {
+      "target_sunlight_pct": 60.68950886160768,
+      "actual": false,
+      "reference": true
+     }
+    ]
+   },
+   {
+    "id": "regression-im2",
+    "elapsed_ms": 3.8074000000001433,
+    "actual": {
+     "sunlit_fraction": 0.39004795457270114,
+     "earth_visible_fraction": 0.7722420652178542,
+     "both_hours": 116.84881424919976,
+     "longest_darkness_hours": 409.03709402770994,
+     "longest_blackout_hours": 130.03153925001357,
+     "generated_wh": 194792.9967063077,
+     "unserved_wh": 65594.17508378987,
+     "deficit_hours": 440.6141519894604,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "grids": {
+     "1": {
+      "sunlit_fraction": 0.39004795818771554,
+      "earth_visible_fraction": 0.7722420640015779,
+      "both_hours": 116.84881597629123,
+      "longest_darkness_hours": 409.0370945138889,
+      "longest_blackout_hours": 130.03153993896484,
+      "generated_wh": 194793.16933981073,
+      "unserved_wh": 65594.24774779285,
+      "deficit_hours": 440.6144045802989,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "5": {
+      "sunlit_fraction": 0.39004795457270114,
+      "earth_visible_fraction": 0.7722420652178542,
+      "both_hours": 116.84881424919976,
+      "longest_darkness_hours": 409.03709402770994,
+      "longest_blackout_hours": 130.03153925001357,
+      "generated_wh": 194793.11617433373,
+      "unserved_wh": 65594.17508378987,
+      "deficit_hours": 440.61415198948987,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "15": {
+      "sunlit_fraction": 0.3900478521394141,
+      "earth_visible_fraction": 0.7722420698126332,
+      "both_hours": 116.84874380547419,
+      "longest_darkness_hours": 409.0370924613444,
+      "longest_blackout_hours": 130.03153679857041,
+      "generated_wh": 194792.97997880788,
+      "unserved_wh": 65593.36062885904,
+      "deficit_hours": 440.61095823787304,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     "60": {
+      "sunlit_fraction": 0.3900912854841256,
+      "earth_visible_fraction": 0.7722422485284687,
+      "both_hours": 116.88014448906793,
+      "longest_darkness_hours": 409.0875345348443,
+      "longest_blackout_hours": 130.0314119946289,
+      "generated_wh": 194799.34833732533,
+      "unserved_wh": 65572.04153762905,
+      "deficit_hours": 440.58339539904847,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    },
+    "terrain_refined": {
+     "sunlit_fraction": 0.3899200042446749,
+     "earth_visible_fraction": 0.7721620694857939,
+     "both_hours": 116.69909308593749,
+     "longest_darkness_hours": 409.0790875914171,
+     "longest_blackout_hours": 130.06021851589628,
+     "generated_wh": 194775.12446783858,
+     "unserved_wh": 65597.45073298187,
+     "deficit_hours": 440.5431978529953,
+     "min_energy_wh": 0,
+     "verdict": false
+    },
+    "boundary_tests": [
+     {
+      "target_sunlight_pct": 38.754795818771555,
+      "actual": true,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 39.004795818771555,
+      "actual": false,
+      "reference": true
+     },
+     {
+      "target_sunlight_pct": 39.254795818771555,
+      "actual": false,
+      "reference": false
+     }
+    ],
+    "display_samples": 721,
+    "calculation": {
+     "baseStepMs": 900000,
+     "minStepMs": 300000,
+     "samples": 3451
+    },
+    "sensitivity": [
+     {
+      "load_scale": 0.5,
+      "sunlit_fraction": 0.39004795457270114,
+      "earth_visible_fraction": 0.7722420652178542,
+      "both_hours": 116.84881424919976,
+      "longest_darkness_hours": 409.03709402770994,
+      "longest_blackout_hours": 130.03153925001357,
+      "generated_wh": 194792.9967063077,
+      "unserved_wh": 31784.455181485813,
+      "deficit_hours": 427.8983089882412,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 1,
+      "sunlit_fraction": 0.39004795457270114,
+      "earth_visible_fraction": 0.7722420652178542,
+      "both_hours": 116.84881424919976,
+      "longest_darkness_hours": 409.03709402770994,
+      "longest_blackout_hours": 130.03153925001357,
+      "generated_wh": 194792.9967063077,
+      "unserved_wh": 65594.17508378987,
+      "deficit_hours": 440.6141519894604,
+      "min_energy_wh": 0,
+      "verdict": false
+     },
+     {
+      "load_scale": 2,
+      "sunlit_fraction": 0.39004795457270114,
+      "earth_visible_fraction": 0.7722420652178542,
+      "both_hours": 116.84881424919976,
+      "longest_darkness_hours": 409.03709402770994,
+      "longest_blackout_hours": 130.03153925001357,
+      "generated_wh": 194792.9967063077,
+      "unserved_wh": 133648.06826242743,
+      "deficit_hours": 448.81486037371263,
+      "min_energy_wh": 0,
+      "verdict": false
+     }
+    ],
+    "direct_spice_5min": {
+     "id": "regression-im2",
+     "metrics": {
+      "interval_hours": 720.0,
+      "sunlit_hours": 280.8356553084988,
+      "sunlit_fraction": 0.3900495212618039,
+      "earth_visible_hours": 556.0105815323893,
+      "earth_visible_fraction": 0.7722369187949851,
+      "both_hours": 116.84623684088812,
+      "longest_darkness_hours": 409.0368130121528,
+      "longest_darkness_truncated": false,
+      "longest_blackout_hours": 130.03461254733617,
+      "longest_blackout_truncated": false,
+      "sunlit_fraction_flat": 0.4371781288783697,
+      "earth_visible_fraction_flat": 0.6305583458788837,
+      "mean_disk_fraction": 0.36784394267974413,
+      "n_sun_windows": 3,
+      "n_earth_windows": 2
+     },
+     "method": "direct SPICE spkcpo, 5-minute grid; same float32 terrain profile as browser"
+    },
+    "checks": {
+     "one_minute": {
+      "differences": {
+       "sunlit_fraction": -3.615014398938854e-09,
+       "earth_visible_fraction": 1.2162763018963574e-09,
+       "longest_darkness_hours": -4.861789761889668e-07,
+       "longest_blackout_hours": -6.88951274696592e-07
+      },
+      "within_project_budget": true
+     },
+     "direct_spice": {
+      "differences": {
+       "sunlit_fraction": -1.5666891027832364e-06,
+       "earth_visible_fraction": 5.14642286908451e-06,
+       "longest_darkness_hours": 0.00028101555716375515,
+       "longest_blackout_hours": -0.0030732973226008653
+      },
+      "within_project_budget": true
+     },
+     "generated_energy_relative": 8.862400238412841e-07
+    },
+    "boundary_sensitive": [
+     {
+      "target_sunlight_pct": 39.004795818771555,
+      "actual": false,
+      "reference": true
+     }
+    ]
+   }
+  ],
+  "searches": [
+   {
+    "size": 12,
+    "elapsed_ms": 57.69990000000007,
+    "matches_exhaustive": true,
+    "top_five": [
+     {
+      "key": "point-0-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.5958488591,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-78.28414760510762-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131857.30652599817,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-50.42878054276911--32.46118000000001|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.41866955403,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-40.228184728061095-20.06211200000007|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.63362217936,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-25.944479772370006--12.399067999999943|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.3182315695,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     }
+    ]
+   },
+   {
+    "size": 24,
+    "elapsed_ms": 50.567099999999755,
+    "matches_exhaustive": true,
+    "top_five": [
+     {
+      "key": "point-0-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.5958488591,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-78.28414760510762-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131857.30652599817,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-50.42878054276911--32.46118000000001|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.41866955403,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-40.228184728061095-20.06211200000007|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.63362217936,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-25.944479772370006--12.399067999999943|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.3182315695,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     }
+    ]
+   },
+   {
+    "size": 48,
+    "elapsed_ms": 113.9952000000003,
+    "matches_exhaustive": true,
+    "top_five": [
+     {
+      "key": "point-0-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.5958488591,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-78.28414760510762-0|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131857.30652599817,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-50.42878054276911--32.46118000000001|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.41866955403,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-40.228184728061095-20.06211200000007|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131858.63362217936,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     },
+     {
+      "key": "point-25.944479772370006--12.399067999999943|1767225600000",
+      "terrain": true,
+      "sunlit_fraction": 1,
+      "earth_visible_fraction": 1,
+      "both_hours": 168,
+      "longest_darkness_hours": 0,
+      "longest_blackout_hours": 0,
+      "generated_wh": 131859.3182315695,
+      "unserved_wh": 0,
+      "deficit_hours": 0,
+      "min_energy_wh": 1500,
+      "verdict": true
+     }
+    ]
+   }
+  ],
+  "power": [
+   {
+    "id": "partial-and-cycling",
+    "energyWh": [
+     100,
+     66.25,
+     100,
+     94.375,
+     0,
+     23.437500000000004
+    ],
+    "generatedWh": 633.75,
+    "loadWh": 795,
+    "unservedWh": 364.0625,
+    "deficitHours": 2.483333333332888,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 9465000.00000142,
+    "firstDeficitMs": 9465000.00000142,
+    "curtailedWh": 279.375
+   },
+   {
+    "id": "interior-empty-full",
+    "energyWh": [
+     10,
+     10
+    ],
+    "generatedWh": 100,
+    "loadWh": 100,
+    "unservedWh": 15,
+    "deficitHours": 0.3872983346207093,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 405725.99536544655,
+    "firstDeficitMs": 405725.99536544655,
+    "curtailedWh": 15
+   },
+   {
+    "id": "interior-minimum",
+    "energyWh": [
+     100,
+     100
+    ],
+    "generatedWh": 100,
+    "loadWh": 100,
+    "unservedWh": 0,
+    "deficitHours": 0,
+    "minEnergyWh": 75,
+    "minEnergyTimeMs": 1800000,
+    "firstDeficitMs": null,
+    "curtailedWh": 0
+   },
+   {
+    "id": "zero-storage",
+    "energyWh": [
+     0,
+     0,
+     0
+    ],
+    "generatedWh": 335,
+    "loadWh": 300,
+    "unservedWh": 68.4375,
+    "deficitHours": 0.9124999999995851,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 0,
+    "firstDeficitMs": 1575000.0000004296,
+    "curtailedWh": 103.4375
+   }
+  ],
+  "search_reference_ms": 319.9204,
+  "default_search_ms": 536.3573000000001,
+  "default_search_count": 1519,
+  "default_terrain_results": 5
+ },
+ "power_reference": [
+  {
+   "case": {
+    "id": "partial-and-cycling",
+    "hours": [
+     0,
+     0.3,
+     1.7,
+     2,
+     5,
+     5.3
+    ],
+    "watts": [
+     0,
+     75,
+     600,
+     0,
+     0,
+     400
+    ],
+    "load": 150,
+    "capacity": 100
+   },
+   "actual": {
+    "id": "partial-and-cycling",
+    "energyWh": [
+     100,
+     66.25,
+     100,
+     94.375,
+     0,
+     23.437500000000004
+    ],
+    "generatedWh": 633.75,
+    "loadWh": 795,
+    "unservedWh": 364.0625,
+    "deficitHours": 2.483333333332888,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 9465000.00000142,
+    "firstDeficitMs": 9465000.00000142,
+    "curtailedWh": 279.375
+   },
+   "reference": {
+    "generatedWh": 633.7499999999998,
+    "unservedWh": 364.0624999999327,
+    "curtailedWh": 279.37499999994,
+    "minEnergyWh": 0,
+    "endEnergyWh": 23.437499999999957,
+    "deficitHours": 2.4833999999998606
+   },
+   "differences": {
+    "generatedWh": 2.2737367544323206e-13,
+    "unservedWh": 6.730260793119669e-11,
+    "curtailedWh": 6.002665031701326e-11,
+    "minEnergyWh": 0,
+    "deficitHours": -6.666666697263679e-05,
+    "endEnergyWh": 4.618527782440651e-14
+   },
+   "within_numerical_budget": true
+  },
+  {
+   "case": {
+    "id": "interior-empty-full",
+    "hours": [
+     0,
+     1
+    ],
+    "watts": [
+     0,
+     200
+    ],
+    "load": 100,
+    "capacity": 10
+   },
+   "actual": {
+    "id": "interior-empty-full",
+    "energyWh": [
+     10,
+     10
+    ],
+    "generatedWh": 100,
+    "loadWh": 100,
+    "unservedWh": 15,
+    "deficitHours": 0.3872983346207093,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 405725.99536544655,
+    "firstDeficitMs": 405725.99536544655,
+    "curtailedWh": 15
+   },
+   "reference": {
+    "generatedWh": 100.00000000000003,
+    "unservedWh": 14.999999999999998,
+    "curtailedWh": 14.999999999999998,
+    "minEnergyWh": 0,
+    "endEnergyWh": 10,
+    "deficitHours": 0.3872999999999655
+   },
+   "differences": {
+    "generatedWh": -2.842170943040401e-14,
+    "unservedWh": 1.7763568394002505e-15,
+    "curtailedWh": 1.7763568394002505e-15,
+    "minEnergyWh": 0,
+    "deficitHours": -1.6653792562215664e-06,
+    "endEnergyWh": 0
+   },
+   "within_numerical_budget": true
+  },
+  {
+   "case": {
+    "id": "interior-minimum",
+    "hours": [
+     0,
+     1
+    ],
+    "watts": [
+     0,
+     200
+    ],
+    "load": 100,
+    "capacity": 100
+   },
+   "actual": {
+    "id": "interior-minimum",
+    "energyWh": [
+     100,
+     100
+    ],
+    "generatedWh": 100,
+    "loadWh": 100,
+    "unservedWh": 0,
+    "deficitHours": 0,
+    "minEnergyWh": 75,
+    "minEnergyTimeMs": 1800000,
+    "firstDeficitMs": null,
+    "curtailedWh": 0
+   },
+   "reference": {
+    "generatedWh": 100.00000000000003,
+    "unservedWh": 0.0,
+    "curtailedWh": 0.0,
+    "minEnergyWh": 75.0,
+    "endEnergyWh": 100,
+    "deficitHours": 0.0
+   },
+   "differences": {
+    "generatedWh": -2.842170943040401e-14,
+    "unservedWh": 0.0,
+    "curtailedWh": 0.0,
+    "minEnergyWh": 0.0,
+    "deficitHours": 0.0,
+    "endEnergyWh": 0
+   },
+   "within_numerical_budget": true
+  },
+  {
+   "case": {
+    "id": "zero-storage",
+    "hours": [
+     0,
+     0.7,
+     2
+    ],
+    "watts": [
+     400,
+     0,
+     300
+    ],
+    "load": 150,
+    "capacity": 0
+   },
+   "actual": {
+    "id": "zero-storage",
+    "energyWh": [
+     0,
+     0,
+     0
+    ],
+    "generatedWh": 335,
+    "loadWh": 300,
+    "unservedWh": 68.4375,
+    "deficitHours": 0.9124999999995851,
+    "minEnergyWh": 0,
+    "minEnergyTimeMs": 0,
+    "firstDeficitMs": 1575000.0000004296,
+    "curtailedWh": 103.4375
+   },
+   "reference": {
+    "generatedWh": 334.9999999999996,
+    "unservedWh": 68.43749999999997,
+    "curtailedWh": 103.43749999999999,
+    "minEnergyWh": 0,
+    "endEnergyWh": 0,
+    "deficitHours": 0.9124999999998346
+   },
+   "differences": {
+    "generatedWh": 3.979039320256561e-13,
+    "unservedWh": 2.842170943040401e-14,
+    "curtailedWh": 1.4210854715202004e-14,
+    "minEnergyWh": 0,
+    "deficitHours": -2.4946711363327267e-13,
+    "endEnergyWh": 0
+   },
+   "within_numerical_budget": true
+  }
+ ],
+ "controlled_maps": {
+  "epochs": "2010-01-01, 18.6 years, hourly; project-selected start epoch",
+  "qualification": "Not an exact reproduction: published map exact start epoch is unconfirmed; its LDEM_65S_240M differs from the adjusted LDEM_60S_240MPP_ADJ used here. No pass tolerance assigned to this contextual comparison.",
+  "rows": [
+   {
+    "site": "im2-athena",
+    "published": {
+     "sun": 0.4500799775123596,
+     "earth_any": 0.9264799952507019
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.4537620823315833,
+      "earth_any": 0.9281561258034444,
+      "earth_center": 0.8097063441440557
+     },
+     "80m_surface": {
+      "sun": 0.4633604828026103,
+      "earth_any": 0.9277022717236642,
+      "earth_center": 0.809283155880477
+     },
+     "80m_2m": {
+      "sun": 0.46777022717236644,
+      "earth_any": 0.9323634757862715,
+      "earth_center": 0.8110249742407144
+     }
+    },
+    "resolution_effect_sun_pp": 0.9598400471026947,
+    "height_effect_sun_pp": 0.44097443697561634,
+    "remaining_surface_difference_sun_pp": 0.3682104819223708
+   },
+   {
+    "site": "im1-odysseus",
+    "published": {
+     "sun": 0.41071999073028564,
+     "earth_any": 1.0
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.3860764928119327,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     },
+     "80m_surface": {
+      "sun": 0.38400961679996076,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     },
+     "80m_2m": {
+      "sun": 0.3983182866395172,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     }
+    },
+    "resolution_effect_sun_pp": -0.20668760119719187,
+    "height_effect_sun_pp": 1.430866983955642,
+    "remaining_surface_difference_sun_pp": -2.4643497918352963
+   },
+   {
+    "site": "connecting-ridge",
+    "published": {
+     "sun": 0.9347599744796753,
+     "earth_any": 0.5767599940299988
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.8597713556744027,
+      "earth_any": 0.5610311074039547,
+      "earth_center": 0.5153145086109612
+     },
+     "80m_surface": {
+      "sun": 0.6387198861684903,
+      "earth_any": 0.5520889553996369,
+      "earth_center": 0.5063723566066435
+     },
+     "80m_2m": {
+      "sun": 0.8276826456012953,
+      "earth_any": 0.5752416466316668,
+      "earth_center": 0.5291447917177764
+     }
+    },
+    "resolution_effect_sun_pp": -22.105146950591237,
+    "height_effect_sun_pp": 18.896275943280504,
+    "remaining_surface_difference_sun_pp": -7.498861880527263
+   },
+   {
+    "site": "illum-peak-1",
+    "published": {
+     "sun": 0.881879985332489,
+     "earth_any": 0.6017199754714966
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.879790000490653,
+      "earth_any": 0.6072751582356116,
+      "earth_center": 0.5600743339384721
+     },
+     "80m_surface": {
+      "sun": 0.661670183013591,
+      "earth_any": 0.5518497620332663,
+      "earth_center": 0.5062864923212796
+     },
+     "80m_2m": {
+      "sun": 0.8183541043128404,
+      "earth_any": 0.5895196506550219,
+      "earth_center": 0.5428830773759874
+     }
+    },
+    "resolution_effect_sun_pp": -21.8119817477062,
+    "height_effect_sun_pp": 15.668392129924936,
+    "remaining_surface_difference_sun_pp": -0.2089984841835979
+   },
+   {
+    "site": "illum-peak-2",
+    "published": {
+     "sun": 0.8335199952125549,
+     "earth_any": 0.781279981136322
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.8228435798047201,
+      "earth_any": 0.8116014915853,
+      "earth_center": 0.7413767724841764
+     },
+     "80m_surface": {
+      "sun": 0.7564398214022865,
+      "earth_any": 0.6416086060546587,
+      "earth_center": 0.5930094205387371
+     },
+     "80m_2m": {
+      "sun": 0.818660762474854,
+      "earth_any": 0.7237439281683922,
+      "earth_center": 0.6682449340071636
+     }
+    },
+    "resolution_effect_sun_pp": -6.640375840243362,
+    "height_effect_sun_pp": 6.222094107256748,
+    "remaining_surface_difference_sun_pp": -1.0676415407834816
+   },
+   {
+    "site": "illum-peak-3",
+    "published": {
+     "sun": 0.8053999543190002,
+     "earth_any": 0.6110000014305115
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.7897735636131691,
+      "earth_any": 0.6121816888278299,
+      "earth_center": 0.5646987390216378
+     },
+     "80m_surface": {
+      "sun": 0.6882451793336931,
+      "earth_any": 0.6123350179088367,
+      "earth_center": 0.5648336686129238
+     },
+     "80m_2m": {
+      "sun": 0.7817268534419312,
+      "earth_any": 0.6127888719886169,
+      "earth_center": 0.5652691232029832
+     }
+    },
+    "resolution_effect_sun_pp": -10.152838427947597,
+    "height_effect_sun_pp": 9.348167410823805,
+    "remaining_surface_difference_sun_pp": -1.5626390705831161
+   },
+   {
+    "site": "illum-peak-4",
+    "published": {
+     "sun": 0.8028799891471863,
+     "earth_any": 0.45284000039100647
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.780911142730975,
+      "earth_any": 0.4531426328443158,
+      "earth_center": 0.406677788136009
+     },
+     "80m_surface": {
+      "sun": 0.5603687257740052,
+      "earth_any": 0.45305676855895194,
+      "earth_center": 0.4065857906874049
+     },
+     "80m_2m": {
+      "sun": 0.7132991511702076,
+      "earth_any": 0.45317329866051714,
+      "earth_center": 0.4067084539522104
+     }
+    },
+    "resolution_effect_sun_pp": -22.054241695696973,
+    "height_effect_sun_pp": 15.293042539620238,
+    "remaining_surface_difference_sun_pp": -2.196884641621133
+   },
+   {
+    "site": "illum-peak-5",
+    "published": {
+     "sun": 0.7923600077629089,
+     "earth_any": 0.6054399609565735
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.8148091359599627,
+      "earth_any": 0.6054965408959325,
+      "earth_center": 0.5586207742505275
+     },
+     "80m_surface": {
+      "sun": 0.2739990677591875,
+      "earth_any": 0.6053125459987243,
+      "earth_center": 0.5584490456797998
+     },
+     "80m_2m": {
+      "sun": 0.4289227712084785,
+      "earth_any": 0.6053922771208479,
+      "earth_center": 0.5585165104754428
+     }
+    },
+    "resolution_effect_sun_pp": -54.081006820077526,
+    "height_effect_sun_pp": 15.492370344929101,
+    "remaining_surface_difference_sun_pp": 2.2449128197053803
+   },
+   {
+    "site": "illum-peak-6",
+    "published": {
+     "sun": 0.787559986114502,
+     "earth_any": 0.5946399569511414
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.876889014278004,
+      "earth_any": 0.584061135371179,
+      "earth_center": 0.5378109513762819
+     },
+     "80m_surface": {
+      "sun": 0.8092647563907561,
+      "earth_any": 0.5843800598596732,
+      "earth_center": 0.538129875864776
+     },
+     "80m_2m": {
+      "sun": 0.8817158137480987,
+      "earth_any": 0.5961373337912762,
+      "earth_center": 0.549549825818164
+     }
+    },
+    "resolution_effect_sun_pp": -6.762425788724791,
+    "height_effect_sun_pp": 7.245105735734258,
+    "remaining_surface_difference_sun_pp": 8.932902816350207
+   },
+   {
+    "site": "polar-interior",
+    "published": {
+     "sun": 0.038839999586343765,
+     "earth_any": 0.3869599997997284
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.036314459545655264,
+      "earth_any": 0.38696580148177223,
+      "earth_center": 0.33608507924046904
+     },
+     "80m_surface": {
+      "sun": 0.035964869240959714,
+      "earth_any": 0.38633408566802413,
+      "earth_center": 0.3354840292429223
+     },
+     "80m_2m": {
+      "sun": 0.03613046464844708,
+      "earth_any": 0.38671434178892106,
+      "earth_center": 0.3358213532211373
+     }
+    },
+    "resolution_effect_sun_pp": -0.034959030469555036,
+    "height_effect_sun_pp": 0.01655954074873678,
+    "remaining_surface_difference_sun_pp": -0.2525540040688501
+   },
+   {
+    "site": "polar-offset",
+    "published": {
+     "sun": 0.1433599889278412,
+     "earth_any": 0.0
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.21578308228251802,
+      "earth_any": 0.0,
+      "earth_center": 0.0
+     },
+     "80m_surface": {
+      "sun": 0.21118320985231342,
+      "earth_any": 0.0,
+      "earth_center": 0.0
+     },
+     "80m_2m": {
+      "sun": 0.22079387664982092,
+      "earth_any": 0.0,
+      "earth_center": 0.0
+     }
+    },
+    "resolution_effect_sun_pp": -0.4599872430204599,
+    "height_effect_sun_pp": 0.9610666797507494,
+    "remaining_surface_difference_sun_pp": 7.2423093354676835
+   },
+   {
+    "site": "polar-custom",
+    "published": {
+     "sun": 0.2839599847793579,
+     "earth_any": 0.37307998538017273
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.28730803199057947,
+      "earth_any": 0.3963986065453118,
+      "earth_center": 0.3452848241008783
+     },
+     "80m_surface": {
+      "sun": 0.28462170649134,
+      "earth_any": 0.382396594867769,
+      "earth_center": 0.32987218487807274
+     },
+     "80m_2m": {
+      "sun": 0.2864248564839802,
+      "earth_any": 0.3906272999362151,
+      "earth_center": 0.3389370001471959
+     }
+    },
+    "resolution_effect_sun_pp": -0.26863254992394725,
+    "height_effect_sun_pp": 0.18031499926401962,
+    "remaining_surface_difference_sun_pp": 0.3348047211221561
+   },
+   {
+    "site": "polar-edge",
+    "published": {
+     "sun": 0.3688800036907196,
+     "earth_any": 1.0
+    },
+    "variants": {
+     "240m_surface": {
+      "sun": 0.3744173494921741,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     },
+     "80m_surface": {
+      "sun": 0.3744173494921741,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     },
+     "80m_2m": {
+      "sun": 0.3747117413277072,
+      "earth_any": 1.0,
+      "earth_center": 1.0
+     }
+    },
+    "resolution_effect_sun_pp": 0.0,
+    "height_effect_sun_pp": 0.02943918355330921,
+    "remaining_surface_difference_sun_pp": 0.5537345801454485
+   }
+  ]
+ },
+ "limits": [
+  "Numerical checks are conditional on the DEM, interpolation and idealized hardware assumptions.",
+  "Six geographic holdouts are not statistical or telemetry validation; the geographic cases were selected before this run.",
+  "SPICE and Horizons share JPL ephemeris heritage. A second code path is not independent physical truth.",
+  "The exhaustive search check covers only its specified 147 scenarios. No global optimum is established.",
+  "The published-map experiment cannot establish physical error bounds with unmatched epochs and DEM realizations."
+ ]
+}

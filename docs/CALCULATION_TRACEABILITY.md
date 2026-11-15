@@ -111,9 +111,12 @@ V-2 quantifies the surface-observer difference. Up is radial, not a gravity mode
 | Longest darkness / blackout | Maximum complement window duration; `windows.ts longestWindow`, `summary.ts` | Computed; null if no such window, and lower-bound marker if clipped at either interval edge |
 | Flat-horizon percentages | Repeat margins with H=0; `analysis.ts analyzeSite` | Approximated comparison baseline; not an alternative NASA measurement |
 | Mean solar disk fraction and mean horizons | Sum 0.5×(v_i+v_next)×dt divided by interval length; `analysis.ts timeMean` | Computed trapezoidal time mean, including invisible periods |
-| Minimum / maximum body elevation | Sampled extrema; `analysis.ts analyzeSite` | Computed hourly-sample extrema, not continuous-time optimized extrema |
+| Minimum / maximum body elevation | Sampled extrema; `analysis.ts analyzeSite` | Computed integration-grid extrema, not continuous-time optimized extrema |
 
-All window lengths can miss events shorter than the sample interval. The Sun flag
+Final results use `analysis.ts analyzeMission`: a 15-minute integration grid with
+5-minute probes near visibility transitions and partial solar disks, then hourly
+display sampling. The raw `analyzeSite` evaluator supports explicit fixed grids for
+screening and validation. All window lengths can miss events between probes. The Sun flag
 includes a sliver of the disk; it does not imply full power. Earth visibility is
 geometric opportunity, not a station-specific communications link. See V-5 for why
 the NASA Earth illumination map's any-part-of-disk criterion differs from this app.
@@ -128,9 +131,11 @@ This is the projected collecting area identity applied to a simplified panel mod
 
 M-BATTERY: `power.ts simulateBattery` integrates generated energy by the trapezoid
 rule, E_gen=0.5×(P_i+P_next)×dt_h, and load energy=P_load×dt_h. The next stored
-energy is clamp(E+E_gen-E_load,0,capacity). Energy below zero is unserved; energy
-above capacity is curtailed. Within a step, deficit duration and first deficit time
-assume a constant net rate. Minimum charge=100×min(E)/capacity, or null at zero
+energy integrates linear generation minus constant load, splitting each interval
+at a net-power reversal. Within each monotone-energy segment, bisection solves
+the empty/full crossing (40 iterations); remaining deficit or surplus is recorded
+as unserved or curtailed energy. This retains interior minimum charge and prevents
+a discharge/charge reversal from cancelling a real deficit. Minimum charge=100×min(E)/capacity, or null at zero
 capacity. Generated/load/unserved kWh are Wh/1000. These are computed estimates
 from assumed inputs, not measured spacecraft performance. The displayed load
 energy is tagged assumed because its constant demand is chosen by the user.
@@ -191,7 +196,7 @@ H(A) = terrain horizon [C] (M-HORIZON, horizon.ts horizonAt; moonlib.py compute_
 ```
 sunlit_pct  Sunlit time [%] = 100 * sunlit_h / interval [C] (M-SUNVIS; analysis.ts analyzeSite)
 sunlit_h    Sunlit hours [h] = sum of Sun window durations [C] (M-WINDOWS; windows.ts findWindows, totalHours)
-  <- crossings t_c = t_i + m_i/(m_i - m_i+1) dt [X] (linear zero crossing, hourly samples)
+  <- crossings t_c = t_i + m_i/(m_i - m_i+1) dt [X] (linear zero crossing on the refined integration grid)
   <- m_s = C_s + rho_s, C_s = el_s - H(az_s) [C] (analysis.ts instantState; same arithmetic in the analyzeSite loop)
   <- rho_s = asin(R_sun / d_s) [C] <- R_sun = 695700 km [S] (R-NAIF-PCK, R-TSI)
   <- GEOM(Sun), H(A)
@@ -218,7 +223,7 @@ generated_kwh  Energy generated [kWh] = sum (P_i + P_i+1)/2 dt / 1000 [C] (M-BAT
   <- A = 2.0 m^2, eta = 0.28, panel mode [A] (A-LANDER) ; cos(i) [C] from el_s ; f as above
 load_kwh       Energy demanded by load [kWh] = P_load * interval / 1000 [A] (A-LANDER, 150 W default)
 unserved_kwh   Unserved load energy [kWh] = sum of energy below 0 [C] (M-BATTERY)
-deficit_h      Time in power deficit [h]: per step (-E')/(-n) dt, constant net rate within a step [C][X]
+deficit_h      Time in power deficit [h]: integral of empty-battery time under piecewise-linear net power, with solved empty/full crossings [C][X]
 min_battery_pct  Minimum battery charge [%] = 100 min(E)/E_cap [C]
   <- E_i+1 = clamp(E_i + E_gen - E_load, 0, E_cap) [C]; E_0 = E_cap [A] (A-BATT-INIT); E_cap = 1500 Wh [A];
      ideal storage, constant load [A]
@@ -265,7 +270,7 @@ Overview hillshade            display only (build_data.py build_overview) <- LDE
                               compared with targets [A] (M-PLAN; default 50 % / 50 %, limits off)
 "Terrain included" / "Flat-horizon estimate"  <- SiteDoc.terrain_aware (exact match to a shipped site)
 Search results / ranking      [C][X] planner.ts searchCandidates, compareCandidates (bounded grid, coarse screening,
-                              hourly refinement) <- analyzeSite for each candidate (chains above)
+                              terrain resolution and refined integration before reranking) <- analyzeMission for each candidate (chains above)
 Comparison table              same AnalysisResult values and summaryRows (MissionPlanner.tsx compare dialog)
 ```
 
@@ -311,3 +316,18 @@ Display assets have their own generators: `scripts/prepare_visuals.py` (Moon mod
 | R-SEGMENT | M-SUNVIS (`power.ts diskFractionVisible`) |
 | R-SST-SOA-POWER | plausibility note for A-LANDER efficiency only |
 | R-SVS-MOON-KIT | display colour of the local terrain (M-PATCH) |
+
+## Mission-level verification and display sampling
+
+`docs/VALIDITY.md` and `docs/validity_results.json` are generated by
+`scripts/validate_validity.py`, calling the actual TypeScript evaluator and custom
+profile converter through Vite. `AnalysisResult.calculation` records base/near-horizon
+spacing and integration sample count separately from `stepMs`, which describes the
+hourly public series. Metrics, windows and power totals use the integration grid;
+the public battery series samples that integrated history. JSON and CSV metadata
+state this distinction. `public/data/validity_report.json` exposes the same report
+through the existing Sources & methods panel. Source-hash tests reject stale reports.
+
+The frozen geographic benchmark is separate from deliberately generated threshold
+boundary sensitivity tests. Fine-grid agreement does not establish physical truth
+below DEM resolution, and the map comparison cannot remove unmatched source assumptions.

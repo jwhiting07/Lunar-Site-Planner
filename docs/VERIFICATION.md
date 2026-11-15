@@ -1,3 +1,55 @@
+# Mission validity upgrade — November 15, 2026
+
+Preserved the current layout, fonts, styles, controls, comparison flow and timeline
+interaction. No CSS or globe/control/result-table markup was changed. The existing
+Sources & methods panel now links to measured validation evidence; its calculation
+explanations and the timeline caption describe the separate calculation/display grids.
+
+Final missions integrate at 15 minutes, with 5-minute probes near detected horizon
+transitions and partial solar disks, while the public series remains hourly. Exact
+interval endpoints are retained. Battery integration splits charge/discharge reversals
+and solves empty/full crossings, including interior deficits and minimum charge.
+Search refines a diverse shortlist of up to 48 missions with exact-coordinate terrain
+where available before reranking. The 49 precomputed default-grid profiles load lazily
+(1.37 MB); uncached custom/nearby terrain still needs the endpoint and can take longer.
+
+Validation actually completed:
+
+- All 160 JavaScript tests, TypeScript and the production build passed.
+- All 34 Python tests passed, with no missing-DEM skips after restoring pinned sources.
+- Original V-1 through V-7 and V-9 reference checks reran successfully. V-8 was refreshed
+  separately using `python scripts/validate.py --tests-only`; its timestamp is explicit.
+- `python scripts/validate_validity.py` passed its frozen project numerical budgets
+  at six geographic holdouts plus three polar regression cases. The largest change
+  in longest darkness against 1-minute integration was 0.478 seconds in these cases.
+- Direct surface-observer SPICE comparisons, finer terrain profiles, 60/15/5/1-minute
+  runs, load sensitivity, four independent numerical battery cases, and the controlled
+  published-map experiment completed. The map experiment includes nine shipped sites
+  plus four polar holdouts; remaining source/epoch discrepancies are retained.
+- The 48-candidate shortlist matched the exhaustive reference's top five in the specified
+  147 scenarios. A separate 1,519-scenario cached benchmark took about 0.54 s locally,
+  excluding downloads and cold terrain requests. This does not prove a global optimum.
+- Two deliberately constructed exact-threshold tests changed verdict relative to the
+  1-minute reference. These are explicitly reported sensitivity results, not hidden
+  by the numerical-budget pass. No verdict changed for the fixed benchmark targets.
+- Source-hash checks bind the report to the current scientific evaluator and reject
+  stale evidence; the shipped report matches the documented JSON.
+
+In-app browser checks on port 5301 verified unrestricted discovery (1,798 actual UI
+scenarios including shipped sites), immediate comparison inclusion, result opening,
+Timeline and Compare views, the one-hour cursor action, saved comparison restoration,
+a JSON download, and the existing exact-coordinate/date analysis flow at -83, 25.
+The custom analysis showed the existing flat preview and then its LOLA terrain result.
+The exported JSON included refined calculation metadata and retained hourly series.
+Sources & methods exposed the validation link. No browser console errors were recorded.
+A final screenshot confirmed the existing dark workspace, square controls and layout.
+These checks cover the exercised paths, not every device or interaction.
+
+See `VALIDITY.md` and `validity_results.json` for measured outputs and reproduction.
+Numerical checks do not validate real spacecraft hardware, sub-pixel terrain, thermal
+survival, RF link performance, or landing safety. Published-map mismatches remain
+qualified where the source DEM realization and epoch are not exactly matched.
+
 # Solar removal — November 15, 2026
 
 Removed the unused Solar component, orbit loader and generated orbit tables,

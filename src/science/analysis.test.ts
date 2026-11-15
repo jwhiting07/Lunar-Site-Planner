@@ -9,7 +9,7 @@ import { AU_KM, DEFAULT_LANDER, DEG, HOUR_MS, R_MOON_M, R_SUN_KM } from './const
 import type { EphemerisTable } from './ephemeris';
 import { enuBasis, enuDirection, sitePositionKm, type Vec3 } from './geometry';
 import { flatHorizon, type HorizonMask } from './horizon';
-import { analyzeSite, instantState, makeSiteContext, sampleTimes, sunAngularRadiusDeg } from './analysis';
+import { analyzeMission, analyzeSite, instantState, makeSiteContext, sampleTimes, sunAngularRadiusDeg } from './analysis';
 import { simulateBattery } from './power';
 import type { SiteDoc } from './types';
 
@@ -164,10 +164,40 @@ describe('analyzeSite (synthetic)', () => {
   });
 });
 
+describe('refined mission analysis preserves the public series', () => {
+  it('detects an intervening terrain blackout absent at both hourly endpoints', () => {
+    const eph = table(2, h => [90 + h, 3], h => [90 + h, 3]);
+    const ctx = makeSiteContext(site, OBS_H, wallMask(90.5, 90.5, 5));
+    const opts = { startMs: 0, endMs: H(1), params: DEFAULT_LANDER };
+    const hourly = analyzeSite(ctx, eph, opts);
+    const refined = analyzeMission(ctx, eph, opts);
+    const reference = analyzeSite(ctx, eph, { ...opts, stepMs: 60_000 });
+    expect(hourly.metrics.longestBlackout).toBeNull();
+    expect(refined.metrics.longestBlackout).not.toBeNull();
+    expect(refined.metrics.earthVisibleHours).toBeCloseTo(reference.metrics.earthVisibleHours, 3);
+    expect(refined.series.tMs).toEqual(hourly.series.tMs);
+    expect(refined.calculation!.samples).toBeGreaterThan(refined.series.tMs.length);
+  });
+
+  it('retains exact fractional endpoints and hourly chart values, with a refined battery history', () => {
+    const eph = table(4, h => [90, -0.5 + h], () => [180, 5]);
+    const ctx = makeSiteContext(site, OBS_H, flatHorizon());
+    const opts = { startMs: 1000, endMs: H(2.3), params: DEFAULT_LANDER };
+    const r = analyzeMission(ctx, eph, opts);
+    expect(r.series.tMs).toEqual(sampleTimes(opts.startMs, opts.endMs, HOUR_MS));
+    expect(r.stepMs).toBe(HOUR_MS);
+    expect(r.battery.energyWh).toEqual(r.series.batteryWh);
+    for (let i = 0; i < r.series.tMs.length; i++) {
+      expect(r.series.sunElDeg[i]).toBeCloseTo(instantState(ctx, eph, r.series.tMs[i]).sun.elDeg, 12);
+    }
+  });
+});
+
 describe('sampleTimes', () => {
   it('always includes the exact end, with a short final step when unaligned', () => {
     expect(Array.from(sampleTimes(0, H(3), H(1)))).toEqual([0, H(1), H(2), H(3)]);
     expect(Array.from(sampleTimes(0, H(2.5), H(1)))).toEqual([0, H(1), H(2), H(2.5)]);
     expect(() => sampleTimes(5, 5, H(1))).toThrow(RangeError);
+    for (const step of [0, -1, NaN, Infinity]) expect(() => sampleTimes(0, H(1), step)).toThrow(RangeError);
   });
 });

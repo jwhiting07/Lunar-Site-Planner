@@ -264,7 +264,7 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 | Target comparison tolerance | 1e-7 | % or h | numerical tolerance | M-PLAN | `planner.ts assessment` |
 | Arbitrary-coordinate site | elevation 0 m on the 1737.4 km sphere; flat horizon H = 0 with 1 deg table step; `terrain_aware = false` | m, deg | assumed / approximated | M-PLAN, M-SUNVIS, M-EARTHVIS | `planner.ts coordinateSite`; `horizon.ts flatHorizon` |
 | Search grid | local: centre + 8 bearings (45 deg) on rings at r/2 and r; global: 48-point Fibonacci sphere (longitude step 137.507764 deg) + the entered point; dates: at most about 30 steps of whole days plus the last date | - | approximated (bounded search) | M-PLAN | `planner.ts locationGrid, dateGrid` |
-| Search screening / refinement | screening step ceil(duration h / 168) h (>= 1 h); keep 12 best, refine hourly, show 5 | h | approximated | M-PLAN | `planner.ts searchCandidates` |
+| Search screening / refinement | screening step ceil(duration h / 168) h (>= 1 h); keep up to 48 with at most four dates per location/duration, resolve terrain where available, refine at 15/5 minutes, rerank and show 5 | h | approximated | M-PLAN | `planner.ts searchCandidates` |
 | "Find better nearby" | dates within +/- 7 days; 16 points within 50 km | d, km | assumed (search scope) | M-PLAN | `src/MissionPlanner.tsx run` |
 | Input limits | duration 1 h to 365 d; Earth clearance 0-60 deg; search radius (0, 1000] km | - | UI validation | - | `src/MissionPlanner.tsx run, validateTargets` |
 | Great-circle distance (search ranking) | haversine on the 1737.4 km sphere | km | computed (identity) | M-PLAN | `planner.ts distanceKm` |
@@ -326,7 +326,7 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 | Unseen-terrain height 11 km | A-HMAX |
 | Ideal storage (100 % efficiency), constant load | M-BATTERY (assumption) |
 | Connecting-ridge selection rule (maximum of the average-illumination map inside the Site01 box) | M-SITE (no separate ID) |
-| Analysis interval and step chosen by the user (within 2026-2028, default step 1 h) | - |
+| Analysis interval chosen by the user within shipped coverage; hourly display, 15/5-minute final integration | - |
 | Mission targets (default sunlight >= 50 %, Earth visible >= 50 %, optional darkness/blackout limits) and the "Meets targets" verdict rule | M-PLAN |
 | Zero elevation on the 1737.4 km sphere for user-entered coordinates | M-PLAN |
 
@@ -431,13 +431,19 @@ A window open at the first sample is flagged `truncatedStart`; one still open at
 
 ### 7.11 Battery energy balance (M-BATTERY)
 
-For each step dt (h): E_gen = (P_i + P_{i+1})/2 dt (trapezoidal rule); E_load = P_load dt; n = E_gen - E_load; E' = E_i + n.
+Generation is linear between integration samples. Integrate P(t) - P_load exactly
+within each step, splitting at a net-power sign change. Each segment then has
+monotone stored energy. Solve an empty/full crossing by 40 bisection iterations;
+account the remaining segment energy as unserved or curtailed. This records
+interior minima and deficit periods even when both step endpoints have charge.
+Initial charge remains 100%; capacity, load and all hardware parameters remain
+assumed. There are no thermal, degradation or storage-efficiency corrections.
 
-- If E' < 0: unserved += -E'; the battery is assumed to empty at a constant net rate, so the deficit time is (-E'/(-n)) dt and the first-deficit time is t_i + (1 - (-E')/(-n)) dt; E_{i+1} = 0.
-- If E' > E_cap: curtailed += E' - E_cap; E_{i+1} = E_cap.
-- Else E_{i+1} = E'. E_0 = E_cap x 1.0 (A-BATT-INIT). Minimum battery % = 100 min(E)/E_cap.
-
-Generated energy is the sum of E_gen (including curtailed energy); load energy is the sum of E_load. Code: `power.ts simulateBattery`.
+Final integration uses a 15-minute grid, adding 5-minute probes near Sun/Earth
+horizon transitions and partial solar disks. The hourly public battery series
+samples this integrated history. `AnalysisResult.calculation` and export metadata
+record the separate integration and display spacings. Independent numerical checks
+and sensitivity runs are in `docs/VALIDITY.md`; they do not validate real hardware.
 
 ### 7.12 Time means (M-SUNVIS, M-HORIZON)
 
@@ -490,7 +496,7 @@ Measured magnitudes are in `docs/VALIDATION.md` (V-1 JPL Horizons, V-2 Moon-cent
 
 | Item | Effect | Magnitude / where measured |
 |---|---|---|
-| Hourly sampling of states | events shorter than 1 h between samples are missed; crossings placed by linear interpolation of the margin | V-4 |
+| Hourly sampling of states | hourly display samples; summaries integrate at 15 min with 5 min near-horizon probes; events between probes can be missed; crossings linearly interpolated on that grid | V-4 |
 | Linear interpolation of hourly vectors | direction and distance error between samples | build self-check recorded in `ephemeris.json interpolation.max_error_vs_spice`: Sun 1.54e-5 deg, Earth 1.33e-4 deg (direction), relative distance 9.9e-6 (Sun), 9.6e-7 (Earth); see V-4 |
 | DEM resolution 80 m (near) / 240 m (far) | sub-pixel relief (boulders, small craters, the lander itself) absent; bilinear smoothing | V-6, V-7 |
 | 0.5 deg azimuth sampling | narrow distant peaks between rays can be missed; linear interpolation between rays | V-6 |
@@ -536,3 +542,12 @@ Measured magnitudes are in `docs/VALIDATION.md` (V-1 JPL Horizons, V-2 Moon-cent
 11. **Display assets without a reference ID**: the SVS 14959 Moon GLB and the Yale Bright Star Catalog (Hoffleit and Warren 1991, via HEASARC) are documented only through their manifests (Section 2.5); their bibliographic details were not independently verified by this document. The body-fixed frame of the Moon GLB is not recorded.
 12. **Landing-site catalogue (`landing_sites.json`)**: coordinates come from NSSDC (impacts table, last updated 13 Aug 2025; Apollo table), the LROC "Coordinates of Lunar Anthropogenic Targets" table, USGS gazetteer feature pages (LOLA 2011 control network) and, for Chandrayaan-4 MM-4 only, an ISRO abstract. Post-2019 NSSDC values other than Chang'e 6 and Chandrayaan-3 were not cross-checked against agency pages (CNSA, ISRO, JAXA, ispace, Intuitive Machines, Firefly). No NASA page gave coordinates for any CLPS delivery or Artemis region, so those entries are USGS **feature centres** labelled "not a landing target", and the reference frame of the ISRO MM-4 coordinates is not stated. Luna 2's arrival is dated 13 September 1959 (UTC) in the NSSDC table and NASA History but 14 September in other sources; its position is uncertain by about 1 degree. Entries for which no defensible coordinate was found (for example Surveyor 2 and 4, Luna 15, Peregrine, ILRS, Chang'e-8, several CLPS task orders) are listed in `landing_sites.json` under `unlocated` with the reason, not plotted. Mission schedules are as stated by the cited pages on 2026-11-14 and change often.
 13. **Text-asset checksums and line endings**: with `core.autocrlf = true` on Windows, a checked-out `public/data/stars.json` carries CRLF line endings and its SHA-256 no longer equals `product_sha256` in `stars.provenance.json` (the LF content does). Manifest hashes of text assets are therefore only reproducible when the files are checked out without line-ending conversion.
+
+## Mission-level validity extension
+
+See `docs/VALIDITY.md` for the controlled terrain/observer-height comparison,
+six fixed geographic holdouts and three polar regression cases, fine-grid and direct
+SPICE comparisons, boundary sensitivity, load sensitivity and an independent battery
+integrator. Fixed numerical budgets are project regression criteria, not NASA
+requirements. Published illumination maps have unmatched epoch/DEM assumptions and
+are used as contextual evidence, not as calibration targets or physical error bounds.

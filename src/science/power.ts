@@ -97,10 +97,12 @@ export interface BatteryResult {
 /**
  * Energy-balance integration with explicit time stepping:
  *   E_gen,i  = (P_i + P_{i+1}) / 2 * dt          (trapezoidal rule)
- *   E_{i+1}  = clamp(E_i + E_gen,i - P_load * dt, 0, E_cap)
+ *   Integrate linear net power exactly, splitting at its zero crossing and
+ *   solving the empty/full crossing within each monotone-energy segment.
  * ASSUMPTIONS: ideal storage (100 % charge/discharge efficiency), constant
  * load, battery starts at INITIAL_STATE_OF_CHARGE. Energy below 0 is counted as
- * unserved load; the time in deficit within a step assumes a constant net rate.
+ * unserved load. A step that first discharges then charges must not cancel the
+ * intervening deficit, or hide its interior minimum charge.
  */
 export function simulateBattery(
   tMs: ArrayLike<number>,
@@ -120,23 +122,38 @@ export function simulateBattery(
     const dtH = (tMs[i + 1] - tMs[i]) / HOUR_MS;
     const gen = 0.5 * (powerW[i] + powerW[i + 1]) * dtH;
     const load = params.loadW * dtH;
-    const net = gen - load;
-    const next = e + net;
     generatedWh += gen;
     loadWh += load;
-    if (next < 0) {
-      // battery empties after (e / -net) of the step; the rest of the step is in deficit
-      const shortfall = -next;
-      unservedWh += shortfall;
-      const deficitFraction = shortfall / -net;
-      deficitHours += deficitFraction * dtH;
-      if (firstDeficitMs === null) firstDeficitMs = tMs[i] + (1 - deficitFraction) * (tMs[i + 1] - tMs[i]);
-      e = 0;
-    } else if (next > cap) {
-      curtailedWh += next - cap;
-      e = cap;
-    } else {
-      e = next;
+    const p0 = powerW[i] - params.loadW, p1 = powerW[i + 1] - params.loadW;
+    const slope = (p1 - p0) / dtH;
+    const turn = p0 * p1 < 0 ? -p0 / slope : dtH;
+    const cuts = turn < dtH ? [0, turn, dtH] : [0, dtH];
+    for (let k = 0; k < cuts.length - 1; k++) {
+      const a = cuts[k], duration = cuts[k + 1] - a, rate = p0 + slope * a;
+      const integral = (h: number) => rate * h + 0.5 * slope * h * h;
+      const net = integral(duration), next = e + net;
+      if (next < 0 || next > cap) {
+        const target = next < 0 ? -e : cap - e;
+        let lo = 0, hi = duration;
+        // Monotone integral on this segment; bisection avoids cancellation in
+        // quadratic roots for almost constant generation.
+        for (let z = 0; z < 40; z++) {
+          const mid = (lo + hi) / 2;
+          if ((net < 0 ? -1 : 1) * (integral(mid) - target) < 0) lo = mid; else hi = mid;
+        }
+        const hit = (lo + hi) / 2;
+        if (next < 0) {
+          unservedWh += -next;
+          deficitHours += duration - hit;
+          if (firstDeficitMs === null) firstDeficitMs = tMs[i] + (a + hit) * HOUR_MS;
+          e = 0;
+        } else { curtailedWh += next - cap; e = cap; }
+        if (e < minEnergyWh) {
+          minEnergyWh = e;
+          minEnergyTimeMs = tMs[i] + (a + hit) * HOUR_MS;
+        }
+      } else e = next;
+      if (e < minEnergyWh) { minEnergyWh = e; minEnergyTimeMs = tMs[i] + cuts[k + 1] * HOUR_MS; }
     }
     energyWh[i + 1] = e;
     if (e < minEnergyWh) {

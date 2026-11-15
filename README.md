@@ -35,7 +35,11 @@ The server uses `.venv` when present. Set `SERAPHIM_PYTHON` to use a different
 Python executable. The first on-demand request starts a Python worker that keeps the
 rasters in memory (about 7 s once, then about 1 s per location); the worker exits after
 five idle minutes. A static host needs an equivalent `/api/custom-horizon` endpoint
-to support on-demand profiles. Shipped terrain profiles work on a static host.
+to support on-demand profiles. Shipped terrain profiles and the 49 exact default search-grid profiles work on a
+static host. The additional search profiles load lazily (about 1.4 MB) and include
+source/generator hashes in `public/data/search_horizons.json`. Uncached nearby or
+custom coordinates still require the terrain endpoint; a cold nearby search can
+therefore take longer. No nearby skyline is substituted for an entered coordinate.
 
 ## Use the application
 
@@ -50,8 +54,9 @@ For discovery, choose Anywhere or a nearby radius, any landing date or a date
 range, and a fixed duration or duration range. **Find options** searches only the
 fields left open; exact coordinates and dates remain fixed. Duration ranges
 sample at most eight lengths, including both endpoints. Search uses bounded
-location/date grids, coarse screening, and hourly refinement of the leading
-twelve candidates. It shows five sampled matches, with three rows initially
+location/date grids and coarse screening, then refines a diverse shortlist of up
+to 48 missions with exact-coordinate terrain where available and finer integration
+before reranking. At most four dates per location and duration enter refinement. It shows five sampled matches, with three rows initially
 visible; better unsampled options may exist. Sources & methods documents ranking.
 
 Each result shows coordinates, landing, duration, sunlight, Earth visibility,
@@ -115,6 +120,11 @@ contextual rather than a simulated epoch sky.
 URLs and versions. [Calculation traceability](docs/CALCULATION_TRACEABILITY.md)
 connects displayed outputs to equations, code and datasets.
 [Validation](docs/VALIDATION.md) reports measured discrepancies and limitations.
+[Mission-level validity](docs/VALIDITY.md) adds six fixed geographic holdouts, three
+polar regression cases, direct-SPICE and 60/15/5/1-minute comparisons, finer terrain,
+a controlled published-map experiment, a small exhaustive search reference, and
+an independent numerical battery reference. Budgets are project choices, not NASA
+requirements. The existing Sources & methods panel links to the machine-readable report.
 `public/data/provenance.json` records source checksums, preprocessing parameters,
 software versions and derived product provenance.
 
@@ -128,6 +138,7 @@ python scripts/fetch_sources.py
 python scripts/build_data.py
 python scripts/make_fixtures.py
 python scripts/validate.py
+python scripts/validate_validity.py  # also regenerates exact search-grid terrain profiles
 ```
 
 The source downloads use about 0.80 GB (0.74 GiB; 797,407,757 bytes per
@@ -147,7 +158,9 @@ python -m pytest scripts/tests -q
 ## Limits
 
 This is an educational planning MVP, not flight software or a landing-safety tool.
-Terrain below 80 m and events between hourly samples can be missed. Earth visibility
+Terrain below the DEM resolution and events between integration probes can be missed.
+Final summaries use 15-minute integration with 5-minute probes near detected
+horizon transitions; charts and exported series retain hourly display samples. Earth visibility
 is geometric line of sight, not a radio link budget. Power and battery use explicitly
 assumed generic lander parameters and ideal storage, not spacecraft telemetry.
 The continuous Moon model is display-only; visibility uses the precomputed LOLA terrain horizon.

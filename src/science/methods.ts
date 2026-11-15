@@ -33,10 +33,10 @@ export const METHODS: MethodDoc[] = [
     formula: 'Rank by all targets met, then sum of normalized target shortfalls, then total sunlight + Earth-visible fractions. Break ties by distance (km) + date offset (days).',
     refs: [],
     limitations: [
-      'Check a site can compute a LOLA horizon for custom coordinates within sufficient south-polar coverage. Other custom coordinates and sampled search locations use zero elevation and a flat skyline unless an existing terrain profile is available.',
+      'Custom coordinates use polar LOLA terrain where covered, otherwise a lower-resolution global regional skyline when available. Exact search-grid profiles are precomputed. Unavailable terrain retains an explicitly labelled flat-horizon estimate at zero reference-sphere elevation.',
       'Local search samples the center and 8 bearings on each of two radius rings. Unrestricted search samples 48 equal-area sphere points, a neutral equatorial point and the shipped terrain sites. Dates sample daily or at a whole-day spacing that limits the grid to 32 dates, including both boundaries.',
       'Duration ranges sample at most eight lengths, including both endpoints. Exact coordinates or an exact landing date remain fixed when other fields are searched. Scenarios extending beyond ephemeris coverage are excluded. Ranking uses visibility targets and availability, not a guarantee of the longest possible mission.',
-      'Search screens each mission at a whole-hour spacing of ceil(duration hours / 168), at least one hour, and refines its leading 12 candidates hourly. The best five refined candidates are shown; unsampled sites, dates and brief visibility events may be missed.',
+      'Search screens at a whole-hour spacing of ceil(duration hours / 168), at least one hour. A diverse shortlist of up to 48 missions (at most four dates per location and duration) receives exact-coordinate terrain where available and refined integration before reranking. The best five are shown, with at most two dates per location and duration. Screening and sampling can miss better options; no global optimum is established.',
       'Nearby alternatives test date offsets within 7 days at the same site, and 16 points within 50 km on the original date. Duration and targets are preserved. The search is bounded, not a global optimum guarantee.',
     ],
     code: ['src/science/planner.ts', 'src/MissionPlanner.tsx'],
@@ -148,12 +148,12 @@ export const METHODS: MethodDoc[] = [
     title: 'Visibility windows and durations',
     kind: 'computed',
     summary:
-      'States are evaluated at hourly samples. A window opens or closes where the visibility margin changes sign; the crossing time is found by linear interpolation between the two samples. Totals are sums of window lengths.',
+      'Final mission summaries integrate on a 15-minute grid with 5-minute probes near the Sun or Earth horizon and across detected visibility transitions. The chart and exported series retain hourly samples. Windows use linear margin crossings on the refined grid; totals sum those window lengths.',
     formula: 't_c = t_i + m_i / (m_i - m_(i+1)) (t_(i+1) - t_i);  hours = sum(end - start);  fraction = hours / interval length',
     inputs: ['M-SUNVIS', 'M-EARTHVIS'],
     refs: [],
     limitations: [
-      'Temporal resolution 1 h: events shorter than one sample step that fall between samples are not detected.',
+      'Events between 15-minute probes, or between 5-minute probes near a detected grazing interval, can still be missed. Finer evaluation interpolates the original hourly ephemeris; it does not improve the source terrain resolution. Mission convergence and direct-SPICE checks are recorded in docs/VALIDITY.md.',
       'Windows cut by the start or end of the selected interval are marked truncated; their true length is at least the value shown.',
     ],
     code: ['src/science/windows.ts findWindows, complementWindows, intersectWindows'],
@@ -179,9 +179,9 @@ export const METHODS: MethodDoc[] = [
     title: 'Battery energy balance',
     kind: 'computed',
     summary:
-      'Stored energy is integrated step by step: generated energy minus the constant load, limited to between empty and full. A deficit is reported when the battery is empty and generation is below the load.',
+      'Generation is linear between integration samples. Net power is integrated with splits at charge/discharge reversals and solved empty/full crossing times. Stored energy stays between empty and full; unserved and curtailed energy are accounted separately. The hourly chart samples the refined battery history.',
     formula:
-      'E_gen,i = (P_i + P_(i+1)) / 2 * dt;  E_(i+1) = clamp(E_i + E_gen,i - P_load dt, 0, E_cap);  unserved = sum of energy below 0',
+      'E_gen = integral P(t) dt; dE/dt = P(t) - P_load with 0 <= E <= E_cap; split linear P(t) at P_load and solve empty/full times; account unserved and curtailed energy',
     inputs: ['M-POWER', 'A-LANDER', 'A-BATT-INIT'],
     refs: [],
     limitations: [

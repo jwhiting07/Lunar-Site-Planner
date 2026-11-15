@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "selection": "Coordinates and intervals fixed before evaluating this benchmark. Geographic coverage cases, not statistically representative mission sites. Do not tune these cases or acceptance limits to make a result pass.",
+  "acceptance": {
+    "fraction_pp": 0.25,
+    "outage_hours": 0.25,
+    "energy_relative": 0.01,
+    "meaning": "Project numerical regression budgets for a demonstration planning tool, not NASA requirements or physical accuracy guarantees. Report verdict changes separately, even when differences fit the budgets."
+  },
+  "stress_cases": [
+    {"id":"regression-ridge", "lat":-89.445496,"lon":-137.313722,"start":"2026-06-01T00:00:00Z","days":30},
+    {"id":"regression-peak-5", "lat":-85.830426,"lon":-116.297657,"start":"2026-01-01T00:00:00Z","days":30},
+    {"id":"regression-im2", "lat":-84.7906,"lon":29.1957,"start":"2026-06-01T00:00:00Z","days":30}
+  ],
+  "cases": [
+    {"id":"polar-interior", "lat":-88.5,"lon":30,"start":"2026-01-15T00:00:00Z","days":7},
+    {"id":"polar-offset", "lat":-85,"lon":45,"start":"2026-06-15T00:00:00Z","days":30},
+    {"id":"polar-custom", "lat":-83,"lon":25,"start":"2026-12-01T00:00:00Z","days":7},
+    {"id":"polar-edge", "lat":-75,"lon":15,"start":"2027-03-01T00:00:00Z","days":7},
+    {"id":"global-east-seam", "lat":-20,"lon":179.9,"start":"2026-06-01T00:00:00Z","days":30},
+    {"id":"global-west-seam", "lat":12,"lon":-179.9,"start":"2026-12-01T00:00:00Z","days":7}
+  ]
+}

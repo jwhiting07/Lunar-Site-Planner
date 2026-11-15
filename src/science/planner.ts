@@ -1,4 +1,4 @@
-import { analyzeSite, makeSiteContext, type AnalysisResult } from './analysis';
+import { analyzeMission, analyzeSite, makeSiteContext, type AnalysisResult } from './analysis';
 import { DEG, HOUR_MS, R_MOON_M, type LanderParams } from './constants';
 import { flatHorizon, type HorizonMask } from './horizon';
 import type { EphemerisTable } from './ephemeris';
@@ -87,7 +87,8 @@ export function compareCandidates(a: Candidate, b: Candidate, origin: Point | nu
   const availability = (r: AnalysisResult) => r.metrics.sunlitFraction + r.metrics.earthVisibleFraction;
   const delta = availability(b.result) - availability(a.result);
   if (Math.abs(delta) > 1e-7) return delta;
-  // A terrain-verified result is a real value, a flat-horizon one only an upper bound: prefer the former when equal.
+  // Prefer terrain-backed values on ties. A flat horizon is not a rigorous upper
+  // bound: elevated observers can have a negative terrain skyline.
   if (a.result.terrainAware !== b.result.terrainAware) return a.result.terrainAware ? -1 : 1;
   // With no entered location (unrestricted search) distance does not matter, only the date offset.
   const cost = (r: AnalysisResult) => (origin ? distanceKm(origin, { lat: r.site.lat_deg, lon: r.site.lon_deg }) : 0) + Math.abs(r.startMs - startMs) / DAY;
@@ -99,6 +100,9 @@ export interface SearchOptions {
   durationsDays?: number[]; coverageEndMs?: number;
   lander: LanderParams; clearance: number; origin: Point | null; startMs: number;
   known: SiteDoc[]; observerHeight: number; masks: Map<string, HorizonMask>;
+  resolveTerrain?: (site: SiteDoc, signal: AbortSignal) => Promise<{ site: SiteDoc; mask: HorizonMask; observerHeightM: number } | null>;
+  /** Validation can compare different bounded shortlists against an exhaustive run. */
+  shortlistSize?: number;
 }
 
 /**
@@ -121,6 +125,7 @@ const SLICE_MS = 12;
 /** Bounded screening, then hourly refinement. Yields every SLICE_MS of work to keep the UI responsive. */
 export async function searchCandidates(eph: EphemerisTable, options: SearchOptions, signal: AbortSignal, progress: (done: number, total: number) => void): Promise<Candidate[]> {
   const best: Candidate[] = [];
+  const shortlistSize = options.shortlistSize ?? 48;
   let sliceStart = performance.now();
   const sliceOver = () => performance.now() - sliceStart >= SLICE_MS;
   const rest = async () => { await yieldToUi(); sliceStart = performance.now(); };
@@ -155,9 +160,13 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
         if (rank(best[mid], candidate) <= 0) lo = mid + 1;
         else hi = mid;
       }
-      if (lo < 12) {
+      if (lo < shortlistSize) {
         best.splice(lo, 0, candidate);
-        if (best.length > 12) best.pop();
+        // Preserve location diversity: many dates at one initially promising
+        // flat-horizon point must not monopolize terrain refinement.
+        const same = best.filter(c => c.result.site.id === siteKey(candidate) && c.result.metrics.intervalHours === candidate.result.metrics.intervalHours);
+        if (same.length > 4) best.splice(best.indexOf(same.at(-1)!), 1);
+        if (best.length > shortlistSize) best.pop();
       }
       done++;
       if (done < total && sliceOver()) {
@@ -167,10 +176,22 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
     }
   }
   const refined: Candidate[] = [];
+  const resolved = new Map<string, Awaited<ReturnType<NonNullable<SearchOptions['resolveTerrain']>>>>();
   for (const candidate of best) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
     const { site, startMs, endMs } = candidate.result;
-    refined.push(evaluate({ lat: site.lat_deg, lon: site.lon_deg }, startMs, (endMs - startMs) / DAY, HOUR_MS));
+    let terrain = null;
+    if (!candidate.result.terrainAware && options.resolveTerrain) {
+      if (!resolved.has(site.id)) resolved.set(site.id, await options.resolveTerrain(site, signal));
+      terrain = resolved.get(site.id) ?? null;
+    }
+    if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
+    const result = analyzeMission(makeSiteContext(terrain?.site ?? site, terrain?.observerHeightM ?? options.observerHeight,
+      terrain?.mask ?? options.masks.get(site.id) ?? flat), eph, {
+      startMs, endMs, params: options.lander, earthMinClearanceDeg: options.clearance,
+    });
+    result.horizonMask = terrain?.mask ?? options.masks.get(site.id) ?? flat;
+    refined.push({ targets: candidate.targets, result });
     if (sliceOver()) await rest();
   }
   progress(total, total);
@@ -183,3 +204,5 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
     return count <= 2;
   }).slice(0, 5);
 }
+
+const siteKey = (candidate: Candidate) => candidate.result.site.id;

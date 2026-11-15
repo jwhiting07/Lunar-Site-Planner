@@ -67,13 +67,51 @@ export function loadHorizon(site: SiteDoc): Promise<HorizonMask> {
   );
 }
 
-type CustomHorizon = { site: SiteDoc; mask: HorizonMask; observerHeightM: number } | null;
+export type CustomHorizon = { site: SiteDoc; mask: HorizonMask; observerHeightM: number } | null;
 const customCache = new Map<string, CustomHorizon>();
+export const terrainKey = (lat: number, lon: number) => `${lat.toFixed(9)},${(((lon + 180) % 360 + 360) % 360 - 180).toFixed(9)}`;
+export interface HorizonProfile {
+  elevationM: number; observerHeightM: number; coverageKm: number; azStepDeg: number;
+  elevDeg: number[]; distM: number[]; terrainResolutionM?: number;
+}
 
-export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal): Promise<CustomHorizon> {
-  const cacheKey = `${site.lat_deg},${site.lon_deg}`;
+/** Also used by the offline benchmark: exercise the exact browser conversion. */
+export function resolveHorizonProfile(site: SiteDoc, data: HorizonProfile): NonNullable<CustomHorizon> {
+  const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM, terrainResolutionM } = data;
+  if (![elevationM, observerHeightM, coverageKm].every(Number.isFinite) ||
+      !(azStepDeg > 0) || !Array.isArray(elevDeg) || !Array.isArray(distM) ||
+      elevDeg.length !== 360 / azStepDeg || elevDeg.length !== distM.length ||
+      !elevDeg.every(Number.isFinite) || !distM.every(Number.isFinite)) {
+    throw new Error('The local terrain calculator returned an invalid horizon.');
+  }
+  const mask: HorizonMask = { azStepDeg, elevDeg: Float32Array.from(elevDeg), distM: Float32Array.from(distM), terrainAware: true };
+  if (Number.isFinite(terrainResolutionM) && terrainResolutionM! > 0) mask.resolutionM = terrainResolutionM;
+  const resolvedSite: SiteDoc = {
+    ...site, terrain_aware: true, elevation_m: elevationM,
+    elevation_source: mask.resolutionM ? 'Global LOLA DEM bilinear sample [R-SVS-MOON-KIT]' : 'Polar LOLA DEM bilinear sample [R-LOLA-PGDA]',
+    coord_note: 'Coordinates with a computed LOLA horizon [M-HORIZON].',
+    horizon: { ...site.horizon, n_az: elevDeg.length, az_step_deg: azStepDeg, coverage_min_km: coverageKm,
+      min_deg: Math.min(...elevDeg), max_deg: Math.max(...elevDeg),
+      mean_deg: elevDeg.reduce((total, elevation) => total + elevation, 0) / elevDeg.length,
+      max_obstruction_distance_km: Math.max(...distM) / 1000 },
+  };
+  return { site: resolvedSite, mask, observerHeightM };
+}
+
+export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal, allowService = true): Promise<CustomHorizon> {
+  const cacheKey = terrainKey(site.lat_deg, site.lon_deg);
   const cached = customCache.get(cacheKey);
   if (cached !== undefined) return cached;
+  signal.throwIfAborted();
+  // Exact grid coordinates only. No nearby point's skyline is substituted.
+  const pack = await cachedSearchProfiles();
+  signal.throwIfAborted();
+  if (pack?.[cacheKey]) {
+    const resolved = resolveHorizonProfile(site, pack[cacheKey]);
+    customCache.set(cacheKey, resolved);
+    return resolved;
+  }
+  if (!allowService) return null;
   const query = new URLSearchParams({ lat: String(site.lat_deg), lon: String(site.lon_deg) });
   const url = `${import.meta.env.BASE_URL}api/custom-horizon?${query}`;
   // Longer than the server-side timeout, so a busy calculator is waited for rather than reported as unavailable.
@@ -89,30 +127,15 @@ export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal): Pro
   if (!response.ok) throw new Error('The local terrain calculator is unavailable.');
   const data = await response.json();
   if (data === null) { customCache.set(cacheKey, null); return null; }
-  const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM, terrainResolutionM } = data;
-  if (![elevationM, observerHeightM, coverageKm].every(Number.isFinite) ||
-      !(azStepDeg > 0) || !Array.isArray(elevDeg) || !Array.isArray(distM) ||
-      elevDeg.length !== 360 / azStepDeg || elevDeg.length !== distM.length ||
-      !elevDeg.every(Number.isFinite) || !distM.every(Number.isFinite)) {
-    throw new Error('The local terrain calculator returned an invalid horizon.');
-  }
-  const mask: HorizonMask = { azStepDeg, elevDeg: Float32Array.from(elevDeg), distM: Float32Array.from(distM), terrainAware: true };
-  if (Number.isFinite(terrainResolutionM) && terrainResolutionM > 0) mask.resolutionM = terrainResolutionM;
-  const resolvedSite: SiteDoc = {
-    ...site, terrain_aware: true, elevation_m: elevationM,
-    elevation_source: mask.resolutionM ? 'Global LOLA DEM bilinear sample [R-SVS-MOON-KIT]' : 'Polar LOLA DEM bilinear sample [R-LOLA-PGDA]',
-    coord_note: 'Coordinates with a computed LOLA horizon [M-HORIZON].',
-    horizon: {
-      ...site.horizon, n_az: elevDeg.length, az_step_deg: azStepDeg, coverage_min_km: coverageKm,
-      min_deg: Math.min(...elevDeg), max_deg: Math.max(...elevDeg),
-      mean_deg: (elevDeg as number[]).reduce((total, elevation) => total + elevation, 0) / elevDeg.length,
-      max_obstruction_distance_km: Math.max(...distM) / 1000,
-    },
-  };
-  const resolved = { site: resolvedSite, mask, observerHeightM };
+  const resolved = resolveHorizonProfile(site, data);
   customCache.set(cacheKey, resolved);
   return resolved;
 }
+
+type SearchProfiles = Record<string, HorizonProfile>;
+const cachedSearchProfiles = () => cached(jsonCache, 'search-horizons', () =>
+  getJson<{ schema: number; profiles: SearchProfiles }>('search_horizons.json')
+    .then(doc => doc.schema === 1 ? doc.profiles : null).catch(() => null)) as Promise<SearchProfiles | null>;
 
 /** Terrain patch heights (m above the 1737.4 km sphere), row-major [j][i], n x n. */
 const terrainCache = new Map<string, Promise<Float32Array>>();

@@ -123,7 +123,8 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
             <div>
               <div className="provenance-method-tools">
                 <p className="provenance-intro">
-                  Every displayed quantity traces to one of these entries. Classification: see the Conventions tab.
+                  Every displayed quantity traces to one of these entries. Classification: see the Conventions tab.{' '}
+                  <a href={`${import.meta.env.BASE_URL}data/validity_report.json`} target="_blank" rel="noreferrer">Validation measurements</a>.
                 </p>
                 <div className="provenance-jump"><Select label="Jump to method" value="" placeholder="Jump to method"
                   options={[...METHODS.map((m) => ({ value: `method-${m.id}`, label: m.title })), { value: 'method-display', label: 'Moon display & local terrain' }]}
@@ -298,7 +299,7 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
               <h3>Limitations in short</h3>
               <ul>
                 <li>Terrain profiles use a 0.5 degree azimuth grid and either the 80/240 m polar DEMs or the global DEM at about 1.9 km per pixel at the equator.</li>
-                <li>Hourly samples: events shorter than one hour between samples are not detected.</li>
+                <li>Hourly display samples; final summaries use 15-minute integration with 5-minute near-horizon probes. Events between probes can still be missed.</li>
                 <li>Earth visibility is geometric line of sight only, not a radio-link assessment.</li>
                 <li>Energy values are an engineering estimate from assumed parameters, not a NASA CLPS spacecraft model.</li>
                 <li>Slopes are regional (80 m baseline) context and not a landing-safety assessment. Favourable light and line of sight do not make a site safe to land on.</li>

@@ -265,7 +265,7 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
       <p className="caption">
         <span className="key"><i className="lg lg-sun" /> Sun visible (any part of disk)</span>{' '}
         <span className="key"><i className="lg lg-earth" /> Earth line of sight (geometric)</span>{' '}
-        1 h samples; transitions interpolated. Click or drag on the chart to move the cursor.
+        1 h display samples; mission summaries use refined integration. Click or drag on the chart to move the cursor.
       </p>
       ) : (
         <p className="caption">Stored energy is limited to the assumed battery capacity; red marks show when the battery is empty. Engineering estimate from assumed lander parameters.</p>

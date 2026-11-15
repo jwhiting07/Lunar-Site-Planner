@@ -1,8 +1,8 @@
 {
- "generated_utc": "2026-11-15T04:44:49Z",
+ "generated_utc": "2026-11-15T17:59:49Z",
  "command": "python scripts/validate.py",
  "environment": {
-  "python": "3.12.10",
+  "python": "3.12.14",
   "numpy": "2.5.4",
   "spiceypy": "8.4.0",
   "cspice": "CSPICE_N0067"
@@ -990,7 +990,7 @@
     "site": "im2-athena",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:28:07 2026",
+    "query_banner": "Sun Nov 15 09:59:51 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1005,7 +1005,7 @@
     "site": "im2-athena",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:53:58 2026",
+    "query_banner": "Sun Nov 15 09:59:52 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1020,7 +1020,7 @@
     "site": "im1-odysseus",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:54:00 2026",
+    "query_banner": "Sun Nov 15 09:59:54 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1035,7 +1035,7 @@
     "site": "im1-odysseus",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:54:02 2026",
+    "query_banner": "Sun Nov 15 09:59:55 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1050,7 +1050,7 @@
     "site": "connecting-ridge",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:54:04 2026",
+    "query_banner": "Sun Nov 15 09:59:57 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1065,7 +1065,7 @@
     "site": "connecting-ridge",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 10:54:06 2026",
+    "query_banner": "Sun Nov 15 09:59:58 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1080,7 +1080,7 @@
     "site": "illum-peak-1",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:06 2026",
+    "query_banner": "Sun Nov 15 09:59:59 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1095,7 +1095,7 @@
     "site": "illum-peak-1",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:08 2026",
+    "query_banner": "Sun Nov 15 10:00:01 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1110,7 +1110,7 @@
     "site": "illum-peak-2",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:10 2026",
+    "query_banner": "Sun Nov 15 10:00:02 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1125,7 +1125,7 @@
     "site": "illum-peak-2",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:12 2026",
+    "query_banner": "Sun Nov 15 10:00:04 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1140,7 +1140,7 @@
     "site": "illum-peak-3",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:13 2026",
+    "query_banner": "Sun Nov 15 10:00:05 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1155,7 +1155,7 @@
     "site": "illum-peak-3",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:15 2026",
+    "query_banner": "Sun Nov 15 10:00:06 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1170,7 +1170,7 @@
     "site": "illum-peak-4",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:17 2026",
+    "query_banner": "Sun Nov 15 10:00:08 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1185,7 +1185,7 @@
     "site": "illum-peak-4",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:19 2026",
+    "query_banner": "Sun Nov 15 10:00:09 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1200,7 +1200,7 @@
     "site": "illum-peak-5",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:21 2026",
+    "query_banner": "Sun Nov 15 10:00:11 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1215,7 +1215,7 @@
     "site": "illum-peak-5",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:23 2026",
+    "query_banner": "Sun Nov 15 10:00:12 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1230,7 +1230,7 @@
     "site": "illum-peak-6",
     "body": "sun",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:25 2026",
+    "query_banner": "Sun Nov 15 10:00:13 2026",
     "target": {
      "name": "Sun (10)",
      "ephemeris_source": "DE441"
@@ -1245,7 +1245,7 @@
     "site": "illum-peak-6",
     "body": "earth",
     "api_version": "1.2",
-    "query_banner": "Sat Nov 14 19:34:27 2026",
+    "query_banner": "Sun Nov 15 10:00:15 2026",
     "target": {
      "name": "Earth (399)",
      "ephemeris_source": "DE441"
@@ -1260,7 +1260,7 @@
   "queries": [
    {
     "cache_file": "data_cache\\horizons\\im2-athena_10_e7e86c4325c6bea3.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "im2-athena",
     "body": "sun",
     "n_epochs": 160,
@@ -1268,7 +1268,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\im2-athena_399_60db9fd7ee8b69c4.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "im2-athena",
     "body": "earth",
     "n_epochs": 160,
@@ -1276,7 +1276,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\im1-odysseus_10_569c04fd216a1dbc.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "im1-odysseus",
     "body": "sun",
     "n_epochs": 160,
@@ -1284,7 +1284,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\im1-odysseus_399_441dc2ae0bb57c5f.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "im1-odysseus",
     "body": "earth",
     "n_epochs": 160,
@@ -1292,7 +1292,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\connecting-ridge_10_f4a40dc12760ddcd.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "connecting-ridge",
     "body": "sun",
     "n_epochs": 160,
@@ -1300,7 +1300,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\connecting-ridge_399_f7044bc1e94a8d03.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "connecting-ridge",
     "body": "earth",
     "n_epochs": 160,
@@ -1308,7 +1308,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-1_10_23b579455aa9c048.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-1",
     "body": "sun",
     "n_epochs": 160,
@@ -1316,7 +1316,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-1_399_ad76b184b4505c65.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-1",
     "body": "earth",
     "n_epochs": 160,
@@ -1324,7 +1324,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-2_10_f0a83a435115b41b.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-2",
     "body": "sun",
     "n_epochs": 160,
@@ -1332,7 +1332,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-2_399_7a8cc8cdc2f03e65.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-2",
     "body": "earth",
     "n_epochs": 160,
@@ -1340,7 +1340,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-3_10_3273d490851cdc70.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-3",
     "body": "sun",
     "n_epochs": 160,
@@ -1348,7 +1348,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-3_399_a28567559c85544a.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-3",
     "body": "earth",
     "n_epochs": 160,
@@ -1356,7 +1356,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-4_10_e9e753ecac531726.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-4",
     "body": "sun",
     "n_epochs": 160,
@@ -1364,7 +1364,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-4_399_f4c3d5c20a8f7701.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-4",
     "body": "earth",
     "n_epochs": 160,
@@ -1372,7 +1372,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-5_10_33fc396f36e84dd4.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-5",
     "body": "sun",
     "n_epochs": 160,
@@ -1380,7 +1380,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-5_399_29ccaaffdec9919f.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-5",
     "body": "earth",
     "n_epochs": 160,
@@ -1388,7 +1388,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-6_10_61b05065117f7f73.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-6",
     "body": "sun",
     "n_epochs": 160,
@@ -1396,7 +1396,7 @@
    },
    {
     "cache_file": "data_cache\\horizons\\illum-peak-6_399_6f0a554ccfe51582.txt",
-    "fetched": false,
+    "fetched": true,
     "site": "illum-peak-6",
     "body": "earth",
     "n_epochs": 160,
@@ -3010,14 +3010,14 @@
   },
   "pytest": {
    "exit_code": 0,
-   "summary": "30 passed in 8.71s",
-   "passed": 30
+   "summary": "34 passed in 6.25s",
+   "passed": 34
   },
   "vitest": {
    "exit_code": 0,
-   "files": 18,
-   "total": 145,
-   "passed": 145,
+   "files": 20,
+   "total": 160,
+   "passed": 160,
    "failed": 0,
    "skipped": 0,
    "failed_tests": []
@@ -3029,7 +3029,7 @@
   "status": "completed"
  },
  "not_validated": [
-  "Power and battery model (M-POWER, M-BATTERY): only analytic unit tests (hand-computed values, energy conservation). No independent model or measured data was compared; the lander parameters are assumed (A-LANDER).",
+  "Power and battery remain idealized estimates with assumed lander parameters (A-LANDER). Analytic, energy-conservation and separate numerical battery-reference checks are recorded in docs/VALIDITY.md; no measured hardware data was compared.",
   "No comparison with real lander telemetry (IM-1 / IM-2 power or illumination records) was made.",
   "Terrain below the 80 m DEM resolution (boulders, the small crater IM-2 rested in) is not represented; no validation at that scale.",
   "The horizon beyond 600 km is bounded (sites.json unseen_terrain_margin_min_deg) but not computed.",
@@ -3037,5 +3037,6 @@
   "The Space Apps challenge page (R-CHALLENGE) could not be fetched on the build machine (TLS certificate error), so requirement wording was not re-checked against it.",
   "V-5: the map's simulation epoch span and time step are not stated in the PDS labels; our 18.6-year span start is an arbitrary choice.",
   "Export consistency (CSV/JSON vs displayed numbers) is covered by src/export/exporters.test.ts; see V-8. Browser download behavior is separate from these builder tests."
- ]
+ ],
+ "test_refresh_utc": "2026-11-15T18:16:12Z"
 }

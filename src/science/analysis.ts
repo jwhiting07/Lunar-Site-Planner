@@ -154,7 +154,9 @@ export interface Series {
 
 /** Sample times: start, start + step, ... and always the exact end of the interval. */
 export function sampleTimes(startMs: number, endMs: number, stepMs: number): Float64Array {
-  if (!(endMs > startMs)) throw new RangeError('analysis interval must have positive length');
+  if (![startMs, endMs, stepMs].every(Number.isFinite) || !(endMs > startMs) || stepMs <= 0) {
+    throw new RangeError('analysis requires a finite, positive interval and sample spacing');
+  }
   const k = Math.floor((endMs - startMs) / stepMs);
   const aligned = startMs + k * stepMs === endMs;
   const t = new Float64Array(aligned ? k + 1 : k + 2);
@@ -205,6 +207,8 @@ export interface AnalysisResult {
   endMs: number;
   /** Sample spacing, ms (the last step may be shorter). */
   stepMs: number;
+  /** Internal integration grid; the public series retains the hourly display grid. */
+  calculation?: { baseStepMs: number; minStepMs: number; samples: number };
   observerHeightM: number;
   earthMinClearanceDeg: number;
   params: LanderParams;
@@ -220,6 +224,8 @@ export interface AnalysisOptions {
   stepMs?: number;
   earthMinClearanceDeg?: number;
   params: LanderParams;
+  /** Internal validation/refinement grid, including both exact interval endpoints. */
+  timesMs?: Float64Array;
 }
 
 function minMax(a: Float64Array): [number, number] {
@@ -242,7 +248,11 @@ function timeMean(t: Float64Array, v: Float64Array): number {
 export function analyzeSite(ctx: SiteContext, eph: EphemerisTable, opts: AnalysisOptions): AnalysisResult {
   const stepMs = opts.stepMs ?? eph.stepMs;
   const minClear = opts.earthMinClearanceDeg ?? DEFAULT_EARTH_MIN_CLEARANCE_DEG;
-  const tMs = sampleTimes(opts.startMs, opts.endMs, stepMs);
+  const tMs = opts.timesMs ?? sampleTimes(opts.startMs, opts.endMs, stepMs);
+  if (tMs.length < 2 || tMs[0] !== opts.startMs || tMs[tMs.length - 1] !== opts.endMs
+    || tMs.some((t, i) => !Number.isFinite(t) || (i > 0 && t <= tMs[i - 1]))) {
+    throw new RangeError('integration samples must be finite, increasing and cover the exact interval');
+  }
   const n = tMs.length;
   const f64 = () => new Float64Array(n);
   const s: Series = {
@@ -346,4 +356,45 @@ export function analyzeSite(ctx: SiteContext, eph: EphemerisTable, opts: Analysi
     metrics,
     battery,
   };
+}
+
+/** Final mission calculation. Keep the familiar hourly chart/export series while
+ * integrating at 15 minutes, with 5-minute probes around grazing visibility and
+ * partial solar disks. This refines the interpolation, not the source ephemeris
+ * or terrain resolution. Events shorter than the probe spacing can still be missed.
+ * analyzeSite remains the explicit fixed-grid evaluator for screening/validation.
+ */
+export function analyzeMission(ctx: SiteContext, eph: EphemerisTable, opts: AnalysisOptions): AnalysisResult {
+  const baseStepMs = 15 * 60_000, minStepMs = 5 * 60_000;
+  const base = analyzeSite(ctx, eph, { ...opts, timesMs: undefined, stepMs: baseStepMs });
+  const times: number[] = [];
+  const s = base.series;
+  for (let i = 0; i < s.tMs.length - 1; i++) {
+    const a = s.tMs[i], b = s.tMs[i + 1];
+    times.push(a);
+    const near = (j: number) => Math.abs(s.sunClearanceDeg[j]) < s.sunRadiusDeg[j] + 0.15
+      || Math.abs(s.earthClearanceDeg[j] - base.earthMinClearanceDeg) < 0.15;
+    if (near(i) || near(i + 1) || s.sunVisible[i] !== s.sunVisible[i + 1]
+      || s.earthVisible[i] !== s.earthVisible[i + 1]) {
+      for (let t = a + minStepMs; t < b; t += minStepMs) times.push(t);
+    }
+  }
+  times.push(opts.endMs);
+  // Include display anchors even for fractional-hour mission durations.
+  const displayTimes = sampleTimes(opts.startMs, opts.endMs, HOUR_MS);
+  const grid = Float64Array.from([...new Set([...times, ...displayTimes])].sort((a, b) => a - b));
+  const fine = grid.length === s.tMs.length ? base : analyzeSite(ctx, eph, { ...opts, stepMs: baseStepMs, timesMs: grid });
+  const indices: number[] = [];
+  let j = 0;
+  for (const t of displayTimes) { while (fine.series.tMs[j] < t) j++; indices.push(j); }
+  const series = {} as Series;
+  for (const key of Object.keys(fine.series) as (keyof Series)[]) {
+    const values = fine.series[key];
+    const selected = indices.map(index => values[index]);
+    // These assignments preserve the struct-of-arrays API consumed by the UI.
+    if (key === 'sunVisible' || key === 'earthVisible') series[key] = Uint8Array.from(selected);
+    else series[key] = Float64Array.from(selected);
+  }
+  return { ...fine, stepMs: HOUR_MS, series, battery: { ...fine.battery, energyWh: series.batteryWh },
+    calculation: { baseStepMs, minStepMs, samples: fine.series.tMs.length } };
 }

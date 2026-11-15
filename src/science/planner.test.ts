@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { analyzeSite, makeSiteContext } from './analysis';
 import { DEFAULT_LANDER, HOUR_MS } from './constants';
-import { flatHorizon } from './horizon';
+import { flatHorizon, type HorizonMask } from './horizon';
 import { assessment, compareCandidates, coordinateSite, dateGrid, durationGrid, DAY, DEFAULT_TARGETS, destination, distanceKm, locationGrid, searchCandidates } from './planner';
 import { shippedEphemeris, sitesDoc } from './__fixtures__/shipped';
 
@@ -118,6 +118,26 @@ describe('coordinate planning and mission targets', () => {
     const key = (c: ReturnType<typeof evaluate>) => `${c.result.site.lat_deg.toFixed(6)},${c.result.site.lon_deg.toFixed(6)},${c.result.startMs}`;
     expect(out.map(key)).toEqual(expected.map(key));
   });
+  it('refines a broader shortlist with terrain before ranking, and requests each skyline only once', async () => {
+    const points = Array.from({ length: 17 }, (_, i) => ({ lat: -85, lon: i }));
+    const calls = new Map<string, number>();
+    const resolveTerrain = async (site: ReturnType<typeof coordinateSite>) => {
+      calls.set(site.id, (calls.get(site.id) ?? 0) + 1);
+      const mask: HorizonMask = { ...flatHorizon(), terrainAware: true };
+      mask.elevDeg.fill(site.lon_deg === 16 ? -90 : 90);
+      return { site: { ...site, terrain_aware: true }, mask, observerHeightM: 2 };
+    };
+    const config = { points, dates: [start, start + DAY], durationDays: 3, targets: DEFAULT_TARGETS,
+      lander: DEFAULT_LANDER, clearance: 0, origin: null, startMs: start, known: [], observerHeight: 2, masks: new Map(), resolveTerrain };
+    const out = await searchCandidates(eph, config, new AbortController().signal, () => {});
+    expect(out[0].result.site.lon_deg).toBe(16);
+    expect(out.every(c => c.result.terrainAware)).toBe(true);
+    expect(out[0].result.calculation).toBeDefined();
+    expect([...calls.values()].every(count => count === 1)).toBe(true);
+    const controller = new AbortController();
+    await expect(searchCandidates(eph, { ...config, resolveTerrain: async () => { controller.abort(); return null; } }, controller.signal, () => {})).rejects.toMatchObject({ name: 'AbortError' });
+  });
+
 it('prefers terrain-verified results when scores tie, ignores distance without an origin, and caps dates per location', async () => {
     const flat = { targets: { ...DEFAULT_TARGETS }, result };
     const terrain = { targets: { ...DEFAULT_TARGETS }, result: { ...result, terrainAware: true } };

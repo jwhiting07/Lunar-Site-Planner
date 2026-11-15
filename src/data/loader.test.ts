@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { EphemerisIndex } from '../science';
 import { bodyVectorKm, tableEndMs } from '../science/ephemeris';
-import { loadEphemeris } from './loader';
+import { loadCustomHorizon, loadEphemeris, resolveHorizonProfile, terrainKey } from './loader';
+import { coordinateSite } from '../science/planner';
 
 const index = JSON.parse(readFileSync('public/data/ephemeris.json', 'utf8')) as EphemerisIndex;
 const first = Date.parse(index.start_utc);
@@ -32,5 +33,31 @@ describe('shipped planning date coverage', () => {
       await expect(loadEphemeris(index, a, b)).rejects.toThrow(RangeError);
     }
     expect(fetch).not.toHaveBeenCalled();
+  });
+});
+
+describe('exact-coordinate terrain profiles', () => {
+  it('validates a custom profile before it reaches the scientific evaluator', () => {
+    const site = coordinateSite({ lat: -83, lon: 25 });
+    const profile = { elevationM: 123, observerHeightM: 2, coverageKm: 600, azStepDeg: 1,
+      elevDeg: new Array(360).fill(-1), distM: new Array(360).fill(1000) };
+    const resolved = resolveHorizonProfile(site, profile);
+    expect(resolved.site.elevation_m).toBe(123);
+    expect(resolved.mask.terrainAware).toBe(true);
+    expect(resolved.observerHeightM).toBe(2);
+    expect(() => resolveHorizonProfile(site, { ...profile, elevDeg: [NaN] })).toThrow();
+  });
+
+  it('serves exact precomputed locations without a Python service and does not borrow nearby terrain', async () => {
+    const site = coordinateSite({ lat: 10, lon: 20 });
+    const fetch = vi.fn(async () => ({ ok: true, json: async () => ({ schema: 1, profiles: {
+      [terrainKey(10, 20)]: { elevationM: 120, observerHeightM: 2, coverageKm: 600,
+        azStepDeg: 1, elevDeg: new Array(360).fill(2), distM: new Array(360).fill(5000) },
+    } }) }));
+    vi.stubGlobal('fetch', fetch);
+    const result = await loadCustomHorizon(site, new AbortController().signal, false);
+    expect(result!.site.elevation_m).toBe(120);
+    expect(await loadCustomHorizon(coordinateSite({ lat: 10.001, lon: 20 }), new AbortController().signal, false)).toBeNull();
+    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
