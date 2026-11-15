@@ -13,7 +13,7 @@ import { ScenarioDetails, ScenarioOverview, ScenarioTimeline, type TerrainState 
 import { UtcClock } from './components/UtcClock';
 import { firstDayOnOrAfter, lastDayOnOrBefore, useTimeZone, zoneDate, zoneDayStart } from './ui/timeZone';
 import { INITIAL_QUERY, isDiscovery, MissionControls, queryLabels, type MissionQuery } from './components/MissionControls';
-import { MissionMatches } from './components/MissionMatches';
+import { MATCHES_SHOWN, MissionMatches } from './components/MissionMatches';
 import { Chevron } from './components/Chevron';
 import { Select } from './components/Select';
 import { MoonLoading } from './components/MoonLoading';
@@ -46,6 +46,7 @@ export default function MissionPlanner() {
   const { lat, lon, duration } = query;
   const [controlsHidden, setControlsHidden] = useState(false);
   const [resultsHidden, setResultsHidden] = useState(false);
+  const [showAllMatches, setShowAllMatches] = useState(false);
   const [targets, setTargets] = useState<Targets>({ ...DEFAULT_TARGETS });
   const [params, setParams] = useState<ParamState>(DEFAULT_PARAM_STATE);
   const [pick, setPick] = useState(false);
@@ -164,7 +165,9 @@ export default function MissionPlanner() {
     return [landmark ? missionSite(site, landmark) : site];
   }, [query.location, lat, lon, data, landmark]);
   const comparedLandmarks = useMemo(() => new Set(saved.flatMap(entry => entry.mission ? [entry.mission.id] : [])), [saved]);
-  const missions = useMemo(() => missionEntries(options, saved, active), [options, saved, active]);
+  // The Moon marks only the matches the results table lists; hidden ones appear after "Show all".
+  const shownOptions = useMemo(() => showAllMatches ? options : options.slice(0, MATCHES_SHOWN), [options, showAllMatches]);
+  const missions = useMemo(() => missionEntries(shownOptions, saved, active), [shownOptions, saved, active]);
   const mapSites = useMemo(() => [
     ...missions.map(({ id, candidate }) => ({ ...candidate.result.site, id })),
     ...chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id)),
@@ -303,6 +306,7 @@ export default function MissionPlanner() {
         const found = await searchCandidates(eph, config, controller.signal, update);
         if (controller.signal.aborted) return;
         setOptions(found);
+        setShowAllMatches(false);
         setSearchNote(`${count} sampled scenarios checked. ${found.some(c => assessment(c.result, c.targets).good) ? 'Best sampled matches shown.' : 'No sampled scenario meets every target; closest matches shown.'}`);
         const labels = queryLabels(query);
         setSearchSummary(labels.location + ' · ' + labels.landing + ' · ' + labels.duration);
@@ -361,7 +365,7 @@ export default function MissionPlanner() {
   const resetMatches = () => {
     abort.current?.abort();
     stopTerrain();
-    setOptions([]); setActive(null); resetComparison(); setOrigin(null);
+    setOptions([]); setShowAllMatches(false); setActive(null); resetComparison(); setOrigin(null);
     setSearchNote(''); setSearchSummary(''); setError('');
     setMarkerScenarioId(null); setLandmark(null); setShowLandmark(false); setDashboard(null);
     setQuery(INITIAL_QUERY); // also drops the entered location, so its marker goes too
@@ -460,7 +464,7 @@ export default function MissionPlanner() {
           onRemove={markerScenario.mission ? () => toggleLandmarkCompare(markerScenario.mission!, false) : undefined} />}
       </div></section>
       {(displayed.length > 0 || searchNote) && <MissionMatches candidates={displayed} active={active} note={searchNote} summary={searchSummary}
-        hidden={resultsHidden} onToggle={() => setResultsHidden(hidden => !hidden)}
+        hidden={resultsHidden} onToggle={() => setResultsHidden(hidden => !hidden)} showAll={showAllMatches} onShowAll={setShowAllMatches}
         isSaved={inComparison} savedCount={saved.length} pending={terrainPending && !options.length}
         onCompare={() => { openedFromCompare.current = true; setDashboard('Compare'); }} compareRef={compareTrigger} onReset={resetMatches}
         reference={origin ? { point: origin, label: 'entered location' } : active ? { point: { lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }, label: 'open mission' } : null}

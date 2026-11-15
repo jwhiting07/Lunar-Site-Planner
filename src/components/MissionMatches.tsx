@@ -1,4 +1,4 @@
-import { useState, type Ref } from 'react';
+import type { Ref } from 'react';
 import type { Candidate } from '../science/planner';
 import { assessment, distanceKm, type Point } from '../science/planner';
 import { useTimeZone } from '../ui/timeZone';
@@ -8,10 +8,12 @@ import { Chevron } from './Chevron';
 export { scenarioKey } from '../ui/scenarios';
 const percent = (value: number) => (value * 100).toFixed(1) + '%';
 const delta = (value: number) => (value >= 0 ? '+' : '') + value.toFixed(1);
+/** Matches listed (and marked on the Moon) until "Show all" is pressed. */
+export const MATCHES_SHOWN = 3;
 
-export function MissionMatches({ candidates, active, note, summary, hidden, onToggle, isSaved, savedCount, pending = false, onCompareChange, onOpen, onCompare, compareRef, reference, onReset }: {
+export function MissionMatches({ candidates, active, note, summary, hidden, onToggle, showAll, onShowAll, isSaved, savedCount, pending = false, onCompareChange, onOpen, onCompare, compareRef, reference, onReset }: {
   candidates: Candidate[]; active: Candidate | null; note: string; summary: string;
-  hidden: boolean; onToggle: () => void;
+  hidden: boolean; onToggle: () => void; showAll: boolean; onShowAll: (showAll: boolean) => void;
   isSaved: (candidate: Candidate) => boolean; savedCount: number; pending?: boolean;
   onCompareChange: (candidate: Candidate, checked: boolean) => void; onOpen: (candidate: Candidate, trigger: HTMLButtonElement) => void;
   onCompare: () => void; compareRef: Ref<HTMLButtonElement>; onReset: () => void;
@@ -19,8 +21,7 @@ export function MissionMatches({ candidates, active, note, summary, hidden, onTo
   reference: { point: Point; label: string } | null;
 }) {
   const tz = useTimeZone();
-  const [showAll, setShowAll] = useState(false);
-  const visible = showAll ? candidates : candidates.slice(0, 3);
+  const visible = showAll ? candidates : candidates.slice(0, MATCHES_SHOWN);
   return <section className="mission-options" aria-label="Search results">
     <div className="mission-options-header"><h2>{note ? 'Best sampled matches' : 'Mission result'}</h2><span>{summary}</span>
       <button ref={compareRef} className="btn small" aria-haspopup="dialog" onClick={onCompare}>Compare{savedCount ? ' (' + savedCount + ')' : ''}</button>
@@ -41,7 +42,7 @@ export function MissionMatches({ candidates, active, note, summary, hidden, onTo
             <td><button className="btn small" onClick={event => onOpen(candidate, event.currentTarget)}>View</button></td>
           </tr>;
         })}</tbody></table></div>
-      <div className="mission-options-footer"><span>{note}</span>{candidates.length > 3 && <button className="mission-text-button" onClick={() => setShowAll(value => !value)}>{showAll ? 'Show fewer' : 'Show all ' + candidates.length}</button>}</div>
+      <div className="mission-options-footer"><span>{note}</span>{candidates.length > MATCHES_SHOWN && <button className="mission-text-button" onClick={() => onShowAll(!showAll)}>{showAll ? 'Show fewer' : 'Show all ' + candidates.length}</button>}</div>
     </div></div>
   </section>;
 }
