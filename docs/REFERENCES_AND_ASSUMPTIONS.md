@@ -1,6 +1,6 @@
 # References, data, conventions and assumptions
 
-CLPS Lunar Mission Browser (NASA Space Apps 2026). This document is the
+Lunar Site Planner (NASA Space Apps 2026). This document is the
 authoritative register of every external source, dataset, constant, convention,
 formula, assumption and approximation used by the project. Companion documents:
 

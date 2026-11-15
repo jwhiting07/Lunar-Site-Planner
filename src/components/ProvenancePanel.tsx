@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { METHODS, type EphemerisIndex, type ProvenanceDoc, type SiteDoc } from '../science';
 import { KindTag, RefLinks } from './Common';
 import { Select } from './Select';
@@ -178,14 +178,14 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
             </div>
           )}
           {tab === 'data' && (
-            <div>
+            <div className="provenance-data">
               {!p ? (
                 <p className="muted">Provenance not loaded.</p>
               ) : (
                 <>
                   <h3>Source files (downloaded once, processed offline)</h3>
                   <div className="table-scroll">
-                    <table className="doc-table">
+                    <table className="doc-table source-files">
                       <thead>
                         <tr><th>File</th><th>Role</th><th>URL</th><th className="num">Size</th><th>SHA-256</th><th>Retrieved</th></tr>
                       </thead>
@@ -214,7 +214,9 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                           <tr key={s.file}>
                             <td className="mono">{s.file}</td>
                             <td>{s.description}</td>
-                            <td className="mono small">{s.inputs.join(', ')}</td>
+                            <td className="mono small">{s.inputs.map((input, i) => (
+                              <Fragment key={i}><span className="source-input">{input}{i < s.inputs.length - 1 ? ',' : ''}</span>{' '}</Fragment>
+                            ))}</td>
                             <td>{s.method ?? '—'}</td>
                           </tr>
                         ))}

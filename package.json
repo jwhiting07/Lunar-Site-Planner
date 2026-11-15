@@ -1,8 +1,8 @@
 {
-  "name": "seraphim-landing",
+  "name": "lunar-site-planner",
   "private": true,
   "version": "0.1.0",
-  "description": "CLPS Lunar Mission Browser: compare lunar south-pole landing sites by sunlight, Earth visibility and solar power (NASA Space Apps 2026).",
+  "description": "Lunar Site Planner: compare lunar south-pole landing sites by sunlight, Earth visibility and solar power (NASA Space Apps 2026).",
   "type": "module",
   "scripts": {
     "dev": "vite",

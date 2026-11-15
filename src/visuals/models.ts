@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 const moonLighting = THREE.ShaderChunk.lights_physical_pars_fragment.replace(
   'float dotNL = saturate( dot( geometryNormal, directLight.direction ) );',
   `float incidence = dot( geometryNormal, directLight.direction );
-   float width = 0.035;
+   float width = 0.06;
    float ramp = clamp( ( incidence + width ) / ( 2.0 * width ), 0.0, 1.0 );
    float dotNL = max( incidence - width, 0.0 ) + width * ramp * ramp;`,
 );
@@ -54,7 +54,7 @@ export function smoothMoonLighting(root: THREE.Object3D) {
     for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
       if (!(material instanceof THREE.MeshStandardMaterial)) continue;
       material.onBeforeCompile = shader => {
-        // Round the diffuse falloff within roughly two degrees of the terminator.
+        // Round the diffuse falloff within roughly 3.5 degrees of the terminator.
         shader.fragmentShader = shader.fragmentShader.replace('#include <lights_physical_pars_fragment>', moonLighting);
       };
     }

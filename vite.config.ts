@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react';
 function customHorizon(): Plugin {
   const root = fileURLToPath(new URL('.', import.meta.url));
   const localPython = fileURLToPath(new URL(process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python', import.meta.url));
-  const python = process.env.SERAPHIM_PYTHON || (existsSync(localPython) ? localPython : 'python');
+  const python = process.env.LUNAR_SITE_PLANNER_PYTHON || (existsSync(localPython) ? localPython : 'python');
 
   // One long-lived Python worker keeps the two LOLA DEMs in memory: reading them
   // costs ~5 s, a horizon from the resident DEMs ~1 s. The worker starts on the
@@ -84,7 +84,7 @@ function customHorizon(): Plugin {
     });
   };
   return {
-    name: 'seraphim-custom-horizon',
+    name: 'lunar-site-planner-custom-horizon',
     configureServer(server) { server.middlewares.use(middleware); server.httpServer?.once('close', stop); },
     configurePreviewServer(server) { server.middlewares.use(middleware); server.httpServer?.once('close', stop); },
   };

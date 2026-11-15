@@ -1,4 +1,4 @@
-# Lunar Landing Site Navigator
+# Lunar Site Planner
 
 Check a lunar location or search for a mission that meets sunlight and Earth-visibility
 targets using precomputed SPICE DE440 geometry. The nine shipped sites (two
@@ -31,7 +31,7 @@ On-demand terrain uses the Python environment from `requirements.txt` and the
 LOLA rasters in `data_cache/lola/` (see `scripts/fetch_sources.py`). The 80 m and
 240 m rasters cover the south pole. The 16 pixels/degree global raster from the
 [NASA CGI Moon Kit](https://svs.gsfc.nasa.gov/4720) supplies regional skylines elsewhere.
-The server uses `.venv` when present. Set `SERAPHIM_PYTHON` to use a different
+The server uses `.venv` when present. Set `LUNAR_SITE_PLANNER_PYTHON` to use a different
 Python executable. The first on-demand request starts a Python worker that keeps the
 rasters in memory (about 7 s once, then about 1 s per location); the worker exits after
 five idle minutes. A static host needs an equivalent `/api/custom-horizon` endpoint

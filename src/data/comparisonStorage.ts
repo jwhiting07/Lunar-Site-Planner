@@ -2,7 +2,7 @@ import type { LandingSite } from './landingSites';
 import { HOUR_MS, type AnalysisResult, type HorizonMask } from '../science';
 import type { Candidate, Targets } from '../science/planner';
 
-const KEY = 'seraphim-compare-v1';
+const KEY = 'lunar-site-planner-compare-v1';
 export interface SavedComparison extends Candidate { id: number; mission?: LandingSite }
 
 type StoredResult = Pick<AnalysisResult, 'site' | 'startMs' | 'endMs' | 'stepMs' | 'observerHeightM' | 'earthMinClearanceDeg' | 'params'>;

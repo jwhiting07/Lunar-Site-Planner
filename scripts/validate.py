@@ -1,4 +1,4 @@
-"""Independent validations of the CLPS Lunar Mission Browser geometry.
+"""Independent validations of the Lunar Site Planner geometry.
 
 Usage:  python scripts/validate.py            (all checks; network needed for V-1 unless cached)
         python scripts/validate.py --no-tests (skip running vitest/pytest for V-8)

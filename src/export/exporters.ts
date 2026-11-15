@@ -74,7 +74,7 @@ function landerText(r: AnalysisResult): string {
 export function buildSeriesCsv(result: AnalysisResult): string {
   const site = result.site;
   const lines: string[] = [
-    metaLine('CLPS Lunar Mission Browser - time series export'),
+    metaLine('Lunar Site Planner - time series export'),
     metaLine(`site_name: ${site.name}`),
     metaLine(`site_id: ${site.id}`),
     metaLine(`latitude_deg: ${site.lat_deg} (planetocentric, negative = south)`),
@@ -113,7 +113,7 @@ function csvField(v: string): string {
 /** Comparison CSV: one row per summary key, one value column per site. */
 export function buildSummaryCsv(results: AnalysisResult[]): string {
   const columnIds = results.map((r, i) => results.filter(x => x.site.id === r.site.id).length > 1 ? `${r.site.id}__scenario${i + 1}` : r.site.id);
-  const lines: string[] = [metaLine('CLPS Lunar Mission Browser - site comparison (values unrounded)')];
+  const lines: string[] = [metaLine('Lunar Site Planner - site comparison (values unrounded)')];
   if (results.length > 0) {
     lines.push(metaLine('time_system: UTC; dates and assumptions are recorded per scenario below'));
     lines.push(metaLine(`Earth metrics: ${EARTH_DISCLAIMER} Energy metrics: ${ENERGY_DISCLAIMER}`));
