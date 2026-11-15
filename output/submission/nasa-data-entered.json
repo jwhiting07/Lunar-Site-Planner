@@ -1,0 +1,343 @@
+{
+  "allNasaSources": [
+    [
+      "NASA/JPL NAIF SPICE generic kernels, DE440 and lunar frames",
+      "https://naif.jpl.nasa.gov/naif/data_generic.html"
+    ],
+    [
+      "NASA GSFC PGDA — A New View of the Lunar South Pole from LOLA",
+      "https://pgda.gsfc.nasa.gov/products/90"
+    ],
+    [
+      "NASA GSFC PGDA — High-Resolution LOLA Topography for Lunar South Pole Sites",
+      "https://pgda.gsfc.nasa.gov/products/78"
+    ],
+    [
+      "NASA GSFC PGDA — Lunar Polar Illumination",
+      "https://pgda.gsfc.nasa.gov/products/69"
+    ],
+    [
+      "NASA/JPL Horizons API",
+      "https://ssd-api.jpl.nasa.gov/doc/horizons.html"
+    ],
+    [
+      "NASA — Moon 3D Models for Web, AR, and Animation",
+      "https://svs.gsfc.nasa.gov/14959/"
+    ],
+    [
+      "NASA — CGI Moon Kit",
+      "https://svs.gsfc.nasa.gov/4720/"
+    ],
+    [
+      "Yale Bright Star Catalog hosted by NASA/GSFC HEASARC",
+      "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html"
+    ],
+    [
+      "NASA NSSDCA — Lunar Landing Sites",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+    ],
+    [
+      "NASA/LROC — IM-1 location",
+      "https://lroc.im-ldi.com/images/1360"
+    ],
+    [
+      "NASA/LROC — IM-2 location",
+      "https://lroc.im-ldi.com/images/1408"
+    ],
+    [
+      "The Planetary and Lunar Ephemeris DE 421",
+      "https://ipnpr.jpl.nasa.gov/progress_report/42-178/178C.pdf"
+    ],
+    [
+      "Lunar frame kernel moon_de440_250416.tf (defines MOON_PA_DE440 and MOON_ME_DE440_ME421)",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf"
+    ],
+    [
+      "aareadme.txt for lunar frame kernels (which FK pairs with which binary PCK)",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt"
+    ],
+    [
+      "Leapseconds kernel naif0012.tls",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+    ],
+    [
+      "Planetary constants kernel pck00011.tpc (body radii)",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc"
+    ],
+    [
+      "Aberration Corrections Required Reading (abcorr.req)",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/abcorr.html"
+    ],
+    [
+      "spkpos_c API documentation (position of a target relative to an observer)",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkpos_c.html"
+    ],
+    [
+      "spkcpo_c API documentation (state of a target relative to an observer with constant position in a specified frame)",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkcpo_c.html"
+    ],
+    [
+      "Frames Required Reading (frames.req)",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html"
+    ],
+    [
+      "Time Required Reading (time.req): UTC, TDB and leap seconds",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html"
+    ],
+    [
+      "NASA's LRO Images Intuitive Machine's Odysseus Lander (80.13 S, 1.44 E, 2,579 m)",
+      "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/"
+    ],
+    [
+      "IM-2 Landing Region (intended landing site -84.78, 29.13 E)",
+      "https://lroc.im-ldi.com/images/1401"
+    ],
+    [
+      "Commercial Lunar Payload Services (CLPS) Deliveries",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/"
+    ],
+    [
+      "CLPS CP-22 Science (Intuitive Machines Nova-C lander IM-4 to Mons Mouton; no coordinates published)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/"
+    ],
+    [
+      "NASA Provides Update on Artemis III Moon Landing Regions (release 24-136)",
+      "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/"
+    ],
+    [
+      "Illumination at the Moon's South Pole to 80S, 2025 to 2028",
+      "https://svs.gsfc.nasa.gov/5027"
+    ],
+    [
+      "State-of-the-Art of Small Spacecraft Technology, chapter 3.0 Power",
+      "https://www.nasa.gov/smallsat-institute/sst-soa/power-subsystems/"
+    ],
+    [
+      "Table of Anthropogenic Impacts and Spacecraft on the Moon",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html"
+    ],
+    [
+      "Coordinates of Lunar Anthropogenic Targets (2016 LROC Coordinates of Robotic Spacecraft)",
+      "https://lroc.im-ldi.com/data/support/downloads/2016_LROC_Coordinates_of_Robotic_Spacecraft.pdf"
+    ],
+    [
+      "Surveyor (1966 - 1968)",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/surveyor.html"
+    ],
+    [
+      "Beyond Earth: A Chronicle of Deep Space Exploration, 1958-2016",
+      "https://www.nasa.gov/wp-content/uploads/2018/09/beyond-earth-tagged.pdf"
+    ],
+    [
+      "60 Years Ago: Luna 2 Makes Impact in Moon Race",
+      "https://www.nasa.gov/history/60-years-ago-luna-2-makes-impact-in-moon-race/"
+    ],
+    [
+      "Soviet Missions to the Moon",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunarussr.html"
+    ],
+    [
+      "First Look: Chang'e 6",
+      "https://lroc.im-ldi.com/images/1374"
+    ],
+    [
+      "Chandrayaan-3 Landing Site",
+      "https://lroc.im-ldi.com/images/1314"
+    ],
+    [
+      "TO20A: Astrobotic (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/to20a-astrobotic/"
+    ],
+    [
+      "CP-11 (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cp-11/"
+    ],
+    [
+      "CS-11 (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cs-11/"
+    ],
+    [
+      "CS-3 (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cs-3/"
+    ],
+    [
+      "CP-21 Science (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cp-21-science/"
+    ],
+    [
+      "CLPS Flight: Intuitive Machines IM-4 (event page)",
+      "https://www.nasa.gov/event/clps-flight-intuitive-machines-im-4-2/"
+    ],
+    [
+      "CT-3 Science (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/ct-3-science/"
+    ],
+    [
+      "CS-6 Science (CLPS delivery page)",
+      "https://science.nasa.gov/lunar-science/programs/clps/cs-6-science/"
+    ],
+    [
+      "VIPER mission page",
+      "https://science.nasa.gov/mission/viper/"
+    ],
+    [
+      "Moon Base phases",
+      "https://www.nasa.gov/moonbase-phases/"
+    ],
+    [
+      "NASA Provides Update on Moon Base Rovers, Landers, Missions (RELEASE 26-046)",
+      "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
+    ],
+    [
+      "Artemis III Site Selection Update: Downselection From Thirteen to Nine Candidate Regions (LPSC 2026 abstract)",
+      "https://ntrs.nasa.gov/citations/20250011660"
+    ],
+    [
+      "Artemis III mission page",
+      "https://www.nasa.gov/mission/artemis-iii/"
+    ],
+    [
+      "Artemis IV mission page",
+      "https://www.nasa.gov/mission/artemis-iv/"
+    ],
+    [
+      "Apollo by the Numbers: LM Lunar Landing",
+      "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_18-27_LM_Lunar_Landing.htm"
+    ],
+    [
+      "Apollo by the Numbers: S-IVB Lunar Impact",
+      "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf"
+    ],
+    [
+      "Ranger to the Moon",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/ranger.html"
+    ],
+    [
+      "JPL Technical Report 32-694",
+      "https://ntrs.nasa.gov/api/citations/19650003678/downloads/19650003678.pdf"
+    ],
+    [
+      "Summary of Hard and Soft Landers",
+      "https://ntrs.nasa.gov/api/citations/19680022029/downloads/19680022029.pdf"
+    ],
+    [
+      "Lunar Prospector",
+      "https://science.nasa.gov/mission/lunar-prospector/"
+    ],
+    [
+      "LCROSS Apache Point Observatory archive",
+      "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=EAR-L-APO3.5M_AGILE-2-EDR-LCROSS-V1.0"
+    ],
+    [
+      "MSolo PRIME-1 overview and results",
+      "https://ntrs.nasa.gov/api/citations/20260003150/downloads/MSolo%20PRIME-1%20overview%20and%20results%20-%20LSSW.pdf"
+    ],
+    [
+      "Blue Ghost Lands on Moon",
+      "https://www.nasa.gov/image-article/blue-ghost-lands-on-moon/"
+    ]
+  ],
+  "formEntries": [
+    [
+      "NASA/JPL NAIF SPICE generic kernels, DE440 and lunar frames",
+      "https://naif.jpl.nasa.gov/naif/data_generic.html"
+    ],
+    [
+      "NASA GSFC PGDA — A New View of the Lunar South Pole from LOLA",
+      "https://pgda.gsfc.nasa.gov/products/90"
+    ],
+    [
+      "NASA GSFC PGDA — High-Resolution LOLA Topography for Lunar South Pole Sites",
+      "https://pgda.gsfc.nasa.gov/products/78"
+    ],
+    [
+      "NASA GSFC PGDA — Lunar Polar Illumination",
+      "https://pgda.gsfc.nasa.gov/products/69"
+    ],
+    [
+      "NASA/JPL Horizons API",
+      "https://ssd-api.jpl.nasa.gov/doc/horizons.html"
+    ],
+    [
+      "NASA — Moon 3D Models for Web, AR, and Animation",
+      "https://svs.gsfc.nasa.gov/14959/"
+    ],
+    [
+      "NASA — CGI Moon Kit",
+      "https://svs.gsfc.nasa.gov/4720/"
+    ],
+    [
+      "Yale Bright Star Catalog hosted by NASA/GSFC HEASARC",
+      "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html"
+    ],
+    [
+      "NASA NSSDCA — Lunar Landing Sites",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+    ],
+    [
+      "NASA/LROC — IM-1 location",
+      "https://lroc.im-ldi.com/images/1360"
+    ],
+    [
+      "NASA/LROC — IM-2 location",
+      "https://lroc.im-ldi.com/images/1408"
+    ],
+    [
+      "The Planetary and Lunar Ephemeris DE 421",
+      "https://ipnpr.jpl.nasa.gov/progress_report/42-178/178C.pdf"
+    ],
+    [
+      "Lunar frame kernel moon_de440_250416.tf (defines MOON_PA_DE440 and MOON_ME_DE440_ME421)",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf"
+    ],
+    [
+      "Leapseconds kernel naif0012.tls",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+    ],
+    [
+      "Planetary constants kernel pck00011.tpc (body radii)",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc"
+    ],
+    [
+      "Frames Required Reading (frames.req)",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html"
+    ],
+    [
+      "Time Required Reading (time.req): UTC, TDB and leap seconds",
+      "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html"
+    ],
+    [
+      "NASA's LRO Images Intuitive Machine's Odysseus Lander (80.13 S, 1.44 E, 2,579 m)",
+      "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/"
+    ],
+    [
+      "Commercial Lunar Payload Services (CLPS) Deliveries",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/"
+    ],
+    [
+      "CLPS CP-22 Science (Intuitive Machines Nova-C lander IM-4 to Mons Mouton; no coordinates published)",
+      "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/"
+    ],
+    [
+      "NASA Provides Update on Artemis III Moon Landing Regions (release 24-136)",
+      "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/"
+    ],
+    [
+      "Illumination at the Moon's South Pole to 80S, 2025 to 2028",
+      "https://svs.gsfc.nasa.gov/5027"
+    ],
+    [
+      "State-of-the-Art of Small Spacecraft Technology, chapter 3.0 Power",
+      "https://www.nasa.gov/smallsat-institute/sst-soa/power-subsystems/"
+    ],
+    [
+      "Table of Anthropogenic Impacts and Spacecraft on the Moon",
+      "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html"
+    ],
+    [
+      "Complete NASA resource register — all 59 NASA source URLs, credits, methods and mission references",
+      "https://github.com/jwhiting07/Lunar-Site-Planner/blob/main/docs/submission/03-RESOURCES.md#complete-source-appendix"
+    ]
+  ],
+  "saved": false
+}
