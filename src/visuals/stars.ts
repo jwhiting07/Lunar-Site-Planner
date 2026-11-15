@@ -5,7 +5,7 @@ let catalog: Promise<{ stars: Star[] }> | undefined;
 
 /** Actual catalog positions, with deliberately restrained display brightness. */
 export async function loadStarfield() {
-  catalog ??= fetch(`${import.meta.env.BASE_URL}data/stars.json`).then(response => {
+  catalog ??= fetch(`${import.meta.env.BASE_URL}data/stars.json`, { signal: AbortSignal.timeout(8000) }).then(response => {
     if (!response.ok) throw new Error(`Star catalog failed to load: ${response.status}`);
     return response.json() as Promise<{ stars: Star[] }>;
   }).catch(error => { catalog = undefined; throw error; });

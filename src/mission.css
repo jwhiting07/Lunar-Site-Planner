@@ -8,6 +8,7 @@ body:has(.mission-app) { min-width: 0; }
 .mission-text-button:hover, .mission-icon-button:hover { color: var(--tx0); }
 .mission-icon-button { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; font-size: 18px; }
 .mission-app button:disabled { opacity: .45; cursor: not-allowed; }
+.mission-app .mission-run:disabled, .mission-map .moon-zoom button:disabled { opacity: 1; }
 .mission-controls { position: relative; z-index: 5; display: flex; align-items: center; gap: 28px; padding: 12px 24px 14px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
 .mission-control { min-width: 0; position: relative; flex: 0 1 280px; }
 .mission-control-duration { flex-basis: 200px; }
@@ -20,7 +21,7 @@ body:has(.mission-app) { min-width: 0; }
 .mission-control-advanced .mission-control-trigger { padding: 8px 0; border: 0; }
 .mission-control-advanced .mission-control-trigger > span:first-child { font-size: 13px; }
 .mission-control-advanced strong, .mission-control-advanced .mission-chevron { display: none; }
-.mission-run { flex-shrink: 0; display: flex; align-items: center; gap: 20px; padding: 9px 14px; min-height: 36px; border: 1px solid #dfe3e8; background: #dfe3e8; color: var(--bg0); font: 500 13px var(--sans); cursor: pointer; border-radius: 0; }
+.mission-run { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; width: 146px; padding: 9px 14px; min-height: 36px; border: 1px solid #dfe3e8; background: #dfe3e8; color: var(--bg0); font: 500 13px var(--sans); cursor: pointer; border-radius: 0; }
 .mission-run:hover:not(:disabled) { background: #fff; }
 .mission-editor { position: absolute; top: calc(100% + 14px); left: 0; width: 348px; padding: 16px; border: 1px solid var(--line); background: var(--bg1); max-height: min(620px, calc(100svh - 160px)); overflow: auto; display: grid; gap: 18px; }
 .mission-editor-duration { width: 300px; }
@@ -48,6 +49,9 @@ body:has(.mission-app) { min-width: 0; }
 .mission-map { position: relative; flex: 1; min-height: 0; }
 .mission-map .moon-stage-full { height: 100%; min-height: 0; }
 .mission-map .moon-coordinate-hud { left: 24px; right: 80px; bottom: 24px; gap: 24px; }
+.mission-map .moon-coordinate-hud > output { min-width: 210px; }
+.mission-map .moon-scale-bar { display: grid; grid-template-columns: 100px auto; align-items: baseline; margin-bottom: 0; }
+.mission-map .moon-scale-bar output { min-width: 62px; }
 .mission-map .moon-stage-full .moon-hint { display: none; }
 .mission-map .moon-zoom { right: 24px; bottom: 24px; gap: 8px; }
 .mission-map .moon-zoom .btn { width: 34px; height: 34px; min-height: 34px; padding: 0; background: transparent; font-size: 18px; }
@@ -194,23 +198,23 @@ body:has(.mission-app) { min-width: 0; }
 ::-webkit-scrollbar-thumb:hover { background: #4a525c; border: 2px solid transparent; background-clip: padding-box; }
 
 /* ---------- minimal chevrons and disclosure ---------- */
-.chev { flex: none; transition: transform .2s ease; }
+.chev { flex: none; transition: transform 0.15s ease; }
 button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .mission-toggle { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .mission-fold { width: 28px; height: 28px; }
 .mission-app summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .mission-app summary::-webkit-details-marker { display: none; }
-.mission-app summary::after { content: ''; flex: none; width: 5px; height: 5px; margin-top: -3px; border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor; transform: rotate(45deg); transition: transform .2s ease; }
+.mission-app summary::after { content: ''; flex: none; width: 5px; height: 5px; margin-top: -3px; border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor; transform: rotate(45deg); transition: transform 0.15s ease; }
 .mission-app details[open] > summary::after { margin-top: 2px; transform: rotate(225deg); }
 
 /* ---------- themed select ---------- */
 .mission-select-field { display: flex; flex-direction: column; gap: 8px; color: var(--tx1); font-size: 12px; min-width: 0; }
-.select-trigger { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 32px; padding: 4px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--tx0); font: 14px var(--sans); text-align: left; cursor: pointer; transition: border-color .15s ease; }
+.select-trigger { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 32px; padding: 4px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--tx0); font: 14px var(--sans); text-align: left; cursor: pointer; transition: border-color 0.1125s ease; }
 .select-trigger:hover, .select-trigger[aria-expanded=true] { border-bottom-color: var(--tx0); }
 .select-trigger .chev { color: var(--tx1); }
 .select-placeholder { color: #7e8792; }
 .select-list { position: fixed; inset: auto; margin: 0; padding: 4px 0; max-height: 280px; overflow: auto; list-style: none; border: 1px solid var(--line); border-radius: 0; background: var(--bg1); color: var(--tx0); box-shadow: 0 10px 28px #000a; }
-.select-list li { padding: 9px 14px 9px 12px; border-left: 2px solid transparent; font: 13px var(--sans); cursor: pointer; transition: background-color .12s ease; }
+.select-list li { padding: 9px 14px 9px 12px; border-left: 2px solid transparent; font: 13px var(--sans); cursor: pointer; transition: background-color 0.09s ease; }
 .select-list li:hover, .select-list li:focus { background: var(--bg2); outline: none; }
 .select-list li[aria-selected=true] { border-left-color: var(--earth); background: #1e252d; }
 .provenance-jump { flex: 0 1 260px; min-width: 180px; }
@@ -224,27 +228,27 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 @keyframes mission-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @keyframes mission-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes mission-pop { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: none; } }
-.mission-editor, .mission-marker-summary, .mission-feedback, .select-list:popover-open, .export-pop:popover-open, .mission-dashboard-content > * { animation: mission-in .2s ease-out backwards; }
-.mission-dashboard[open] { animation: mission-pop .24s cubic-bezier(.2, .7, .2, 1) backwards; }
-.mission-dashboard[open]::backdrop { animation: mission-fade .24s ease-out backwards; }
-.mission-app button, .mission-app .btn, .mission-app input, .mission-app summary { transition: color .15s ease, background-color .15s ease, border-color .15s ease, opacity .15s ease; }
-.mission-app .mission-run, .mission-app .moon-pin { transition: color .15s ease, background-color .15s ease, border-color .15s ease; }
-.mission-options tbody tr { transition: background-color .15s ease; }
+.mission-editor, .mission-marker-summary, .mission-feedback, .select-list:popover-open, .export-pop:popover-open, .mission-dashboard-content > * { animation: mission-in 0.15s ease-out backwards; }
+.mission-dashboard[open] { animation: mission-pop 0.18s cubic-bezier(.2, .7, .2, 1) backwards; }
+.mission-dashboard[open]::backdrop { animation: mission-fade 0.18s ease-out backwards; }
+.mission-app button, .mission-app .btn, .mission-app input, .mission-app summary { transition: color 0.1125s ease, background-color 0.1125s ease, border-color 0.1125s ease, opacity 0.1125s ease; }
+.mission-app .mission-run, .mission-app .moon-pin { transition: color 0.1125s ease, background-color 0.1125s ease, border-color 0.1125s ease; }
+.mission-options tbody tr { transition: background-color 0.1125s ease; }
 .mission-options tbody tr:hover { background: #181c21; }
 @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 
 /* ---------- overlays and collapsing panels: nothing here changes the Moon's size abruptly ---------- */
 .mission-map .mission-feedback { position: absolute; top: 12px; left: 24px; z-index: 4; max-width: calc(100% - 96px); padding: 7px 12px; border: 1px solid var(--line); background: #0d0f12e6; }
-.mission-controls-wrap { position: relative; z-index: 5; display: grid; grid-template-rows: 1fr; flex-shrink: 0; transition: grid-template-rows .3s cubic-bezier(.2, .7, .2, 1); }
-.mission-controls-wrap > .mission-controls { min-height: 0; z-index: auto; transition: opacity .22s ease, padding .3s ease, border-bottom-width .3s ease; }
+.mission-controls-wrap { position: relative; z-index: 5; display: grid; grid-template-rows: 1fr; flex-shrink: 0; transition: grid-template-rows 0.225s cubic-bezier(.2, .7, .2, 1); }
+.mission-controls-wrap > .mission-controls { min-height: 0; z-index: auto; transition: opacity 0.165s ease, padding 0.225s ease, border-bottom-width 0.225s ease; }
 .mission-controls-wrap[data-collapsed=true] { grid-template-rows: 0fr; }
-.mission-controls-wrap[data-collapsed=true] > .mission-controls { overflow: hidden; opacity: 0; padding-top: 0; padding-bottom: 0; border-bottom-width: 0; visibility: hidden; transition: opacity .22s ease, padding .3s ease, border-bottom-width .3s ease, visibility 0s linear .3s; }
-.mission-fold-wrap { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .3s cubic-bezier(.2, .7, .2, 1); }
+.mission-controls-wrap[data-collapsed=true] > .mission-controls { overflow: hidden; opacity: 0; padding-top: 0; padding-bottom: 0; border-bottom-width: 0; visibility: hidden; transition: opacity 0.165s ease, padding 0.225s ease, border-bottom-width 0.225s ease, visibility 0s linear 0.225s; }
+.mission-fold-wrap { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.225s cubic-bezier(.2, .7, .2, 1); }
 .mission-fold-wrap[data-collapsed=true] { grid-template-rows: 0fr; }
 .mission-fold-inner { min-height: 0; overflow: hidden; }
-.mission-fold-wrap[data-collapsed=true] .mission-fold-inner { visibility: hidden; transition: visibility 0s linear .3s; }
+.mission-fold-wrap[data-collapsed=true] .mission-fold-inner { visibility: hidden; transition: visibility 0s linear 0.225s; }
 @keyframes mission-rise { from { max-height: 0; opacity: 0; } to { max-height: 38vh; opacity: 1; } }
-.mission-options { animation: mission-rise .32s cubic-bezier(.2, .7, .2, 1) backwards; }
+.mission-options { animation: mission-rise 0.24s cubic-bezier(.2, .7, .2, 1) backwards; }
 @media (max-width: 1100px) { .mission-options { animation-name: mission-rise-narrow; } }
 @keyframes mission-rise-narrow { from { max-height: 0; opacity: 0; } to { max-height: 42vh; opacity: 1; } }
 .mission-result-actions { position: relative; z-index: 2; }
@@ -253,7 +257,7 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 /* ---------- export menu ---------- */
 .export-trigger { display: inline-flex; align-items: center; gap: 8px; }
 .export-pop { position: fixed; inset: auto; margin: 0; padding: 4px 0; border: 1px solid var(--line); border-radius: 0; background: var(--bg1); color: var(--tx0); box-shadow: 0 10px 28px #000a; }
-.export-pop > button { display: grid; gap: 3px; width: 100%; padding: 10px 16px 10px 14px; border: 0; border-left: 2px solid transparent; border-radius: 0; background: transparent; color: var(--tx0); font: 13px var(--sans); text-align: left; cursor: pointer; transition: background-color .12s ease, border-color .12s ease; }
+.export-pop > button { display: grid; gap: 3px; width: 100%; padding: 10px 16px 10px 14px; border: 0; border-left: 2px solid transparent; border-radius: 0; background: transparent; color: var(--tx0); font: 13px var(--sans); text-align: left; cursor: pointer; transition: background-color 0.09s ease, border-color 0.09s ease; }
 .export-pop > button small { color: var(--tx1); font-size: 11px; }
 .export-pop > button:hover, .export-pop > button:focus { background: var(--bg2); border-left-color: var(--earth); outline: none; }
 
@@ -279,8 +283,8 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .tl-sky-chart { min-width: 0; }
 .tl-sky-chart .caption { margin: 8px 0 0; }
 .sky-cards { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-.sky-card { display: grid; gap: 2px; padding: 0 0 16px 14px; border-left: 2px solid var(--line); border-bottom: 1px solid var(--line-soft); transition: border-color .2s ease; }
-.sky-card h4 { margin: 0; font-size: 13px; font-weight: 500; transition: color .2s ease; }
+.sky-card { display: grid; gap: 2px; padding: 0 0 16px 14px; border-left: 2px solid var(--line); border-bottom: 1px solid var(--line-soft); transition: border-color 0.15s ease; }
+.sky-card h4 { margin: 0; font-size: 13px; font-weight: 500; transition: color 0.15s ease; }
 .sky-card.ok-sun { border-left-color: var(--sun); }
 .sky-card.ok-sun h4 { color: var(--sun); }
 .sky-card.ok-earth { border-left-color: var(--earth); }
@@ -316,11 +320,11 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .mission-options tbody td, .mission-verdict, .mission-result-coords, .mission-distance, .mission-metrics > div,
 .mission-failures, .mission-terrain-status, .mission-dialog-sub, .tl-state, .tl-panel-h h3, .sky-card,
 .mission-comparison td, .mission-comparison th, .mission-data summary, .mission-feedback span, .mission-marker-summary p, .mission-marker-summary dl {
-  animation: mission-text .4s ease-out backwards;
+  animation: mission-text 0.3s ease-out backwards;
 }
-.mission-options tbody tr:nth-child(2) td { animation-delay: .05s; }
-.mission-options tbody tr:nth-child(3) td { animation-delay: .1s; }
-.mission-options tbody tr:nth-child(n+4) td { animation-delay: .15s; }
+.mission-options tbody tr:nth-child(2) td { animation-delay: 0.0375s; }
+.mission-options tbody tr:nth-child(3) td { animation-delay: 0.075s; }
+.mission-options tbody tr:nth-child(n+4) td { animation-delay: 0.1125s; }
 
 /* Known landing sites: grouped list headings, dot tooltip, layer toggle */
 .select-list .select-group { padding: 10px 14px 4px 12px; color: var(--tx2); font: 600 10px var(--sans); letter-spacing: .08em; text-transform: uppercase; cursor: default; pointer-events: none; }
@@ -338,4 +342,21 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .moon-legend .landed { background: #ebebe6; }
 .moon-legend .impact { background: #7a8594; }
 .moon-legend .planned { background: #dbad4d; }
-@media (max-width: 760px) { .moon-layer-toggle { left: 16px; bottom: 42px; } }
+@media (max-width: 760px) { .moon-layer-toggle { left: 16px; bottom: 60px; } }
+
+/* Startup text and controls share the prepared scene's reveal, with no stagger. */
+.mission-app > :is(.mission-top, .mission-controls-wrap, .mission-footer) {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--reveal-duration) var(--reveal-easing);
+}
+.mission-app.mission-ready > :is(.mission-top, .mission-controls-wrap, .mission-footer) {
+  opacity: 1;
+  visibility: visible;
+}
+.mission-app > .mission-controls-wrap {
+  transition: opacity var(--reveal-duration) var(--reveal-easing), grid-template-rows .225s cubic-bezier(.2, .7, .2, 1);
+}
+.mission-app .moon-pin {
+  transition: opacity var(--reveal-duration) var(--reveal-easing), color .1125s ease;
+}

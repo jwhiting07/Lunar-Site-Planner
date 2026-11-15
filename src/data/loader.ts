@@ -9,8 +9,8 @@ import type { LandingSitesDoc } from './landingSites';
 
 const BASE = `${import.meta.env.BASE_URL}data/`;
 
-async function getJson<T>(name: string): Promise<T> {
-  const r = await fetch(BASE + name);
+async function getJson<T>(name: string, signal?: AbortSignal): Promise<T> {
+  const r = await fetch(BASE + name, { signal });
   if (!r.ok) throw new Error(`failed to load ${name}: HTTP ${r.status}`);
   return (await r.json()) as T;
 }
@@ -54,7 +54,7 @@ export const loadEphemerisIndex = () =>
   }) as Promise<EphemerisIndex>;
 /** Optional layer: callers treat a failed load as "no catalogue". */
 export const loadLandingSites = () =>
-  cached(jsonCache, 'landing', () => getJson<LandingSitesDoc>('landing_sites.json')) as Promise<LandingSitesDoc>;
+  cached(jsonCache, 'landing', () => getJson<LandingSitesDoc>('landing_sites.json', AbortSignal.timeout(8000))) as Promise<LandingSitesDoc>;
 export const loadProvenance = () =>
   cached(jsonCache, 'prov', () => getJson<ProvenanceDoc>('provenance.json')) as Promise<ProvenanceDoc>;
 

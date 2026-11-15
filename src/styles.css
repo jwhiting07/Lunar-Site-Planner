@@ -1,4 +1,13 @@
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/inter-latin-variable.woff2') format('woff2');
+}
 :root{
+  --reveal-duration: 240ms;
+  --reveal-easing: cubic-bezier(.4, 0, .2, 1);
   --bg0: #0d0f12;
   --bg1: #15181c;
   --bg2: #23272d;
@@ -21,6 +30,10 @@
 }
 
 *{ box-sizing: border-box; }
+button, summary, [role="button"], label:has(input[type="checkbox"]), .moon-hint {
+  -webkit-user-select: none;
+  user-select: none;
+}
 html,
 body{ margin: 0; background: var(--bg0); color: var(--tx0); font-family: var(--sans); font-size: 14px; line-height: 1.4; }
 body{ min-width: 320px; }
@@ -230,8 +243,24 @@ input[aria-invalid='true']{ border-color: var(--warn); }
 .moon-stage canvas{ display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .moon-stage canvas:active{ cursor: grabbing; }
 .moon-stage canvas:focus-visible{ outline-offset: -3px; }
+.moon-stage { --moon-reveal-duration: var(--reveal-duration); --moon-reveal-easing: var(--reveal-easing); }
+.moon-stage canvas { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity var(--moon-reveal-duration) var(--moon-reveal-easing); }
+.moon-ready canvas { opacity: 1; }
+.moon-placeholder { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; visibility: visible; }
+.moon-placeholder > span { width: var(--moon-disc-size, 0px); aspect-ratio: 1; border-radius: 50%; background: #2b2e33; }
+/* Keep the disc opaque underneath the canvas, avoiding a dark dip mid-fade. */
+.moon-ready .moon-placeholder { visibility: hidden; transition: visibility 0s linear var(--moon-reveal-duration); }
+.moon-loading .moon-pin { visibility: hidden; }
+.moon-pin, .moon-coordinate-hud, .moon-zoom, .moon-layer-toggle, .moon-hint { transition: opacity var(--moon-reveal-duration) var(--moon-reveal-easing); }
+.moon-loading .moon-pin { opacity: 0; }
+.moon-loading :is(.moon-coordinate-hud, .moon-zoom, .moon-layer-toggle, .moon-hint) { opacity: 0; visibility: hidden; }
+.moon-stage.moon-chrome-ready :is(.moon-coordinate-hud, .moon-zoom, .moon-layer-toggle, .moon-hint) { opacity: 1; visibility: visible; }
+.moon-coordinate-hud, .moon-zoom, .moon-hint, .moon-local-reticle, .moon-message { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .moon-stage canvas, .moon-placeholder, .moon-pin, .moon-coordinate-hud, .moon-zoom, .moon-layer-toggle, .moon-hint { transition: none; }
+}
 .moon-toolbar{ position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 2; }
-.moon-pin{ position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; background: #15181c; color: #eff1f3; border: 1px solid #a6afb9; font: 12px var(--mono); cursor: pointer; z-index: 1; padding: 0; }
+.moon-pin{ position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; background: #15181c; color: #eff1f3; border: 1px solid #a6afb9; font: 12px var(--mono); cursor: pointer; z-index: 2; padding: 0; }
 .moon-pin.selected{ background: #eff1f3; color: #0d0f12; border-color: white; z-index: 2; }
 .moon-pin:hover{ outline: 2px solid var(--earth); outline-offset: 2px; }
 .moon-message{ position: absolute; left: 15%; right: 15%; top: 45%; padding: 12px; background: var(--bg1); text-align: center; pointer-events: none; }
