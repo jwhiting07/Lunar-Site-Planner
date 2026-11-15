@@ -8,6 +8,8 @@ NASA/JPL SPICE geometry and NASA LRO/LOLA terrain data.
 [Release notes](CHANGELOG.md) · [Development guide](docs/DEVELOPMENT.md) ·
 [Sources and assumptions](docs/REFERENCES_AND_ASSUMPTIONS.md)
 
+https://lunarsiteplanner.com/
+
 Built by **Project Seraphim** for the **2026 NASA Space Apps Challenge**.
 
 ![Interactive Moon workspace with location, landing date, and mission duration controls](docs/images/moon-workspace.png)
