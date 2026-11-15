@@ -7,8 +7,9 @@ import { assessment, compareCandidates, coordinateSite, dateGrid, distanceKm, du
 import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
 import { ExportMenu, parseDate } from './components/Controls';
-import { deg, fmtLat, fmtLon } from './ui/labels';
-import { ScenarioDetails, ScenarioTimeline } from './components/ScenarioDetails';
+import { deg, fmtLat, fmtLon, isoDate } from './ui/labels';
+import { horizonModel, scenarioKey } from './ui/scenarios';
+import { ScenarioDetails, ScenarioTimeline, type TerrainState } from './components/ScenarioDetails';
 import { UtcClock } from './components/UtcClock';
 import { firstDayOnOrAfter, lastDayOnOrBefore, useTimeZone, zoneDate, zoneDayStart } from './ui/timeZone';
 import { INITIAL_QUERY, isDiscovery, MissionControls, queryLabels, type MissionQuery } from './components/MissionControls';
@@ -20,7 +21,6 @@ import './mission.css';
 
 const Moon = lazy(() => import('./components/MoonView').then(m => ({ default: m.MoonView })));
 const Sources = lazy(() => import('./components/ProvenancePanel').then(m => ({ default: m.ProvenancePanel })));
-const utcDay = (ms: number) => new Date(ms).toISOString().slice(0, 10);
 const errorText = (e: unknown) => e instanceof Error ? e.message : String(e);
 const percent = (v: number) => `${(v * 100).toFixed(1)}%`;
 const coords = (r: Candidate['result']) => `${r.site.lat_deg.toFixed(4)}°, ${r.site.lon_deg.toFixed(4)}°`;
@@ -28,7 +28,6 @@ const hasEventSeconds = (site?: LandingSite) => /T\d\d:\d\d:\d\dZ$/.test(site?.e
 const missionSite = (site: ReturnType<typeof coordinateSite>, mission: LandingSite) => ({
   ...site, name: mission.name, short: mission.name.split(' — ')[0],
 });
-const horizonModel = (result: Candidate['result']) => result.horizonMask?.resolutionM ? 'Regional LOLA' : result.terrainAware ? 'LOLA terrain' : 'Flat horizon';
 const dashboardTabs = ['Results', 'Timeline', 'Compare'] as const;
 type DashboardTab = typeof dashboardTabs[number];
 
@@ -59,7 +58,7 @@ export default function MissionPlanner() {
     setLandmark(site); setShowLandmark(true); setMarkerScenarioId(null); setPick(false);
   };
   const [active, setActive] = useState<Candidate | null>(null);
-  const [terrainStatus, setTerrainStatus] = useState<'pending' | 'uncovered' | 'unavailable' | null>(null);
+  const [terrainStatus, setTerrainStatus] = useState<TerrainState>(null);
   const [saved, setSaved] = useState<Saved[]>([]);
   const [stored] = useState(readComparison);
   const [comparisonReady, setComparisonReady] = useState(stored.length === 0);
@@ -241,8 +240,8 @@ export default function MissionPlanner() {
         const upgraded = { ...updated, horizonMask: mask };
         setActive({ targets: candidate.targets, result: upgraded });
         // The matches list and the comparison must show the same terrain-based numbers as the open mission.
-        const key = signature(candidate);
-        const swap = <T extends Candidate>(entry: T): T => signature(entry) === key ? { ...entry, result: upgraded } : entry;
+        const key = scenarioKey(candidate);
+        const swap = <T extends Candidate>(entry: T): T => scenarioKey(entry) === key ? { ...entry, result: upgraded } : entry;
         setOptions(list => list.map(swap));
         setSaved(list => list.map(swap));
       }
@@ -280,7 +279,7 @@ export default function MissionPlanner() {
         if (km !== null && (!Number.isFinite(km) || km <= 0 || km > 1000)) throw new Error('Search radius must be greater than 0 and at most 1,000 km.');
         const first = base ? Math.max(startCoverage, start - 7 * DAY) : start;
         const last = base ? Math.min(endCoverage - days * DAY, start + 7 * DAY) : query.landing === 'any' ? endCoverage - days * DAY : query.landing === 'range' ? parseDate(query.lastDate, tz.zone) : start;
-        if (last === null || first < startCoverage || last + days * DAY > endCoverage || last < first) throw new Error(`The landing range and full mission must fit within ${utcDay(startCoverage)} and ${utcDay(endCoverage)} UTC.`);
+        if (last === null || first < startCoverage || last + days * DAY > endCoverage || last < first) throw new Error(`The landing range and full mission must fit within ${isoDate(startCoverage)} and ${isoDate(endCoverage)} UTC.`);
         let points = !base && query.location === 'exact' ? [point] : locationGrid(point, km);
         // An unrestricted search also checks the shipped terrain sites, so polar matches can use real LOLA terrain.
         if (!base && query.location === 'any') points = [...points, ...data.sites.sites.filter(s => s.terrain_aware).map(s => ({ lat: s.lat_deg, lon: normalizeLon(s.lon_deg) }))];
@@ -318,7 +317,7 @@ export default function MissionPlanner() {
         setSearchSummary(base ? 'Nearby dates and locations · ' + days + ' days' : labels.location + ' · ' + labels.landing + ' · ' + labels.duration);
         if (!base && found[0]) showResult(found[0], data.index, eph);
       } else {
-        if (start < startCoverage || start + days * DAY > endCoverage) throw new Error(`The full mission must fit within ${utcDay(startCoverage)} and ${utcDay(endCoverage)} UTC.`);
+        if (start < startCoverage || start + days * DAY > endCoverage) throw new Error(`The full mission must fit within ${isoDate(startCoverage)} and ${isoDate(endCoverage)} UTC.`);
         const site = coordinateSite(point, data.sites.sites);
         const [eph, mask] = await Promise.all([
           loadEphemeris(data.index, start, start + days * DAY),
@@ -341,10 +340,9 @@ export default function MissionPlanner() {
     finally { if (abort.current === controller) { setBusy(false); setProgress(''); } }
   }
 
-  const signature = (c: Candidate) => JSON.stringify([c.result.site.id, c.result.startMs, c.result.endMs, c.targets, c.result.params, c.result.earthMinClearanceDeg]);
-  const inComparison = (c: Candidate) => saved.some(s => signature(s) === signature(c));
+  const inComparison = (candidate: Candidate) => saved.some(entry => scenarioKey(entry) === scenarioKey(candidate));
   const add = (candidate: Candidate, mission?: LandingSite) => {
-    const existing = saved.find(entry => signature(entry) === signature(candidate) && (!mission || !entry.mission || entry.mission.id === mission.id));
+    const existing = saved.find(entry => scenarioKey(entry) === scenarioKey(candidate) && (!mission || !entry.mission || entry.mission.id === mission.id));
     if (existing && mission && !existing.mission) {
       setSaved(list => list.map(entry => entry.id === existing.id ? { ...entry, ...candidate, mission } : entry));
     } else if (saved.length < 12 && !existing) {
@@ -473,7 +471,7 @@ export default function MissionPlanner() {
         isSaved={inComparison} savedCount={saved.length} pending={terrainPending && !options.length}
         onCompare={() => { openedFromCompare.current = true; setDashboard('Compare'); }} compareRef={compareTrigger} onReset={resetMatches}
         reference={origin ? { point: origin, label: 'entered location' } : active ? { point: { lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }, label: 'open mission' } : null}
-        onCompareChange={(candidate, checked) => { if (checked) add(candidate); else setSaved(current => current.filter(entry => signature(entry) !== signature(candidate))); }}
+        onCompareChange={(candidate, checked) => { if (checked) add(candidate); else setSaved(current => current.filter(entry => scenarioKey(entry) !== scenarioKey(candidate))); }}
         onOpen={(candidate, trigger) => { dashboardTrigger.current = trigger; openedFromCompare.current = false; use(candidate, data?.index); setDashboard('Results'); }}
         />}
     </main>
@@ -486,7 +484,7 @@ export default function MissionPlanner() {
       <div className="mission-dashboard-content">
         {dashboard === 'Results' && <>{results}</>}
         {dashboard === 'Compare' && comparison}
-        {dashboard === 'Timeline' && (data ? <TimelinePanel active={active ?? saved[0] ?? null} saved={saved} signature={signature} index={data.index} notice={terrainNotice} terrain={terrainStatus}
+        {dashboard === 'Timeline' && (data ? <TimelinePanel active={active ?? saved[0] ?? null} saved={saved} index={data.index} notice={terrainNotice} terrain={terrainStatus}
           onChoose={id => { const entry = saved.find(item => String(item.id) === id); if (entry) use(entry, data.index); }} onCompare={() => setDashboard('Compare')} /> : <p>Loading…</p>)}
       </div>
     </dialog>
@@ -529,14 +527,14 @@ function MarkerSummary({ scenario, atLocation, onSelect, onClose, onRemove }: {
 }
 
 /** Timeline of the open mission; the compared missions can be switched in from the selector. */
-function TimelinePanel({ active, saved, signature, onChoose, onCompare, index, notice, terrain }: {
-  active: Candidate | null; saved: Saved[]; signature: (candidate: Candidate) => string; onChoose: (value: string) => void; onCompare: () => void;
-  index: EphemerisIndex; notice: ReactNode; terrain: 'pending' | 'uncovered' | 'unavailable' | null;
+function TimelinePanel({ active, saved, onChoose, onCompare, index, notice, terrain }: {
+  active: Candidate | null; saved: Saved[]; onChoose: (value: string) => void; onCompare: () => void;
+  index: EphemerisIndex; notice: ReactNode; terrain: TerrainState;
 }) {
   const tz = useTimeZone();
   if (!active) return <p>Run an analysis to view the timeline and local horizon.</p>;
   const describe = (candidate: Candidate) => coords(candidate.result) + ' · ' + tz.date(candidate.result.startMs) + ' · ' + Number((candidate.result.metrics.intervalHours / 24).toFixed(3)) + ' d';
-  const match = saved.find(entry => signature(entry) === signature(active));
+  const match = saved.find(entry => scenarioKey(entry) === scenarioKey(active));
   const options = [
     ...(match ? [] : [{ value: 'open', label: 'Open mission · ' + describe(active) }]),
     ...saved.map((entry, i) => ({ value: String(entry.id), label: (entry.mission ? entry.result.site.short : 'Scenario ' + (i + 1)) + ' · ' + describe(entry) })),

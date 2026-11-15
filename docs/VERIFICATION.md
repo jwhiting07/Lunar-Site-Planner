@@ -1,3 +1,18 @@
+# Code cleanup — November 15, 2026
+
+`npm test` passes all 152 tests, including three regression tests for scenario
+identity through terrain upgrades, distinct mission inputs, and terrain-model
+labels. `npm run typecheck`, `npm run build`, and `git diff --check` pass. No lint
+command is configured. `python -m pytest scripts/tests -q -rs` passes 26 tests;
+four existing DEM-dependent tests skip because `LDEM_80S_80MPP_ADJ.TIF` is absent.
+
+The original and cleaned-up `MissionMatches` produce identical static HTML in
+six combinations of active selection, flat/polar/regional terrain, and hidden or
+pending results. This is a markup comparison, not a browser interaction check.
+Removed styles belong exclusively to the unused panel and information-button
+components. The parked Solar work, generated terrain products, and existing
+screenshots are retained.
+
 # Navigator implementation — November 14, 2026
 
 Integrated main's c829a9b cleanup and calculation/search performance improvements.

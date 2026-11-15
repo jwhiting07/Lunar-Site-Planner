@@ -1,10 +1,11 @@
+import { useState, type Ref } from 'react';
 import type { Candidate } from '../science/planner';
 import { assessment, distanceKm, type Point } from '../science/planner';
 import { useTimeZone } from '../ui/timeZone';
+import { horizonModel, scenarioKey } from '../ui/scenarios';
 import { Chevron } from './Chevron';
-import type { Ref } from 'react';
 
-export const scenarioKey = (candidate: Candidate) => JSON.stringify([candidate.result.site.id, candidate.result.startMs, candidate.result.endMs, candidate.targets, candidate.result.params, candidate.result.earthMinClearanceDeg]);
+export { scenarioKey } from '../ui/scenarios';
 const percent = (value: number) => (value * 100).toFixed(1) + '%';
 const delta = (value: number) => (value >= 0 ? '+' : '') + value.toFixed(1);
 
@@ -36,7 +37,7 @@ export function MissionMatches({ candidates, active, note, summary, hidden, onTo
             <td className="mono">{result.site.lat_deg.toFixed(4)}°, {result.site.lon_deg.toFixed(4)}°</td>
             <td className="mono">{tz.dateTime(result.startMs)}</td><td>{Number((result.metrics.intervalHours / 24).toFixed(3))} days</td>
             <td className="num mono">{reference ? distanceKm(reference.point, { lat: result.site.lat_deg, lon: result.site.lon_deg }).toFixed(1) + ' km' : '—'}</td><td className="num mono">{percent(result.metrics.sunlitFraction)}</td><td className="num mono">{percent(result.metrics.earthVisibleFraction)}</td>
-            <td>{assessment(result, candidate.targets).good ? 'Meets targets' : 'Below targets'}<small title={difference ? 'Compared to the open mission: ' + difference : undefined}>{result.horizonMask?.resolutionM ? 'Regional LOLA' : result.terrainAware ? 'LOLA terrain' : 'Flat horizon'}</small></td>
+            <td>{assessment(result, candidate.targets).good ? 'Meets targets' : 'Below targets'}<small title={difference ? 'Compared to the open mission: ' + difference : undefined}>{horizonModel(result)}</small></td>
             <td><button className="btn small" onClick={event => onOpen(candidate, event.currentTarget)}>View</button></td>
           </tr>;
         })}</tbody></table></div>
@@ -44,4 +45,3 @@ export function MissionMatches({ candidates, active, note, summary, hidden, onTo
     </div></div>
   </section>;
 }
-import { useState } from 'react';
