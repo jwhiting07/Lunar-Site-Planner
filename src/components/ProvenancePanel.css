@@ -47,11 +47,41 @@
 .provenance-close:hover { color: var(--tx0); }
 .provenance-close kbd { margin-left: 8px; font: 10px var(--mono); color: var(--tx1); }
 .provenance-cross { font-size: 27px; line-height: 1; font-weight: 300; color: var(--tx0); }
+.provenance-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.provenance-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 0 10px;
+}
+.provenance-project-links :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tx0);
+  font: 12px/1.4 var(--sans);
+  text-decoration: none;
+}
+.provenance-project-links a:hover { border-color: var(--tx1); }
+.provenance-project-links button:disabled { opacity: 1; color: var(--tx1); cursor: default; }
 .provenance-tabs {
   display: flex;
   gap: 32px;
-  padding: 0 36px;
-  border-bottom: 1px solid var(--line);
+  min-width: 0;
   flex-shrink: 0;
   overflow-x: auto;
   scrollbar-width: thin;
@@ -162,7 +192,8 @@
   .provenance-header h2 { font-size: 21px; }
   .provenance-close { gap: 14px; }
   .provenance-close kbd { display: none; }
-  .provenance-tabs { padding: 0 20px; gap: 24px; }
+  .provenance-toolbar { padding: 0 20px; }
+  .provenance-tabs { gap: 24px; }
   .provenance-method-tools { align-items: flex-start; flex-direction: column; gap: 12px; }
   .provenance-body { padding: 24px 20px 36px; }
   .provenance-body .method h3 { font-size: 18px; }
@@ -175,12 +206,13 @@
   .provenance-backdrop { padding: 0; }
   .provenance-dialog { border: 0; }
   .provenance-close > span:first-child { display: none; }
-  .provenance-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; overflow: visible; }
+  .provenance-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; overflow: visible; width: 100%; }
+  .provenance-project-links { padding-top: 10px; }
   .provenance-tabs button { text-align: left; padding: 12px 0; font-size: 11px; }
   .provenance-field, .provenance-body .legend-list li, .provenance-body .facts .dl-row, .provenance-symbols > div { grid-template-columns: minmax(0,1fr); gap: 6px; }
 }
 @media (pointer: coarse) {
-  .provenance-close, .provenance-tabs button { min-height: 44px; }
+  .provenance-close, .provenance-tabs button, .provenance-project-links :is(a, button) { min-height: 44px; }
   .provenance-notation summary { min-height: 44px; padding-top: 12px; }
 }
 

@@ -110,12 +110,19 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
             <span>Close <kbd>Esc</kbd></span><span className="provenance-cross" aria-hidden="true">×</span>
           </button>
         </header>
-        <div className="provenance-tabs" role="tablist" aria-label="Sections">
-          {TABS.map(([id, label], index) => (
-            <button key={id} type="button" role="tab" id={`tab-${id}`} aria-selected={tab === id} aria-controls={`pane-${id}`} tabIndex={tab === id ? 0 : -1} onKeyDown={(e) => onTabKeyDown(e, index)} onClick={() => selectTab(id)}>
-              {label}
-            </button>
-          ))}
+        <div className="provenance-toolbar">
+          <div className="provenance-tabs" role="tablist" aria-label="Sections">
+            {TABS.map(([id, label], index) => (
+              <button key={id} type="button" role="tab" id={`tab-${id}`} aria-selected={tab === id} aria-controls={`pane-${id}`} tabIndex={tab === id ? 0 : -1} onKeyDown={(e) => onTabKeyDown(e, index)} onClick={() => selectTab(id)}>
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="provenance-project-links" role="group" aria-label="Project links">
+            <a href="https://github.com/jwhiting07/Lunar-Site-Planner" target="_blank" rel="noreferrer">Github</a>
+            <button type="button" disabled title="Demo video coming soon">Demo</button>
+            <button type="button" disabled title="Space Apps submission coming soon">Space App Submission</button>
+          </div>
         </div>
         <div className="provenance-body" ref={bodyRef} role="tabpanel" id={`pane-${tab}`} aria-labelledby={`tab-${tab}`} tabIndex={0}>
           {provenanceError && <p className="warn-box">provenance.json could not be loaded: {provenanceError}. Reference links are unavailable.</p>}
