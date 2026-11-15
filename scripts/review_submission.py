@@ -19,6 +19,7 @@ OUT = ROOT / "docs/submission"
 EVIDENCE = OUT / "evidence"
 
 SOFTWARE = [
+    ("Adobe Illustrator", "https://www.adobe.com/products/illustrator.html", "Project Seraphim logo design"),
     ("React and React DOM", "https://react.dev/", "Interface; MIT"),
     ("Three.js", "https://threejs.org/", "3D Moon, terrain and stars; MIT"),
     ("KaTeX", "https://katex.org/", "Math rendering code: MIT; bundled math fonts: SIL OFL 1.1"),

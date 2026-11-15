@@ -5,17 +5,29 @@
   "tools": [
     {
       "name": "OpenAI Codex",
-      "uses": ["code assistance", "interface development", "documentation", "submission preparation"],
-      "evidence": ["docs/ui/README.md", "docs/submission/02-SUBMISSION-TEXT.md"]
+      "uses": [
+        "code assistance",
+        "interface development",
+        "documentation",
+        "submission preparation"
+      ],
+      "evidence": [
+        "docs/ui/README.md",
+        "docs/submission/02-SUBMISSION-TEXT.md"
+      ]
     },
     {
       "name": "Anthropic Claude Opus 5.5",
-      "uses": ["code assistance"],
-      "evidence": ["Git commit co-authorship trailers"]
+      "uses": [
+        "code assistance"
+      ],
+      "evidence": [
+        "Git commit co-authorship trailers"
+      ]
     }
   ],
   "code": "Project code was developed with SI assistance; third-party source licenses remain applicable.",
   "data": "NASA and other source datasets retain their recorded provenance. Derived science products are numerical calculations from those sources; no generative fabrication of scientific values is asserted.",
   "media": "The demo uses application screen capture recorded with OBS Studio. No generated imagery is included in the submitted application.",
-  "branding": "The supplied submission rules prohibit generated content using, containing or modifying NASA branding and design elements, including logos, flags and mission identifiers."
+  "branding": "The Project Seraphim logo was designed in Adobe Illustrator. Browser and touch icons are resized exports of the supplied artwork."
 }

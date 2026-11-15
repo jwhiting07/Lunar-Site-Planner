@@ -40,6 +40,8 @@ Search samples a bounded set of scenarios and does not prove a global optimum. T
 
 ## Use of Super Intelligence — disclosure text
 
+The Project Seraphim logo was designed in Adobe Illustrator.
+
 OpenAI Codex assisted project code, interface development, documentation, and submission preparation. Anthropic Claude Opus 5.5 assisted code development. Scientific values are calculated from the cited datasets by the documented numerical pipeline. The NASA Moon model, textures and star catalogue have their own source provenance. SI assistance is acknowledged in the project README and `public/si-disclosure.json`.
 
 The form's exact SI option labels were not included in the pasted text. Select the options matching **code** and **text** assistance. OBS captures the application screen. If the final demo adds synthetic audio, generated video, or other generated assets, disclose that use separately.

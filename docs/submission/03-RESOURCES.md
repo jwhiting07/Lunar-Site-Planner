@@ -23,6 +23,7 @@ Use each resource name as **Link Text** and its complete URL as **Link URL**. Th
 | Link Text | Link URL | Use / licensing note |
 |---|---|---|
 | React and React DOM | https://react.dev/ | Interface; MIT |
+| Adobe Illustrator | https://www.adobe.com/products/illustrator.html | Project Seraphim logo design |
 | Three.js | https://threejs.org/ | 3D Moon, terrain and stars; MIT |
 | KaTeX | https://katex.org/ | Math rendering code: MIT; bundled math fonts: SIL OFL 1.1 |
 | TypeScript | https://www.typescriptlang.org/ | Application language and type checking; Apache-2.0 |
