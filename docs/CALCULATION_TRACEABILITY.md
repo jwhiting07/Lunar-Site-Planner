@@ -16,8 +16,9 @@ The image is aesthetically processed and includes polar fill. Scientific analysi
 continues to use the separate LOLA horizon and SPICE pipeline below.
 Markers use the sourced site latitude/longitude via `enuBasis`; lunar body axes
 (X,Y,Z) map to Three.js (X,Z,-Y), aligning zero longitude with the texture centre.
-The existing local DEM view is accessible through Local terrain. No code or
-assets were copied from Moonquake Map; its simple globe presentation was the visual reference.
+The local DEM patches and textures are retained generation products. The active
+planner shows the lander's skyline through `SkyView.tsx`. No code or assets were
+copied from Moonquake Map; its simple globe presentation was the visual reference.
 
 This guide follows each major displayed/exported quantity from its output to its
 equation, implementation, inputs and references. Reference IDs resolve in
@@ -251,9 +252,8 @@ Published elevation [m]       [S] IM-1 2579 m (R-LROC-1360, R-NASA-IM1); display
 Regional slope [deg]          [S] LDSM_80S_80MPP_ADJ pixel and 3x3 mean (build_data.py slope_at) <- R-LOLA-PGDA; context only
 Horizon range / mean [deg], max obstruction distance [km], coverage [km], unseen-terrain margin [deg]
                               [C] sites.json horizon.* (build_data.py main) <- H(A) table; margin uses A-HMAX [A]
-Local terrain (3-D)           [C] terrain_<id>.bin heights (build_data.py terrain_patch) -> geometry.ts terrainNodeEnu
-                              (curvature exact, optional x3 exaggeration, display) ; colour terrain_color_<id>.png
-                              <- R-SVS-MOON-KIT (display) ; light direction = enuDirection(az_s, el_s) [C], intensity 2.8 f (display)
+Retained local DEM products   [C] terrain_<id>.bin heights (build_data.py terrain_patch), colour terrain_color_<id>.png
+                              <- R-SVS-MOON-KIT (display); generated but not loaded by the active planner
 Moon globe                    display only: moon.glb (public/models/provenance.json); site markers from lat/lon via enuBasis
 Overview hillshade            display only (build_data.py build_overview) <- LDEM_80S_80MPP_ADJ, artificial light
 ```

@@ -119,45 +119,67 @@ function yieldToUi(): Promise<void> {
 const SLICE_MS = 12;
 
 /** Bounded screening, then hourly refinement. Yields every SLICE_MS of work to keep the UI responsive. */
-export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, signal: AbortSignal, progress: (done: number, total: number) => void): Promise<Candidate[]> {
+export async function searchCandidates(eph: EphemerisTable, options: SearchOptions, signal: AbortSignal, progress: (done: number, total: number) => void): Promise<Candidate[]> {
   const best: Candidate[] = [];
   let sliceStart = performance.now();
   const sliceOver = () => performance.now() - sliceStart >= SLICE_MS;
   const rest = async () => { await yieldToUi(); sliceStart = performance.now(); };
   const flat = flatHorizon();
-  const rank = (a: Candidate, b: Candidate) => compareCandidates(a, b, o.origin, o.startMs);
+  const rank = (a: Candidate, b: Candidate) => compareCandidates(a, b, options.origin, options.startMs);
   const evaluate = (point: Point, startMs: number, days: number, stepMs: number): Candidate => {
-    const site = coordinateSite(point, o.known);
-    const mask = o.masks.get(site.id) ?? flat;
-    const result = analyzeSite(makeSiteContext(site, o.observerHeight, mask), eph, {
-      startMs, endMs: startMs + days * DAY, stepMs, params: o.lander, earthMinClearanceDeg: o.clearance,
+    const site = coordinateSite(point, options.known);
+    const mask = options.masks.get(site.id) ?? flat;
+    const result = analyzeSite(makeSiteContext(site, options.observerHeight, mask), eph, {
+      startMs, endMs: startMs + days * DAY, stepMs, params: options.lander, earthMinClearanceDeg: options.clearance,
     });
     if (mask.terrainAware) result.horizonMask = mask;
-    return { targets: { ...o.targets }, result };
+    return { targets: { ...options.targets }, result };
   };
-  const durations = o.durationsDays ?? durationGrid(o.durationDays);
+  const durations = options.durationsDays ?? durationGrid(options.durationDays);
   for (const days of durations) durationGrid(days);
-  const scenarios = o.dates.flatMap(date => durations.filter(days => date + days * DAY <= (o.coverageEndMs ?? Infinity)).map(days => ({ date, days })));
-  const total = o.points.length * scenarios.length;
+  const scenarios = options.dates.flatMap(date => durations
+    .filter(days => date + days * DAY <= (options.coverageEndMs ?? Infinity))
+    .map(days => ({ date, days })));
+  const total = options.points.length * scenarios.length;
   let done = 0;
-  for (const point of o.points) for (const { date, days } of scenarios) {
-    if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    const step = Math.max(1, Math.ceil(days * 24 / 168)) * HOUR_MS;
-    // Preserve main's stable binary insertion and short, responsive work slices.
-    const candidate = evaluate(point, date, days, step);
-    let lo = 0, hi = best.length;
-    while (lo < hi) { const mid = (lo + hi) >> 1; if (rank(best[mid], candidate) <= 0) lo = mid + 1; else hi = mid; }
-    if (lo < 12) { best.splice(lo, 0, candidate); if (best.length > 12) best.pop(); }
-    if (++done < total && sliceOver()) { progress(done, total); await rest(); }
+  for (const point of options.points) {
+    for (const { date, days } of scenarios) {
+      if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
+      const step = Math.max(1, Math.ceil(days * 24 / 168)) * HOUR_MS;
+      const candidate = evaluate(point, date, days, step);
+      // Insert after equal-ranked candidates to preserve the sampling order on ties.
+      let lo = 0;
+      let hi = best.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (rank(best[mid], candidate) <= 0) lo = mid + 1;
+        else hi = mid;
+      }
+      if (lo < 12) {
+        best.splice(lo, 0, candidate);
+        if (best.length > 12) best.pop();
+      }
+      done++;
+      if (done < total && sliceOver()) {
+        progress(done, total);
+        await rest();
+      }
+    }
   }
   const refined: Candidate[] = [];
   for (const candidate of best) {
     if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    refined.push(evaluate({ lat: candidate.result.site.lat_deg, lon: candidate.result.site.lon_deg }, candidate.result.startMs, (candidate.result.endMs - candidate.result.startMs) / DAY, HOUR_MS));
+    const { site, startMs, endMs } = candidate.result;
+    refined.push(evaluate({ lat: site.lat_deg, lon: site.lon_deg }, startMs, (endMs - startMs) / DAY, HOUR_MS));
     if (sliceOver()) await rest();
   }
   progress(total, total);
   // At most two dates per location and mission length, so the list is not five copies of one point.
-  const perSite = new Map<string, number>();
-  return refined.sort(rank).filter(c => { const key = c.result.site.id + "|" + Math.round(c.result.metrics.intervalHours); const n = (perSite.get(key) ?? 0) + 1; perSite.set(key, n); return n <= 2; }).slice(0, 5);
+  const countsBySiteAndDuration = new Map<string, number>();
+  return refined.sort(rank).filter(({ result }) => {
+    const key = result.site.id + '|' + Math.round(result.metrics.intervalHours);
+    const count = (countsBySiteAndDuration.get(key) ?? 0) + 1;
+    countsBySiteAndDuration.set(key, count);
+    return count <= 2;
+  }).slice(0, 5);
 }
