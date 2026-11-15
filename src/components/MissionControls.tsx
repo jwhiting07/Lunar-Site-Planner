@@ -51,7 +51,7 @@ export function MissionControls({ query, onChange, sites, landmarks, firstDate, 
   const [editor, setEditor] = useState<Editor | null>(null);
   const root = useRef<HTMLDivElement>(null);
   const triggers = useRef(new Map<Editor, HTMLButtonElement>());
-  const popup = useRef<HTMLFormElement>(null);
+  const popup = useRef<HTMLDivElement>(null);
   const labels = queryLabels(query);
   const change = (patch: Partial<MissionQuery>) => onChange({ ...query, ...patch });
   const close = () => { if (editor) triggers.current.get(editor)?.focus(); setEditor(null); };
@@ -78,10 +78,9 @@ export function MissionControls({ query, onChange, sites, landmarks, firstDate, 
     <button type="button" className="mission-control-trigger" ref={el => { if (el) triggers.current.set(key, el); }} aria-expanded={editor === key} aria-controls={`mission-editor-${key}`} onClick={() => setEditor(editor === key ? null : key)} disabled={busy}>
       <span>{label}</span><strong>{value}</strong><Chevron className="mission-chevron" />
     </button>
-    {editor === key && <form ref={popup} id={`mission-editor-${key}`} className={`mission-editor mission-editor-${key}`} aria-label={`${label} settings`} onSubmit={event => { event.preventDefault(); close(); }}>
+    {editor === key && <div ref={popup} id={`mission-editor-${key}`} className={`mission-editor mission-editor-${key}`} role="group" aria-label={`${label} settings`}>
       {contents}
-      <div className="mission-editor-actions"><button type="submit" className="mission-text-button">Apply</button></div>
-    </form>}
+    </div>}
   </div>;
 
   return <div className="mission-controls-wrap" data-collapsed={collapsed}><div ref={root} id="mission-controls" className="mission-controls" inert={collapsed}>

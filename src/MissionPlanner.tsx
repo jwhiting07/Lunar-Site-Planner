@@ -1,15 +1,15 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, loadLandingSites, loadProvenance, loadSites } from './data/loader';
 import { landmarkBasis, landmarkStart, type LandingSite } from './data/landingSites';
 import { readComparison, storeComparison, storedHorizon, type SavedComparison as Saved, type StoredComparison } from './data/comparisonStorage';
 import { analyzeMission, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
-import { assessment, compareCandidates, coordinateSite, dateGrid, distanceKm, durationGrid, DAY, DEFAULT_TARGETS, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
+import { assessment, coordinateSite, dateGrid, distanceKm, durationGrid, DAY, DEFAULT_TARGETS, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
 import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
 import { ExportMenu, parseDate } from './components/Controls';
 import { deg, fmtLat, fmtLon, isoDate } from './ui/labels';
-import { horizonModel, scenarioKey } from './ui/scenarios';
-import { ScenarioDetails, ScenarioTimeline, type TerrainState } from './components/ScenarioDetails';
+import { horizonModel, missionEntries, scenarioKey } from './ui/scenarios';
+import { ScenarioDetails, ScenarioOverview, ScenarioTimeline, type TerrainState } from './components/ScenarioDetails';
 import { UtcClock } from './components/UtcClock';
 import { firstDayOnOrAfter, lastDayOnOrBefore, useTimeZone, zoneDate, zoneDayStart } from './ui/timeZone';
 import { INITIAL_QUERY, isDiscovery, MissionControls, queryLabels, type MissionQuery } from './components/MissionControls';
@@ -73,6 +73,7 @@ export default function MissionPlanner() {
   const [provenance, setProvenance] = useState<ProvenanceDoc | null>(null);
   const [provError, setProvError] = useState<string | null>(null);
   const [dashboard, setDashboard] = useState<DashboardTab | null>(null);
+  const [originalMission, setOriginalMission] = useState<Candidate | null>(null);
   const [detailed, setDetailed] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const terrainRequest = useRef<AbortController | null>(null);
@@ -146,6 +147,7 @@ export default function MissionPlanner() {
     if (dashboard && !element?.open) element?.showModal();
     if (!dashboard && element?.open) {
       element.close();
+      setOriginalMission(null);
       const trigger = (openedFromCompare.current ? compareTrigger : dashboardTrigger).current;
       (trigger?.isConnected ? trigger : compareTrigger.current)?.focus();
     }
@@ -163,33 +165,30 @@ export default function MissionPlanner() {
     const site = coordinateSite(point, data?.sites.sites);
     return [landmark ? missionSite(site, landmark) : site];
   }, [query.location, lat, lon, data, landmark]);
-  const savedSites = useMemo(() => new Map(saved.map(entry => [entry.result.site.id, entry.result.site])), [saved]);
-  const savedSiteIds = useMemo(() => new Set(savedSites.keys()), [savedSites]);
   const comparedLandmarks = useMemo(() => new Set(saved.flatMap(entry => entry.mission ? [entry.mission.id] : [])), [saved]);
-  const mapSites = useMemo(() => {
-    const sites = new Map<string, ReturnType<typeof coordinateSite>>();
-    for (const candidate of options) sites.set(candidate.result.site.id, candidate.result.site);
-    if (active) sites.set(active.result.site.id, active.result.site);
-    for (const [id, site] of savedSites) sites.set(id, site);
-    for (const site of chosen) if (landmark || !sites.has(site.id)) sites.set(site.id, site);
-    return [...sites.values()];
-  }, [savedSites, chosen, options, active, landmark]);
-  const markerLabels = useMemo(() => new Map(mapSites.map((site, index) => {
-    const candidateIndex = options.findIndex(candidate => candidate.result.site.id === site.id);
-    return [site.id, site.short === 'Selected location' ? 'Site ' + (candidateIndex >= 0 ? candidateIndex + 1 : index + 1) : site.short];
-  })), [mapSites, options]);
+  const missions = useMemo(() => missionEntries(options, saved, [originalMission, active]), [options, saved, originalMission, active]);
+  const mapSites = useMemo(() => [
+    ...missions.map(({ id, candidate }) => ({ ...candidate.result.site, id })),
+    ...chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id)),
+  ], [missions, chosen]);
+  const markerLabels = useMemo(() => new Map(missions.map(({ id, label }) => [id, label])), [missions]);
+  const savedSiteIds = useMemo(() => new Set(missions.filter(entry => entry.saved).map(entry => entry.id)), [missions]);
   const markerScenario = saved.find(entry => entry.id === markerScenarioId);
-  const markerSiteId = markerScenario?.result.site.id;
-  const markerDates = saved.filter(entry => entry.result.site.id === markerSiteId);
+  const markerDates = saved.filter(entry => entry.result.site.id === markerScenario?.result.site.id);
+  const primaryMarkerId = markerScenario ? scenarioKey(markerScenario)
+    : active && (options.length || !chosen.length || active.result.site.id === chosen[0].id) ? scenarioKey(active)
+      : missions.find(entry => entry.candidate.result.site.id === chosen[0]?.id)?.id ?? chosen[0]?.id ?? '';
 
   const selectMarker = (siteId: string) => {
-    const scenario = saved.find(entry => entry.result.site.id === siteId);
-    if (!scenario && landmark && chosen[0]?.id === siteId) { setShowLandmark(true); return; }
+    const entry = missions.find(mission => mission.id === siteId);
+    if (!entry && landmark && chosen[0]?.id === siteId) { setShowLandmark(true); return; }
     setShowLandmark(false);
-    setMarkerScenarioId(scenario?.id ?? null);
-    if (!scenario) {
-      const candidate = options.find(entry => entry.result.site.id === siteId);
-      if (candidate) { showResult(candidate, data?.index); setDashboard('Results'); }
+    setMarkerScenarioId(entry?.sampled ? null : entry?.saved?.id ?? null);
+    if (entry && (entry.sampled || !entry.saved)) {
+      openedFromCompare.current = false;
+      dashboardTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      use(entry.candidate, data?.index);
+      setDashboard('Results');
     }
   };
 
@@ -253,45 +252,40 @@ export default function MissionPlanner() {
     });
   }
 
-  async function run(alternatives = false, mission?: LandingSite) {
+  async function run(mission?: LandingSite) {
     if (!data || !comparisonReady || busy) return;
     const controller = new AbortController(); abort.current = controller;
     setBusy(true); setError(''); setProgress('Loading geometry…');
     setResultsHidden(false);
     try {
       validateTargets();
-      const base = alternatives ? active : null;
-      const days = base ? (base.result.endMs - base.result.startMs) / DAY : Number(duration);
-      const durations = durationGrid(days, !base && !mission && query.durationRange ? Number(query.maxDuration) : days);
+      const days = Number(duration);
+      const durations = durationGrid(days, !mission && query.durationRange ? Number(query.maxDuration) : days);
       const maxDays = Math.max(...durations);
-      const start = mission ? comparisonStart(mission, days).ms : base ? base.result.startMs : query.landing === 'any' ? defaultStart : parseDate(query.date, tz.zone);
+      const start = mission ? comparisonStart(mission, days).ms : query.landing === 'any' ? defaultStart : parseDate(query.date, tz.zone);
       if (start === null || !Number.isFinite(start)) throw new Error('Enter a valid landing date.');
       const siteSelection = mission ?? landmark;
-      const point: Point = base ? { lat: base.result.site.lat_deg, lon: base.result.site.lon_deg }
-        : siteSelection ? { lat: siteSelection.lat_deg, lon: siteSelection.lon_deg } : query.location === 'any' ? { lat: 0, lon: 0 } : { lat: Number(lat), lon: Number(lon) };
-      if (!base && !mission) setOrigin(query.location === 'any' ? null : point);
-      if (query.location !== 'any' && !chosen.length && !base && !mission) throw new Error('Enter latitude from −90 to 90 and longitude from −180 to 180, or choose on the Moon.');
-      const target = base ? base.targets : { ...targets };
-      const lander = base ? base.result.params : { ...params.lander };
-      const clearance = base ? base.result.earthMinClearanceDeg : params.earthMinClearanceDeg;
-      if (base || (!mission && isDiscovery(query))) {
-        const km = base ? 50 : query.location === 'nearby' ? Number(query.radius) : null;
+      const point: Point = siteSelection ? { lat: siteSelection.lat_deg, lon: siteSelection.lon_deg }
+        : query.location === 'any' ? { lat: 0, lon: 0 } : { lat: Number(lat), lon: Number(lon) };
+      if (!mission) setOrigin(query.location === 'any' ? null : point);
+      if (query.location !== 'any' && !chosen.length && !mission) throw new Error('Enter latitude from −90 to 90 and longitude from −180 to 180, or choose on the Moon.');
+      const target = { ...targets };
+      const lander = { ...params.lander };
+      const clearance = params.earthMinClearanceDeg;
+      if (!mission && isDiscovery(query)) {
+        const km = query.location === 'nearby' ? Number(query.radius) : null;
         if (km !== null && (!Number.isFinite(km) || km <= 0 || km > 1000)) throw new Error('Search radius must be greater than 0 and at most 1,000 km.');
-        const first = base ? Math.max(startCoverage, start - 7 * DAY) : start;
-        const last = base ? Math.min(endCoverage - days * DAY, start + 7 * DAY) : query.landing === 'any' ? endCoverage - days * DAY : query.landing === 'range' ? parseDate(query.lastDate, tz.zone) : start;
+        const first = start;
+        const last = query.landing === 'any' ? endCoverage - days * DAY : query.landing === 'range' ? parseDate(query.lastDate, tz.zone) : start;
         if (last === null || first < startCoverage || last + days * DAY > endCoverage || last < first) throw new Error(`The landing range and full mission must fit within ${isoDate(startCoverage)} and ${isoDate(endCoverage)} UTC.`);
-        let points = !base && query.location === 'exact' ? [point] : locationGrid(point, km);
+        let points = query.location === 'exact' ? [point] : locationGrid(point, km);
         // An unrestricted search also checks the shipped terrain sites, so polar matches can use real LOLA terrain.
-        if (!base && query.location === 'any') points = [...points, ...data.sites.sites.filter(s => s.terrain_aware).map(s => ({ lat: s.lat_deg, lon: normalizeLon(s.lon_deg) }))];
+        if (query.location === 'any') points = [...points, ...data.sites.sites.filter(s => s.terrain_aware).map(s => ({ lat: s.lat_deg, lon: normalizeLon(s.lon_deg) }))];
         const dates = dateGrid(first, last);
-        if (base) points = [point];
         const eph = await loadEphemeris(data.index, first, Math.min(endCoverage, last + maxDays * DAY));
         for (const s of data.sites.sites) await getMask(s);
-        const named = !base && landmark ? chosen[0] : undefined;
+        const named = landmark ? chosen[0] : undefined;
         const known = named ? [named, ...data.sites.sites] : data.sites.sites;
-        const customBase = base?.result.horizonMask?.terrainAware && !base.result.site.horizon.file ? base.result : null;
-        const searchMasks = new Map(masks.current);
-        if (customBase?.horizonMask) searchMasks.set(customBase.site.id, customBase.horizonMask);
         let terrainUnavailable = false;
         const resolveTerrain = async (site: ReturnType<typeof coordinateSite>, signal: AbortSignal) => {
           try { return await loadCustomHorizon(site, signal, !terrainUnavailable); }
@@ -301,32 +295,20 @@ export default function MissionPlanner() {
             return null; // Keep the existing explicitly labelled preview when the service is absent.
           }
         };
-        const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: !base && query.location === 'any' ? null : point, startMs: start,
-          known: customBase ? [...known, customBase.site] : known,
-          observerHeight: data.sites.observer_height_m, masks: searchMasks };
+        const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: query.location === 'any' ? null : point, startMs: start,
+          known, observerHeight: data.sites.observer_height_m, masks: new Map(masks.current) };
         let count = 0;
         const update = (done: number, total: number) => {
-          if (done === total) count += total;
+          count = total;
           setProgress(`Checking ${done} / ${total}…`);
         };
-        let found = await searchCandidates(eph, config, controller.signal, update);
-        if (base) {
-          const nearby = locationGrid(point, 50).slice(1);
-          const local = await searchCandidates(eph, { ...config, points: nearby, dates: [start] }, controller.signal, update);
-          const betterDates = found.filter(c => compareCandidates(c, base, point, start) < 0);
-          const betterLocations = local.filter(c => compareCandidates(c, base, point, start) < 0);
-          // Keep both types of improvement visible when both exist.
-          const dateCount = betterLocations.length ? 3 : 5;
-          const locationCount = 5 - Math.min(dateCount, betterDates.length);
-          found = [...betterDates.slice(0, dateCount), ...betterLocations.slice(0, locationCount)].sort((a, b) => compareCandidates(a, b, point, start));
-        }
+        const found = await searchCandidates(eph, config, controller.signal, update);
         if (controller.signal.aborted) return;
         setOptions(found);
-        if (base) setDashboard(null);
-        setSearchNote(base ? `${count} nearby scenarios checked: dates within 7 days or locations within 50 km. ${found.length ? '' : 'No better option found in these samples.'}` : `${count} sampled scenarios checked. ${found.some(c => assessment(c.result, c.targets).good) ? 'Best sampled matches shown.' : 'No sampled scenario meets every target; closest matches shown.'}`);
+        setSearchNote(`${count} sampled scenarios checked. ${found.some(c => assessment(c.result, c.targets).good) ? 'Best sampled matches shown.' : 'No sampled scenario meets every target; closest matches shown.'}`);
         const labels = queryLabels(query);
-        setSearchSummary(base ? 'Nearby dates and locations · ' + days + ' days' : labels.location + ' · ' + labels.landing + ' · ' + labels.duration);
-        if (!base && found[0]) showResult(found[0], data.index, eph);
+        setSearchSummary(labels.location + ' · ' + labels.landing + ' · ' + labels.duration);
+        if (found[0]) showResult(found[0], data.index, eph);
       } else {
         if (start < startCoverage || start + days * DAY > endCoverage) throw new Error(`The full mission must fit within ${isoDate(startCoverage)} and ${isoDate(endCoverage)} UTC.`);
         const site = coordinateSite(point, data.sites.sites);
@@ -371,7 +353,7 @@ export default function MissionPlanner() {
   const toggleLandmarkCompare = (mission: LandingSite, checked: boolean) => {
     chooseLandmark(mission);
     if (!checked) { setSaved(list => list.filter(entry => entry.mission?.id !== mission.id)); return; }
-    void run(false, mission);
+    void run(mission);
   };
   const use = (candidate: Candidate, index?: EphemerisIndex, eph?: EphemerisTable) => {
     showResult(candidate, index, eph);
@@ -410,14 +392,9 @@ export default function MissionPlanner() {
           {terrainNotice}
           <p className="mission-result-coords">{coords(active.result)} · {tz.dateTime(active.result.startMs)} · {(active.result.metrics.intervalHours / 24).toFixed(2).replace(/\.00$/, '')} days</p>
           {origin && <p className="mission-distance"><span>Distance from entered location</span><strong className="mono">{distanceKm(origin, { lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }).toFixed(1)} km</strong></p>}
-          <div className="mission-metrics"><div><span className="sun-text">Sunlight</span><strong>{percent(active.result.metrics.sunlitFraction)}</strong><small>{active.result.metrics.sunlitHours.toFixed(1)} h · target ≥ {active.targets.sunlight}%</small></div><div><span className="earth-text">Earth visible</span><strong>{percent(active.result.metrics.earthVisibleFraction)}</strong><small>{active.result.metrics.earthVisibleHours.toFixed(1)} h · target ≥ {active.targets.earth}%</small></div></div>
+          <ScenarioOverview result={active.result} targets={active.targets} />
           {verdict.failures.length > 0 && <p className="mission-failures">{verdict.failures.map(c => `${c.label}: ${c.actual.toFixed(1)}${c.maximum ? ' h' : '%'} (${c.maximum ? '≤' : '≥'} ${c.target}${c.maximum ? ' h' : '%'} required)`).join(' · ')}</p>}
           <div className="mission-result-actions">
-            <button className="btn" onClick={() => {
-              if (!dashboard) openedFromCompare.current = false;
-              setDashboard('Timeline');
-            }}>View horizon</button>
-            <button className="btn" disabled={busy || terrainPending} onClick={() => void run(true)}>Find better nearby ↗</button>
             <ExportMenu results={terrainPending ? [] : [active.result]} primaryId={active.result.site.id} provenance={provenance} targets={[active.targets]} />
           </div>
           <ScenarioDetails result={active.result} />
@@ -437,6 +414,11 @@ export default function MissionPlanner() {
   </div>;
 
   const displayed = options.length ? options : active ? [active] : saved;
+  const viewedMission = active ?? saved[0];
+  const viewedId = viewedMission ? scenarioKey(viewedMission) : '';
+  const missionChoices = missions.map(({ id, label, candidate: { result } }) => ({
+    value: id, label: `${label} · ${tz.dateTime(result.startMs)} · ${Number((result.metrics.intervalHours / 24).toFixed(3))} d`,
+  }));
   const missionTime = landmark ? comparisonStart(landmark) : null;
   const comparedMission = landmark ? saved.find(entry => entry.mission?.id === landmark.id) : undefined;
   return <div className={`mission-app${chromeReady ? ' mission-ready' : ''}`}>
@@ -460,7 +442,7 @@ export default function MissionPlanner() {
       {error && <button className="mission-icon-button" aria-label="Dismiss error" onClick={() => setError('')}>×</button>}
     </div>}
         <Suspense fallback={<MoonLoading showPlaceholder={showPlaceholder} chromeReady={chromeReady} />}>
-          <Moon compact explorer ephemerisIndex={data?.index} startupReady={startupReady} showPlaceholder={showPlaceholder} chromeReady={chromeReady} onLoadComplete={() => setSceneReady(true)} landmarks={landmarks} onLandmark={chooseLandmark} idleRotate={mapSites.length === 0 && !pick} sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={markerSiteId ?? (query.location !== 'any' ? chosen[0]?.id : undefined) ?? active?.result.site.id ?? ''} onSelect={selectMarker}
+          <Moon compact explorer ephemerisIndex={data?.index} startupReady={startupReady} showPlaceholder={showPlaceholder} chromeReady={chromeReady} onLoadComplete={() => setSceneReady(true)} landmarks={landmarks} onLandmark={chooseLandmark} idleRotate={mapSites.length === 0 && !pick} sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={primaryMarkerId} onSelect={selectMarker}
             onPick={pick && !busy ? point => { setQuery(current => ({ ...current, location: current.location === 'any' ? 'exact' : current.location, lat: point.lat.toFixed(6), lon: point.lon.toFixed(6) })); setLandmark(null); setMarkerScenarioId(null); setPick(false); } : undefined} />
         </Suspense>
         {showLandmark && landmark && missionTime && <aside className="mission-marker-summary" aria-label="Historical or planned mission">
@@ -483,20 +465,38 @@ export default function MissionPlanner() {
         onCompare={() => { openedFromCompare.current = true; setDashboard('Compare'); }} compareRef={compareTrigger} onReset={resetMatches}
         reference={origin ? { point: origin, label: 'entered location' } : active ? { point: { lat: active.result.site.lat_deg, lon: active.result.site.lon_deg }, label: 'open mission' } : null}
         onCompareChange={(candidate, checked) => { if (checked) add(candidate); else setSaved(current => current.filter(entry => scenarioKey(entry) !== scenarioKey(candidate))); }}
-        onOpen={(candidate, trigger) => { dashboardTrigger.current = trigger; openedFromCompare.current = false; use(candidate, data?.index); setDashboard('Results'); }}
+        onOpen={(candidate, trigger) => { dashboardTrigger.current = trigger; openedFromCompare.current = false; setMarkerScenarioId(null); use(candidate, data?.index); setDashboard('Results'); }}
         />}
     </main>
     <footer className="mission-footer"><button className="mission-text-button" onClick={() => setSources(true)}>Sources &amp; methods</button><span>NASA LOLA · SPICE DE440</span><UtcClock /></footer>
     <dialog ref={dialog} className="mission-dashboard" aria-label="Mission details" onCancel={event => { event.preventDefault(); setDashboard(null); }}>
-      <header className="mission-dialog-bar"><div><h2>Mission details</h2>{active && <p className="mission-dialog-sub mono">{fmtLat(active.result.site.lat_deg)} / {fmtLon(active.result.site.lon_deg)}</p>}</div><button className="mission-icon-button" aria-label="Close mission details" onClick={() => setDashboard(null)}>×</button></header>
+      <header className="mission-dialog-bar">
+        <div><h2>Mission details</h2>{viewedMission && <p className="mission-dialog-sub mono">{fmtLat(viewedMission.result.site.lat_deg)} / {fmtLon(viewedMission.result.site.lon_deg)}</p>}</div>
+        {(dashboard === 'Results' || dashboard === 'Timeline') && missionChoices.length > 0 && <div className="mission-dialog-pick">
+          <Select label="Mission" value={viewedId} options={missionChoices} onChange={value => {
+            const next = missions.find(entry => entry.id === value);
+            if (!next || value === viewedId) return;
+            if (viewedMission && missions.some(entry => entry.id === viewedId && !entry.sampled && !entry.saved)) setOriginalMission(viewedMission);
+            setMarkerScenarioId(null);
+            use(next.candidate, data?.index);
+          }} />
+        </div>}
+        <button className="mission-icon-button" aria-label="Close mission details" onClick={() => setDashboard(null)}>×</button>
+      </header>
       <div className="mission-dashboard-tabs" role="group" aria-label="Analysis views">
-        {dashboardTabs.map(tab => <button key={tab} className="mission-text-button" aria-pressed={dashboard === tab} onClick={() => setDashboard(tab)}>{tab}</button>)}
+        {dashboardTabs.map(tab => <button key={tab} className="mission-text-button" aria-pressed={dashboard === tab} onClick={() => {
+          if (tab !== 'Compare' && !active && viewedMission) use(viewedMission, data?.index);
+          setDashboard(tab);
+        }}>{tab}</button>)}
       </div>
       <div className="mission-dashboard-content">
         {dashboard === 'Results' && <>{results}</>}
         {dashboard === 'Compare' && comparison}
-        {dashboard === 'Timeline' && (data ? <TimelinePanel active={active ?? saved[0] ?? null} saved={saved} index={data.index} notice={terrainNotice} terrain={terrainStatus}
-          onChoose={id => { const entry = saved.find(item => String(item.id) === id); if (entry) use(entry, data.index); }} onCompare={() => setDashboard('Compare')} /> : <p>Loading…</p>)}
+        {dashboard === 'Timeline' && (!data ? <p>Loading…</p> : viewedMission ? <>
+          {terrainNotice}
+          <ScenarioTimeline key={viewedId} result={viewedMission.result} missionId={viewedId}
+            missions={missions.map(({ id, label, candidate }) => ({ id, label, result: candidate.result }))} index={data.index} terrain={terrainStatus} />
+        </> : <p>Run an analysis to view the timeline and local horizon.</p>)}
       </div>
     </dialog>
     {sources && <Suspense fallback={<div role="status">Loading sources…</div>}><Sources provenance={provenance} provenanceError={provError} ephIndex={data?.index ?? null} sites={data?.sites.sites} focusMethodId={null} onClose={() => setSources(false)} /></Suspense>}
@@ -535,28 +535,4 @@ function MarkerSummary({ scenario, atLocation, onSelect, onClose, onRemove }: {
       <dd>{deg(series.earthAzDeg[0], 1)} / {deg(series.earthElDeg[0], 1)} / {deg(series.earthClearanceDeg[0], 1)}</dd>
     </dl>
   </aside>;
-}
-
-/** Timeline of the open mission; the compared missions can be switched in from the selector. */
-function TimelinePanel({ active, saved, onChoose, onCompare, index, notice, terrain }: {
-  active: Candidate | null; saved: Saved[]; onChoose: (value: string) => void; onCompare: () => void;
-  index: EphemerisIndex; notice: ReactNode; terrain: TerrainState;
-}) {
-  const tz = useTimeZone();
-  if (!active) return <p>Run an analysis to view the timeline and local horizon.</p>;
-  const describe = (candidate: Candidate) => coords(candidate.result) + ' · ' + tz.date(candidate.result.startMs) + ' · ' + Number((candidate.result.metrics.intervalHours / 24).toFixed(3)) + ' d';
-  const match = saved.find(entry => scenarioKey(entry) === scenarioKey(active));
-  const options = [
-    ...(match ? [] : [{ value: 'open', label: 'Open mission · ' + describe(active) }]),
-    ...saved.map((entry, i) => ({ value: String(entry.id), label: (entry.mission ? entry.result.site.short : 'Scenario ' + (i + 1)) + ' · ' + describe(entry) })),
-  ];
-  return <>
-    {saved.length > 0 && <div className="tl-mission-row">
-      <div className="mission-select-field mission-timeline-pick"><span>Compared missions</span>
-        <Select label="Mission on timeline" value={match ? String(match.id) : 'open'} options={options} onChange={value => { if (value !== 'open') onChoose(value); }} /></div>
-      <button type="button" className="btn small" onClick={onCompare}>Compare table</button>
-    </div>}
-    {notice}
-    <ScenarioTimeline key={active.result.site.id + ':' + active.result.startMs + ':' + active.result.endMs} result={active.result} index={index} terrain={terrain} />
-  </>;
 }

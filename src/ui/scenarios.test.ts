@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { analyzeSite, DEFAULT_LANDER, flatHorizon, makeSiteContext } from '../science';
 import { coordinateSite, DAY, DEFAULT_TARGETS, type Candidate } from '../science/planner';
 import { shippedEphemeris } from '../science/__fixtures__/shipped';
-import { horizonModel, scenarioKey } from './scenarios';
+import { horizonModel, missionEntries, scenarioKey } from './scenarios';
 
 const startMs = Date.UTC(2026, 11, 1);
 const result = analyzeSite(
@@ -47,5 +47,15 @@ describe('scenario identity and model labels', () => {
     expect(horizonModel({ ...result, terrainAware: true, horizonMask: {
       ...flatHorizon(), terrainAware: true, resolutionM: 1895,
     } })).toBe('Regional LOLA');
+  });
+
+  it('keeps distinct mission choices for two landing windows at the same site', () => {
+    const later = { ...candidate, result: { ...result, startMs: startMs + DAY, endMs: result.endMs + DAY }, id: 12 };
+    const entries = missionEntries([candidate, later], [later], [later]);
+    expect(entries.map(({ id, label }) => [id, label])).toEqual([
+      [scenarioKey(candidate), 'Site 1'], [scenarioKey(later), 'Site 2'],
+    ]);
+    expect(entries[1].candidate.result.startMs).toBe(startMs + DAY);
+    expect(entries[1].saved?.id).toBe(12);
   });
 });

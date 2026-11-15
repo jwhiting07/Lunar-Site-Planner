@@ -79,6 +79,8 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   primaryRef.current = primaryId;
   const savedRef = useRef(savedSiteIds);
   savedRef.current = savedSiteIds;
+  const markerLabelsRef = useRef(markerLabels);
+  markerLabelsRef.current = markerLabels;
   const illumination = useRef(inst);
   illumination.current = inst;
   const applyLiveLighting = useRef<(sun: Vec3, earth: Vec3) => void>(() => {});
@@ -353,7 +355,7 @@ ${shader.fragmentShader}`.replace('#include <color_fragment>', `
           const edge = previousPosition === 'offscreen' ? 0.94 : 0.96;
           const onScreen = Math.abs(screen.x) < edge && Math.abs(screen.y) < edge && screen.z < 1;
           const visible = facing && onScreen;
-          const keepMarked = compact && explorer && savedRef.current?.has(id);
+          const keepMarked = compact && explorer && (savedRef.current?.has(id) || markerLabelsRef.current?.has(id));
           pin.hidden = !visible && !keepMarked;
           const position = facing ? (onScreen ? 'surface' : 'offscreen') : 'behind';
           if (previousPosition !== position) {
@@ -716,7 +718,7 @@ ${shader.fragmentShader}`.replace('#include <color_fragment>', `
       </div>}
       {!local && sites.map((site, i) => <button key={site.id} ref={el => { if (el) pins.current.set(site.id, el); else pins.current.delete(site.id); }}
         className={`moon-pin${site.id === primaryId ? ' selected' : ''}${savedSiteIds?.has(site.id) ? ' saved' : ''}`} hidden
-        aria-label={savedSiteIds?.has(site.id) ? `Saved: ${markerLabels?.get(site.id) ?? site.short}` : `Select ${site.short}`}
+        aria-label={`${savedSiteIds?.has(site.id) ? 'Saved:' : 'Select'} ${markerLabels?.get(site.id) ?? site.short}`}
         aria-pressed={site.id === primaryId}
         title={site.short} onClick={event => { onSelect(site.id); if (!compact || event.currentTarget.dataset.position !== 'surface') focus.current(site.id); }}>
         {compact && explorer ? <>

@@ -74,8 +74,10 @@ function seriesPath(t: Float64Array, v: Float64Array, tx: (t: number) => number,
   return d;
 }
 
+export interface TimelineMission { id: string; label: string; result: AnalysisResult }
+
 interface Props {
-  results: AnalysisResult[];
+  missions: TimelineMission[];
   primaryId: string;
   /** Which charts to draw: Sun/Earth visibility bars, battery and power, or both. */
   part?: 'visibility' | 'power' | 'all';
@@ -89,7 +91,7 @@ function winTitle(label: string, w: TimeWindow, tz: TimeZoneValue): string {
   return `${label}: ${tz.dateTime(w.startMs)} to ${tz.dateTime(w.endMs)}, ${num(windowHours(w), 1)} h${w.truncatedStart || w.truncatedEnd ? ' (cut by the interval)' : ''}`;
 }
 
-function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, cursorMs, onCursor }: Props) {
+function TimelinesImpl({ missions, primaryId, part = 'all', startMs, endMs, cursorMs, onCursor }: Props) {
   const tz = useTimeZone();
   const selection = useScrubSelection();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -99,18 +101,18 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
   const showRows = part !== 'power';
   const showPower = part !== 'visibility';
   const layout = useMemo(() => {
-    const rowsH = showRows ? results.length * (2 * BAR_H + BAR_GAP + SITE_GAP) : 0;
+    const rowsH = showRows ? missions.length * (2 * BAR_H + BAR_GAP + SITE_GAP) : 0;
     const chart1Y = AXIS_H + rowsH + (showRows ? 14 : 6);
     const batH = 86;
     const powY = chart1Y + batH + 22;
     const powH = 58;
     return { rowsH, chart1Y, batH, powY, powH, total: showPower ? powY + powH + 8 : AXIS_H + rowsH + 8 };
-  }, [results.length, showRows, showPower]);
+  }, [missions.length, showRows, showPower]);
 
   const staticPart = useMemo(() => {
     const ticks = makeTicks(startMs, endMs);
     const x = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
-    const primary = results.find((r) => r.site.id === primaryId) ?? results[0];
+    const primary = missions.find(mission => mission.id === primaryId) ?? missions[0];
     const { chart1Y, batH, powY, powH, total } = layout;
     const bars = (ws: TimeWindow[], y: number, cls: string, label: string) =>
       ws.map((w, i) => (
@@ -124,8 +126,8 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
     let cap = 0;
     let pMax = 1;
     if (primary && showPower) {
-      const s = primary.series;
-      cap = primary.params.batteryCapacityWh;
+      const s = primary.result.series;
+      cap = primary.result.params.batteryCapacityWh;
       const bmax = cap > 0 ? cap : 1;
       for (let i = 0; i < s.powerW.length; i++) if (s.powerW[i] > pMax) pMax = s.powerW[i];
       batteryPath = seriesPath(s.tMs, s.batteryWh, x, (v) => chart1Y + batH - (v / bmax) * batH);
@@ -157,27 +159,29 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
           ))}
           <text x={LX - 28} y={AXIS_H - 8} textAnchor="end">UTC</text>
         </g>
-        {showRows && results.map((r, idx) => {
+        {showRows && missions.map(({ id, label, result: r }, idx) => {
           const y0 = AXIS_H + 6 + idx * (2 * BAR_H + BAR_GAP + SITE_GAP);
+          const left = x(r.startMs), width = x(r.endMs) - left;
           return (
-            <g key={r.site.id}>
-              <text x={LX - 8} y={y0 + BAR_H - 2} textAnchor="end" className={r.site.id === primaryId ? 'row-label primary' : 'row-label'}>
-                {r.site.short}
+            <g key={id}>
+              <title>{label} · {tz.dateTime(r.startMs)} to {tz.dateTime(r.endMs)}</title>
+              <text x={LX - 8} y={y0 + BAR_H - 2} textAnchor="end" className={id === primaryId ? 'row-label primary' : 'row-label'}>
+                {label.length > 23 ? `${label.slice(0, 22)}…` : label}
               </text>
               <text x={LX - 8} y={y0 + 2 * BAR_H + BAR_GAP - 2} textAnchor="end" className="axis-text-small">
                 Sun / Earth
               </text>
-              <rect x={LX} y={y0} width={PWID} height={BAR_H} className="bar-track" />
-              <rect x={LX} y={y0 + BAR_H + BAR_GAP} width={PWID} height={BAR_H} className="bar-track" />
-              {bars(r.metrics.sunWindows, y0, 'bar-sun', `${r.site.short} Sun visible`)}
-              {bars(r.metrics.earthWindows, y0 + BAR_H + BAR_GAP, 'bar-earth', `${r.site.short} Earth line of sight`)}
+              <rect x={left} y={y0} width={width} height={BAR_H} className="bar-track" />
+              <rect x={left} y={y0 + BAR_H + BAR_GAP} width={width} height={BAR_H} className="bar-track" />
+              {bars(r.metrics.sunWindows, y0, 'bar-sun', `${label} Sun visible`)}
+              {bars(r.metrics.earthWindows, y0 + BAR_H + BAR_GAP, 'bar-earth', `${label} Earth line of sight`)}
             </g>
           );
         })}
         {showPower && primary && (
           <g>
             <text x={LX - 8} y={chart1Y + 10} textAnchor="end" className="row-label primary">Battery energy</text>
-            <text x={LX - 8} y={chart1Y + 24} textAnchor="end" className="axis-text-small">{primary.site.short}</text>
+            <text x={LX - 8} y={chart1Y + 24} textAnchor="end" className="axis-text-small">{primary.label.length > 23 ? `${primary.label.slice(0, 22)}…` : primary.label}</text>
             <text x={LX - 8} y={chart1Y + 38} textAnchor="end" className="axis-text-small">{num(cap, 0)} Wh</text>
             <text x={LX - 8} y={chart1Y + batH} textAnchor="end" className="axis-text-small">0</text>
             <line x1={LX} x2={RX} y1={chart1Y} y2={chart1Y} className="cap-line" />
@@ -194,7 +198,7 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
         )}
       </g>
     );
-  }, [results, primaryId, startMs, endMs, layout, tz, showRows, showPower]);
+  }, [missions, primaryId, startMs, endMs, layout, tz, showRows, showPower]);
 
   const setFromEvent = (e: RPointerEvent<SVGSVGElement>) => {
     const el = svgRef.current;
@@ -207,6 +211,8 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
   };
 
   const cx = tx(cursorMs);
+  const cursorInRange = cursorMs >= startMs && cursorMs <= endMs;
+  const chartTime = clamp(cursorMs, startMs, endMs);
   const Hh = layout.total;
 
   return (
@@ -219,14 +225,14 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
         tabIndex={0}
         aria-valuemin={startMs}
         aria-valuemax={endMs}
-        aria-valuenow={cursorMs}
-        aria-valuetext={tz.dateTime(cursorMs)}
-        aria-label="Timelines of Sun visibility, Earth line of sight, battery energy and array power. Click or drag to set the cursor time."
+        aria-valuenow={chartTime}
+        aria-valuetext={cursorInRange ? tz.dateTime(cursorMs) : 'Cursor outside this chart’s interval'}
+        aria-label={`${showRows ? 'Mission visibility' : 'Battery energy and array power'}. Click or drag to set the cursor time.`}
         onKeyDown={(e) => {
           const step = e.shiftKey ? DAY_MS : HOUR_MS;
           const next = e.key === 'Home' ? startMs : e.key === 'End' ? endMs
-            : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? cursorMs - step
-              : e.key === 'ArrowRight' || e.key === 'ArrowUp' ? cursorMs + step : null;
+            : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? chartTime - step
+              : e.key === 'ArrowRight' || e.key === 'ArrowUp' ? chartTime + step : null;
           if (next === null) return;
           e.preventDefault();
           onCursor(clamp(next, startMs, endMs));
@@ -252,12 +258,12 @@ function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, curso
         onPointerCancel={() => { dragging.current = null; selection.stop(); }}
         onLostPointerCapture={() => { dragging.current = null; selection.stop(); }}
       >
-        {results.length === 0 ? (
+        {missions.length === 0 ? (
           <text x={LX} y={40} className="axis-text">Computing{'…'}</text>
         ) : (
           <>
             {staticPart}
-            <line x1={cx} x2={cx} y1={AXIS_H - 2} y2={Hh} className="cursor-line" />
+            {cursorInRange && <line x1={cx} x2={cx} y1={AXIS_H - 2} y2={Hh} className="cursor-line" />}
           </>
         )}
       </svg>

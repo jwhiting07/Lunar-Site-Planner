@@ -35,8 +35,6 @@ body:has(.mission-app) { min-width: 0; }
 .mission-editor label { display: flex; flex-direction: column; gap: 8px; color: var(--tx1); font-size: 12px; min-width: 0; }
 .mission-editor input { width: 100%; min-width: 0; border: 0; border-bottom: 1px solid var(--line); min-height: 32px; padding: 4px 0; background: transparent; font: 14px var(--mono); color: var(--tx0); color-scheme: dark; }
 .mission-editor input::placeholder { color: #7e8792; }
-.mission-editor-actions { display: flex; justify-content: flex-end; }
-.mission-editor-actions button { color: var(--tx0); }
 .mission-pick { justify-self: stretch; }
 .mission-data summary { cursor: pointer; font-size: 12px; color: var(--tx1); }
 .mission-known-sites summary { list-style: none; }
@@ -69,8 +67,8 @@ body:has(.mission-app) { min-width: 0; }
 .mission-map .moon-pin.saved { color: var(--earth); background: transparent; }
 .mission-map .moon-pin.saved { z-index: 2; }
 .mission-map .moon-pin.selected { z-index: 3; }
-.moon-pin.saved:is([data-position=behind], [data-position=offscreen]) .moon-callout-dot { background: var(--bg0); border: 1px solid currentColor; }
-.moon-pin.saved:is([data-position=behind], [data-position=offscreen]) .moon-leader polyline { stroke-dasharray: 3 2; }
+.moon-pin:is([data-position=behind], [data-position=offscreen]) .moon-callout-dot { background: var(--bg0); border: 1px solid currentColor; }
+.moon-pin:is([data-position=behind], [data-position=offscreen]) .moon-leader polyline { stroke-dasharray: 3 2; }
 .mission-map .moon-pin:hover { color: var(--earth); outline: none; }
 .mission-map .moon-pin:focus-visible { outline: 1px solid var(--earth); outline-offset: 3px; }
 .moon-callout-dot { position: absolute; left: 9px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
@@ -127,8 +125,11 @@ body:has(.mission-app) { min-width: 0; }
 .mission-dashboard { background: var(--bg1); color: var(--tx0); border: 1px solid var(--line); border-radius: 0; width: min(1120px, calc(100vw - 48px)); max-height: calc(100svh - 48px); padding: 0; }
 .mission-dashboard[open] { display: flex; flex-direction: column; }
 .mission-dashboard::backdrop { background: #000a; }
-.mission-dialog-bar { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 24px 12px; border-bottom: 1px solid var(--line); }
+.mission-dialog-bar { display: flex; align-items: center; gap: 12px; padding: 14px 24px 12px; border-bottom: 1px solid var(--line); }
 .mission-dialog-bar h2 { font-size: 15px; font-weight: 500; }
+.mission-dialog-bar > .mission-icon-button { margin-left: auto; }
+.mission-dialog-pick { flex: 0 1 440px; min-width: 0; margin-inline-start: clamp(4px, 2vw, 20px); }
+.mission-dialog-pick .select-trigger > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mission-dashboard-tabs { display: flex; gap: 24px; padding: 0 24px; border-bottom: 1px solid var(--line); }
 .mission-dashboard-tabs button { padding: 14px 0 12px; border-bottom: 2px solid transparent; }
 .mission-dashboard-tabs button[aria-pressed=true] { border-bottom-color: var(--earth); color: var(--tx0); }
@@ -140,11 +141,23 @@ body:has(.mission-app) { min-width: 0; }
 .mission-good { color: #b7cbbd; }
 .mission-bad, .mission-failures, .mission-error { color: #e8a19a; }
 .mission-result-coords { margin-top: 12px; font: 12px var(--mono); color: var(--tx1); }
-.mission-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 28px 0; max-width: 560px; }
+.mission-results-overview { display: grid; gap: 24px; margin: 24px 0; }
+.mission-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 18px 24px; }
 .mission-metrics > div { display: flex; flex-direction: column; gap: 6px; }
 .mission-metrics span { font-size: 12px; }
 .mission-metrics strong { font: 24px var(--mono); }
 .mission-metrics small { color: var(--tx1); font-size: 11px; }
+.mission-result-track { position: relative; height: 6px; background: var(--bg2); }
+.mission-result-fill { height: 100%; background: currentColor; }
+.mission-result-target { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--tx0); transform: translateX(-50%); }
+.mission-energy { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 18px 24px; border-top: 1px solid var(--line); padding-top: 18px; }
+.mission-energy h3 { font-size: 13px; font-weight: 500; }
+.mission-energy-budget, .mission-energy-battery { display: grid; align-content: start; gap: 8px; }
+.mission-energy-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 14ch; align-items: center; gap: 8px; font-size: 12px; }
+.mission-energy-row > :last-child { text-align: right; }
+.mission-energy-battery { font-size: 12px; color: var(--tx1); }
+.mission-energy-battery h3, .mission-energy-battery strong, .mission-energy-battery .mission-result-track { color: var(--tx0); }
+.mission-energy-battery strong { font-size: 18px; font-weight: 400; }
 .mission-failures { font-size: 12px; margin-bottom: 18px; }
 .mission-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .mission-terrain-status { color: var(--tx1); font-size: 12px; margin: 12px 0; }
@@ -267,7 +280,6 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 @media (max-width: 1100px) { .mission-options { animation-name: mission-rise-narrow; } }
 @keyframes mission-rise-narrow { from { max-height: 0; opacity: 0; } to { max-height: 42vh; opacity: 1; } }
 .mission-result-actions { position: relative; z-index: 2; }
-.mission-timeline-pick { max-width: 520px; }
 
 /* ---------- export menu ---------- */
 .export-trigger { display: inline-flex; align-items: center; gap: 8px; }
@@ -282,8 +294,6 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 
 /* ---------- timeline tab ---------- */
 .mission-dialog-sub { margin: 4px 0 0; font-size: 12px; color: var(--tx1); }
-.tl-mission-row { display: flex; align-items: flex-end; gap: 16px; }
-.tl-mission-row .mission-timeline-pick { flex: 1; }
 .tl .timebar { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 12px 24px; margin: 0; }
 .tl .time-now { width: auto; }
 .tl .time-val { font: 500 18px var(--mono); white-space: nowrap; }
@@ -317,11 +327,6 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .sky-details dl { font-size: 12px; }
 .obstruction line { stroke: #e8a19a; stroke-width: 1; stroke-dasharray: 3 3; }
 .obstruction text { fill: #e8a19a; font: 10px var(--mono); }
-.tl-power { border: 1px solid var(--line); }
-.tl-power > summary { padding: 14px 18px; font-size: 14px; font-weight: 500; color: var(--tx0); }
-.tl-power > summary small { font-size: 12px; font-weight: 400; color: var(--tx1); }
-.tl-power > summary::after { margin-left: auto; }
-.tl-power[open] > summary { border-bottom: 1px solid var(--line-soft); }
 @media (max-width: 900px) {
   .tl-sky { grid-template-columns: minmax(0, 1fr); }
   .tl .timebar { grid-template-columns: minmax(0, 1fr); }
