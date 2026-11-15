@@ -1,0 +1,4202 @@
+{
+  "reviewed_utc": "2026-11-15T18:35:42.149929+00:00",
+  "packages": [
+    {
+      "name": "@babel/code-frame",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/code-frame",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.29.7.tgz",
+      "integrity": "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==",
+      "homepage": "https://babel.dev/docs/en/next/babel-code-frame",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-code-frame"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/code-frame/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/compat-data",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/compat-data",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.29.7.tgz",
+      "integrity": "sha512-locTkQyKvwIEgBzVrn8693ebc97F2U8ZHjbXwDXJ5Fn2TCpNwTlKcaKLkdHop5c/icOFE7qt7Q9JC5hnKNa6Gg==",
+      "homepage": null,
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-compat-data"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/compat-data/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/core",
+      "version": "7.29.13",
+      "path": "node_modules/@babel/core",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.13",
+      "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.29.13.tgz",
+      "integrity": "sha512-j1nvOQCZYSgp7HLmisnCXFTpVvFODiijQ9QHkORfGKWH6YDtskTEeCJS7eV545GZ9UBzrq0e2xsOd5QQ5PjIqw==",
+      "homepage": "https://babel.dev/docs/en/next/babel-core",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-core"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/core/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/generator",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/generator",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-7.29.14.tgz",
+      "integrity": "sha512-qSY56jgW5JnSXzuekLVil6zaOQxOCtOHidr65KkaMBw772IuAY28Qx4ZykAcDn8+FRF15qk80XzKwgSc/RYW6g==",
+      "homepage": "https://babel.dev/docs/en/next/babel-generator",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-generator"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/generator/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-compilation-targets",
+      "version": "7.29.13",
+      "path": "node_modules/@babel/helper-compilation-targets",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.13",
+      "resolved": "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.29.13.tgz",
+      "integrity": "sha512-8WxJ4/Vmes3ghacj8VOJy3NW8eyHiFY/4thU/LSBuBE470+igjR/j1ZTNn8fV5VdNrLx6iXUwig526UdOvfP0w==",
+      "homepage": null,
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-compilation-targets"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-compilation-targets/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-globals",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/helper-globals",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-globals/-/helper-globals-7.29.7.tgz",
+      "integrity": "sha512-3nQVUAtvkKH9zahfWgw96Jc/uFOmjACE1kQz82E2lqWmHBgjzbNlsC22nuQTfahmWeQtTq5nQ/4Nnd2A1wj4zA==",
+      "homepage": null,
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-globals"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-globals/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-module-imports",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/helper-module-imports",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.29.7.tgz",
+      "integrity": "sha512-ejHwrQQYcm9xnTivShn2IDOlIzInN34AXskvq9QicvCtEzq1Vzclu/tKF8Jq1Cg8JG2GL6/EmjgsCT7lXepE3g==",
+      "homepage": "https://babel.dev/docs/en/next/babel-helper-module-imports",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-module-imports"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-module-imports/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-module-transforms",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/helper-module-transforms",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.29.14.tgz",
+      "integrity": "sha512-2XDvQVd9JESaOgGc4jT2/jquTAO7ppA5noTZQqH+MmZ89yjCzScLwtCPbWtkPZylL+TLWR49IwWmk+QkRR4GsA==",
+      "homepage": "https://babel.dev/docs/en/next/babel-helper-module-transforms",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-module-transforms"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-module-transforms/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-plugin-utils",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/helper-plugin-utils",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.29.7.tgz",
+      "integrity": "sha512-G7sHYigPY17oO5SYWnfD/0MTBwVR781S/JI643e/JhUYgVgWE/61SoW3NH9KWUKyKq5LVh3npif99Wkt6j86Jw==",
+      "homepage": "https://babel.dev/docs/en/next/babel-helper-plugin-utils",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-plugin-utils"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-plugin-utils/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-string-parser",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/helper-string-parser",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.29.14.tgz",
+      "integrity": "sha512-CXvKMFvM80ihI7Vox9jb+kQjnyjESQNPM+vB7U0Zz6TWuZA+Z/FL0QPMH300h33qJtIx+REeBhXqWOPW48TcAQ==",
+      "homepage": "https://babel.dev/docs/en/next/babel-helper-string-parser",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-string-parser"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-string-parser/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/helper-validator-identifier",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.29.7.tgz",
+      "integrity": "sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==",
+      "homepage": null,
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-validator-identifier"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-validator-identifier/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helper-validator-option",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/helper-validator-option",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.29.7.tgz",
+      "integrity": "sha512-N9ZErrD+yW5geCDtBqnOoxmR8+tNKiGuxKlDpuJxfsqpa2dFcexaziGAE/qoHLiDDreVNMupxGmSoNlyvsA3gw==",
+      "homepage": null,
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helper-validator-option"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helper-validator-option/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/helpers",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/helpers",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/helpers/-/helpers-7.29.14.tgz",
+      "integrity": "sha512-6E3Mi1r0B0umq6vmZa4/78q+64fqO2YY0THUdjDPKUCKhNb0yQy5NQIaPHCSD3ryTgiTss//P4JsWS80AsZ6LQ==",
+      "homepage": "https://babel.dev/docs/en/next/babel-helpers",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-helpers"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/helpers/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/parser",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/parser",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.29.14.tgz",
+      "integrity": "sha512-VL220vXuyO2z3rNIQwY7ftj9UwpqOt+33sH+sBWkOekbsSR2g7EEMnOx24ZlCH0xOA3DM/33SifVFGbnJD8r/w==",
+      "homepage": "https://babel.dev/docs/en/next/babel-parser",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-parser"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/parser/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/plugin-transform-react-jsx-self",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/plugin-transform-react-jsx-self",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-self/-/plugin-transform-react-jsx-self-7.29.7.tgz",
+      "integrity": "sha512-TL0hMc9xzy86VD31nUiwzd5otRAcyEPcsegCxolO0PvcXuH1v0kECe/UIznYFihpkvU5wg/jk4v0TTEFfm53fw==",
+      "homepage": "https://babel.dev/docs/en/next/babel-plugin-transform-react-jsx-self",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-plugin-transform-react-jsx-self"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/plugin-transform-react-jsx-self/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/plugin-transform-react-jsx-source",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/plugin-transform-react-jsx-source",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-source/-/plugin-transform-react-jsx-source-7.29.7.tgz",
+      "integrity": "sha512-06IyK09H3wi4cGbhDBwp5gUGo0IKtnYa8tyTiephirPCK6fbobVGiXMMI5zLQ4aKEYP3wZ3ArU44o+8KMrSG/Q==",
+      "homepage": "https://babel.dev/docs/en/next/babel-plugin-transform-react-jsx-source",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-plugin-transform-react-jsx-source"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/plugin-transform-react-jsx-source/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/template",
+      "version": "7.29.7",
+      "path": "node_modules/@babel/template",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.29.7.tgz",
+      "integrity": "sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==",
+      "homepage": "https://babel.dev/docs/en/next/babel-template",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-template"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/template/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/traverse",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/traverse",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-7.29.14.tgz",
+      "integrity": "sha512-RAdQJrBgmIH1FWvN0X+1hoDxzMzlP4cv/1Zi4dn4tG1H0cTb+rw7CzUxQJhp1f4ANd8j5vH3fy8BAWFGkBDEsA==",
+      "homepage": "https://babel.dev/docs/en/next/babel-traverse",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-traverse"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/traverse/LICENSE"
+      ]
+    },
+    {
+      "name": "@babel/types",
+      "version": "7.29.14",
+      "path": "node_modules/@babel/types",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.29.14",
+      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.29.14.tgz",
+      "integrity": "sha512-UjI/dKmwJwT9pOszJitq2G6EObZPnsZUfdCr92z2TlF3EZK9J3EdfOKUrCzHl6wFthbzwhzl1Soc/UIwxRiq6w==",
+      "homepage": "https://babel.dev/docs/en/next/babel-types",
+      "author": "The Babel Team (https://babel.dev/team)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/babel/babel.git",
+        "directory": "packages/babel-types"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@babel/types/LICENSE"
+      ]
+    },
+    {
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/aix-ppc64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.25.12.tgz",
+      "integrity": "sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/android-arm",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/android-arm",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.25.12.tgz",
+      "integrity": "sha512-VJ+sKvNA/GE7Ccacc9Cha7bpS8nyzVv0jdVgwNDaR4gDMC/2TTRc33Ip8qrNYUcpkOHUT5OZ0bUcNNVZQ9RLlg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/android-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/android-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.25.12.tgz",
+      "integrity": "sha512-6AAmLG7zwD1Z159jCKPvAxZd4y/VTO0VkprYy+3N2FtJ8+BQWFXU+OxARIwA46c5tdD9SsKGZ/1ocqBS/gAKHg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/android-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/android-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.25.12.tgz",
+      "integrity": "sha512-5jbb+2hhDHx5phYR2By8GTWEzn6I9UqR11Kwf22iKbNpYrsmRB18aX/9ivc5cabcUiAT/wM+YIZ6SG9QO6a8kg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/darwin-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.25.12.tgz",
+      "integrity": "sha512-N3zl+lxHCifgIlcMUP5016ESkeQjLj/959RxxNYIthIg+CQHInujFuXeWbWMgnTo4cp5XVHqFPmpyu9J65C1Yg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/darwin-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/darwin-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.25.12.tgz",
+      "integrity": "sha512-HQ9ka4Kx21qHXwtlTUVbKJOAnmG1ipXhdWTmNXiPzPfWKpXqASVcWdnf2bnL73wgjNrFXAa3yYvBSd9pzfEIpA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/freebsd-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-gA0Bx759+7Jve03K1S0vkOu5Lg/85dou3EseOGUes8flVOGxbhDDh/iZaoek11Y8mtyKPGF3vP8XhnkDEAmzeg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/freebsd-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.25.12.tgz",
+      "integrity": "sha512-TGbO26Yw2xsHzxtbVFGEXBFH0FRAP7gtcPE7P5yP7wGy7cXK2oO7RyOhL5NLiqTlBh47XhmIUXuGciXEqYFfBQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-arm",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-arm",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.25.12.tgz",
+      "integrity": "sha512-lPDGyC1JPDou8kGcywY0YILzWlhhnRjdof3UlcoqYmS9El818LLfJJc3PXXgZHrHCAKs/Z2SeZtDJr5MrkxtOw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.25.12.tgz",
+      "integrity": "sha512-8bwX7a8FghIgrupcxb4aUmYDLp8pX06rGh5HqDT7bB+8Rdells6mHvrFHHW2JAOPZUbnjUpKTLg6ECyzvas2AQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-ia32",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-ia32",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.25.12.tgz",
+      "integrity": "sha512-0y9KrdVnbMM2/vG8KfU0byhUN+EFCny9+8g202gYqSSVMonbsCfLjUO+rCci7pM0WBEtz+oK/PIwHkzxkyharA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-loong64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-loong64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.25.12.tgz",
+      "integrity": "sha512-h///Lr5a9rib/v1GGqXVGzjL4TMvVTv+s1DPoxQdz7l/AYv6LDSxdIwzxkrPW438oUXiDtwM10o9PmwS/6Z0Ng==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-mips64el",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.25.12.tgz",
+      "integrity": "sha512-iyRrM1Pzy9GFMDLsXn1iHUm18nhKnNMWscjmp4+hpafcZjrr2WbT//d20xaGljXDBYHqRcl8HnxbX6uaA/eGVw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-ppc64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.25.12.tgz",
+      "integrity": "sha512-9meM/lRXxMi5PSUqEXRCtVjEZBGwB7P/D4yT8UG/mwIdze2aV4Vo6U5gD3+RsoHXKkHCfSxZKzmDssVlRj1QQA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-riscv64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.25.12.tgz",
+      "integrity": "sha512-Zr7KR4hgKUpWAwb1f3o5ygT04MzqVrGEGXGLnj15YQDJErYu/BGg+wmFlIDOdJp0PmB0lLvxFIOXZgFRrdjR0w==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-s390x",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-s390x",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.25.12.tgz",
+      "integrity": "sha512-MsKncOcgTNvdtiISc/jZs/Zf8d0cl/t3gYWX8J9ubBnVOwlk65UIEEvgBORTiljloIWnBzLs4qhzPkJcitIzIg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/linux-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/linux-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.25.12.tgz",
+      "integrity": "sha512-uqZMTLr/zR/ed4jIGnwSLkaHmPjOjJvnm6TVVitAa08SLS9Z0VM8wIRx7gWbJB5/J54YuIMInDquWyYvQLZkgw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/netbsd-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-arm64/-/netbsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-xXwcTq4GhRM7J9A8Gv5boanHhRa/Q9KLVmcyXHCTaM4wKfIpWkdXiMog/KsnxzJ0A1+nD+zoecuzqPmCRyBGjg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/netbsd-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.25.12.tgz",
+      "integrity": "sha512-Ld5pTlzPy3YwGec4OuHh1aCVCRvOXdH8DgRjfDy/oumVovmuSzWfnSJg+VtakB9Cm0gxNO9BzWkj6mtO1FMXkQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/openbsd-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-arm64/-/openbsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-fF96T6KsBo/pkQI950FARU9apGNTSlZGsv1jZBAlcLL1MLjLNIWPBkj5NlSz8aAzYKg+eNqknrUJ24QBybeR5A==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/openbsd-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.25.12.tgz",
+      "integrity": "sha512-MZyXUkZHjQxUvzK7rN8DJ3SRmrVrke8ZyRusHlP+kuwqTcfWLyqMOE3sScPPyeIXN/mDJIfGXvcMqCgYKekoQw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/openharmony-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/openharmony-arm64/-/openharmony-arm64-0.25.12.tgz",
+      "integrity": "sha512-rm0YWsqUSRrjncSXGA7Zv78Nbnw4XL6/dzr20cyrQf7ZmRcsovpcRBdhD43Nuk3y7XIoW2OxMVvwuRvk9XdASg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/sunos-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/sunos-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.25.12.tgz",
+      "integrity": "sha512-3wGSCDyuTHQUzt0nV7bocDy72r2lI33QL3gkDNGkod22EsYl04sMf0qLb8luNKTOmgF/eDEDP5BFNwoBKH441w==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/win32-arm64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/win32-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.25.12.tgz",
+      "integrity": "sha512-rMmLrur64A7+DKlnSuwqUdRKyd3UE7oPJZmnljqEptesKM8wx9J8gx5u0+9Pq0fQQW8vqeKebwNXdfOyP+8Bsg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/win32-ia32",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/win32-ia32",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.25.12.tgz",
+      "integrity": "sha512-HkqnmmBoCbCwxUKKNPBixiWDGCpQGVsrQfJoVGYLPT41XWF8lHuE5N6WhVia2n4o5QK5M4tYr21827fNhi4byQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@esbuild/win32-x64",
+      "version": "0.25.12",
+      "path": "node_modules/@esbuild/win32-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.25.12.tgz",
+      "integrity": "sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/evanw/esbuild.git"
+      },
+      "notice_basis": "related upstream package",
+      "notice_files": [
+        "node_modules/esbuild/LICENSE.md"
+      ]
+    },
+    {
+      "name": "@jridgewell/gen-mapping",
+      "version": "0.3.13",
+      "path": "node_modules/@jridgewell/gen-mapping",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.3.13",
+      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
+      "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==",
+      "homepage": "https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping",
+      "author": "Justin Ridgewell <justin@ridgewell.name>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jridgewell/sourcemaps.git",
+        "directory": "packages/gen-mapping"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@jridgewell/gen-mapping/LICENSE"
+      ]
+    },
+    {
+      "name": "@jridgewell/remapping",
+      "version": "2.3.5",
+      "path": "node_modules/@jridgewell/remapping",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.3.5",
+      "resolved": "https://registry.npmjs.org/@jridgewell/remapping/-/remapping-2.3.5.tgz",
+      "integrity": "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==",
+      "homepage": "https://github.com/jridgewell/sourcemaps/tree/main/packages/remapping",
+      "author": "Justin Ridgewell <justin@ridgewell.name>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jridgewell/sourcemaps.git",
+        "directory": "packages/remapping"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@jridgewell/remapping/LICENSE"
+      ]
+    },
+    {
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.3",
+      "path": "node_modules/@jridgewell/resolve-uri",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.3.tgz",
+      "integrity": "sha512-lhTtjtoEArWBjismtfS761S9Hlyn+nIZqOZVYoZ1Xn82PMNMVnk+jj/NhC4fAXGTs7ydONcJiR5vyQBTMDu27g==",
+      "homepage": null,
+      "author": "Justin Ridgewell <justin@ridgewell.name>",
+      "contributors": null,
+      "repository": "https://github.com/jridgewell/resolve-uri",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@jridgewell/resolve-uri/LICENSE"
+      ]
+    },
+    {
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "path": "node_modules/@jridgewell/sourcemap-codec",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.6.0",
+      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.6.0.tgz",
+      "integrity": "sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==",
+      "homepage": "https://github.com/jridgewell/sourcemaps/tree/main/packages/sourcemap-codec",
+      "author": "Justin Ridgewell <justin@ridgewell.name>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jridgewell/sourcemaps.git",
+        "directory": "packages/sourcemap-codec"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@jridgewell/sourcemap-codec/LICENSE"
+      ]
+    },
+    {
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "path": "node_modules/@jridgewell/trace-mapping",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.3.31",
+      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
+      "integrity": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==",
+      "homepage": "https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping",
+      "author": "Justin Ridgewell <justin@ridgewell.name>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jridgewell/sourcemaps.git",
+        "directory": "packages/trace-mapping"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@jridgewell/trace-mapping/LICENSE"
+      ]
+    },
+    {
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.0-beta.27",
+      "path": "node_modules/@rolldown/pluginutils",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.0.0-beta.27",
+      "resolved": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.27.tgz",
+      "integrity": "sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rolldown/rolldown.git",
+        "directory": "packages/pluginutils"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@rolldown/pluginutils/LICENSE"
+      ]
+    },
+    {
+      "name": "@rollup/rollup-android-arm-eabi",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-android-arm-eabi",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.68.3.tgz",
+      "integrity": "sha512-mqfypgH/liYjaSCoPI4erckUcROgZtmFUUmyOJ05oyayi/tVqOEYAzWP7ufqCoCT3xB31Fw4XIVO/jX42hYvKA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-android-arm64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-android-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.68.3.tgz",
+      "integrity": "sha512-5tY+GC/1gpt79cKS2DQzu6iD824j6BmI4q5Zb6qftZ4kWqIQmvR3DD4eJ2Gclu6/nVMYDk2IVpqxypWOiAuWJg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-android-x64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-android-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-x64/-/rollup-android-x64-4.68.3.tgz",
+      "integrity": "sha512-nDBcQ/o3PMmGxmAzGBJFn+n1rb83Va9WSdFIq1AHmlEF3tuibVsyJ3kG5x13r7VIy6WI8SvzCdHVNSlSDIdj8w==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-darwin-arm64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-darwin-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.68.3.tgz",
+      "integrity": "sha512-dra5zl0QWKkIkaMgNDNPC19gkMlPAfAf41yWlkGztXMIvUQrX9XWZFQRw7abhH3nks+XZGQpybINAxT2pKdFew==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-darwin-x64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-darwin-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.68.3.tgz",
+      "integrity": "sha512-xo5xeo/AjEB/ArzQjGn0JRDZuybZicQ5O3VPfko6ocH1li/qNrN4p5+R/WgjavzRz6UwAOaqsau7VvRQA6i6AA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-freebsd-arm64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-freebsd-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.68.3.tgz",
+      "integrity": "sha512-zdckkcxHDEEKyDbC1t21DeaaiKGymxbkBU9c3zyfaaz+8N96ItJw4nmzHhZF+Mukgt906fnf2tsc90pVyStuHA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-freebsd-x64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-freebsd-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.68.3.tgz",
+      "integrity": "sha512-9oXqI7g/ycEz7TyicdGBC4sL6PfWMXAx8u15f/nd7lYkCLJd8U8VdBfbpc4SSnRBU/e7aPALve3mhzasGDeCYg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-arm-gnueabihf",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-arm-gnueabihf",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.68.3.tgz",
+      "integrity": "sha512-hbgT4NlaOELE3D5UUzSqF+OFgwz4Scvo2SQD9nZJUFjdIsg9Kg3FabQauUxkHKY9N5yjNXfXRRmiKNN4JpLmFA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-arm-musleabihf",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-arm-musleabihf",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.68.3.tgz",
+      "integrity": "sha512-yECcXZ/Bl+JVRhLFgld42rYrXgPdE0LtySGAmmmH6OtkaJM17A4cWG/eCzDymMVb52/jZjW0R54YrTHj4xXlSA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-arm64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-arm64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.68.3.tgz",
+      "integrity": "sha512-q4Q4/B7wyqM+TFqY5tJYQlaz5+ksGopcRmMeMdu4q6eaPK7N1PymTjIaH5LL32mMJBqIzpRof7BhlYLim5JgNQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-arm64-musl",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-arm64-musl",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.68.3.tgz",
+      "integrity": "sha512-Ich3TGl/7GqhQ6G6jVPzgGQGJjd3E5hECxSVanPYchy6Vwcq+WI8wG/gmEMilHNy+ZYCR6U8EN50EejG3TaIgw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-loong64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-loong64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-gnu/-/rollup-linux-loong64-gnu-4.68.3.tgz",
+      "integrity": "sha512-URBmOhwv4Y0Hi5Hhxc3cmqZLtQlx55DOs5PUhhITDC3zu0qwAfhcNAFAIwAhOUdA6NFVEck07CNZX6cBEs1vTg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-loong64-musl",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-loong64-musl",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-musl/-/rollup-linux-loong64-musl-4.68.3.tgz",
+      "integrity": "sha512-PTdJXuZplRyaE3ECArlbZubI2LlUHWm0oCipCexnE/8LM+L7qIqUiNbU0piBxt46EB5zxXX+cpmDvHX4Z3WwcQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-ppc64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-ppc64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-gnu/-/rollup-linux-ppc64-gnu-4.68.3.tgz",
+      "integrity": "sha512-IlSQPDExSm9YdtrWeZIHj87GPXI9lYygRvHVwQ1o9t91JHIiB2CihrvNIASpc/zI28atqm04jS3proaQuaJMww==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-ppc64-musl",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-ppc64-musl",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-musl/-/rollup-linux-ppc64-musl-4.68.3.tgz",
+      "integrity": "sha512-O2ssyDcBTZkH5v2P/9ZaXJreL0hCKvUA5UwuHn0jCKeMLKi4GhspZJ1I5FT5QsHtJ/dPx4pup7pg/Lw0emeY0Q==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-riscv64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-riscv64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.68.3.tgz",
+      "integrity": "sha512-fesqagxcnc87lH2+aBWne/tFCmQVIGH+YezjY1wQwbUODuTBBlhHoyxju6umwn8LnjHVanjpoeaQdLsXP8JQSQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-riscv64-musl",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-riscv64-musl",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-musl/-/rollup-linux-riscv64-musl-4.68.3.tgz",
+      "integrity": "sha512-WAjFDtLW3HjJ2RAytKoWdFwlK/hW8rJHrjhRZFw14nR+c9JN//WIlSBkyXUjEYCNOFs2sGLNutOEPQG4iVYHgA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-s390x-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-s390x-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.68.3.tgz",
+      "integrity": "sha512-+fZiTeHV/1fy/14dRqE4thjYwUOABL6qQjxElOEQg2oHLkCamO8dxhHphVgD4+pFxtVEUIWxsGVduPtwnAlvbg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-x64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-x64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.68.3.tgz",
+      "integrity": "sha512-pfn4Zd9Ic3lEaSwW3GsQhTIDd7929C+eiEkOutsSCT2IHD6rDLblwmMQkgeGOso0oDo9Jk/ERtFdtFr9ElLs+g==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-linux-x64-musl",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-linux-x64-musl",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.68.3.tgz",
+      "integrity": "sha512-eUXzaeNQbKXKNqseL3g/usUqOPmRu+DbQsvwr9MXMdV+VQFUNb9bcWSNAAs/TRV95PCbFK46kLzHEOhFSzujsg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-openbsd-x64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-openbsd-x64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-openbsd-x64/-/rollup-openbsd-x64-4.68.3.tgz",
+      "integrity": "sha512-OiUclE7QDU4H/hr3ACRHhVGKWl+gNx+6Emignfq0hmNmzzTkZnT79wzB9NXKd0QH16S4t/wVqlAFBfC17nkZ5A==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-openharmony-arm64",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-openharmony-arm64",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-openharmony-arm64/-/rollup-openharmony-arm64-4.68.3.tgz",
+      "integrity": "sha512-s6EclDWmk6zvIfk1yixgYthk7xHNx0xu5cEF5RDpS4IHNTpfswRX6xOXVG5cHF5xWn0B6EpDGARhPQ520KTlsA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-win32-arm64-msvc",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-win32-arm64-msvc",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.68.3.tgz",
+      "integrity": "sha512-G2xnmxGnU8XHLwtjnnXNRcLrub+Af3nm9VQ1QzL2aEiAL7woBdRgTCZBslJl8umA+YMqdEFpUh9kJB/Vyzk2wQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-win32-ia32-msvc",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-win32-ia32-msvc",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.68.3.tgz",
+      "integrity": "sha512-Y/4tApNVrMUYWbAHsyRWJgwuuJOfhTNhA2B04Xpa6+G9btkPZ9kU3XagUKzPTwF3hg36NpQk748JsnoTVho67Q==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "@rollup/rollup-win32-x64-gnu",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-win32-x64-gnu",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.68.3",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-gnu/-/rollup-win32-x64-gnu-4.68.3.tgz",
+      "integrity": "sha512-i2vH/OA5BcW+TdNg12ZTRC4rn+vILaPMP9CvHqnv+QEpMjBHGGNLo4k4EnEqzjYvTD6x1Xark9WhsQbH4bTzUQ==",
+      "homepage": "https://rollupjs.org/",
+      "author": "Lukas Taegert-Atkinson",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rollup/rollup.git"
+      },
+      "notice_basis": "related upstream package",
+      "notice_files": [
+        "node_modules/rollup/LICENSE.md"
+      ]
+    },
+    {
+      "name": "@rollup/rollup-win32-x64-msvc",
+      "version": "4.68.3",
+      "path": "node_modules/@rollup/rollup-win32-x64-msvc",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.68.3",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.68.3.tgz",
+      "integrity": "sha512-ADb1Uz2MNM0sxVpAlMNdQG16Hw4sgW1aqVL7NeqBMpcZeiHb192d7W6shZdMQs33D+w9ihDYBBPsYqqc4MlD8w==",
+      "homepage": "https://rollupjs.org/",
+      "author": "Lukas Taegert-Atkinson",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rollup/rollup.git"
+      },
+      "notice_basis": "related upstream package",
+      "notice_files": [
+        "node_modules/rollup/LICENSE.md"
+      ]
+    },
+    {
+      "name": "@tweenjs/tween.js",
+      "version": "23.1.3",
+      "path": "node_modules/@tweenjs/tween.js",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "23.1.3",
+      "resolved": "https://registry.npmjs.org/@tweenjs/tween.js/-/tween.js-23.1.3.tgz",
+      "integrity": "sha512-vJmvvwFxYuGnF2axRtPYocag6Clbb5YS7kLL+SO/TeVFzHqDIWrNKYtcsPMibjDx9O+bu+psAy9NKfWklassUA==",
+      "homepage": "https://github.com/tweenjs/tween.js",
+      "author": "tween.js contributors (https://github.com/tweenjs/tween.js/graphs/contributors)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/tweenjs/tween.js.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@tweenjs/tween.js/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/babel__core",
+      "version": "7.20.5",
+      "path": "node_modules/@types/babel__core",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.20.5",
+      "resolved": "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz",
+      "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__core",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Troy Gerwien",
+          "githubUsername": "yortus",
+          "url": "https://github.com/yortus"
+        },
+        {
+          "name": "Marvin Hagemeister",
+          "githubUsername": "marvinhagemeister",
+          "url": "https://github.com/marvinhagemeister"
+        },
+        {
+          "name": "Melvin Groenhoff",
+          "githubUsername": "mgroenhoff",
+          "url": "https://github.com/mgroenhoff"
+        },
+        {
+          "name": "Jessica Franco",
+          "githubUsername": "Jessidhia",
+          "url": "https://github.com/Jessidhia"
+        },
+        {
+          "name": "Ifiok Jr.",
+          "githubUsername": "ifiokjr",
+          "url": "https://github.com/ifiokjr"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/babel__core"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/babel__core/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/babel__generator",
+      "version": "7.27.0",
+      "path": "node_modules/@types/babel__generator",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.27.0",
+      "resolved": "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.27.0.tgz",
+      "integrity": "sha512-ufFd2Xi92OAVPYsy+P4n7/U7e68fex0+Ee8gSG9KX7eo084CWiQ4sdxktvdl0bOPupXtVJPY19zk6EwWqUQ8lg==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__generator",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Troy Gerwien",
+          "githubUsername": "yortus",
+          "url": "https://github.com/yortus"
+        },
+        {
+          "name": "Melvin Groenhoff",
+          "githubUsername": "mgroenhoff",
+          "url": "https://github.com/mgroenhoff"
+        },
+        {
+          "name": "Cameron Yan",
+          "githubUsername": "khell",
+          "url": "https://github.com/khell"
+        },
+        {
+          "name": "Lyanbin",
+          "githubUsername": "Lyanbin",
+          "url": "https://github.com/Lyanbin"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/babel__generator"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/babel__generator/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/babel__template",
+      "version": "7.4.4",
+      "path": "node_modules/@types/babel__template",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.4.4",
+      "resolved": "https://registry.npmjs.org/@types/babel__template/-/babel__template-7.4.4.tgz",
+      "integrity": "sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__template",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Troy Gerwien",
+          "githubUsername": "yortus",
+          "url": "https://github.com/yortus"
+        },
+        {
+          "name": "Marvin Hagemeister",
+          "githubUsername": "marvinhagemeister",
+          "url": "https://github.com/marvinhagemeister"
+        },
+        {
+          "name": "Melvin Groenhoff",
+          "githubUsername": "mgroenhoff",
+          "url": "https://github.com/mgroenhoff"
+        },
+        {
+          "name": "ExE Boss",
+          "githubUsername": "ExE-Boss",
+          "url": "https://github.com/ExE-Boss"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/babel__template"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/babel__template/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/babel__traverse",
+      "version": "7.28.0",
+      "path": "node_modules/@types/babel__traverse",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "7.28.0",
+      "resolved": "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.28.0.tgz",
+      "integrity": "sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__traverse",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Troy Gerwien",
+          "githubUsername": "yortus",
+          "url": "https://github.com/yortus"
+        },
+        {
+          "name": "Marvin Hagemeister",
+          "githubUsername": "marvinhagemeister",
+          "url": "https://github.com/marvinhagemeister"
+        },
+        {
+          "name": "Ryan Petrich",
+          "githubUsername": "rpetrich",
+          "url": "https://github.com/rpetrich"
+        },
+        {
+          "name": "Melvin Groenhoff",
+          "githubUsername": "mgroenhoff",
+          "url": "https://github.com/mgroenhoff"
+        },
+        {
+          "name": "Dean L.",
+          "githubUsername": "dlgrit",
+          "url": "https://github.com/dlgrit"
+        },
+        {
+          "name": "Ifiok Jr.",
+          "githubUsername": "ifiokjr",
+          "url": "https://github.com/ifiokjr"
+        },
+        {
+          "name": "ExE Boss",
+          "githubUsername": "ExE-Boss",
+          "url": "https://github.com/ExE-Boss"
+        },
+        {
+          "name": "Daniel Tschinder",
+          "githubUsername": "danez",
+          "url": "https://github.com/danez"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/babel__traverse"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/babel__traverse/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "path": "node_modules/@types/chai",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "5.2.3",
+      "resolved": "https://registry.npmjs.org/@types/chai/-/chai-5.2.3.tgz",
+      "integrity": "sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chai",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Bart van der Schoor",
+          "githubUsername": "Bartvds",
+          "url": "https://github.com/Bartvds"
+        },
+        {
+          "name": "Andrew Brown",
+          "githubUsername": "AGBrown",
+          "url": "https://github.com/AGBrown"
+        },
+        {
+          "name": "Olivier Chevet",
+          "githubUsername": "olivr70",
+          "url": "https://github.com/olivr70"
+        },
+        {
+          "name": "Matt Wistrand",
+          "githubUsername": "mwistrand",
+          "url": "https://github.com/mwistrand"
+        },
+        {
+          "name": "Shaun Luttin",
+          "githubUsername": "shaunluttin",
+          "url": "https://github.com/shaunluttin"
+        },
+        {
+          "name": "Satana Charuwichitratana",
+          "githubUsername": "micksatana",
+          "url": "https://github.com/micksatana"
+        },
+        {
+          "name": "Erik Schierboom",
+          "githubUsername": "ErikSchierboom",
+          "url": "https://github.com/ErikSchierboom"
+        },
+        {
+          "name": "Bogdan Paranytsia",
+          "githubUsername": "bparan",
+          "url": "https://github.com/bparan"
+        },
+        {
+          "name": "CXuesong",
+          "githubUsername": "CXuesong",
+          "url": "https://github.com/CXuesong"
+        },
+        {
+          "name": "Joey Kilpatrick",
+          "githubUsername": "joeykilpatrick",
+          "url": "https://github.com/joeykilpatrick"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/chai"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/chai/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "path": "node_modules/@types/deep-eql",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.0.2",
+      "resolved": "https://registry.npmjs.org/@types/deep-eql/-/deep-eql-4.0.2.tgz",
+      "integrity": "sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/deep-eql",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Rodrigo Pietnechuk",
+          "githubUsername": "ghnoob",
+          "url": "https://github.com/ghnoob"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/deep-eql"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/deep-eql/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/estree",
+      "version": "1.0.10",
+      "path": "node_modules/@types/estree",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.0.10",
+      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.10.tgz",
+      "integrity": "sha512-lTyOMnOcmRBzdCv6/4zUZCrEhV0xrqQiUZBZtVcbmLHBXKLnN8q89v/wKRF/Q0HbwVsqbIG3o5HDoFl9sduM+g==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/estree",
+      "author": null,
+      "contributors": [
+        {
+          "name": "RReverser",
+          "githubUsername": "RReverser",
+          "url": "https://github.com/RReverser"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/estree"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/estree/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/katex",
+      "version": "0.16.8",
+      "path": "node_modules/@types/katex",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "0.16.8",
+      "resolved": "https://registry.npmjs.org/@types/katex/-/katex-0.16.8.tgz",
+      "integrity": "sha512-trgaNyfU+Xh2Tc+ABIb44a5AYUpicB3uwirOioeOkNPPbmgRNtcWyDeeFRzjPZENO9Vq8gvVqfhaaXWLlevVwg==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/katex",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Kevin Nguyen",
+          "githubUsername": "knguyen0125",
+          "url": "https://github.com/knguyen0125"
+        },
+        {
+          "name": "bLue",
+          "githubUsername": "dreamerblue",
+          "url": "https://github.com/dreamerblue"
+        },
+        {
+          "name": "Sebastian Weigand",
+          "githubUsername": "s-weigand",
+          "url": "https://github.com/s-weigand"
+        },
+        {
+          "name": "sapphi-red",
+          "githubUsername": "sapphi-red",
+          "url": "https://github.com/sapphi-red"
+        },
+        {
+          "name": "Stefaans",
+          "githubUsername": "Stefaans",
+          "url": "https://github.com/Stefaans"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/katex"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/katex/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/node",
+      "version": "22.20.5",
+      "path": "node_modules/@types/node",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "22.20.5",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-22.20.5.tgz",
+      "integrity": "sha512-U2+DNr+wSjpsTS/wZGYHq7GcwfuSmKiKvoPvK22zwTlRhU91yOniN4qRR5KhIjvif7ysw/dz/hKmfDH0Ris4aA==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Microsoft TypeScript",
+          "githubUsername": "Microsoft",
+          "url": "https://github.com/Microsoft"
+        },
+        {
+          "name": "Alberto Schiabel",
+          "githubUsername": "jkomyno",
+          "url": "https://github.com/jkomyno"
+        },
+        {
+          "name": "Andrew Makarov",
+          "githubUsername": "r3nya",
+          "url": "https://github.com/r3nya"
+        },
+        {
+          "name": "Benjamin Toueg",
+          "githubUsername": "btoueg",
+          "url": "https://github.com/btoueg"
+        },
+        {
+          "name": "David Junger",
+          "githubUsername": "touffy",
+          "url": "https://github.com/touffy"
+        },
+        {
+          "name": "Mohsen Azimi",
+          "githubUsername": "mohsen1",
+          "url": "https://github.com/mohsen1"
+        },
+        {
+          "name": "Nikita Galkin",
+          "githubUsername": "galkin",
+          "url": "https://github.com/galkin"
+        },
+        {
+          "name": "Sebastian Silbermann",
+          "githubUsername": "eps1lon",
+          "url": "https://github.com/eps1lon"
+        },
+        {
+          "name": "Wilco Bakker",
+          "githubUsername": "WilcoBakker",
+          "url": "https://github.com/WilcoBakker"
+        },
+        {
+          "name": "Trivikram Kamat",
+          "githubUsername": "trivikr",
+          "url": "https://github.com/trivikr"
+        },
+        {
+          "name": "Junxiao Shi",
+          "githubUsername": "yoursunny",
+          "url": "https://github.com/yoursunny"
+        },
+        {
+          "name": "ExE Boss",
+          "githubUsername": "ExE-Boss",
+          "url": "https://github.com/ExE-Boss"
+        },
+        {
+          "name": "Piotr Błażejewicz",
+          "githubUsername": "peterblazejewicz",
+          "url": "https://github.com/peterblazejewicz"
+        },
+        {
+          "name": "Anna Henningsen",
+          "githubUsername": "addaleax",
+          "url": "https://github.com/addaleax"
+        },
+        {
+          "name": "NodeJS Contributors",
+          "githubUsername": "NodeJS",
+          "url": "https://github.com/NodeJS"
+        },
+        {
+          "name": "Linus Unnebäck",
+          "githubUsername": "LinusU",
+          "url": "https://github.com/LinusU"
+        },
+        {
+          "name": "wafuwafu13",
+          "githubUsername": "wafuwafu13",
+          "url": "https://github.com/wafuwafu13"
+        },
+        {
+          "name": "Matteo Collina",
+          "githubUsername": "mcollina",
+          "url": "https://github.com/mcollina"
+        },
+        {
+          "name": "Dmitry Semigradsky",
+          "githubUsername": "Semigradsky",
+          "url": "https://github.com/Semigradsky"
+        },
+        {
+          "name": "René",
+          "githubUsername": "Renegade334",
+          "url": "https://github.com/Renegade334"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/node"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/node/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/react",
+      "version": "19.3.0",
+      "path": "node_modules/@types/react",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "19.3.0",
+      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.3.0.tgz",
+      "integrity": "sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Asana",
+          "url": "https://asana.com"
+        },
+        {
+          "name": "AssureSign",
+          "url": "http://www.assuresign.com"
+        },
+        {
+          "name": "Microsoft",
+          "url": "https://microsoft.com"
+        },
+        {
+          "name": "John Reilly",
+          "githubUsername": "johnnyreilly",
+          "url": "https://github.com/johnnyreilly"
+        },
+        {
+          "name": "Benoit Benezech",
+          "githubUsername": "bbenezech",
+          "url": "https://github.com/bbenezech"
+        },
+        {
+          "name": "Patricio Zavolinsky",
+          "githubUsername": "pzavolinsky",
+          "url": "https://github.com/pzavolinsky"
+        },
+        {
+          "name": "Eric Anderson",
+          "githubUsername": "ericanderson",
+          "url": "https://github.com/ericanderson"
+        },
+        {
+          "name": "Dovydas Navickas",
+          "githubUsername": "DovydasNavickas",
+          "url": "https://github.com/DovydasNavickas"
+        },
+        {
+          "name": "Josh Rutherford",
+          "githubUsername": "theruther4d",
+          "url": "https://github.com/theruther4d"
+        },
+        {
+          "name": "Guilherme Hübner",
+          "githubUsername": "guilhermehubner",
+          "url": "https://github.com/guilhermehubner"
+        },
+        {
+          "name": "Ferdy Budhidharma",
+          "githubUsername": "ferdaber",
+          "url": "https://github.com/ferdaber"
+        },
+        {
+          "name": "Johann Rakotoharisoa",
+          "githubUsername": "jrakotoharisoa",
+          "url": "https://github.com/jrakotoharisoa"
+        },
+        {
+          "name": "Olivier Pascal",
+          "githubUsername": "pascaloliv",
+          "url": "https://github.com/pascaloliv"
+        },
+        {
+          "name": "Martin Hochel",
+          "githubUsername": "hotell",
+          "url": "https://github.com/hotell"
+        },
+        {
+          "name": "Frank Li",
+          "githubUsername": "franklixuefei",
+          "url": "https://github.com/franklixuefei"
+        },
+        {
+          "name": "Jessica Franco",
+          "githubUsername": "Jessidhia",
+          "url": "https://github.com/Jessidhia"
+        },
+        {
+          "name": "Saransh Kataria",
+          "githubUsername": "saranshkataria",
+          "url": "https://github.com/saranshkataria"
+        },
+        {
+          "name": "Kanitkorn Sujautra",
+          "githubUsername": "lukyth",
+          "url": "https://github.com/lukyth"
+        },
+        {
+          "name": "Sebastian Silbermann",
+          "githubUsername": "eps1lon",
+          "url": "https://github.com/eps1lon"
+        },
+        {
+          "name": "Kyle Scully",
+          "githubUsername": "zieka",
+          "url": "https://github.com/zieka"
+        },
+        {
+          "name": "Cong Zhang",
+          "githubUsername": "dancerphil",
+          "url": "https://github.com/dancerphil"
+        },
+        {
+          "name": "Dimitri Mitropoulos",
+          "githubUsername": "dimitropoulos",
+          "url": "https://github.com/dimitropoulos"
+        },
+        {
+          "name": "JongChan Choi",
+          "githubUsername": "disjukr",
+          "url": "https://github.com/disjukr"
+        },
+        {
+          "name": "Victor Magalhães",
+          "githubUsername": "vhfmag",
+          "url": "https://github.com/vhfmag"
+        },
+        {
+          "name": "Priyanshu Rav",
+          "githubUsername": "priyanshurav",
+          "url": "https://github.com/priyanshurav"
+        },
+        {
+          "name": "Dmitry Semigradsky",
+          "githubUsername": "Semigradsky",
+          "url": "https://github.com/Semigradsky"
+        },
+        {
+          "name": "Matt Pocock",
+          "githubUsername": "mattpocock",
+          "url": "https://github.com/mattpocock"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/react"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/react/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/react-dom",
+      "version": "19.3.0",
+      "path": "node_modules/@types/react-dom",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "19.3.0",
+      "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.3.0.tgz",
+      "integrity": "sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Asana",
+          "url": "https://asana.com"
+        },
+        {
+          "name": "AssureSign",
+          "url": "http://www.assuresign.com"
+        },
+        {
+          "name": "Microsoft",
+          "url": "https://microsoft.com"
+        },
+        {
+          "name": "MartynasZilinskas",
+          "githubUsername": "MartynasZilinskas",
+          "url": "https://github.com/MartynasZilinskas"
+        },
+        {
+          "name": "Josh Rutherford",
+          "githubUsername": "theruther4d",
+          "url": "https://github.com/theruther4d"
+        },
+        {
+          "name": "Jessica Franco",
+          "githubUsername": "Jessidhia",
+          "url": "https://github.com/Jessidhia"
+        },
+        {
+          "name": "Sebastian Silbermann",
+          "githubUsername": "eps1lon",
+          "url": "https://github.com/eps1lon"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/react-dom"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/react-dom/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/stats.js",
+      "version": "0.17.4",
+      "path": "node_modules/@types/stats.js",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.17.4",
+      "resolved": "https://registry.npmjs.org/@types/stats.js/-/stats.js-0.17.4.tgz",
+      "integrity": "sha512-jIBvWWShCvlBqBNIZt0KAshWpvSjhkwkEu4ZUcASoAvhmrgAUI2t1dXrjSL4xXVLB4FznPrIsX3nKXFl/Dt4vA==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/stats.js",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Gregory Dalton",
+          "githubUsername": "gregolai",
+          "url": "https://github.com/gregolai"
+        },
+        {
+          "name": "Harm Berntsen",
+          "githubUsername": "hberntsen",
+          "url": "https://github.com/hberntsen"
+        },
+        {
+          "name": "Dan Vanderkam",
+          "githubUsername": "danvk",
+          "url": "https://github.com/danvk"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/stats.js"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/stats.js/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/three",
+      "version": "0.170.0",
+      "path": "node_modules/@types/three",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "0.170.0",
+      "resolved": "https://registry.npmjs.org/@types/three/-/three-0.170.0.tgz",
+      "integrity": "sha512-CUm2uckq+zkCY7ZbFpviRttY+6f9fvwm6YqSqPfA5K22s9w7R4VnA3rzJse8kHVvuzLcTx+CjNCs2NYe0QFAyg==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/three",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Josh Ellis",
+          "githubUsername": "joshuaellis",
+          "url": "https://github.com/joshuaellis"
+        },
+        {
+          "name": "Nathan Bierema",
+          "githubUsername": "Methuselah96",
+          "url": "https://github.com/Methuselah96"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/three"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/three/LICENSE"
+      ]
+    },
+    {
+      "name": "@types/webxr",
+      "version": "0.5.24",
+      "path": "node_modules/@types/webxr",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.5.24",
+      "resolved": "https://registry.npmjs.org/@types/webxr/-/webxr-0.5.24.tgz",
+      "integrity": "sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/webxr",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Rob Rohan",
+          "githubUsername": "robrohan",
+          "url": "https://github.com/robrohan"
+        },
+        {
+          "name": "Raanan Weber",
+          "githubUsername": "RaananW",
+          "url": "https://github.com/RaananW"
+        },
+        {
+          "name": "Sean T. McBeth",
+          "githubUsername": "capnmidnight",
+          "url": "https://github.com/capnmidnight"
+        },
+        {
+          "name": "Timmy Kokke",
+          "githubUsername": "sorskoot",
+          "url": "https://github.com/sorskoot"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/webxr"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@types/webxr/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "version": "4.7.0",
+      "path": "node_modules/@vitejs/plugin-react",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "4.7.0",
+      "resolved": "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-4.7.0.tgz",
+      "integrity": "sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==",
+      "homepage": "https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme",
+      "author": "Evan You",
+      "contributors": [
+        "Alec Larson",
+        "Arnaud Barré"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitejs/vite-plugin-react.git",
+        "directory": "packages/plugin-react"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitejs/plugin-react/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/expect",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/expect",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/expect/-/expect-3.2.7.tgz",
+      "integrity": "sha512-E8eBXaKibuvH2pSZErOjdVb5vF4PbKYcrnluBTYxEk1l/VhhwZg1kZQsdtjq+CsF5CFydf2Rdkz7jDHKSisi3w==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/expect#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/expect"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/expect/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/mocker",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/mocker",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/mocker/-/mocker-3.2.7.tgz",
+      "integrity": "sha512-Trr0hYO9CM3Wj6ksWHRhK9IZpIY6wTMO5u/MqXurMxT57sWBaOPEtP3Oq60ihZuh5JsiagKfz95OcxdEP6dBrA==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/mocker#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/mocker"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/mocker/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/pretty-format",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/pretty-format",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-3.2.7.tgz",
+      "integrity": "sha512-KUHlwqVu0sRlhCdyPdQ/wBoTfRahjUky1MubOmYw9fWfIZy1gNoHpuaaQBPAaMaVYdQYHJLurzj8ECCj5OwTqA==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/utils#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/pretty-format"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/pretty-format/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/runner",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/runner",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/runner/-/runner-3.2.7.tgz",
+      "integrity": "sha512-sB9y4ovltoQP+WaUPwmSxO9WIg9Ig694Di5PalVPsYHklAdE027mehpWF2SQSVq+k6sFgaivbTjTJwZLSHbedA==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/runner#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/runner"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/runner/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/snapshot",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/snapshot",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-3.2.7.tgz",
+      "integrity": "sha512-7C+MwShwtBSI5Buwoyg3s/iY1eHL9PKAf+O1wVh/TdnjXUtkoL/9YQtre90i4MtNXM6edP1wJ2zOBpfCyhIS7g==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/snapshot#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/snapshot"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/snapshot/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/spy",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/spy",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/spy/-/spy-3.2.7.tgz",
+      "integrity": "sha512-Q2eQGI6d2L/hBtZ0qNuKcAGid68XK6cv1xsoaIma6PaJhHPoqcEJhYpXZ/5myCMqkNgtP6UKuBhbc0nHKnrkuQ==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/spy#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/spy"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/spy/LICENSE"
+      ]
+    },
+    {
+      "name": "@vitest/utils",
+      "version": "3.2.7",
+      "path": "node_modules/@vitest/utils",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/@vitest/utils/-/utils-3.2.7.tgz",
+      "integrity": "sha512-x6BDOd7dyo3PFLY3I9/HJ25X/6OurhGXk2/B9gOZNPF7XDVjeBK4k01lQE5uvDpbuheErh91qYuE1E2OEjK3Rw==",
+      "homepage": "https://github.com/vitest-dev/vitest/tree/main/packages/utils#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/utils"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@vitest/utils/LICENSE"
+      ]
+    },
+    {
+      "name": "@webgpu/types",
+      "version": "0.1.74",
+      "path": "node_modules/@webgpu/types",
+      "license": "BSD-3-Clause",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.1.74",
+      "resolved": "https://registry.npmjs.org/@webgpu/types/-/types-0.1.74.tgz",
+      "integrity": "sha512-lgiI4hbuLcI9unnm2cL/tvCaQU45dp0xcLWJh5uB/9MBGvIA4F8XIk7nSiBeg+K4xWGYwgZKn80LmERI5CxoTA==",
+      "homepage": "https://github.com/gpuweb/types",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gpuweb/types.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/@webgpu/types/LICENSE"
+      ]
+    },
+    {
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "path": "node_modules/assertion-error",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/assertion-error/-/assertion-error-2.0.1.tgz",
+      "integrity": "sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==",
+      "homepage": null,
+      "author": "Jake Luer <jake@qualiancy.com> (http://qualiancy.com)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git@github.com:chaijs/assertion-error.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/assertion-error/LICENSE"
+      ]
+    },
+    {
+      "name": "baseline-browser-mapping",
+      "version": "2.11.37",
+      "path": "node_modules/baseline-browser-mapping",
+      "license": "Apache-2.0",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.11.37",
+      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.37.tgz",
+      "integrity": "sha512-QYph+vfurmaxhNwi9FprfmtkT5cx2Keg8FzZ0vnjO8ukscIybVyZGMFwdllKGlTI6qyU8ck43OM9UXh+IFJihQ==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/web-platform-dx/baseline-browser-mapping.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/baseline-browser-mapping/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "browserslist",
+      "version": "4.29.5",
+      "path": "node_modules/browserslist",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.29.5",
+      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.29.5.tgz",
+      "integrity": "sha512-khTmKu5NGYTotqcYo8Bew2k4RAE9PuXRSFRXG2lQBrCEQHyeQ/vX6gKMxfokwywBsLiXZMnHsmWMG1pnO8J7uQ==",
+      "homepage": null,
+      "author": "Andrey Sitnik <andrey@sitnik.es>",
+      "contributors": null,
+      "repository": "browserslist/browserslist",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/browserslist/LICENSE"
+      ]
+    },
+    {
+      "name": "cac",
+      "version": "6.7.14",
+      "path": "node_modules/cac",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "6.7.14",
+      "resolved": "https://registry.npmjs.org/cac/-/cac-6.7.14.tgz",
+      "integrity": "sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==",
+      "homepage": null,
+      "author": "egoist <0x142857@gmail.com>",
+      "contributors": null,
+      "repository": {
+        "url": "egoist/cac",
+        "type": "git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/cac/LICENSE"
+      ]
+    },
+    {
+      "name": "caniuse-lite",
+      "version": "1.0.30001826",
+      "path": "node_modules/caniuse-lite",
+      "license": "CC-BY-4.0",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.0.30001826",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001826.tgz",
+      "integrity": "sha512-wTB+9tIbLro/BCXwLuNV1meHE4L9dS6dArMDwgYfNBPMYScqClHyGunhkCSDtHhe/69Xl0sHlKgBVZ+fNsYtWA==",
+      "homepage": null,
+      "author": {
+        "name": "Ben Briggs",
+        "email": "beneb.info@gmail.com",
+        "url": "http://beneb.info"
+      },
+      "contributors": null,
+      "repository": "browserslist/caniuse-lite",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/caniuse-lite/LICENSE"
+      ]
+    },
+    {
+      "name": "chai",
+      "version": "5.3.3",
+      "path": "node_modules/chai",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "5.3.3",
+      "resolved": "https://registry.npmjs.org/chai/-/chai-5.3.3.tgz",
+      "integrity": "sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==",
+      "homepage": "http://chaijs.com",
+      "author": "Jake Luer <jake@alogicalparadox.com>",
+      "contributors": [
+        "Jake Luer <jake@alogicalparadox.com>",
+        "Domenic Denicola <domenic@domenicdenicola.com> (http://domenicdenicola.com)",
+        "Veselin Todorov <hi@vesln.com>",
+        "John Firebaugh <john.firebaugh@gmail.com>"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/chaijs/chai"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/chai/LICENSE"
+      ]
+    },
+    {
+      "name": "check-error",
+      "version": "2.1.3",
+      "path": "node_modules/check-error",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.1.3",
+      "resolved": "https://registry.npmjs.org/check-error/-/check-error-2.1.3.tgz",
+      "integrity": "sha512-PAJdDJusoxnwm1VwW07VWwUN1sl7smmC3OKggvndJFadxxDRyFJBX/ggnu/KE4kQAB7a3Dp8f/YXC1FlUprWmA==",
+      "homepage": null,
+      "author": "Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)",
+      "contributors": [
+        "David Losert (https://github.com/davelosert)",
+        "Keith Cirkel (https://github.com/keithamus)",
+        "Miroslav Bajtoš (https://github.com/bajtos)",
+        "Lucas Fernandes da Costa (https://github.com/lucasfcosta)"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/chaijs/check-error.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/check-error/LICENSE"
+      ]
+    },
+    {
+      "name": "commander",
+      "version": "15.1.0",
+      "path": "node_modules/commander",
+      "license": "MIT",
+      "development_only": false,
+      "direct": false,
+      "installed": true,
+      "installed_version": "15.1.0",
+      "resolved": "https://registry.npmjs.org/commander/-/commander-15.1.0.tgz",
+      "integrity": "sha512-cgnQ88TRrWcC7pVq46RzJVRMktu3W2RcbnoidnfBsl1bmDCBwJS/udcIZpKoCrbAYYaCqsz1yZCVIgbIaU3ddQ==",
+      "homepage": null,
+      "author": "TJ Holowaychuk <tj@vision-media.ca>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tj/commander.js.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/commander/LICENSE"
+      ]
+    },
+    {
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "path": "node_modules/convert-source-map",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz",
+      "integrity": "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==",
+      "homepage": "https://github.com/thlorenz/convert-source-map",
+      "author": {
+        "name": "Thorsten Lorenz",
+        "email": "thlorenz@gmx.de",
+        "url": "http://thlorenz.com"
+      },
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git://github.com/thlorenz/convert-source-map.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/convert-source-map/LICENSE"
+      ]
+    },
+    {
+      "name": "csstype",
+      "version": "3.2.3",
+      "path": "node_modules/csstype",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.3",
+      "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
+      "integrity": "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==",
+      "homepage": null,
+      "author": "Fredrik Nicol <fredrik.nicol@gmail.com>",
+      "contributors": null,
+      "repository": "https://github.com/frenic/csstype",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/csstype/LICENSE"
+      ]
+    },
+    {
+      "name": "debug",
+      "version": "4.4.3",
+      "path": "node_modules/debug",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.4.3",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "homepage": null,
+      "author": "Josh Junon (https://github.com/qix-)",
+      "contributors": [
+        "TJ Holowaychuk <tj@vision-media.ca>",
+        "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io)",
+        "Andrew Rhyne <rhyneandrew@gmail.com>"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git://github.com/debug-js/debug.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/debug/LICENSE"
+      ]
+    },
+    {
+      "name": "deep-eql",
+      "version": "5.0.2",
+      "path": "node_modules/deep-eql",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/deep-eql/-/deep-eql-5.0.2.tgz",
+      "integrity": "sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==",
+      "homepage": null,
+      "author": "Jake Luer <jake@alogicalparadox.com>",
+      "contributors": [
+        "Keith Cirkel (https://github.com/keithamus)",
+        "dougluce (https://github.com/dougluce)",
+        "Lorenz Leutgeb (https://github.com/flowlo)"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git@github.com:chaijs/deep-eql.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/deep-eql/LICENSE"
+      ]
+    },
+    {
+      "name": "electron-to-chromium",
+      "version": "1.5.485",
+      "path": "node_modules/electron-to-chromium",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.5.485",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.485.tgz",
+      "integrity": "sha512-m3uadzR0Z+sR19HGWgfxoZcKv9hE/edVM9OZ+FJ4wNRyfuFtkwZJIDoehEty5sisYVwmge8lKV1tenWOyClVgw==",
+      "homepage": null,
+      "author": "Kilian Valkhof",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kilian/electron-to-chromium.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/electron-to-chromium/LICENSE"
+      ]
+    },
+    {
+      "name": "es-module-lexer",
+      "version": "1.7.0",
+      "path": "node_modules/es-module-lexer",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.7.0",
+      "resolved": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.7.0.tgz",
+      "integrity": "sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==",
+      "homepage": "https://github.com/guybedford/es-module-lexer#readme",
+      "author": "Guy Bedford",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guybedford/es-module-lexer.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/es-module-lexer/LICENSE"
+      ]
+    },
+    {
+      "name": "esbuild",
+      "version": "0.25.12",
+      "path": "node_modules/esbuild",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.25.12.tgz",
+      "integrity": "sha512-bbPBYYrtZbkt6Os6FiTLCTFxvq4tt3JKall1vRwshA3fdVztsLAatFaZobhkBC8/BrPetoa0oksYoKXoG4ryJg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/evanw/esbuild.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/esbuild/LICENSE.md"
+      ]
+    },
+    {
+      "name": "escalade",
+      "version": "3.2.0",
+      "path": "node_modules/escalade",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.0",
+      "resolved": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+      "integrity": "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==",
+      "homepage": null,
+      "author": {
+        "name": "Luke Edwards",
+        "email": "luke.edwards05@gmail.com",
+        "url": "https://lukeed.com"
+      },
+      "contributors": null,
+      "repository": "lukeed/escalade",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/escalade/license"
+      ]
+    },
+    {
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "path": "node_modules/estree-walker",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz",
+      "integrity": "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==",
+      "homepage": null,
+      "author": "Rich Harris",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/Rich-Harris/estree-walker"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/estree-walker/LICENSE"
+      ]
+    },
+    {
+      "name": "expect-type",
+      "version": "1.4.0",
+      "path": "node_modules/expect-type",
+      "license": "Apache-2.0",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.4.0",
+      "resolved": "https://registry.npmjs.org/expect-type/-/expect-type-1.4.0.tgz",
+      "integrity": "sha512-KfYbmpRm0VbLjEvVa9yGwCi9GI34xvi7A/HXYWQO65CSD2u3MczUJSuwXKFIxlGsgBQizV9q5J9NHj4VG0n+pA==",
+      "homepage": "https://github.com/mmkal/expect-type#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/mmkal/expect-type.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/expect-type/LICENSE"
+      ]
+    },
+    {
+      "name": "fdir",
+      "version": "6.5.0",
+      "path": "node_modules/fdir",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "6.5.0",
+      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
+      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+      "homepage": "https://github.com/thecodrr/fdir#readme",
+      "author": "thecodrr <thecodrr@protonmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thecodrr/fdir.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/fdir/LICENSE"
+      ]
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.3",
+      "path": "node_modules/fflate",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.8.3",
+      "resolved": "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz",
+      "integrity": "sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==",
+      "homepage": "https://101arrowz.github.io/fflate",
+      "author": "Arjun Barrett <arjunbarrett@gmail.com>",
+      "contributors": null,
+      "repository": "https://github.com/101arrowz/fflate",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/fflate/LICENSE"
+      ]
+    },
+    {
+      "name": "fsevents",
+      "version": "2.3.3",
+      "path": "node_modules/fsevents",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": false,
+      "installed_version": null,
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": null,
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "gensync",
+      "version": "1.0.0-beta.2",
+      "path": "node_modules/gensync",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.0.0-beta.2",
+      "resolved": "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz",
+      "integrity": "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==",
+      "homepage": "https://github.com/loganfsmyth/gensync",
+      "author": "Logan Smyth <loganfsmyth@gmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/loganfsmyth/gensync.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/gensync/LICENSE"
+      ]
+    },
+    {
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "path": "node_modules/js-tokens",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+      "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==",
+      "homepage": null,
+      "author": "Simon Lydell",
+      "contributors": null,
+      "repository": "lydell/js-tokens",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/js-tokens/LICENSE"
+      ]
+    },
+    {
+      "name": "jsesc",
+      "version": "3.1.0",
+      "path": "node_modules/jsesc",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/jsesc/-/jsesc-3.1.0.tgz",
+      "integrity": "sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==",
+      "homepage": "https://mths.be/jsesc",
+      "author": {
+        "name": "Mathias Bynens",
+        "url": "https://mathiasbynens.be/"
+      },
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/mathiasbynens/jsesc.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/jsesc/LICENSE-MIT.txt"
+      ]
+    },
+    {
+      "name": "json5",
+      "version": "2.2.3",
+      "path": "node_modules/json5",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.2.3",
+      "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz",
+      "integrity": "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==",
+      "homepage": "http://json5.org/",
+      "author": "Aseem Kishore <aseem.kishore@gmail.com>",
+      "contributors": [
+        "Max Nanasy <max.nanasy@gmail.com>",
+        "Andrew Eisenberg <andrew@eisenberg.as>",
+        "Jordan Tucker <jordanbtucker@gmail.com>"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/json5/json5.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/json5/LICENSE.md"
+      ]
+    },
+    {
+      "name": "katex",
+      "version": "0.19.1",
+      "path": "node_modules/katex",
+      "license": "MIT",
+      "development_only": false,
+      "direct": true,
+      "installed": true,
+      "installed_version": "0.19.1",
+      "resolved": "https://registry.npmjs.org/katex/-/katex-0.19.1.tgz",
+      "integrity": "sha512-jG8uKntjSEcm2EpQOh0XturpPuuC9r3Sq5HLHdsFdWZT27E672SF19QEi+of0/YeOy15lDgRhKvr5614uRrEfA==",
+      "homepage": "https://katex.org",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/KaTeX/KaTeX.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/katex/LICENSE"
+      ]
+    },
+    {
+      "name": "loupe",
+      "version": "3.2.1",
+      "path": "node_modules/loupe",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.1",
+      "resolved": "https://registry.npmjs.org/loupe/-/loupe-3.2.1.tgz",
+      "integrity": "sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==",
+      "homepage": "https://github.com/chaijs/loupe",
+      "author": "Veselin Todorov <hi@vesln.com>",
+      "contributors": [
+        "Keith Cirkel (https://github.com/keithamus)"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/chaijs/loupe"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/loupe/LICENSE"
+      ]
+    },
+    {
+      "name": "lru-cache",
+      "version": "5.1.1",
+      "path": "node_modules/lru-cache",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "5.1.1",
+      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
+      "integrity": "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==",
+      "homepage": null,
+      "author": "Isaac Z. Schlueter <i@izs.me>",
+      "contributors": null,
+      "repository": "git://github.com/isaacs/node-lru-cache.git",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/lru-cache/LICENSE"
+      ]
+    },
+    {
+      "name": "magic-string",
+      "version": "0.30.21",
+      "path": "node_modules/magic-string",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.30.21",
+      "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz",
+      "integrity": "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==",
+      "homepage": null,
+      "author": "Rich Harris",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Rich-Harris/magic-string.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/magic-string/LICENSE"
+      ]
+    },
+    {
+      "name": "meshoptimizer",
+      "version": "0.18.1",
+      "path": "node_modules/meshoptimizer",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.18.1",
+      "resolved": "https://registry.npmjs.org/meshoptimizer/-/meshoptimizer-0.18.1.tgz",
+      "integrity": "sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==",
+      "homepage": "https://github.com/zeux/meshoptimizer",
+      "author": "Arseny Kapoulkine",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/zeux/meshoptimizer"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/meshoptimizer/LICENSE.md"
+      ]
+    },
+    {
+      "name": "ms",
+      "version": "2.1.3",
+      "path": "node_modules/ms",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.1.3",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": "vercel/ms",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/ms/license.md"
+      ]
+    },
+    {
+      "name": "nanoid",
+      "version": "3.3.20",
+      "path": "node_modules/nanoid",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.3.20",
+      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.20.tgz",
+      "integrity": "sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==",
+      "homepage": null,
+      "author": "Andrey Sitnik <andrey@sitnik.ru>",
+      "contributors": null,
+      "repository": "ai/nanoid",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/nanoid/LICENSE"
+      ]
+    },
+    {
+      "name": "node-releases",
+      "version": "2.0.64",
+      "path": "node_modules/node-releases",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.64",
+      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.64.tgz",
+      "integrity": "sha512-zAPCKqMcnqs2nGy6nlkm7JduFseiBJy3EXHGLh+8pFR+TxGCBxxiEN21+UROU5CKwX/f4TlUcYjiM+vs/tsyxw==",
+      "homepage": null,
+      "author": "Sergey Rubanov <chi187@gmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/chicoxyzzy/node-releases.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/node-releases/LICENSE"
+      ]
+    },
+    {
+      "name": "pathe",
+      "version": "2.0.3",
+      "path": "node_modules/pathe",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.3",
+      "resolved": "https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz",
+      "integrity": "sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": "unjs/pathe",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/pathe/LICENSE"
+      ]
+    },
+    {
+      "name": "pathval",
+      "version": "2.0.1",
+      "path": "node_modules/pathval",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/pathval/-/pathval-2.0.1.tgz",
+      "integrity": "sha512-//nshmD55c46FuFw26xV/xFAaB5HF9Xdap7HJBBnrKdAd6/GxDBaNA1870O79+9ueg61cZLSVc+OaFlfmObYVQ==",
+      "homepage": "https://github.com/chaijs/pathval",
+      "author": "Veselin Todorov <hi@vesln.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/chaijs/pathval.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/pathval/LICENSE"
+      ]
+    },
+    {
+      "name": "picocolors",
+      "version": "1.1.1",
+      "path": "node_modules/picocolors",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
+      "homepage": null,
+      "author": "Alexey Raspopov",
+      "contributors": null,
+      "repository": "alexeyraspopov/picocolors",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/picocolors/LICENSE"
+      ]
+    },
+    {
+      "name": "picomatch",
+      "version": "4.0.7",
+      "path": "node_modules/picomatch",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.0.7",
+      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.7.tgz",
+      "integrity": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+      "homepage": "https://github.com/micromatch/picomatch",
+      "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+      "contributors": null,
+      "repository": "micromatch/picomatch",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/picomatch/LICENSE"
+      ]
+    },
+    {
+      "name": "postcss",
+      "version": "8.5.33",
+      "path": "node_modules/postcss",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "8.5.33",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.33.tgz",
+      "integrity": "sha512-RVHEU9/Pp1Fnjr/MpAJsZoADukCKhfIi15OunEYiGktIkYLkPVvC1sioWolGDS7XByMTx9m/IGbro0Js13zhnQ==",
+      "homepage": "https://postcss.org/",
+      "author": "Andrey Sitnik <andrey@sitnik.es>",
+      "contributors": null,
+      "repository": "postcss/postcss",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/postcss/LICENSE"
+      ]
+    },
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "path": "node_modules/react",
+      "license": "MIT",
+      "development_only": false,
+      "direct": true,
+      "installed": true,
+      "installed_version": "19.3.1",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.3.1.tgz",
+      "integrity": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==",
+      "homepage": "https://react.dev/",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/react/react.git",
+        "directory": "packages/react"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/react/LICENSE"
+      ]
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.1",
+      "path": "node_modules/react-dom",
+      "license": "MIT",
+      "development_only": false,
+      "direct": true,
+      "installed": true,
+      "installed_version": "19.3.1",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.3.1.tgz",
+      "integrity": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==",
+      "homepage": "https://react.dev/",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/react/react.git",
+        "directory": "packages/react-dom"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/react-dom/LICENSE"
+      ]
+    },
+    {
+      "name": "react-refresh",
+      "version": "0.17.0",
+      "path": "node_modules/react-refresh",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.17.0",
+      "resolved": "https://registry.npmjs.org/react-refresh/-/react-refresh-0.17.0.tgz",
+      "integrity": "sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==",
+      "homepage": "https://react.dev/",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/facebook/react.git",
+        "directory": "packages/react"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/react-refresh/LICENSE"
+      ]
+    },
+    {
+      "name": "rollup",
+      "version": "4.68.3",
+      "path": "node_modules/rollup",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.68.3",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.68.3.tgz",
+      "integrity": "sha512-wd2gavj7CEQv52rdcVqfUupO/KPIKcoJKxyFWl4cOqYZGMQEOSijJRkliz0dRa7gpkj/h4TRqyWa+dJJi6T0OA==",
+      "homepage": "https://rollupjs.org/",
+      "author": "Rich Harris",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rollup/rollup.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/rollup/LICENSE.md"
+      ]
+    },
+    {
+      "name": "scheduler",
+      "version": "0.28.0",
+      "path": "node_modules/scheduler",
+      "license": "MIT",
+      "development_only": false,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.28.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.28.0.tgz",
+      "integrity": "sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==",
+      "homepage": "https://react.dev/",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/react/react.git",
+        "directory": "packages/scheduler"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/scheduler/LICENSE"
+      ]
+    },
+    {
+      "name": "semver",
+      "version": "6.3.2",
+      "path": "node_modules/semver",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "6.3.2",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.2.tgz",
+      "integrity": "sha512-GYrCADwpu6yV5OAvchkQ27Z5wwMxWAEMg5NNWjyHh/5DboFFqbdbvYNIvZouQpxXyeMPoTOh0vdPYKlf0ZswdQ==",
+      "homepage": null,
+      "author": "GitHub Inc.",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/npm/node-semver.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/semver/LICENSE"
+      ]
+    },
+    {
+      "name": "siginfo",
+      "version": "2.0.0",
+      "path": "node_modules/siginfo",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/siginfo/-/siginfo-2.0.0.tgz",
+      "integrity": "sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==",
+      "homepage": "https://github.com/emilbayes/siginfo#readme",
+      "author": "Emil Bay <github@tixz.dk>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/emilbayes/siginfo.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/siginfo/LICENSE"
+      ]
+    },
+    {
+      "name": "source-map-js",
+      "version": "1.2.2",
+      "path": "node_modules/source-map-js",
+      "license": "BSD-3-Clause",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.2.2",
+      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.2.tgz",
+      "integrity": "sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==",
+      "homepage": "https://github.com/7rulnik/source-map-js",
+      "author": "Valentin 7rulnik Semirulnik <v7rulnik@gmail.com>",
+      "contributors": [
+        "Nick Fitzgerald <nfitzgerald@mozilla.com>",
+        "Tobias Koppers <tobias.koppers@googlemail.com>",
+        "Duncan Beevers <duncan@dweebd.com>",
+        "Stephen Crane <scrane@mozilla.com>",
+        "Ryan Seddon <seddon.ryan@gmail.com>",
+        "Miles Elam <miles.elam@deem.com>",
+        "Mihai Bazon <mihai.bazon@gmail.com>",
+        "Michael Ficarra <github.public.email@michael.ficarra.me>",
+        "Todd Wolfson <todd@twolfson.com>",
+        "Alexander Solovyov <alexander@solovyov.net>",
+        "Felix Gnass <fgnass@gmail.com>",
+        "Conrad Irwin <conrad.irwin@gmail.com>",
+        "usrbincc <usrbincc@yahoo.com>",
+        "David Glasser <glasser@davidglasser.net>",
+        "Chase Douglas <chase@newrelic.com>",
+        "Evan Wallace <evan.exe@gmail.com>",
+        "Heather Arthur <fayearthur@gmail.com>",
+        "Hugh Kennedy <hughskennedy@gmail.com>",
+        "David Glasser <glasser@davidglasser.net>",
+        "Simon Lydell <simon.lydell@gmail.com>",
+        "Jmeas Smith <jellyes2@gmail.com>",
+        "Michael Z Goddard <mzgoddard@gmail.com>",
+        "azu <azu@users.noreply.github.com>",
+        "John Gozde <john@gozde.ca>",
+        "Adam Kirkton <akirkton@truefitinnovation.com>",
+        "Chris Montgomery <christopher.montgomery@dowjones.com>",
+        "J. Ryan Stinnett <jryans@gmail.com>",
+        "Jack Herrington <jherrington@walmartlabs.com>",
+        "Chris Truter <jeffpalentine@gmail.com>",
+        "Daniel Espeset <daniel@danielespeset.com>",
+        "Jamie Wong <jamie.lf.wong@gmail.com>",
+        "Eddy Bruël <ejpbruel@mozilla.com>",
+        "Hawken Rives <hawkrives@gmail.com>",
+        "Gilad Peleg <giladp007@gmail.com>",
+        "djchie <djchie.dev@gmail.com>",
+        "Gary Ye <garysye@gmail.com>",
+        "Nicolas Lalevée <nicolas.lalevee@hibnet.org>"
+      ],
+      "repository": "7rulnik/source-map-js",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/source-map-js/LICENSE"
+      ]
+    },
+    {
+      "name": "stackback",
+      "version": "0.0.2",
+      "path": "node_modules/stackback",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.0.2",
+      "resolved": "https://registry.npmjs.org/stackback/-/stackback-0.0.2.tgz",
+      "integrity": "sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==",
+      "homepage": null,
+      "author": "Roman Shtylman <shtylman@gmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git://github.com/shtylman/node-stackback.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": []
+    },
+    {
+      "name": "std-env",
+      "version": "3.10.0",
+      "path": "node_modules/std-env",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.10.0",
+      "resolved": "https://registry.npmjs.org/std-env/-/std-env-3.10.0.tgz",
+      "integrity": "sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": "unjs/std-env",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/std-env/LICENCE"
+      ]
+    },
+    {
+      "name": "strip-literal",
+      "version": "3.1.0",
+      "path": "node_modules/strip-literal",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/strip-literal/-/strip-literal-3.1.0.tgz",
+      "integrity": "sha512-8r3mkIM/2+PpjHoOtiAW8Rg3jJLHaV7xPwG+YRGrv6FP0wwk/toTpATxWYOW0BKdWwl82VT2tFYi5DlROa0Mxg==",
+      "homepage": "https://github.com/antfu/strip-literal#readme",
+      "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/antfu/strip-literal.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/strip-literal/LICENSE"
+      ]
+    },
+    {
+      "name": "js-tokens",
+      "version": "9.0.1",
+      "path": "node_modules/strip-literal/node_modules/js-tokens",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "9.0.1",
+      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-9.0.1.tgz",
+      "integrity": "sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ==",
+      "homepage": null,
+      "author": "Simon Lydell",
+      "contributors": null,
+      "repository": "lydell/js-tokens",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/strip-literal/node_modules/js-tokens/LICENSE"
+      ]
+    },
+    {
+      "name": "three",
+      "version": "0.170.0",
+      "path": "node_modules/three",
+      "license": "MIT",
+      "development_only": false,
+      "direct": true,
+      "installed": true,
+      "installed_version": "0.170.0",
+      "resolved": "https://registry.npmjs.org/three/-/three-0.170.0.tgz",
+      "integrity": "sha512-FQK+LEpYc0fBD+J8g6oSEyyNzjp+Q7Ks1C568WWaoMRLW+TkNNWmenWeGgJjV105Gd+p/2ql1ZcjYvNiPZBhuQ==",
+      "homepage": "https://threejs.org/",
+      "author": "mrdoob",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/mrdoob/three.js"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/three/LICENSE"
+      ]
+    },
+    {
+      "name": "tinybench",
+      "version": "2.9.0",
+      "path": "node_modules/tinybench",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.9.0",
+      "resolved": "https://registry.npmjs.org/tinybench/-/tinybench-2.9.0.tgz",
+      "integrity": "sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==",
+      "homepage": null,
+      "author": null,
+      "contributors": null,
+      "repository": "tinylibs/tinybench",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinybench/LICENSE"
+      ]
+    },
+    {
+      "name": "tinyexec",
+      "version": "0.3.2",
+      "path": "node_modules/tinyexec",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.3.2",
+      "resolved": "https://registry.npmjs.org/tinyexec/-/tinyexec-0.3.2.tgz",
+      "integrity": "sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==",
+      "homepage": "https://github.com/tinylibs/tinyexec#readme",
+      "author": "James Garbutt (https://github.com/43081j)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tinylibs/tinyexec.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinyexec/LICENSE"
+      ]
+    },
+    {
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "path": "node_modules/tinyglobby",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "0.2.17",
+      "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+      "integrity": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+      "homepage": "https://superchupu.dev/tinyglobby",
+      "author": "Superchupu",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SuperchupuDev/tinyglobby.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinyglobby/LICENSE"
+      ]
+    },
+    {
+      "name": "tinypool",
+      "version": "1.1.1",
+      "path": "node_modules/tinypool",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/tinypool/-/tinypool-1.1.1.tgz",
+      "integrity": "sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==",
+      "homepage": "https://github.com/tinylibs/tinypool#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/tinylibs/tinypool.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinypool/LICENSE"
+      ]
+    },
+    {
+      "name": "tinyrainbow",
+      "version": "2.0.0",
+      "path": "node_modules/tinyrainbow",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/tinyrainbow/-/tinyrainbow-2.0.0.tgz",
+      "integrity": "sha512-op4nsTR47R6p0vMUUoYl/a+ljLFVtlfaXkLQmqfLR1qHma1h/ysYk4hEXZ880bf2CYgTskvTa/e196Vd5dDQXw==",
+      "homepage": "https://github.com/tinylibs/tinyrainbow#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tinylibs/tinyrainbow.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinyrainbow/LICENCE"
+      ]
+    },
+    {
+      "name": "tinyspy",
+      "version": "4.0.6",
+      "path": "node_modules/tinyspy",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/tinyspy/-/tinyspy-4.0.6.tgz",
+      "integrity": "sha512-u8KszXvGfU68hVcZpRHKG28T0krMuv2G5nDhiHaMLen/gIuFEgIJhaJuO69qjnXg5paSrbPMFfx3brNuN8eVSg==",
+      "homepage": "https://github.com/tinylibs/tinyspy#readme",
+      "author": null,
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tinylibs/tinyspy.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/tinyspy/LICENCE"
+      ]
+    },
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "path": "node_modules/typescript",
+      "license": "Apache-2.0",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "5.9.3",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "homepage": "https://www.typescriptlang.org/",
+      "author": "Microsoft Corp.",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/microsoft/TypeScript.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/typescript/LICENSE.txt",
+        "node_modules/typescript/ThirdPartyNoticeText.txt"
+      ]
+    },
+    {
+      "name": "undici-types",
+      "version": "6.21.0",
+      "path": "node_modules/undici-types",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "6.21.0",
+      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+      "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==",
+      "homepage": "https://undici.nodejs.org",
+      "author": null,
+      "contributors": [
+        {
+          "name": "Daniele Belardi",
+          "url": "https://github.com/dnlup",
+          "author": true
+        },
+        {
+          "name": "Ethan Arrowood",
+          "url": "https://github.com/ethan-arrowood",
+          "author": true
+        },
+        {
+          "name": "Matteo Collina",
+          "url": "https://github.com/mcollina",
+          "author": true
+        },
+        {
+          "name": "Matthew Aitken",
+          "url": "https://github.com/KhafraDev",
+          "author": true
+        },
+        {
+          "name": "Robert Nagy",
+          "url": "https://github.com/ronag",
+          "author": true
+        },
+        {
+          "name": "Szymon Marczak",
+          "url": "https://github.com/szmarczak",
+          "author": true
+        },
+        {
+          "name": "Tomas Della Vedova",
+          "url": "https://github.com/delvedor",
+          "author": true
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nodejs/undici.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/undici-types/LICENSE"
+      ]
+    },
+    {
+      "name": "update-browserslist-db",
+      "version": "1.3.4",
+      "path": "node_modules/update-browserslist-db",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "1.3.4",
+      "resolved": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.3.4.tgz",
+      "integrity": "sha512-t8wonIOdQyOjtPd2VktlBu6QjTVTks6v8bSi7kd0r2Vll8TK1JYDZtRRdbmCHOAMphkZgrzK+L+vXK4pyZ8t4A==",
+      "homepage": null,
+      "author": "Andrey Sitnik <andrey@sitnik.es>",
+      "contributors": null,
+      "repository": "browserslist/update-db",
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/update-browserslist-db/LICENSE"
+      ]
+    },
+    {
+      "name": "vite",
+      "version": "6.4.6",
+      "path": "node_modules/vite",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "6.4.6",
+      "resolved": "https://registry.npmjs.org/vite/-/vite-6.4.6.tgz",
+      "integrity": "sha512-RtsraAwEG68idOA6iUOoIpOlcSKROnf815aIq9qHTSrDNpLoBrBa12suyfcEd8qn0xwOVQI1Yhm1GbmTjF600A==",
+      "homepage": "https://vite.dev",
+      "author": "Evan You",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitejs/vite.git",
+        "directory": "packages/vite"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/vite/LICENSE.md"
+      ]
+    },
+    {
+      "name": "vite-node",
+      "version": "3.2.4",
+      "path": "node_modules/vite-node",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.2.4",
+      "resolved": "https://registry.npmjs.org/vite-node/-/vite-node-3.2.4.tgz",
+      "integrity": "sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==",
+      "homepage": "https://github.com/vitest-dev/vitest/blob/main/packages/vite-node#readme",
+      "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/vite-node"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/vite-node/LICENSE"
+      ]
+    },
+    {
+      "name": "vitest",
+      "version": "3.2.7",
+      "path": "node_modules/vitest",
+      "license": "MIT",
+      "development_only": true,
+      "direct": true,
+      "installed": true,
+      "installed_version": "3.2.7",
+      "resolved": "https://registry.npmjs.org/vitest/-/vitest-3.2.7.tgz",
+      "integrity": "sha512-KrxIJ62Fd89gfysR4WotlgZABiz2dqFPgqGzX7s+CwsqLFomRH7777ZcrOD6+WVAh7khPQP41A+BKbpcJFrdEg==",
+      "homepage": "https://github.com/vitest-dev/vitest#readme",
+      "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vitest-dev/vitest.git",
+        "directory": "packages/vitest"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/vitest/LICENSE.md"
+      ]
+    },
+    {
+      "name": "why-is-node-running",
+      "version": "2.3.0",
+      "path": "node_modules/why-is-node-running",
+      "license": "MIT",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "2.3.0",
+      "resolved": "https://registry.npmjs.org/why-is-node-running/-/why-is-node-running-2.3.0.tgz",
+      "integrity": "sha512-hUrmaWBdVDcxvYqnyh09zunKzROWjbZTiNy8dBEjkS7ehEDQibXJ7XvlmtbwuTclUiIyN+CyXQD4Vmko8fNm8w==",
+      "homepage": "https://github.com/mafintosh/why-is-node-running",
+      "author": "Mathias Buus (@mafintosh)",
+      "contributors": [
+        {
+          "name": "Jon Peck",
+          "email": "jpeck@fluxsauce.com"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/mafintosh/why-is-node-running.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/why-is-node-running/LICENSE"
+      ]
+    },
+    {
+      "name": "yallist",
+      "version": "3.1.1",
+      "path": "node_modules/yallist",
+      "license": "ISC",
+      "development_only": true,
+      "direct": false,
+      "installed": true,
+      "installed_version": "3.1.1",
+      "resolved": "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz",
+      "integrity": "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==",
+      "homepage": null,
+      "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
+      "contributors": null,
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/isaacs/yallist.git"
+      },
+      "notice_basis": "package top-level files",
+      "notice_files": [
+        "node_modules/yallist/LICENSE"
+      ]
+    }
+  ]
+}

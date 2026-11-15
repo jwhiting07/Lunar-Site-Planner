@@ -178,8 +178,8 @@ input[aria-invalid='true']{ border-color: var(--warn); }
 .time-val{ font-size: 16px; }
 .time-btns{ display: flex; gap: 4px; }
 .scrubber{ flex: 1 1 260px; accent-color: #b6bcc4; padding: 0; }
-.timelines{ overflow-x: auto; }
-.timeline-svg{ min-width: 680px; cursor: col-resize; }
+.timelines{ min-width: 0; }
+.timeline-svg{ cursor: col-resize; touch-action: pan-y; }
 .bar-track{ fill: #1e2227; }
 .bar-sun{ fill: var(--sun); }
 .bar-earth{ fill: var(--earth); }

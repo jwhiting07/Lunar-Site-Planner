@@ -20,7 +20,10 @@ const metrics = (r: AnalysisResult) => ({ sunlit_fraction: r.metrics.sunlitFract
 
 export async function run(mode: string) {
   const points = locationGrid({ lat: 0, lon: 0 }, null);
-  if (mode === 'grid') { write('data_cache/validity_grid.json', points); return; }
+  if (mode === 'grid') {
+    write('data_cache/validity_grid.json', [...points, ...locationGrid({ lat: -90, lon: 0 }, 50)]);
+    return;
+  }
   const input = read('data_cache/validity_input.json');
   const eph = shippedEphemeris(), known = sitesDoc().sites;
   const cases = [];

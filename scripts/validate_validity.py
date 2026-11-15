@@ -38,7 +38,11 @@ def digest(path):
 
 
 def write(path, doc):
-    Path(path).write_text(json.dumps(doc, indent=1, allow_nan=False), encoding='utf-8')
+    # Readers (including the running dev server) must never see half a JSON file.
+    path = Path(path)
+    temporary = path.with_suffix(path.suffix + '.tmp')
+    temporary.write_text(json.dumps(doc, indent=1, allow_nan=False), encoding='utf-8')
+    temporary.replace(path)
 
 
 def node(mode):

@@ -172,7 +172,7 @@ body:has(.mission-app) { min-width: 0; }
 .mission-scenario { color: var(--tx0); }
 .mission-remove { padding: 4px; margin-left: 10px; font-size: 18px; }
 .mission-comparison > .menu { margin-top: 20px; }
-.mission-timeline { display: grid; gap: 16px; }
+.mission-timeline { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 .mission-timeline-controls { position: sticky; top: -24px; z-index: 2; background: var(--bg1); padding: 8px 0; }
 .mission-timeline-controls .timebar { margin: 0; }
 .mission-timeline .sky-scrub { cursor: ew-resize; touch-action: pan-y; user-select: none; }
@@ -295,13 +295,20 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 /* ---------- timeline tab ---------- */
 .mission-dialog-sub { margin: 4px 0 0; font-size: 12px; color: var(--tx1); }
 .tl .timebar { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 12px 24px; margin: 0; }
-.tl .time-now { width: auto; }
+.tl .time-now { width: auto; min-width: 0; }
 .tl .time-val { font: 500 18px var(--mono); white-space: nowrap; }
 .tl .time-slider { display: grid; gap: 6px; min-width: 0; }
+.tl .scrubber { width: 100%; min-width: 0; margin: 0; }
 .tl .time-ends { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--tx1); }
 .tl-panel { border: 1px solid var(--line); }
 .tl-panel-h { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line-soft); }
 .tl-panel-h h3 { margin: 0; font-size: 14px; font-weight: 500; }
+.tl-mission-picker { width: min(100%, 240px); min-width: 0; }
+.tl-mission-options { max-width: calc(100vw - 16px); }
+.tl-mission-options label { display: flex; align-items: center; gap: 12px; padding: 10px 14px; cursor: pointer; font-size: 13px; }
+.tl-mission-options label:hover, .tl-mission-options label:focus-within { background: var(--bg2); }
+.tl-mission-options input { flex: none; }
+.tl-mission-options small { display: block; margin-top: 3px; color: var(--tx1); font-size: 11px; }
 .tl-state { font-size: 12px; color: var(--tx1); text-align: right; }
 .tl-body { padding: 14px 18px 18px; }
 .tl-sky { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; padding: 16px 18px 18px; }
@@ -332,6 +339,22 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
   .tl .timebar { grid-template-columns: minmax(0, 1fr); }
   .tl-panel-h { flex-direction: column; gap: 4px; }
   .tl-state { text-align: left; }
+}
+@media (max-width: 760px) {
+  .mission-dialog-bar { flex-wrap: wrap; gap: 8px; }
+  .mission-dialog-bar > .mission-icon-button { order: 0; }
+  .mission-dialog-pick { flex: 1 0 100%; order: 1; margin-inline-start: 0; }
+  .mission-timeline-controls { top: -12px; }
+  .tl-panel-h { padding: 12px; gap: 8px; }
+  .tl-body, .tl-sky { padding: 12px; }
+  .tl-sky { gap: 20px; }
+  .tl-mission-picker { width: 100%; }
+  .tl .time-val { font-size: clamp(13px, 4vw, 18px); white-space: normal; overflow-wrap: anywhere; }
+  .tl .time-btns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tl .time-btns button { min-height: 44px; }
+  .tl .scrubber { min-height: 32px; }
+  .tl .key { display: block; margin: 0 0 6px; }
+  .sky-card dt, .sky-details dt, .sky-details dd { overflow-wrap: anywhere; }
 }
 
 /* ---------- text fades in when it appears ---------- */

@@ -8,7 +8,7 @@ import { formatRowValue, summaryRows } from './science/summary';
 import { DEFAULT_PARAM_STATE, type ParamState } from './ui/params';
 import { ExportMenu, parseDate } from './components/Controls';
 import { deg, fmtLat, fmtLon, isoDate } from './ui/labels';
-import { horizonModel, missionEntries, scenarioKey } from './ui/scenarios';
+import { horizonModel, missionEntries, scenarioKey, timelineEntries } from './ui/scenarios';
 import { ScenarioDetails, ScenarioOverview, ScenarioTimeline, type TerrainState } from './components/ScenarioDetails';
 import { UtcClock } from './components/UtcClock';
 import { firstDayOnOrAfter, lastDayOnOrBefore, useTimeZone, zoneDate, zoneDayStart } from './ui/timeZone';
@@ -73,6 +73,8 @@ export default function MissionPlanner() {
   const [provenance, setProvenance] = useState<ProvenanceDoc | null>(null);
   const [provError, setProvError] = useState<string | null>(null);
   const [dashboard, setDashboard] = useState<DashboardTab | null>(null);
+  // Chart selections belong to the workspace, independently of the mission being inspected.
+  const [timelineSelectedIds, setTimelineSelectedIds] = useState<string[] | null>(null);
   const [originalMission, setOriginalMission] = useState<Candidate | null>(null);
   const [detailed, setDetailed] = useState(false);
   const abort = useRef<AbortController | null>(null);
@@ -167,6 +169,7 @@ export default function MissionPlanner() {
   }, [query.location, lat, lon, data, landmark]);
   const comparedLandmarks = useMemo(() => new Set(saved.flatMap(entry => entry.mission ? [entry.mission.id] : [])), [saved]);
   const missions = useMemo(() => missionEntries(options, saved, [originalMission, active]), [options, saved, originalMission, active]);
+  const timelineMissions = useMemo(() => timelineEntries(missions, active), [missions, active]);
   const mapSites = useMemo(() => [
     ...missions.map(({ id, candidate }) => ({ ...candidate.result.site, id })),
     ...chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id)),
@@ -298,9 +301,9 @@ export default function MissionPlanner() {
         const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: query.location === 'any' ? null : point, startMs: start,
           known, observerHeight: data.sites.observer_height_m, masks: new Map(masks.current) };
         let count = 0;
-        const update = (done: number, total: number) => {
-          count = total;
-          setProgress(`Checking ${done} / ${total}…`);
+        const update = (done: number, total: number, phase: 'screening' | 'refining') => {
+          if (phase === 'screening') count = total;
+          setProgress(`${phase === 'screening' ? 'Checking' : 'Refining'} ${done} / ${total}…`);
         };
         const found = await searchCandidates(eph, config, controller.signal, update);
         if (controller.signal.aborted) return;
@@ -368,7 +371,7 @@ export default function MissionPlanner() {
     setMarkerScenarioId(null); setLandmark(null); setShowLandmark(false); setDashboard(null);
     setQuery(INITIAL_QUERY); // also drops the entered location, so its marker goes too
   };
-  const resetComparison = () => { failedRestore.current = []; setSaved([]); setMarkerScenarioId(null); };
+  const resetComparison = () => { failedRestore.current = []; setSaved([]); setTimelineSelectedIds(null); setMarkerScenarioId(null); };
   const verdict = active ? assessment(active.result, active.targets) : null;
   const terrainPending = terrainStatus === 'pending';
   const terrainNotice = terrainStatus && <p className="mission-terrain-status" role="status">
@@ -414,9 +417,13 @@ export default function MissionPlanner() {
   </div>;
 
   const displayed = options.length ? options : active ? [active] : saved;
-  const viewedMission = active ?? saved[0];
+  const dialogMissions = dashboard === 'Timeline' ? timelineMissions : missions.filter(entry => entry.saved);
+  const viewedMission = dashboard === 'Timeline'
+    ? (timelineMissions.find(entry => entry.id === (active ? scenarioKey(active) : '')) ?? timelineMissions[0])?.candidate
+    : active ?? saved[0];
   const viewedId = viewedMission ? scenarioKey(viewedMission) : '';
-  const missionChoices = missions.map(({ id, label, candidate: { result } }) => ({
+  const viewingActive = !!active && viewedId === scenarioKey(active);
+  const missionChoices = dialogMissions.map(({ id, label, candidate: { result } }) => ({
     value: id, label: `${label} · ${tz.dateTime(result.startMs)} · ${Number((result.metrics.intervalHours / 24).toFixed(3))} d`,
   }));
   const missionTime = landmark ? comparisonStart(landmark) : null;
@@ -473,8 +480,8 @@ export default function MissionPlanner() {
       <header className="mission-dialog-bar">
         <div><h2>Mission details</h2>{viewedMission && <p className="mission-dialog-sub mono">{fmtLat(viewedMission.result.site.lat_deg)} / {fmtLon(viewedMission.result.site.lon_deg)}</p>}</div>
         {(dashboard === 'Results' || dashboard === 'Timeline') && missionChoices.length > 0 && <div className="mission-dialog-pick">
-          <Select label="Mission" value={viewedId} options={missionChoices} onChange={value => {
-            const next = missions.find(entry => entry.id === value);
+          <Select label="Mission" value={viewedId} options={missionChoices} placeholder="Select compared site" onChange={value => {
+            const next = dialogMissions.find(entry => entry.id === value);
             if (!next || value === viewedId) return;
             if (viewedMission && missions.some(entry => entry.id === viewedId && !entry.sampled && !entry.saved)) setOriginalMission(viewedMission);
             setMarkerScenarioId(null);
@@ -493,9 +500,10 @@ export default function MissionPlanner() {
         {dashboard === 'Results' && <>{results}</>}
         {dashboard === 'Compare' && comparison}
         {dashboard === 'Timeline' && (!data ? <p>Loading…</p> : viewedMission ? <>
-          {terrainNotice}
+          {viewingActive && terrainNotice}
           <ScenarioTimeline key={viewedId} result={viewedMission.result} missionId={viewedId}
-            missions={missions.map(({ id, label, candidate }) => ({ id, label, result: candidate.result }))} index={data.index} terrain={terrainStatus} />
+            selectedIds={timelineSelectedIds ?? [viewedId]} onSelectionChange={setTimelineSelectedIds}
+            missions={timelineMissions.map(({ id, label, candidate }) => ({ id, label, result: candidate.result }))} index={data.index} terrain={viewingActive ? terrainStatus : null} />
         </> : <p>Run an analysis to view the timeline and local horizon.</p>)}
       </div>
     </dialog>

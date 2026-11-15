@@ -37,6 +37,21 @@ export function missionEntries(sampled: Candidate[], saved: SavedComparison[], o
   return [...entries.values()];
 }
 
+/** Only the open mission and checked comparisons are available to the timeline. */
+export function timelineEntries(entries: ReturnType<typeof missionEntries>, active: Candidate | null) {
+  const id = active ? scenarioKey(active) : null;
+  return entries.filter(entry => entry.saved || entry.id === id);
+}
+
+/** Keep the examined mission first when checked, then the other checked missions. */
+export function timelineSelection<T extends { id: string }>(missions: T[], primaryId: string, selectedIds: readonly string[]) {
+  const primary = missions.find(mission => mission.id === primaryId);
+  return [
+    ...(primary && selectedIds.includes(primaryId) ? [primary] : []),
+    ...missions.filter(mission => mission.id !== primaryId && selectedIds.includes(mission.id)),
+  ];
+}
+
 export function horizonModel(result: AnalysisResult): string {
   if (result.horizonMask?.resolutionM) return 'Regional LOLA';
   return result.terrainAware ? 'LOLA terrain' : 'Flat horizon';
