@@ -15,6 +15,7 @@ import { INITIAL_QUERY, isDiscovery, MissionControls, queryLabels, type MissionQ
 import { MissionMatches } from './components/MissionMatches';
 import { Chevron } from './components/Chevron';
 import { Select } from './components/Select';
+import { MoonLoading } from './components/MoonLoading';
 import './mission.css';
 
 const Moon = lazy(() => import('./components/MoonView').then(m => ({ default: m.MoonView })));
@@ -33,6 +34,13 @@ type DashboardTab = typeof dashboardTabs[number];
 
 export default function MissionPlanner() {
   const [data, setData] = useState<{ sites: SitesDoc; index: EphemerisIndex } | null>(null);
+  const [fontsReady, setFontsReady] = useState(false);
+  const [dataSettled, setDataSettled] = useState(false);
+  const [landmarksReady, setLandmarksReady] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(false);
+  const startupReady = fontsReady && landmarksReady && dataSettled;
+  const chromeReady = startupReady && (sceneReady || showPlaceholder);
   const [error, setError] = useState('');
   const [query, setQuery] = useState<MissionQuery>(INITIAL_QUERY);
   const tz = useTimeZone();
@@ -76,6 +84,17 @@ export default function MissionPlanner() {
   const compareTrigger = useRef<HTMLButtonElement>(null);
   const openedFromCompare = useRef(false);
   const previousZone = useRef(tz.zone);
+  useEffect(() => {
+    if (!startupReady || sceneReady) return;
+    // Fast loads reveal everything together. Only show a disc for a slower scene.
+    const timer = window.setTimeout(() => setShowPlaceholder(true), 400);
+    return () => window.clearTimeout(timer);
+  }, [startupReady, sceneReady]);
+  useEffect(() => {
+    let current = true;
+    document.fonts.ready.then(() => { if (current) setFontsReady(true); });
+    return () => { current = false; };
+  }, []);
   // Dates in the controls are calendar days in the display zone: when the zone
   // changes, re-express the same instants so the landing dates stay the same moments.
   useEffect(() => {
@@ -89,13 +108,13 @@ export default function MissionPlanner() {
 
   useEffect(() => {
     let current = true;
-    Promise.all([loadSites(), loadEphemerisIndex()]).then(([sites, index]) => { if (current) setData({ sites, index }); }).catch(e => { if (current) setError(errorText(e)); });
+    Promise.all([loadSites(), loadEphemerisIndex()]).then(([sites, index]) => { if (current) setData({ sites, index }); }).catch(e => { if (current) setError(errorText(e)); }).finally(() => { if (current) setDataSettled(true); });
     return () => { current = false; abort.current?.abort(); terrainRequest.current?.abort(); };
   }, []);
   useEffect(() => {
     // Optional layer: the planner works without the catalogue.
     let current = true;
-    loadLandingSites().then(doc => { if (current) setLandmarks(doc.sites); }).catch(() => {});
+    loadLandingSites().then(doc => { if (current) setLandmarks(doc.sites); }).catch(() => {}).finally(() => { if (current) setLandmarksReady(true); });
     return () => { current = false; };
   }, []);
   useEffect(() => {
@@ -411,7 +430,7 @@ export default function MissionPlanner() {
   const displayed = options.length ? options : active ? [active] : saved;
   const missionTime = landmark ? comparisonStart(landmark) : null;
   const comparedMission = landmark ? saved.find(entry => entry.mission?.id === landmark.id) : undefined;
-  return <div className="mission-app">
+  return <div className={`mission-app${chromeReady ? ' mission-ready' : ''}`}>
     <header className="mission-top">
       <h1>Lunar Landing Site Navigator</h1>
       <button className="mission-text-button mission-toggle" aria-expanded={!controlsHidden} aria-controls="mission-controls" onClick={() => setControlsHidden(hidden => !hidden)}>Controls<Chevron /></button>
@@ -431,8 +450,8 @@ export default function MissionPlanner() {
       {pick && <button className="mission-text-button" onClick={() => setPick(false)}>Cancel selection</button>}
       {error && <button className="mission-icon-button" aria-label="Dismiss error" onClick={() => setError('')}>×</button>}
     </div>}
-        <Suspense fallback={<div className="view-loading" role="status">Loading Moon…</div>}>
-          <Moon compact explorer ephemerisIndex={data?.index} landmarks={landmarks} onLandmark={chooseLandmark} idleRotate={mapSites.length === 0 && !pick} sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={markerSiteId ?? (query.location !== 'any' ? chosen[0]?.id : undefined) ?? active?.result.site.id ?? ''} onSelect={selectMarker}
+        <Suspense fallback={<MoonLoading showPlaceholder={showPlaceholder} chromeReady={chromeReady} />}>
+          <Moon compact explorer ephemerisIndex={data?.index} startupReady={startupReady} showPlaceholder={showPlaceholder} chromeReady={chromeReady} onLoadComplete={() => setSceneReady(true)} landmarks={landmarks} onLandmark={chooseLandmark} idleRotate={mapSites.length === 0 && !pick} sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={markerSiteId ?? (query.location !== 'any' ? chosen[0]?.id : undefined) ?? active?.result.site.id ?? ''} onSelect={selectMarker}
             onPick={pick && !busy ? point => { setQuery(current => ({ ...current, location: current.location === 'any' ? 'exact' : current.location, lat: point.lat.toFixed(6), lon: point.lon.toFixed(6) })); setLandmark(null); setMarkerScenarioId(null); setPick(false); } : undefined} />
         </Suspense>
         {showLandmark && landmark && missionTime && <aside className="mission-marker-summary" aria-label="Historical or planned mission">

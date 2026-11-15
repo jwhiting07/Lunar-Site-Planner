@@ -184,7 +184,7 @@
 .provenance-body .refs-item { display: grid; grid-template-columns: 156px minmax(0, 1fr); gap: 4px 28px; padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
 .provenance-body .refs-item:first-child { padding-top: 4px; }
 .provenance-body .refs-id { padding-top: 3px; font-size: 11px; color: var(--tx1); overflow-wrap: anywhere; }
-.provenance-body .refs-title { color: var(--tx0); font-size: 14px; line-height: 1.5; text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color .15s ease; }
+.provenance-body .refs-title { color: var(--tx0); font-size: 14px; line-height: 1.5; text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color 0.1125s ease; }
 .provenance-body .refs-title:hover { border-bottom-color: var(--tx0); }
 .provenance-body .refs-meta { margin: 6px 0 0; font-size: 12px; line-height: 1.55; color: var(--tx1); }
 .provenance-body .refs-links { margin: 8px 0 0; font: 11px var(--mono); }
