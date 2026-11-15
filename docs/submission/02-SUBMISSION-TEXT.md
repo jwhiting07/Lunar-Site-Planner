@@ -26,7 +26,7 @@ The TypeScript calculation engine compares Sun and Earth directions with the ter
 
 Core sources are NASA/JPL NAIF SPICE kernels, NASA GSFC PGDA LOLA elevation and slope products, published LOLA illumination and Earth-visibility maps for contextual checks and site selection, and NASA/LROC mission-location records. NASA's Moon model and CGI Moon Kit supply visual context and global elevation data. The background uses a filtered Yale Bright Star Catalog hosted by NASA HEASARC. Published NASA, partner-agency, USGS, research and mission-provider records support the landing-site catalogue. The submission resource list provides the source links and distinguishes calculation inputs, display assets, catalogue facts, methods and validation references.
 
-The interface uses React, TypeScript, Three.js, KaTeX, HTML and CSS, with Vite and Node.js/npm for development and builds. Python preprocessing and validation use NumPy, SpiceyPy, Rasterio, pyproj, Requests and Pillow. Vitest and pytest support testing. There is no external database service: the application reads precomputed JSON and binary files and stores comparison selections in browser localStorage. Git/GitHub provide source versioning and the configured remote repository. OpenAI Codex assisted development and documentation; a historical image-generation concept is documented separately from the working application.
+The interface uses React, TypeScript, Three.js, KaTeX, HTML and CSS, with Vite and Node.js/npm for development and builds. Python preprocessing and validation use NumPy, SpiceyPy, Rasterio, pyproj, Requests and Pillow. Vitest and pytest support testing. The application reads precomputed JSON and binary files and stores comparison selections in browser localStorage. Git and GitHub provide source versioning. Vercel hosts the public app, and OBS Studio is used for demo screen capture.
 
 ### Creativity, benefit and intended impact
 
@@ -40,14 +40,14 @@ Search samples a bounded set of scenarios and does not prove a global optimum. T
 
 ## Use of Super Intelligence — disclosure text
 
-OpenAI Codex assisted project code, interface development, documentation, and submission preparation. The repository also records use of OpenAI's image-generation tool for a historical interface concept at `docs/ui/mockups/moon-view-v1.png`; that concept is not part of the running application's scientific display. Scientific values are calculated from the cited source datasets by the documented numerical pipeline, not fabricated by a generative model. The NASA Moon model, textures and star catalogue have their own source provenance. Code/SI assistance is acknowledged in the project README and `public/si-disclosure.json`.
+OpenAI Codex assisted project code, interface development, documentation, and submission preparation. Anthropic Claude Opus 5.5 assisted code development. Scientific values are calculated from the cited datasets by the documented numerical pipeline. The NASA Moon model, textures and star catalogue have their own source provenance. SI assistance is acknowledged in the project README and `public/si-disclosure.json`.
 
-The form's exact SI option labels were not included in the pasted text. Select the options matching **code** and **text** assistance. Include **image generation** if the historical concept is included in the publicly submitted project, and visibly watermark that image first. Select audio/video-generation options only if those tools are actually used for the final recording. Do not select “I did not use SI.”
+The form's exact SI option labels were not included in the pasted text. Select the options matching **code** and **text** assistance. OBS captures the application screen. If the final demo adds synthetic audio, generated video, or other generated assets, disclose that use separately.
 
 ## Links
 
 - **Project demonstration:** insert the final public video URL after recording and uploading. No completed demo file was found in this checkout.
-- **Project:** insert a public app or repository URL after a signed-out access check. The configured GitHub remote returned 404 to an unauthenticated web check; its public accessibility is unresolved.
+- **Project:** https://lunarsiteplanner.com/ · public source: https://github.com/jwhiting07/Lunar-Site-Planner.
 - **NASA Data / Space Agency Partner & Other Data:** use [03-RESOURCES.md](03-RESOURCES.md), including its complete reference appendix.
 
 The prose above describes the implemented code. It does not claim that a final video, public deployment, or judging submission has already been completed.

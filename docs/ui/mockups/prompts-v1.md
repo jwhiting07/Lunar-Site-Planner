@@ -2,7 +2,7 @@
 
 Generated with the built-in image_gen tool. Historical Moon explorer concept requested by Elliott; this is an image, not an implemented application or validated scientific visualization. Existing reference HTML was left unchanged.
 
-- `moon-view-v1.png`: 3D Moon explorer appearance.
+The historical concept image is excluded from the current project and submission. This file preserves the design prompt for reference.
 
 ## Moon prompt (historical)
 

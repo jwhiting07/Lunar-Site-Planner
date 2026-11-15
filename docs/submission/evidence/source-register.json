@@ -1305,7 +1305,7 @@
     [
       "KaTeX",
       "https://katex.org/",
-      "Mathematical notation and bundled fonts; MIT"
+      "Math rendering code: MIT; bundled math fonts: SIL OFL 1.1"
     ],
     [
       "TypeScript",
@@ -1379,8 +1379,18 @@
     ],
     [
       "GitHub",
-      "https://github.com/",
-      "Configured remote repository service; public access not yet verified"
+      "https://github.com/jwhiting07/Lunar-Site-Planner",
+      "Public source repository and collaboration"
+    ],
+    [
+      "Vercel",
+      "https://vercel.com/",
+      "Production hosting and deployment"
+    ],
+    [
+      "OBS Studio",
+      "https://obsproject.com/",
+      "Screen recording for the project demonstration"
     ],
     [
       "OpenAI Codex",
@@ -1388,9 +1398,9 @@
       "SI code and documentation assistance"
     ],
     [
-      "OpenAI image generation",
-      "https://openai.com/index/image-generation/",
-      "Historical concept only; see SI disclosure and watermark requirement"
+      "Anthropic Claude Opus 5.5",
+      "https://www.anthropic.com/claude/opus",
+      "SI code assistance, recorded in Git co-authorship trailers"
     ]
   ]
 }

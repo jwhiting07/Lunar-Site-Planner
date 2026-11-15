@@ -24,7 +24,7 @@ Use each resource name as **Link Text** and its complete URL as **Link URL**. Th
 |---|---|---|
 | React and React DOM | https://react.dev/ | Interface; MIT |
 | Three.js | https://threejs.org/ | 3D Moon, terrain and stars; MIT |
-| KaTeX | https://katex.org/ | Mathematical notation and bundled fonts; MIT |
+| KaTeX | https://katex.org/ | Math rendering code: MIT; bundled math fonts: SIL OFL 1.1 |
 | TypeScript | https://www.typescriptlang.org/ | Application language and type checking; Apache-2.0 |
 | Vite and React plugin | https://vite.dev/ | Build and local server; MIT |
 | Vitest | https://vitest.dev/ | JavaScript/TypeScript tests; MIT |
@@ -39,9 +39,11 @@ Use each resource name as **Link Text** and its complete URL as **Link URL**. Th
 | pytest | https://docs.pytest.org/ | Python tests; MIT |
 | Inter | https://github.com/rsms/inter | Interface font; SIL OFL 1.1 |
 | Git | https://git-scm.com/ | Version control; GPL-2.0, tool use does not relicense project code |
-| GitHub | https://github.com/ | Configured remote repository service; public access not yet verified |
+| GitHub | https://github.com/jwhiting07/Lunar-Site-Planner | Public source repository and collaboration |
+| Vercel | https://vercel.com/ | Production hosting and deployment |
+| OBS Studio | https://obsproject.com/ | Screen recording for the project demonstration |
 | OpenAI Codex | https://openai.com/codex/ | SI code and documentation assistance |
-| OpenAI image generation | https://openai.com/index/image-generation/ | Historical concept only; see SI disclosure and watermark requirement |
+| Anthropic Claude Opus 5.5 | https://www.anthropic.com/claude/opus | SI code assistance, recorded in Git co-authorship trailers |
 
 No SQL database, Firebase, Supabase, MongoDB, paid map API, or external database backend is referenced by the inspected implementation. It loads local JSON/binary products, uses browser localStorage for comparisons, and can call its own custom-terrain endpoint. NASA/partner archives are data sources, not database services that the team built or operates.
 
@@ -180,6 +182,6 @@ The archived ESA annual-report section at `https://www.esa.int/esapub/annuals/an
 
 - `evidence/npm-inventory.json`: every lockfile package, installed version, declared license and located notices.
 - `evidence/python-inventory.json`: installed Python distributions and their recorded licensing metadata; versions describe this environment, not a fully pinned requirements file.
-- `../../../public/THIRD_PARTY_NOTICES.txt`: collected npm and Inter notices for distribution.
+- `../../public/THIRD_PARTY_NOTICES.txt`: collected npm, Inter and KaTeX font notices for distribution.
 - `evidence/python-notices.txt`: collected Python license texts, including available bundled-component notices.
 - Existing asset provenance records identify URLs, modifications and SHA-256 hashes.

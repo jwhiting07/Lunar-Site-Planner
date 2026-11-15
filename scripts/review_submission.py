@@ -21,7 +21,7 @@ EVIDENCE = OUT / "evidence"
 SOFTWARE = [
     ("React and React DOM", "https://react.dev/", "Interface; MIT"),
     ("Three.js", "https://threejs.org/", "3D Moon, terrain and stars; MIT"),
-    ("KaTeX", "https://katex.org/", "Mathematical notation and bundled fonts; MIT"),
+    ("KaTeX", "https://katex.org/", "Math rendering code: MIT; bundled math fonts: SIL OFL 1.1"),
     ("TypeScript", "https://www.typescriptlang.org/", "Application language and type checking; Apache-2.0"),
     ("Vite and React plugin", "https://vite.dev/", "Build and local server; MIT"),
     ("Vitest", "https://vitest.dev/", "JavaScript/TypeScript tests; MIT"),
@@ -36,9 +36,11 @@ SOFTWARE = [
     ("pytest", "https://docs.pytest.org/", "Python tests; MIT"),
     ("Inter", "https://github.com/rsms/inter", "Interface font; SIL OFL 1.1"),
     ("Git", "https://git-scm.com/", "Version control; GPL-2.0, tool use does not relicense project code"),
-    ("GitHub", "https://github.com/", "Configured remote repository service; public access not yet verified"),
+    ("GitHub", "https://github.com/jwhiting07/Lunar-Site-Planner", "Public source repository and collaboration"),
+    ("Vercel", "https://vercel.com/", "Production hosting and deployment"),
+    ("OBS Studio", "https://obsproject.com/", "Screen recording for the project demonstration"),
     ("OpenAI Codex", "https://openai.com/codex/", "SI code and documentation assistance"),
-    ("OpenAI image generation", "https://openai.com/index/image-generation/", "Historical concept only; see SI disclosure and watermark requirement"),
+    ("Anthropic Claude Opus 5.5", "https://www.anthropic.com/claude/opus", "SI code assistance, recorded in Git co-authorship trailers"),
 ]
 
 
@@ -68,7 +70,7 @@ def main():
                "Collected from installed packages identified by package-lock.json.\n"
                "Includes development tools for completeness; not every package is shipped in the browser.\n"
                "Absent platform-specific optional packages are inventoried separately, not represented as installed.\n"
-               "External data credits: CREDITS.md. Inter font license: fonts/OFL.txt.\n"]
+               "External data credits: CREDITS.md. Font licenses: fonts/OFL.txt and fonts/KaTeX-OFL.txt.\n"]
     for relative, meta in lock["packages"].items():
         if not relative:
             continue
@@ -106,6 +108,8 @@ def main():
     # The Inter binary is shipped with the application, independently of npm.
     notices.append("\n" + "=" * 72 + "\nInter font — SIL Open Font License 1.1\n")
     notices.append((ROOT / "public/fonts/OFL.txt").read_text(encoding="utf-8"))
+    notices.append("\n" + "=" * 72 + "\nKaTeX math fonts — SIL Open Font License 1.1\n")
+    notices.append((ROOT / "public/fonts/KaTeX-OFL.txt").read_text(encoding="utf-8"))
     (ROOT / "public/THIRD_PARTY_NOTICES.txt").write_text("\n".join(notices), encoding="utf-8")
     save_json(EVIDENCE / "npm-inventory.json", {"reviewed_utc": now, "packages": npm})
 
@@ -177,7 +181,7 @@ def main():
     lines += ["", "## Exact dependency evidence", "",
               "- `evidence/npm-inventory.json`: every lockfile package, installed version, declared license and located notices.",
               "- `evidence/python-inventory.json`: installed Python distributions and their recorded licensing metadata; versions describe this environment, not a fully pinned requirements file.",
-              "- `../../../public/THIRD_PARTY_NOTICES.txt`: collected npm and Inter notices for distribution.",
+              "- `../../public/THIRD_PARTY_NOTICES.txt`: collected npm, Inter and KaTeX font notices for distribution.",
               "- `evidence/python-notices.txt`: collected Python license texts, including available bundled-component notices.",
               "- Existing asset provenance records identify URLs, modifications and SHA-256 hashes.", ""]
     (OUT / "03-RESOURCES.md").write_text("\n".join(lines), encoding="utf-8")
@@ -185,7 +189,7 @@ def main():
     if args.check_links:
         import requests
         urls = sorted({r["url"] for r in refs} | {s[1] for s in SOFTWARE} |
-                      {"https://github.com/jwhiting07/Seraphim-Landing"})
+                      {"https://lunarsiteplanner.com/"})
 
         def check(url):
             try:

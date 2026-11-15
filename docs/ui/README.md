@@ -61,9 +61,8 @@ Earlier page and interaction descriptions below are historical references.
 
 ## Moon reference
 
-The separate 3D Moon reference remains in `mockups/moon-view-v1.png`. The Solar
-view, its assets, orbital data, and mockups were removed at the user's request on
-November 15, 2026. Earlier instructions to retain that work are superseded.
+The historical 3D Moon concept image is excluded from the submission. The Solar
+view, its assets, orbital data, and mockups were removed on November 15, 2026.
 
 ## Planning interactions — November 14, 2026
 

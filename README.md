@@ -126,9 +126,8 @@ hosted by NASA/GSFC HEASARC. Source and asset checksums are recorded under
 [`public/fonts/OFL.txt`](public/fonts/OFL.txt).
 
 OpenAI Codex assisted code, interface development, documentation, and submission
-preparation. A historical generated interface concept is documented in
-[`docs/ui/mockups/prompts-v1.md`](docs/ui/mockups/prompts-v1.md) and is outside the
-running application. It requires a visible SI-generated watermark before inclusion
-in public submission materials. Scientific values are calculated by the documented
-numerical pipeline from the cited source data. This team project is not endorsed
-by NASA.
+preparation. Anthropic Claude Opus 5.5 assisted code. The application is hosted on
+Vercel, and OBS Studio is used for demo screen capture. The KaTeX math fonts use
+SIL OFL 1.1, with their notice in [`public/fonts/KaTeX-OFL.txt`](public/fonts/KaTeX-OFL.txt).
+Scientific values are calculated by the documented numerical pipeline from the
+cited source data. This team project is not endorsed by NASA.
