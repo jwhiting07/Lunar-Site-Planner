@@ -60,39 +60,11 @@ coordinate flat-horizon estimates from the exact shipped terrain masks. The defa
 
 Earlier page and interaction descriptions below are historical references.
 
-## Latest view direction — November 14, 2026
+## Moon reference
 
-Moon is now the default application page. Solar view is parked at the user's request:
-keep its source, NASA assets, orbital data and mockups, but hide it from navigation
-and do not load it on startup. The production entry point exposes Moon and Planning.
-
-The Moon page uses NASA's LRO GLB, with optional landing-site markers, Focus site,
-and zoom controls. Keep a Scale popout button and cursor
-latitude/longitude at the lower left, on the Moon page only. Compute coordinates
-from the pointer's intersection with the Moon, updating during pointer movement and
-camera changes; update the popout's distance bar when zoom or viewport changes. The viewing
-light is contextual, not a simulated epoch's illumination. Site selection carries
-between Moon and Planning. All existing planning data and calculations remain available.
-
-The following solar direction is retained for future work, not an active page:
-
-The user approved the separate 3D Moon page in `mockups/moon-view-v1.png`.
-For the solar page, use NASA 3D models/textures in a fixed-camera overview, with
-no user rotation. Update positions against current time and show only future
-trajectory segments starting at the current body positions; do not show past trails.
-Keep both pages minimal and visually consistent. `mockups/solar-view-v4.png` is the
-approved solar mockup. It illustrates appearance rather than actual
-NASA assets or calculated positions. Show approximately six months of future paths,
-without a time-span label, a Future path box, or a Now box. Add a bottom-left Scale
-button with an on-demand information panel showing each body's physical diameter
-scale in meters per screen pixel (m/px), not size sliders; the mockup shows it open.
-Numbers in the image are illustrative; production must derive them from projected
-diameter and update them with the view. Move the Sun farther left, place Earth about
-two thirds across from the left, and bring the Moon closer than in revision 3.
-Improve body detail and use a camera lowered 60 degrees
-from overhead (30 degrees above the orbital plane), shifted slightly right.
-Generation prompts and implementation notes are in `mockups/prompts-v4.md`.
-The saved HTML below preserves the earlier layout reference.
+The separate 3D Moon reference remains in `mockups/moon-view-v1.png`. The Solar
+view, its assets, orbital data, and mockups were removed at the user's request on
+November 15, 2026. Earlier instructions to retain that work are superseded.
 
 ## Planning interactions — November 14, 2026
 

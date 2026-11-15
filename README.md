@@ -85,25 +85,22 @@ browser-supported named zone and fixed offsets UTC−12 through UTC+14 remain
 available, with time-zone names and daylight-saving-aware offsets. Mission dates
 and scientific timeline controls always use UTC.
 
-Solar view remains parked with its code and assets preserved. See
-[parked solar work](docs/ui/SOLAR_PARKED.md).
-
 CSV files begin with `#` metadata lines; skip these when importing the table.
 JSON includes references, assumptions, windows, summary values and sampled series.
 
 ## Sources and reproducibility
 
-The display-only NASA models are recorded with source URLs and checksums in
+The display-only NASA Moon model is recorded with its source URL and checksums in
 `public/models/provenance.json`. NASA geometry/UVs are preserved, with embedded maps
-repacked for the web (Moon: 4096 px; Earth/Sun: 2048 px). The Moon is about 4.5 MB and
+repacked for the web at 4096 px. The Moon is about 4.5 MB and
 is loaded with the Moon page. The globe uses a viewing light, not physical illumination
 for the displayed UTC. Local terrain uses the calculated Sun direction with ambient
 fill and no ray-traced shadows. Scientific calculations still use the original terrain and
 ephemeris pipeline below.
 
-To reproduce the models and the retained solar-only orbit data, run
+To reproduce the Moon model, run
 `.venv\Scripts\python.exe scripts/prepare_visuals.py` after installing requirements.
-Original model downloads and NAIF kernels are cached in ignored `data_cache/`.
+The original model download is cached in ignored `data_cache/models/`.
 The active Moon views use 4,103 bright-star positions from the Yale Bright Star
 Catalog hosted by NASA/GSFC HEASARC, rendered as small, dim, antialiased points.
 `public/data/stars.provenance.json` records the source, credit, selection and checksums;
@@ -135,8 +132,8 @@ python scripts/validate.py
 
 The source downloads use about 0.80 GB (0.74 GiB; 797,407,757 bytes per
 `data_cache/sources_manifest.json`) in ignored `data_cache/`. The app ships about
-5.3 MB under `public/data/` (scientific products plus the display-only star and orbit
-tables) and about 6.3 MB of display-only models and textures under `public/models/`
+31.5 MB under `public/data/` (scientific products plus the display-only star
+catalog) and about 4.9 MB of display-only models and textures under `public/models/`
 and `public/textures/`. Validation may download additional reference
 products and Horizons responses. Keep Node/npm on PATH for validation's JS checks.
 On Windows the existing venv executable is `.venv\Scripts\python.exe`.

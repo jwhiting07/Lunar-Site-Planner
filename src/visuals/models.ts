@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import type { OrbitBody } from './orbits';
 
 const moonLighting = THREE.ShaderChunk.lights_physical_pars_fragment.replace(
   'float dotNL = saturate( dot( geometryNormal, directLight.direction ) );',
@@ -11,8 +10,8 @@ const moonLighting = THREE.ShaderChunk.lights_physical_pars_fragment.replace(
 );
 
 /** Each caller owns its model and GPU resources; HTTP cache reuses the local GLB. */
-export async function loadNasaModel(body: OrbitBody): Promise<THREE.Group> {
-  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/${body}.glb`);
+export async function loadMoonModel(): Promise<THREE.Group> {
+  const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/moon.glb`);
   const source = gltf.scene;
   const box = new THREE.Box3().setFromObject(source);
   const centre = box.getCenter(new THREE.Vector3());
@@ -24,7 +23,7 @@ export async function loadNasaModel(body: OrbitBody): Promise<THREE.Group> {
   normalized.scale.setScalar(1 / radius);
   // NASA LRO cube mesh: physical ME (X,Y,Z) = (-local Z,-local X,local Y).
   // Align with the existing site-marker convention Three (X,Z,-Y).
-  if (body === 'moon') normalized.rotation.y = -Math.PI / 2;
+  normalized.rotation.y = -Math.PI / 2;
   const root = new THREE.Group();
   root.add(normalized);
   source.traverse(node => {
@@ -34,11 +33,6 @@ export async function loadNasaModel(body: OrbitBody): Promise<THREE.Group> {
       material.metalness = 0;
       material.roughness = 1;
       if (material.map) material.map.anisotropy = 4;
-      if (body === 'sun') {
-        material.emissive.set(0xffffff);
-        material.emissiveIntensity = 1;
-        material.toneMapped = false;
-      }
     }
   });
   return root;
