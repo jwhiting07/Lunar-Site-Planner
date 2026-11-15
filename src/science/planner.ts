@@ -131,8 +131,7 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
   const rest = async () => { await yieldToUi(); sliceStart = performance.now(); };
   const flat = flatHorizon();
   const rank = (a: Candidate, b: Candidate) => compareCandidates(a, b, options.origin, options.startMs);
-  const evaluate = (point: Point, startMs: number, days: number, stepMs: number): Candidate => {
-    const site = coordinateSite(point, options.known);
+  const evaluate = (site: SiteDoc, startMs: number, days: number, stepMs: number): Candidate => {
     const mask = options.masks.get(site.id) ?? flat;
     const result = analyzeSite(makeSiteContext(site, options.observerHeight, mask), eph, {
       startMs, endMs: startMs + days * DAY, stepMs, params: options.lander, earthMinClearanceDeg: options.clearance,
@@ -140,18 +139,23 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
     if (mask.terrainAware) result.horizonMask = mask;
     return { targets: { ...options.targets }, result };
   };
-  const durations = options.durationsDays ?? durationGrid(options.durationDays);
+  const sites = new Map<string, SiteDoc>();
+  for (const point of options.points) {
+    const site = coordinateSite(point, options.known);
+    sites.set(site.id, site);
+  }
+  const durations = [...new Set(options.durationsDays ?? durationGrid(options.durationDays))];
   for (const days of durations) durationGrid(days);
-  const scenarios = options.dates.flatMap(date => durations
+  const scenarios = [...new Set(options.dates)].flatMap(date => durations
     .filter(days => date + days * DAY <= (options.coverageEndMs ?? Infinity))
     .map(days => ({ date, days })));
-  const total = options.points.length * scenarios.length;
+  const total = sites.size * scenarios.length;
   let done = 0;
-  for (const point of options.points) {
+  for (const site of sites.values()) {
     for (const { date, days } of scenarios) {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
       const step = Math.max(1, Math.ceil(days * 24 / 168)) * HOUR_MS;
-      const candidate = evaluate(point, date, days, step);
+      const candidate = evaluate(site, date, days, step);
       // Insert after equal-ranked candidates to preserve the sampling order on ties.
       let lo = 0;
       let hi = best.length;
@@ -197,7 +201,13 @@ export async function searchCandidates(eph: EphemerisTable, options: SearchOptio
   progress(total, total);
   // At most two dates per location and mission length, so the list is not five copies of one point.
   const countsBySiteAndDuration = new Map<string, number>();
+  const shown = new Set<string>();
   return refined.sort(rank).filter(({ result }) => {
+    // Two site aliases can resolve to the same coordinates and mission window.
+    const location = `${Number(result.site.lat_deg.toFixed(4))}|${normalizeLon(Number(result.site.lon_deg.toFixed(4)))}`;
+    const sample = `${location}|${result.startMs}|${result.endMs}`;
+    if (shown.has(sample)) return false;
+    shown.add(sample);
     const key = result.site.id + '|' + Math.round(result.metrics.intervalHours);
     const count = (countsBySiteAndDuration.get(key) ?? 0) + 1;
     countsBySiteAndDuration.set(key, count);

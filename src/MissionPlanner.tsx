@@ -304,13 +304,15 @@ export default function MissionPlanner() {
         const config = { resolveTerrain, points, dates, durationDays: days, durationsDays: durations, coverageEndMs: endCoverage, targets: target, lander, clearance, origin: !base && query.location === 'any' ? null : point, startMs: start,
           known: customBase ? [...known, customBase.site] : known,
           observerHeight: data.sites.observer_height_m, masks: searchMasks };
-        const update = (done: number, total: number) => setProgress(`Checking ${done} / ${total}…`);
+        let count = 0;
+        const update = (done: number, total: number) => {
+          if (done === total) count += total;
+          setProgress(`Checking ${done} / ${total}…`);
+        };
         let found = await searchCandidates(eph, config, controller.signal, update);
-        let count = points.length * dates.reduce((total, date) => total + durations.filter(length => date + length * DAY <= endCoverage).length, 0);
         if (base) {
           const nearby = locationGrid(point, 50).slice(1);
           const local = await searchCandidates(eph, { ...config, points: nearby, dates: [start] }, controller.signal, update);
-          count += nearby.length;
           const betterDates = found.filter(c => compareCandidates(c, base, point, start) < 0);
           const betterLocations = local.filter(c => compareCandidates(c, base, point, start) < 0);
           // Keep both types of improvement visible when both exist.

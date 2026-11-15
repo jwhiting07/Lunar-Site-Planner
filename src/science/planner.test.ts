@@ -74,6 +74,20 @@ describe('coordinate planning and mission targets', () => {
     }
   });
 
+  it('shows one sampled match per displayed location and mission window', async () => {
+    const point = { lat: -85, lon: 0 };
+    const progress: number[][] = [];
+    const out = await searchCandidates(eph, {
+      points: [point, point, { ...point, lon: 360 }, { ...point, lon: 0.00001 }],
+      dates: [start, start], durationDays: 1, durationsDays: [1, 1, 2],
+      targets: DEFAULT_TARGETS, lander: DEFAULT_LANDER, clearance: 0,
+      origin: point, startMs: start, known: [], observerHeight: 2, masks: new Map(),
+    }, new AbortController().signal, (done, total) => progress.push([done, total]));
+
+    expect(progress.at(-1)).toEqual([4, 4]);
+    expect(out.map(({ result }) => result.endMs).sort()).toEqual([start + DAY, start + 2 * DAY]);
+  });
+
   it('applies inclusive percentage and outage limits using unrounded values', () => {
     const matching = { ...DEFAULT_TARGETS, sunlight: result.metrics.sunlitFraction * 100, earth: result.metrics.earthVisibleFraction * 100 };
     expect(assessment(result, matching).good).toBe(true);

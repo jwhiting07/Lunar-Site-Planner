@@ -95,26 +95,28 @@ export function MissionControls({ query, onChange, sites, landmarks, firstDate, 
         <button type="button" className="btn mission-pick" onClick={() => { setEditor(null); onPick(); }}>Choose Coordinates on the Moon</button>
         {query.location === 'nearby' && <label>Radius (km)<input type="number" required min="0.001" max="1000" step="any" value={query.radius} onChange={event => change({ radius: event.target.value })} /></label>}
       </> : <p>Search across the Moon.</p>}
-      {!!landmarks.length && <details className="mission-known-sites">
-        <summary className="select-trigger"><span className="select-placeholder">Known landing sites</span><Chevron /></summary>
-        <div className="mission-landmark-list">
-          {LANDMARK_GROUPS.map(group => <div key={group.label} role="group" aria-label={group.label}>
-            <div className="mission-landmark-group">{group.label}</div>
-            {landmarks.filter(group.match).map(site => {
-              const checked = comparedLandmarks.has(site.id);
-              return <div className="mission-landmark-row" key={site.id}>
-                <input type="checkbox" aria-label={`Compare ${site.name}`} checked={checked} disabled={!ready || busy || (comparisonFull && !checked)}
-                  onChange={event => onLandmarkCompare(site, event.target.checked)} />
-                <button type="button" className="mission-text-button" onClick={() => { close(); onLandmark(site); }}>{landmarkLabel(site)}</button>
-              </div>;
-            })}
-          </div>)}
-        </div>
-      </details>}
-      <Select label="Sites with terrain data" value="" placeholder="Sites with terrain data" options={sites.filter(site => site.terrain_aware).map(site => ({ value: site.id, label: site.short }))} onChange={id => {
-        const site = sites.find(item => item.id === id);
-        if (site) { change({ location: query.location === 'any' ? 'exact' : query.location, lat: String(site.lat_deg), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) }); close(); }
-      }} />
+      {query.location === 'exact' && <>
+        {!!landmarks.length && <details className="mission-known-sites">
+          <summary className="select-trigger"><span className="select-placeholder">Known landing sites</span><Chevron /></summary>
+          <div className="mission-landmark-list">
+            {LANDMARK_GROUPS.map(group => <div key={group.label} role="group" aria-label={group.label}>
+              <div className="mission-landmark-group">{group.label}</div>
+              {landmarks.filter(group.match).map(site => {
+                const checked = comparedLandmarks.has(site.id);
+                return <div className="mission-landmark-row" key={site.id}>
+                  <input type="checkbox" aria-label={`Compare ${site.name}`} checked={checked} disabled={!ready || busy || (comparisonFull && !checked)}
+                    onChange={event => onLandmarkCompare(site, event.target.checked)} />
+                  <button type="button" className="mission-text-button" onClick={() => { close(); onLandmark(site); }}>{landmarkLabel(site)}</button>
+                </div>;
+              })}
+            </div>)}
+          </div>
+        </details>}
+        <Select label="Sites with terrain data" value="" placeholder="Sites with terrain data" options={sites.filter(site => site.terrain_aware).map(site => ({ value: site.id, label: site.short }))} onChange={id => {
+          const site = sites.find(item => item.id === id);
+          if (site) { change({ lat: String(site.lat_deg), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) }); close(); }
+        }} />
+      </>}
     </>)}
     {field('landing', `Landing (${zoneLabel})`, labels.landing, <>
       {choices('Landing date scope', query.landing, [['any', 'Any date'], ['exact', 'Exact date'], ['range', 'Date range']], landing => change({ landing }))}
