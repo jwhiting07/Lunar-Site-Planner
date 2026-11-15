@@ -96,7 +96,7 @@ export function MissionControls({ query, onChange, sites, landmarks, firstDate, 
         {query.location === 'nearby' && <label>Radius (km)<input type="number" required min="0.001" max="1000" step="any" value={query.radius} onChange={event => change({ radius: event.target.value })} /></label>}
       </> : <p>Search across the Moon.</p>}
       {!!landmarks.length && <details className="mission-known-sites">
-        <summary className="select-trigger"><span>Known landing sites</span><Chevron /></summary>
+        <summary className="select-trigger"><span className="select-placeholder">Known landing sites</span><Chevron /></summary>
         <div className="mission-landmark-list">
           {LANDMARK_GROUPS.map(group => <div key={group.label} role="group" aria-label={group.label}>
             <div className="mission-landmark-group">{group.label}</div>
