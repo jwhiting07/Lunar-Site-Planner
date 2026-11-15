@@ -60,6 +60,13 @@ function customHorizon(): Plugin {
       res.writeHead(status, { 'Content-Type': 'application/json' });
       res.end(body);
     };
+    // Plugin middleware runs before Vite's own host/CORS checks, so repeat them: a loopback
+    // Host blocks DNS rebinding; fetch metadata blocks cross-site triggers (<img>, forms).
+    // shortcut: loopback only; add LAN hosts here if the server is ever run with --host.
+    const host = (req.headers.host ?? '').replace(/:\d+$/, '').toLowerCase();
+    const site = req.headers['sec-fetch-site'];
+    if (!['localhost', '127.0.0.1', '[::1]'].includes(host) || (site && site !== 'same-origin' && site !== 'none'))
+      return send(403, '{"error":"Forbidden."}');
     if (req.method !== 'GET') return send(405, '{"error":"Use GET."}');
     const lat = Number(url.searchParams.get('lat') ?? NaN);
     const lon = Number(url.searchParams.get('lon') ?? NaN);

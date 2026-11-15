@@ -97,15 +97,42 @@ def download(url: str, dest: Path) -> None:
     raise SystemExit(f"could not download {url}")
 
 
+# SHA-256 of sources that public/data/provenance.json does not list (validation-only
+# inputs and the runtime global DEM), taken from the files cached on 2026-11-14/15.
+PINNED_SHA256 = {
+    "de421.bsp": "08b20db2ae22488650641c5a9033e5bfda4b1c4b440cfeaf20f621cfa18ecdb3",
+    "moon_pa_de421_1900-2050.bpc": "656f90616403d75a75f0cd6c8830fc5b44f8cb4facb5ccb8915e752b397520cf",
+    "moon_080317.tf": "78732477b96f9863e7b0d65bcee3c22b8707ca5ed0db56d1173319cb2e8c7993",
+    "ldem_16_uint.tif": "45a2b32d56e81ed30db07fead8abc842b249b6511219d9ca2c53f81bc2dc5d62",
+    "AVGVISIB_65S_240M_201608_EARTH.TIF": "8a6d5fa8079c83e2159adf58ce33cd1cd9c09be6c19023bf5b6cc304f51568b7",
+    "AVGVISIB_65S_240M_201608.LBL": "10b0d6d881713d6bd4d61a30cc64da6d53934e2c9a8cc702b36a5cd758751b03",
+    "AVGVISIB_65S_240M_201608_EARTH.LBL": "eb99d4e4a0bd3508e95dc87e0f65663452db0c20dcadaf272ebf27c7ce418913",
+}
+
+
+def expected_hashes() -> dict[str, str]:
+    """SHA-256 of each source as recorded in the committed provenance (plus the pins
+    above), so a rebuild refuses a file that differs from the one the data was made from."""
+    path = ROOT / "public" / "data" / "provenance.json"
+    if not path.exists():
+        return dict(PINNED_SHA256)
+    sources = json.loads(path.read_text(encoding="utf-8"))["sources"]
+    return {**PINNED_SHA256, **{s["file"]: s["sha256"] for s in sources}}
+
+
 def main() -> None:
     manifest_path = CACHE / "sources_manifest.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    expected = expected_hashes()
     for sub, name, url, role, ref in SOURCES:
         dest = CACHE / sub / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         if not dest.exists():
             print(f"downloading {name} ...", flush=True)
             download(url, dest)
+            if (want := expected.get(name)) and sha256(dest) != want:
+                dest.unlink()
+                raise SystemExit(f"{name}: SHA-256 does not match the pinned value; download refused")
             manifest.pop(name, None)
         if name not in manifest:
             manifest[name] = {
