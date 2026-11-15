@@ -175,8 +175,9 @@ export default function MissionPlanner() {
   const timelineMissions = useMemo(() => timelineEntries(missions, active, originalMission), [missions, active, originalMission]);
   const mapSites = useMemo(() => [
     ...missions.map(({ id, candidate }) => ({ ...candidate.result.site, id })),
-    ...chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id)),
-  ], [missions, chosen]);
+    // The entered point marks the search before it runs; after, only listed matches are drawn.
+    ...(options.length ? [] : chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id))),
+  ], [missions, chosen, options.length]);
   const markerLabels = useMemo(() => new Map(missions.map(({ id, label }) => [id, label])), [missions]);
   const savedSiteIds = useMemo(() => new Set(missions.filter(entry => entry.saved).map(entry => entry.id)), [missions]);
   const markerScenario = saved.find(entry => entry.id === markerScenarioId);
