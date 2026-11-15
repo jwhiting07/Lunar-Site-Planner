@@ -1,187 +1,132 @@
 # Lunar Site Planner
 
-Check a lunar location or search for a mission that meets sunlight and Earth-visibility
-targets using precomputed SPICE DE440 geometry. The nine shipped sites (two
-as-landed CLPS positions and seven representative points) use
-precomputed NASA LOLA terrain masks. The local Vite server can calculate a terrain
-mask on demand for custom south-polar coordinates.
-The shipped data supports 1959-09-13 (Luna 2 reached the Moon on 13 or 14 September 1959, depending on the source and time zone) through 2029-01-01 UTC; searches without a date look at 2026-2028, and earlier missions are chosen with an exact date or a range.
+Explore where and when to land on the Moon. Compare sunlight, Earth visibility,
+and solar power across lunar locations, landing dates, and mission durations using
+NASA/JPL SPICE geometry and NASA LRO/LOLA terrain data.
+
+**[Open Lunar Site Planner](https://lunarsiteplanner.com)** ·
+[Release notes](CHANGELOG.md) · [Development guide](docs/DEVELOPMENT.md) ·
+[Sources and assumptions](docs/REFERENCES_AND_ASSUMPTIONS.md)
+
+Built by **Project Seraphim** for the **2026 NASA Space Apps Challenge**.
+
+![Interactive Moon workspace with location, landing date, and mission duration controls](docs/images/moon-workspace.png)
+
+## Plan a mission
+
+- **Choose a location.** Enter coordinates, select a point on the 3D Moon, or search
+  anywhere or within a radius. Known landing sites provide geographic context.
+- **Choose when and how long.** Fix a landing time and duration to analyze one
+  mission, or leave fields open to find sampled alternatives.
+- **Set your targets.** Advanced controls expose sunlight and Earth-visibility
+  targets, outage limits, Earth clearance, and solar-panel, load, and battery assumptions.
+- **Inspect and compare.** Open a result for detailed metrics and synchronized
+  Sun/Earth horizon and mission timelines. Compare up to twelve scenarios and
+  export CSV or JSON with their parameters, assumptions, and references.
+
+Drag the Moon to rotate and scroll or use +/− to zoom. Mission dates and timeline
+controls use UTC; the footer clock supports other display time zones. Comparison
+selections are saved in your browser until removed or reset.
+
+## Search and compare
+
+**Find options** explores the location, date, or duration fields left open, then
+refines and ranks a shortlist against your targets. Five sampled matches are
+available, with three shown initially. Check a row to include it in **Compare**;
+use **View** to inspect that mission.
+
+![Sampled lunar mission matches with sunlight, Earth visibility, landing dates, and comparison selections](docs/images/search-results.png)
+
+Search explores a bounded grid and does not establish a global optimum. Duration
+ranges sample up to eight lengths. The initial 50% visibility targets are editable
+project assumptions, not NASA requirements.
+
+## Understand the timeline
+
+The **Timeline** view connects the lander's local terrain skyline to Sun and Earth
+positions, visibility windows, and power estimates. Move the shared time cursor
+to see how terrain and mission timing affect each scenario.
+
+![Mission timeline with LOLA terrain horizon, Sun and Earth tracks, visibility windows, and power details](docs/images/mission-timeline.png)
+
+Screenshots supplied by the team on November 15, 2026 show the working application
+and example scenarios. Their values depend on the selected inputs and assumptions.
+The globe's viewing light is contextual; the calculated local horizon determines
+scientific visibility.
 
 ## Run locally
 
-With Node.js (version 20 or newer) and npm on PATH:
+Install Node.js 20.19+ or 22.12+ and npm, then:
 
 ```sh
+git clone https://github.com/jwhiting07/Lunar-Site-Planner.git
+cd Lunar-Site-Planner
 npm ci
 npm run dev -- --host 127.0.0.1 --port 5200 --strictPort
 ```
 
-Open http://127.0.0.1:5200 and keep the terminal running. Dependencies are already
-installed in this checkout, so `npm ci` is only needed for a fresh installation.
-On Jesse's machine, the existing portable Node installation can be enabled in PowerShell:
-
-```powershell
-$env:PATH = 'C:\Users\Jesse\AppData\Local\Programs\nodejs-portable\node-v26.13.1-win-x64;' + $env:PATH
-npm.cmd run dev -- --host 127.0.0.1 --port 5200 --strictPort
-```
-
-If a port is occupied, select another port and use the URL Vite prints.
-For a production build, run `npm run build` and serve it with `npm run preview`.
-On-demand terrain uses the Python environment from `requirements.txt` and the
-LOLA rasters in `data_cache/lola/` (see `scripts/fetch_sources.py`). The 80 m and
-240 m rasters cover the south pole. The 16 pixels/degree global raster from the
-[NASA CGI Moon Kit](https://svs.gsfc.nasa.gov/4720) supplies regional skylines elsewhere.
-The server uses `.venv` when present. Set `LUNAR_SITE_PLANNER_PYTHON` to use a different
-Python executable. The first on-demand request starts a Python worker that keeps the
-rasters in memory (about 7 s once, then about 1 s per location); the worker exits after
-five idle minutes. A static host needs an equivalent `/api/custom-horizon` endpoint
-to support on-demand profiles. Shipped terrain profiles and the 49 exact default search-grid profiles work on a
-static host. The additional search profiles load lazily (about 1.4 MB) and include
-source/generator hashes in `public/data/search_horizons.json`. Uncached nearby or
-custom coordinates still require the terrain endpoint; a cold nearby search can
-therefore take longer. No nearby skyline is substituted for an entered coordinate.
-
-## Use the application
-
-The Moon workspace has one collapsible row: **Location**, **Landing (UTC)**,
-and **Duration**. Each field opens a small editor. Enter coordinates or choose
-on the Moon, fix a landing date, and set a duration from one hour to 365 days;
-**Analyze** checks that exact mission. **Advanced** retains visibility targets,
-outage limits, Earth clearance, and all power assumptions. The initial 50% minima
-are editable project assumptions, not NASA requirements.
-
-For discovery, choose Anywhere or a nearby radius, any landing date or a date
-range, and a fixed duration or duration range. **Find options** searches only the
-fields left open; exact coordinates and dates remain fixed. Duration ranges
-sample at most eight lengths, including both endpoints. Search uses bounded
-location/date grids and coarse screening, then refines a diverse shortlist of up
-to 48 missions with exact-coordinate terrain where available and finer integration
-before reranking. At most four dates per location and duration enter refinement. It shows five sampled matches, with three rows initially
-visible; better unsampled options may exist. Sources & methods documents ranking.
-
-Each result shows coordinates, landing, duration, sunlight, Earth visibility,
-verdict, and terrain model. Checking a row immediately includes that scenario in
-**Compare**; unchecking removes it. Up to twelve scenarios can be compared,
-including different dates and durations at one location. Basic and detailed
-comparison and CSV/JSON exports retain each scenario's parameters and targets.
-Compared scenarios and their Moon markers are kept in this browser until removed or reset.
-
-**Open** reveals Results, Timeline, Terrain, and Compare. The timeline and local
-horizon share a cursor; the Terrain view uses the same cursor for Sun/Earth
-geometry. Detailed metrics, terrain facts, power estimates, nearby alternatives,
-and exports remain available. **Use this mission in controls** adopts a result
-without changing the search settings just by opening it. Nearby alternatives
-preserve duration and targets while testing dates within seven days and locations
-within 50 km.
-
-Custom coordinates first show a flat-horizon preview while a LOLA profile computes
-in the background. Results and the lander skyline update together. The regional
-profile uses a DEM with cells about 1.9 km across at the equator and cannot resolve
-small local obstructions. Sampled searches use flat-horizon screening. Try `-83`
-and `25` for a higher-resolution south-polar profile.
-
-Drag or use arrow keys to rotate the Moon; scroll or use +/− to zoom. The map
-centers an entered location and retains cursor coordinates and a distance scale.
-Site callouts have a surface dot, diagonal leader, and horizontal name/number line.
-The up/down arrows hide and restore mission controls and results without losing
-state. Sources & methods stays in the footer. Click the clock for a compact,
-searchable time-zone list, ordered west to east by current UTC offset. Every
-browser-supported named zone and fixed offsets UTC−12 through UTC+14 remain
-available, with time-zone names and daylight-saving-aware offsets. Mission dates
-and scientific timeline controls always use UTC.
-
-CSV files begin with `#` metadata lines; skip these when importing the table.
-JSON includes references, assumptions, windows, summary values and sampled series.
-
-## Sources and reproducibility
-
-The display-only NASA Moon model is recorded with its source URL and checksums in
-`public/models/provenance.json`. NASA geometry/UVs are preserved, with embedded maps
-repacked for the web at 4096 px. The Moon is about 4.5 MB and
-is loaded with the Moon page. The globe uses a viewing light, not physical illumination
-for the displayed UTC. Local terrain uses the calculated Sun direction with ambient
-fill and no ray-traced shadows. Scientific calculations still use the original terrain and
-ephemeris pipeline below.
-
-To reproduce the Moon model, run
-`.venv\Scripts\python.exe scripts/prepare_visuals.py` after installing requirements.
-The original model download is cached in ignored `data_cache/models/`.
-The active Moon views use 4,103 bright-star positions from the Yale Bright Star
-Catalog hosted by NASA/GSFC HEASARC, rendered as small, dim, antialiased points.
-`public/data/stars.provenance.json` records the source, credit, selection and checksums;
-`node scripts/prepare_stars.mjs` regenerates the 97 KB data file. Its orientation is
-contextual rather than a simulated epoch sky.
-
-- NASA/JPL NAIF: DE440 SPK, lunar orientation/frame kernels, planetary constants and leap seconds.
-- NASA LOLA/PGDA: 80 m and 240 m elevation products, 80 m slope map and the illumination map used to select the ridge point.
-- NASA/LROC: published IM-1 and IM-2 as-landed coordinates. The ridge is a project-selected representative point, not a mission target.
-
-[References and assumptions](docs/REFERENCES_AND_ASSUMPTIONS.md) contains exact source
-URLs and versions. [Calculation traceability](docs/CALCULATION_TRACEABILITY.md)
-connects displayed outputs to equations, code and datasets.
-[Validation](docs/VALIDATION.md) reports measured discrepancies and limitations.
-[Mission-level validity](docs/VALIDITY.md) adds six fixed geographic holdouts, three
-polar regression cases, direct-SPICE and 60/15/5/1-minute comparisons, finer terrain,
-a controlled published-map experiment, a small exhaustive search reference, and
-an independent numerical battery reference. Budgets are project choices, not NASA
-requirements. The existing Sources & methods panel links to the machine-readable report.
-`public/data/provenance.json` records source checksums, preprocessing parameters,
-software versions and derived product provenance.
-
-Python is only required to regenerate data or run scientific validation:
-
-```sh
-python -m venv .venv
-# Activate the venv using the command for your shell, then:
-python -m pip install -r requirements.txt
-python scripts/fetch_sources.py
-python scripts/build_data.py
-python scripts/make_fixtures.py
-python scripts/validate.py
-python scripts/validate_validity.py  # also regenerates exact search-grid terrain profiles
-```
-
-The source downloads use about 0.80 GB (0.74 GiB; 797,407,757 bytes per
-`data_cache/sources_manifest.json`) in ignored `data_cache/`. The app ships about
-31.5 MB under `public/data/` (scientific products plus the display-only star
-catalog) and about 4.9 MB of display-only models and textures under `public/models/`
-and `public/textures/`. Validation may download additional reference
-products and Horizons responses. Keep Node/npm on PATH for validation's JS checks.
-On Windows the existing venv executable is `.venv\Scripts\python.exe`.
+Open [localhost:5200](http://127.0.0.1:5200). Python is optional for the shipped
+datasets; it is needed for data regeneration, scientific validation, and on-demand
+terrain at uncached coordinates.
 
 ```sh
 npm test
 npm run build
-python -m pytest scripts/tests -q
+npm run preview
 ```
 
-## Limits
+The production build is written to `dist/`. Static hosting supports the shipped
+terrain profiles; uncached custom coordinates require a terrain service. See the
+[development guide](docs/DEVELOPMENT.md) for setup, deployment, and reproduction.
 
-This is an educational planning MVP, not flight software or a landing-safety tool.
-Terrain below the DEM resolution and events between integration probes can be missed.
+## Data and scientific scope
+
+The application combines DE440 ephemerides and lunar orientation kernels from
+NASA/JPL NAIF with NASA LOLA elevation products. Nine shipped sites include two
+as-landed CLPS positions and seven representative points; 49 exact default
+search-grid locations also have precomputed terrain profiles. Custom locations
+use a flat-horizon preview until an exact-coordinate terrain profile is available.
+
+Shipped ephemerides cover **September 13, 1959 through the January 1, 2029 UTC
+boundary**. Searches without a date explore 2026–2028; select an exact date or range
+for earlier missions. Durations range from one hour to 365 days and must fit the
+available ephemeris interval.
+
 Final summaries use 15-minute integration with 5-minute probes near detected
-horizon transitions; charts and exported series retain hourly display samples. Earth visibility
-is geometric line of sight, not a radio link budget. Power and battery use explicitly
-assumed generic lander parameters and ideal storage, not spacecraft telemetry.
-The continuous Moon model is display-only; visibility uses the precomputed LOLA terrain horizon.
-The official challenge page could not be retrieved, so scope follows the supplied brief.
-Flat-horizon estimates for arbitrary coordinates ignore terrain shadowing and blocking
-and are generally not representative near the poles. No RF link budget, thermal model or
-landing-safety certification is provided.
+horizon transitions. Charts and exported series retain hourly display samples.
+Recorded checks compare the calculations with direct SPICE, finer time and terrain
+sampling, published maps, a limited exhaustive search reference, and an independent
+numerical battery calculation. Numerical budgets are the team's choices.
 
-## Licence and data credit
+This is an educational planning prototype. Earth visibility means geometric line
+of sight, not a radio link budget. Power estimates assume generic hardware and
+ideal storage. Terrain below the source resolution and events between calculation
+probes can be missed. The tool does not assess landing safety or thermal survival.
 
-The code is under the MIT licence in `LICENSE`. NASA data are not relicensed here; cite
-them as their providers request (verified on the source pages): Barker et al. 2023 for
-the PGDA LOLA south-pole products, Mazarico et al. 2011 for the PGDA illumination maps,
-and "NASA's Scientific Visualization Studio" for SVS material. Other credits are in
-`public/models/provenance.json`, `public/textures/provenance.json` and
-`public/data/stars.provenance.json`. A general public-domain status of these datasets was
-not verified and is not asserted.
-See [verification status](docs/VERIFICATION.md) for checks actually performed and browser limits.
+## Documentation and credits
 
-## UI reference
+| Document | Contents |
+| --- | --- |
+| [Development guide](docs/DEVELOPMENT.md) | Local terrain service, deployment, data regeneration, and checks |
+| [References and assumptions](docs/REFERENCES_AND_ASSUMPTIONS.md) | Source URLs, versions, and modeling assumptions |
+| [Calculation traceability](docs/CALCULATION_TRACEABILITY.md) | Connections between outputs, equations, code, and datasets |
+| [Validation](docs/VALIDATION.md) | Reference comparisons and measured limitations |
+| [Mission-level validity](docs/VALIDITY.md) | Convergence, terrain, search, and battery evidence |
+| [Verification history](docs/VERIFICATION.md) | Recorded implementation and browser checks |
+| [Materials and tools inventory](docs/THIRD_PARTY_AUDIT.md) | Data, software, assets, and licensing evidence |
+| [UI reference](docs/ui/README.md) | Reviewed design direction and historical reference layouts |
 
-See [the approved UI direction](docs/ui/README.md) for the design requirements and
-[the interactive reference](docs/ui/index.html) for the saved layouts. Open the HTML
-file locally in a browser; no installation is required.
+Project code is licensed under [MIT](LICENSE). External datasets, models, and fonts
+retain their providers' terms. Credit NASA/JPL NAIF, NASA LRO/LOLA and GSFC PGDA,
+NASA/LROC, NASA's Scientific Visualization Studio, and the Yale Bright Star Catalog
+hosted by NASA/GSFC HEASARC. Source and asset checksums are recorded under
+`public/data/`, `public/models/`, and `public/textures/`; Inter's license is in
+[`public/fonts/OFL.txt`](public/fonts/OFL.txt).
+
+OpenAI Codex assisted code, interface development, documentation, and submission
+preparation. A historical generated interface concept is documented in
+[`docs/ui/mockups/prompts-v1.md`](docs/ui/mockups/prompts-v1.md) and is outside the
+running application. It requires a visible SI-generated watermark before inclusion
+in public submission materials. Scientific values are calculated by the documented
+numerical pipeline from the cited source data. This team project is not endorsed
+by NASA.

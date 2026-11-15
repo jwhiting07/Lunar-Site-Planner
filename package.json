@@ -2,7 +2,12 @@
   "name": "lunar-site-planner",
   "private": true,
   "version": "0.1.0",
-  "description": "Lunar Site Planner: compare lunar south-pole landing sites by sunlight, Earth visibility and solar power (NASA Space Apps 2026).",
+  "description": "Explore lunar landing sites, dates, and mission durations using NASA SPICE and LOLA data. Compare sunlight, Earth visibility, and solar power. Built by Project Seraphim for NASA Space Apps 2026.",
+  "homepage": "https://lunarsiteplanner.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwhiting07/Lunar-Site-Planner.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
