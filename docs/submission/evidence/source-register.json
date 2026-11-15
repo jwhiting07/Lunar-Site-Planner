@@ -1398,9 +1398,19 @@
       "Screen recording for the project demonstration"
     ],
     [
+      "DaVinci Resolve",
+      "https://www.blackmagicdesign.com/products/davinciresolve",
+      "Editing for the project demonstration"
+    ],
+    [
       "OpenAI Codex",
       "https://openai.com/codex/",
       "SI code and documentation assistance"
+    ],
+    [
+      "OpenAI ChatGPT",
+      "https://chatgpt.com/",
+      "Planned SI assistance for favicon design; confirm whether generated art ships"
     ],
     [
       "Anthropic Claude Opus 5.5",

@@ -26,7 +26,7 @@ The TypeScript calculation engine compares Sun and Earth directions with the ter
 
 Core sources are NASA/JPL NAIF SPICE kernels, NASA GSFC PGDA LOLA elevation and slope products, published LOLA illumination and Earth-visibility maps for contextual checks and site selection, and NASA/LROC mission-location records. NASA's Moon model and CGI Moon Kit supply visual context and global elevation data. The background uses a filtered Yale Bright Star Catalog hosted by NASA HEASARC. Published NASA, partner-agency, USGS, research and mission-provider records support the landing-site catalogue. The submission resource list provides the source links and distinguishes calculation inputs, display assets, catalogue facts, methods and validation references.
 
-The interface uses React, TypeScript, Three.js, KaTeX, HTML and CSS, with Vite and Node.js/npm for development and builds. Python preprocessing and validation use NumPy, SpiceyPy, Rasterio, pyproj, Requests and Pillow. Vitest and pytest support testing. The application reads precomputed JSON and binary files and stores comparison selections in browser localStorage. Git and GitHub provide source versioning. Vercel hosts the public app, and OBS Studio is used for demo screen capture.
+The interface uses React, TypeScript, Three.js, KaTeX, HTML and CSS, with Vite and Node.js/npm for development and builds. Python preprocessing and validation use NumPy, SpiceyPy, Rasterio, pyproj, Requests and Pillow. Vitest and pytest support testing. The application reads precomputed JSON and binary files and stores comparison selections in browser localStorage. Git and GitHub provide source versioning. Vercel hosts the public app. The demo plan uses OBS Studio for screen capture, DaVinci Resolve for editing, and narration by Jesse Whiting and Elliott Crosby.
 
 ### Creativity, benefit and intended impact
 
@@ -44,7 +44,7 @@ The Project Seraphim logo was designed in Adobe Illustrator.
 
 OpenAI Codex assisted project code, interface development, documentation, and submission preparation. Anthropic Claude Opus 5.5 assisted code development. Scientific values are calculated from the cited datasets by the documented numerical pipeline. The NASA Moon model, textures and star catalogue have their own source provenance. SI assistance is acknowledged in the project README and `public/si-disclosure.json`.
 
-The form's exact SI option labels were not included in the pasted text. Select the options matching **code** and **text** assistance. OBS captures the application screen. If the final demo adds synthetic audio, generated video, or other generated assets, disclose that use separately.
+The form's exact SI option labels were not included in the pasted text. Select the options matching **code** and **text** assistance. ChatGPT is planned for favicon design. Before submitting, record whether it supplied design ideas for human-drawn artwork or generated artwork that appears in the final favicon. If generated artwork ships or appears in the demo, disclose image generation and follow the form's visible watermark requirements for the submitted media. The demo is planned with the two team members' own voices.
 
 ## Links
 

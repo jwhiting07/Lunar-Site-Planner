@@ -12,7 +12,7 @@ Project code is supplied under the repository's MIT license. External code, font
 - **Interface font:** Inter, Copyright 2020 The Inter Project Authors; SIL Open Font License 1.1 in `fonts/OFL.txt`.
 - **Math fonts:** KaTeX font software, copyright Design Science, Inc. and Khan Academy; SIL Open Font License 1.1 in `fonts/KaTeX-OFL.txt`.
 - **Software:** React/React DOM, Three.js and KaTeX, plus the development and scientific libraries listed in the submission resource register. Installed npm license and notice texts are preserved in `THIRD_PARTY_NOTICES.txt`; Python license evidence is recorded with the repository submission pack.
-- **Hosting and screen recording:** [Vercel](https://vercel.com/) hosts the public app; [OBS Studio](https://obsproject.com/) captures the demonstration.
+- **Hosting and demo production:** [Vercel](https://vercel.com/) hosts the app. The demo is planned with [OBS Studio](https://obsproject.com/) for recording, [DaVinci Resolve](https://www.blackmagicdesign.com/products/davinciresolve) for editing, and narration by Jesse Whiting and Elliott Crosby.
 - **Project Seraphim logo:** Designed in Adobe Illustrator. Browser and touch icons are resized exports of the supplied artwork.
 - **SI assistance:** OpenAI Codex assisted code and documentation. Anthropic Claude Opus 5.5 assisted code. See `si-disclosure.json`. Scientific source data are externally sourced; derived numerical products are calculated by the documented pipeline.
 

@@ -24,10 +24,18 @@
       "evidence": [
         "Git commit co-authorship trailers"
       ]
+    },
+    {
+      "name": "OpenAI ChatGPT",
+      "uses": [
+        "favicon design assistance"
+      ],
+      "status": "planned",
+      "final_asset_status": "Favicon artwork is pending. Confirm whether generated artwork is included before submitting."
     }
   ],
   "code": "Project code was developed with SI assistance; third-party source licenses remain applicable.",
   "data": "NASA and other source datasets retain their recorded provenance. Derived science products are numerical calculations from those sources; no generative fabrication of scientific values is asserted.",
-  "media": "The demo uses application screen capture recorded with OBS Studio. No generated imagery is included in the submitted application.",
+  "media": "Demo plan: OBS Studio screen capture, DaVinci Resolve editing, and human narration by Jesse Whiting and Elliott Crosby.",
   "branding": "The Project Seraphim logo was designed in Adobe Illustrator. Browser and touch icons are resized exports of the supplied artwork."
 }

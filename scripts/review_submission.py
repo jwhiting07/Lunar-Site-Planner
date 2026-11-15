@@ -40,7 +40,9 @@ SOFTWARE = [
     ("GitHub", "https://github.com/jwhiting07/Lunar-Site-Planner", "Public source repository and collaboration"),
     ("Vercel", "https://vercel.com/", "Production hosting and deployment"),
     ("OBS Studio", "https://obsproject.com/", "Screen recording for the project demonstration"),
+    ("DaVinci Resolve", "https://www.blackmagicdesign.com/products/davinciresolve", "Editing for the project demonstration"),
     ("OpenAI Codex", "https://openai.com/codex/", "SI code and documentation assistance"),
+    ("OpenAI ChatGPT", "https://chatgpt.com/", "Planned SI assistance for favicon design; confirm whether generated art ships"),
     ("Anthropic Claude Opus 5.5", "https://www.anthropic.com/claude/opus", "SI code assistance, recorded in Git co-authorship trailers"),
 ]
 

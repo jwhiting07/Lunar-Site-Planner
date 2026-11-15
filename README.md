@@ -127,7 +127,7 @@ hosted by NASA/GSFC HEASARC. Source and asset checksums are recorded under
 
 OpenAI Codex assisted code, interface development, documentation, and submission
 preparation. Anthropic Claude Opus 5.5 assisted code. The application is hosted on
-Vercel, and OBS Studio is used for demo screen capture. The KaTeX math fonts use
+Vercel. The demo plan uses OBS Studio for screen capture and DaVinci Resolve for editing. The KaTeX math fonts use
 SIL OFL 1.1, with their notice in [`public/fonts/KaTeX-OFL.txt`](public/fonts/KaTeX-OFL.txt).
 Scientific values are calculated by the documented numerical pipeline from the
 cited source data. This team project is not endorsed by NASA.
