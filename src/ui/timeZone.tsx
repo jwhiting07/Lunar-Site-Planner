@@ -5,7 +5,7 @@ import { TIME_ZONES } from './timeZones';
  * Display time zone. All calculations and exports stay in UTC; only what the
  * user reads and types (landing dates, cursor times) follows this zone.
  */
-const STORAGE_KEY = 'seraphim-clock-time-zone';
+const STORAGE_KEY = 'lunar-site-planner-clock-time-zone';
 
 const formatters = new Map<string, Intl.DateTimeFormat>();
 function fields(ms: number, zone: string) {

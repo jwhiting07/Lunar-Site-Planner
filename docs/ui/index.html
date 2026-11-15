@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Seraphim interface reference: dark surfaces, sharp controls, and a map-first lunar planning workspace.">
+<meta name="description" content="Lunar Site Planner interface reference: dark surfaces, sharp controls, and a map-first lunar planning workspace.">
 <meta name="generator" content="AI-assisted design reference created with OpenAI Codex">
-<title>Seraphim UI reference</title>
+<title>Lunar Site Planner UI reference</title>
 <style>
 html{color-scheme:dark;background:#0d0f12}
 body{margin:0;font-family:Inter,Arial,sans-serif;color:#eff1f3}
@@ -20,7 +20,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:#eff1f3}
 </head>
 <body>
 <div class="reference-container">
-<div id="seraphim-designs" aria-label="Seraphim interface directions">
+<div id="lunar-site-planner-designs" aria-label="Lunar Site Planner interface directions">
   <section data-variant="Trek workspace" aria-label="Trek workspace design"><div class="sr-app" data-layout="trek"></div></section>
   <section data-variant="Site comparison" aria-label="Site comparison design" hidden><div class="sr-app" data-layout="compare"></div></section>
   <section data-variant="Horizon view" aria-label="Horizon view design" hidden><div class="sr-app" data-layout="horizon"></div></section>
@@ -28,110 +28,110 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:#eff1f3}
 </div>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-#seraphim-designs .sr-app{--sr-bg:#0d0f12;--sr-panel:#15181c;--sr-line:#343940;--sr-text:#eff1f3;--sr-muted:#a6afb9;--sr-sun:#e6bc72;--sr-earth:#8eb9df;--sr-space:16px;background:var(--sr-bg);color:var(--sr-text);font:14px/1.5 Inter,Arial,sans-serif;min-height:760px;color-scheme:dark;box-sizing:border-box;display:flex;flex-direction:column}
-#seraphim-designs .sr-app *{box-sizing:border-box}
-#seraphim-designs .sr-app button,#seraphim-designs .sr-app input,#seraphim-designs .sr-app select{font:inherit;color:inherit;border-radius:0;box-shadow:none}
-#seraphim-designs .sr-app button{background:transparent;border:1px solid var(--sr-line);padding:7px 12px;cursor:pointer;min-height:36px}
-#seraphim-designs .sr-app button:hover{background:#242930}
-#seraphim-designs .sr-app button:focus-visible,#seraphim-designs .sr-app input:focus-visible,#seraphim-designs .sr-app select:focus-visible{outline:2px solid var(--sr-earth);outline-offset:3px}
-#seraphim-designs .sr-app button[aria-pressed=true]{background:#e2e7ed;color:#11151a;border-color:#e2e7ed}
-#seraphim-designs .sr-head{display:flex;align-items:center;gap:22px;min-height:64px;padding:14px 20px;border-bottom:1px solid var(--sr-line);background:#090b0d;flex-wrap:wrap}
-#seraphim-designs .sr-brand{font-size:16px;font-weight:700;letter-spacing:.12em}
-#seraphim-designs .sr-head-title{color:var(--sr-muted);border-left:1px solid var(--sr-line);padding-left:22px}
+#lunar-site-planner-designs .sr-app{--sr-bg:#0d0f12;--sr-panel:#15181c;--sr-line:#343940;--sr-text:#eff1f3;--sr-muted:#a6afb9;--sr-sun:#e6bc72;--sr-earth:#8eb9df;--sr-space:16px;background:var(--sr-bg);color:var(--sr-text);font:14px/1.5 Inter,Arial,sans-serif;min-height:760px;color-scheme:dark;box-sizing:border-box;display:flex;flex-direction:column}
+#lunar-site-planner-designs .sr-app *{box-sizing:border-box}
+#lunar-site-planner-designs .sr-app button,#lunar-site-planner-designs .sr-app input,#lunar-site-planner-designs .sr-app select{font:inherit;color:inherit;border-radius:0;box-shadow:none}
+#lunar-site-planner-designs .sr-app button{background:transparent;border:1px solid var(--sr-line);padding:7px 12px;cursor:pointer;min-height:36px}
+#lunar-site-planner-designs .sr-app button:hover{background:#242930}
+#lunar-site-planner-designs .sr-app button:focus-visible,#lunar-site-planner-designs .sr-app input:focus-visible,#lunar-site-planner-designs .sr-app select:focus-visible{outline:2px solid var(--sr-earth);outline-offset:3px}
+#lunar-site-planner-designs .sr-app button[aria-pressed=true]{background:#e2e7ed;color:#11151a;border-color:#e2e7ed}
+#lunar-site-planner-designs .sr-head{display:flex;align-items:center;gap:22px;min-height:64px;padding:14px 20px;border-bottom:1px solid var(--sr-line);background:#090b0d;flex-wrap:wrap}
+#lunar-site-planner-designs .sr-brand{font-size:16px;font-weight:700;letter-spacing:.12em}
+#lunar-site-planner-designs .sr-head-title{color:var(--sr-muted);border-left:1px solid var(--sr-line);padding-left:22px}
 
-#seraphim-designs .sr-toolbar{display:flex;align-items:center;gap:20px;padding:12px 20px;border-bottom:1px solid var(--sr-line);flex-wrap:wrap}
-#seraphim-designs .sr-toolbar label{display:flex;align-items:center;gap:10px;color:var(--sr-muted)}
-#seraphim-designs .sr-toolbar input,#seraphim-designs .sr-toolbar select{background:var(--sr-panel);border:1px solid var(--sr-line);padding:6px 9px;max-width:100%;min-height:36px}
-#seraphim-designs .sr-mono{font-family:ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
-#seraphim-designs .sr-muted{color:var(--sr-muted)}
-#seraphim-designs .sr-sun{color:var(--sr-sun)}
-#seraphim-designs .sr-earth{color:var(--sr-earth)}
-#seraphim-designs .sr-small{font-size:12px}
-#seraphim-designs .sr-workspace{display:grid;grid-template-columns:200px minmax(0,1fr) 185px;min-height:365px}
-#seraphim-designs .sr-sites{background:var(--sr-panel);border-right:1px solid var(--sr-line)}
-#seraphim-designs .sr-label{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--sr-muted)}
-#seraphim-designs .sr-sites>.sr-label{padding:16px 16px 10px}
-#seraphim-designs .sr-app .sr-site{width:100%;display:block;text-align:left;border:0;border-top:1px solid #282d34;border-left:3px solid transparent;padding:14px 13px;background:transparent;color:var(--sr-text)}
-#seraphim-designs .sr-app .sr-site[aria-pressed=true]{border-left-color:var(--sr-earth);background:#252d36;color:var(--sr-text)}
-#seraphim-designs .sr-site span{display:block}
-#seraphim-designs .sr-site span+span{margin-top:5px;color:var(--sr-muted);font-size:12px}
-#seraphim-designs .sr-map{min-width:0;position:relative;background:#111519;overflow:hidden;min-height:365px}
-#seraphim-designs .sr-map svg{display:block;width:100%;height:365px}
-#seraphim-designs .sr-map-note{position:absolute;left:16px;bottom:12px;color:var(--sr-muted);font-size:11px;background:#111519;padding:2px 5px}
-#seraphim-designs .sr-map-top{position:absolute;left:16px;top:12px;z-index:1;font-size:12px;background:#111519;padding:3px 6px}
-#seraphim-designs .sr-inspect{padding:var(--sr-space);border-left:1px solid var(--sr-line);background:var(--sr-panel)}
-#seraphim-designs .sr-inspect h2{font-size:16px;font-weight:500;margin:0 0 18px}
-#seraphim-designs .sr-readout{margin:0 0 22px}
-#seraphim-designs .sr-readout dt{color:var(--sr-muted);font-size:12px;margin-bottom:3px}
-#seraphim-designs .sr-readout dd{font-size:23px;margin:0;font-variant-numeric:tabular-nums}
-#seraphim-designs .sr-status{font-size:12px;border-top:1px solid var(--sr-line);padding-top:10px;margin-top:5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-#seraphim-designs .sr-time{padding:16px 20px;border-top:1px solid var(--sr-line)}
-#seraphim-designs .sr-time-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
-#seraphim-designs .sr-app input[type=range]{width:100%;accent-color:#bed0df;height:18px;cursor:ew-resize;margin:0;background:transparent}
-#seraphim-designs .sr-ticks{display:flex;justify-content:space-between;color:var(--sr-muted);font:11px ui-monospace,Consolas,monospace;gap:5px;margin-top:5px}
-#seraphim-designs .sr-window-row{display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:center;margin:10px 0;font-size:12px}
-#seraphim-designs .sr-track{height:9px;position:relative;background:#252a31}
-#seraphim-designs .sr-track i{display:block;height:100%;position:absolute;background:var(--sr-sun)}
-#seraphim-designs .sr-track.sr-contact i{background:var(--sr-earth)}
-#seraphim-designs .sr-footer{padding:10px 20px;border-top:1px solid var(--sr-line);display:flex;justify-content:space-between;gap:12px;color:var(--sr-muted);font-size:11px;flex-wrap:wrap;margin-top:auto}
-#seraphim-designs .sr-main{padding:22px;width:100%}
-#seraphim-designs .sr-main h1{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 20px}
-#seraphim-designs .sr-app table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
-#seraphim-designs .sr-app th{font-size:12px;color:var(--sr-muted);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--sr-line)}
-#seraphim-designs .sr-app td{padding:16px 12px;border-bottom:1px solid var(--sr-line);font-variant-numeric:tabular-nums}
-#seraphim-designs .sr-app .sr-site-cell{padding:0}
-#seraphim-designs .sr-app .sr-site-cell button{border:0;width:100%;text-align:left;padding:16px 12px;color:inherit;background:transparent}
-#seraphim-designs .sr-selected-row{background:#1e2831}
-#seraphim-designs .sr-numeric{text-align:right;white-space:nowrap}
-#seraphim-designs th.sr-numeric{white-space:normal}
-#seraphim-designs .sr-compare-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:24px}
-#seraphim-designs .sr-panel-heading{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px;font-size:13px;flex-wrap:wrap}
-#seraphim-designs .sr-chart{min-width:0}
-#seraphim-designs .sr-chart svg{display:block;width:100%;height:170px;overflow:visible}
-#seraphim-designs .sr-horizon-main{padding:28px 24px 8px;width:100%}
-#seraphim-designs .sr-horizon-title{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:18px}
-#seraphim-designs .sr-horizon-title h1{font-size:24px;font-weight:500;margin:0}
-#seraphim-designs .sr-horizon-main .sr-chart svg{height:260px}
-#seraphim-designs .sr-key{display:flex;align-items:center;gap:18px;font-size:12px;flex-wrap:wrap}
-#seraphim-designs .sr-key>span{display:flex;align-items:center;gap:7px;color:var(--sr-muted)}
-#seraphim-designs .sr-key i{display:inline-block;width:16px;height:2px;background:var(--sr-sun)}
-#seraphim-designs .sr-key .sr-earth-key{background:var(--sr-earth)}
-#seraphim-designs .sr-key .sr-terrain-key{background:#89919b;height:7px}
-#seraphim-designs .sr-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:20px 24px;gap:20px;border-top:1px solid var(--sr-line)}
-#seraphim-designs .sr-strip dt{color:var(--sr-muted);font-size:12px;margin:0 0 6px}
-#seraphim-designs .sr-strip dd{font-size:19px;margin:0;font-variant-numeric:tabular-nums}
-#seraphim-designs .sr-strip dl{margin:0}
-#seraphim-designs .sr-planner{padding:24px 24px 18px;width:100%}
-#seraphim-designs .sr-plan-head{display:grid;grid-template-columns:170px 1fr;gap:18px;padding-bottom:14px;border-bottom:1px solid var(--sr-line)}
-#seraphim-designs .sr-plan-scale{display:flex;justify-content:space-between;color:var(--sr-muted);font:12px ui-monospace,Consolas,monospace}
-#seraphim-designs .sr-plan-site{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;padding:23px 0;border-bottom:1px solid var(--sr-line);align-items:center}
-#seraphim-designs .sr-plan-site>button{text-align:left;border:0;padding:0;min-height:36px}
-#seraphim-designs .sr-app .sr-plan-site>button[aria-pressed=true]{color:var(--sr-text);background:transparent;text-decoration:underline;text-underline-offset:6px}
-#seraphim-designs .sr-plan-tracks{position:relative;display:grid;gap:12px;padding:7px 0}
-#seraphim-designs .sr-plan-tracks:before{content:'';position:absolute;left:var(--sr-cursor,35%);top:0;bottom:0;width:1px;background:#e4e7ec;z-index:1}
-#seraphim-designs .sr-plan-summary{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:20px 24px;background:var(--sr-panel);flex-wrap:wrap}
-#seraphim-designs .sr-app details{color:var(--sr-muted);font-size:12px}
-#seraphim-designs .sr-app summary{cursor:pointer}
-#seraphim-designs .sr-app details p{max-width:70ch;margin:8px 0}
-#seraphim-designs .sr-foot-details{padding:12px 20px;border-top:1px solid var(--sr-line)}
-#seraphim-designs svg text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#a6afb9}
-#seraphim-designs .sr-map svg text{font-size:15px}
-@media(min-width:581px) and (max-width:820px){#seraphim-designs .sr-app{min-height:1000px}}
-@media(max-width:820px){#seraphim-designs .sr-workspace{grid-template-columns:180px minmax(0,1fr)}#seraphim-designs .sr-inspect{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;border-left:0;border-top:1px solid var(--sr-line)}#seraphim-designs .sr-inspect h2{grid-column:1/-1;margin:0}#seraphim-designs .sr-readout{margin:0}#seraphim-designs .sr-inspect .sr-status{grid-column:1/-1}#seraphim-designs .sr-app{min-height:800px}}
-@media(max-width:580px){#seraphim-designs .sr-head{gap:10px;padding-left:14px;min-height:80px}#seraphim-designs .sr-head-title{border:0;padding:0}#seraphim-designs .sr-toolbar{gap:10px;padding:12px 14px}#seraphim-designs .sr-toolbar label{flex-wrap:wrap;gap:5px}#seraphim-designs .sr-workspace{display:block}#seraphim-designs .sr-sites{display:flex;border-right:0;flex-wrap:wrap}#seraphim-designs .sr-sites>.sr-label{width:100%}#seraphim-designs .sr-app .sr-site{width:100%;padding:10px 14px}#seraphim-designs .sr-app .sr-site span+span{margin-top:0}#seraphim-designs .sr-inspect{display:grid;grid-template-columns:1fr 1fr}#seraphim-designs .sr-compare-bottom{grid-template-columns:1fr}#seraphim-designs .sr-main,#seraphim-designs .sr-planner{padding:18px 12px}#seraphim-designs .sr-app table{font-size:12px}#seraphim-designs .sr-app td,#seraphim-designs .sr-app th{padding:12px 5px}#seraphim-designs .sr-app .sr-site-cell button{padding:12px 5px}#seraphim-designs .sr-coord-col{display:none}#seraphim-designs .sr-strip{grid-template-columns:1fr 1fr;padding:18px 14px}#seraphim-designs .sr-horizon-main{padding:20px 14px}#seraphim-designs .sr-plan-head,#seraphim-designs .sr-plan-site{grid-template-columns:1fr;gap:12px}#seraphim-designs .sr-plan-site{padding:16px 0}#seraphim-designs .sr-plan-head>.sr-label{display:none}#seraphim-designs .sr-app{min-height:1120px}#seraphim-designs .sr-ticks span:nth-child(even){display:none}#seraphim-designs .sr-map svg{height:300px}#seraphim-designs .sr-map{min-height:300px}}
-@media(pointer:coarse){#seraphim-designs .sr-app button{min-height:44px}#seraphim-designs .sr-app input,#seraphim-designs .sr-app select{font-size:16px;min-height:44px}}
-@media(max-width:580px){#seraphim-designs .sr-app{min-height:1320px}#seraphim-designs .sr-map svg text{display:none}}
+#lunar-site-planner-designs .sr-toolbar{display:flex;align-items:center;gap:20px;padding:12px 20px;border-bottom:1px solid var(--sr-line);flex-wrap:wrap}
+#lunar-site-planner-designs .sr-toolbar label{display:flex;align-items:center;gap:10px;color:var(--sr-muted)}
+#lunar-site-planner-designs .sr-toolbar input,#lunar-site-planner-designs .sr-toolbar select{background:var(--sr-panel);border:1px solid var(--sr-line);padding:6px 9px;max-width:100%;min-height:36px}
+#lunar-site-planner-designs .sr-mono{font-family:ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+#lunar-site-planner-designs .sr-muted{color:var(--sr-muted)}
+#lunar-site-planner-designs .sr-sun{color:var(--sr-sun)}
+#lunar-site-planner-designs .sr-earth{color:var(--sr-earth)}
+#lunar-site-planner-designs .sr-small{font-size:12px}
+#lunar-site-planner-designs .sr-workspace{display:grid;grid-template-columns:200px minmax(0,1fr) 185px;min-height:365px}
+#lunar-site-planner-designs .sr-sites{background:var(--sr-panel);border-right:1px solid var(--sr-line)}
+#lunar-site-planner-designs .sr-label{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--sr-muted)}
+#lunar-site-planner-designs .sr-sites>.sr-label{padding:16px 16px 10px}
+#lunar-site-planner-designs .sr-app .sr-site{width:100%;display:block;text-align:left;border:0;border-top:1px solid #282d34;border-left:3px solid transparent;padding:14px 13px;background:transparent;color:var(--sr-text)}
+#lunar-site-planner-designs .sr-app .sr-site[aria-pressed=true]{border-left-color:var(--sr-earth);background:#252d36;color:var(--sr-text)}
+#lunar-site-planner-designs .sr-site span{display:block}
+#lunar-site-planner-designs .sr-site span+span{margin-top:5px;color:var(--sr-muted);font-size:12px}
+#lunar-site-planner-designs .sr-map{min-width:0;position:relative;background:#111519;overflow:hidden;min-height:365px}
+#lunar-site-planner-designs .sr-map svg{display:block;width:100%;height:365px}
+#lunar-site-planner-designs .sr-map-note{position:absolute;left:16px;bottom:12px;color:var(--sr-muted);font-size:11px;background:#111519;padding:2px 5px}
+#lunar-site-planner-designs .sr-map-top{position:absolute;left:16px;top:12px;z-index:1;font-size:12px;background:#111519;padding:3px 6px}
+#lunar-site-planner-designs .sr-inspect{padding:var(--sr-space);border-left:1px solid var(--sr-line);background:var(--sr-panel)}
+#lunar-site-planner-designs .sr-inspect h2{font-size:16px;font-weight:500;margin:0 0 18px}
+#lunar-site-planner-designs .sr-readout{margin:0 0 22px}
+#lunar-site-planner-designs .sr-readout dt{color:var(--sr-muted);font-size:12px;margin-bottom:3px}
+#lunar-site-planner-designs .sr-readout dd{font-size:23px;margin:0;font-variant-numeric:tabular-nums}
+#lunar-site-planner-designs .sr-status{font-size:12px;border-top:1px solid var(--sr-line);padding-top:10px;margin-top:5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#lunar-site-planner-designs .sr-time{padding:16px 20px;border-top:1px solid var(--sr-line)}
+#lunar-site-planner-designs .sr-time-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+#lunar-site-planner-designs .sr-app input[type=range]{width:100%;accent-color:#bed0df;height:18px;cursor:ew-resize;margin:0;background:transparent}
+#lunar-site-planner-designs .sr-ticks{display:flex;justify-content:space-between;color:var(--sr-muted);font:11px ui-monospace,Consolas,monospace;gap:5px;margin-top:5px}
+#lunar-site-planner-designs .sr-window-row{display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:center;margin:10px 0;font-size:12px}
+#lunar-site-planner-designs .sr-track{height:9px;position:relative;background:#252a31}
+#lunar-site-planner-designs .sr-track i{display:block;height:100%;position:absolute;background:var(--sr-sun)}
+#lunar-site-planner-designs .sr-track.sr-contact i{background:var(--sr-earth)}
+#lunar-site-planner-designs .sr-footer{padding:10px 20px;border-top:1px solid var(--sr-line);display:flex;justify-content:space-between;gap:12px;color:var(--sr-muted);font-size:11px;flex-wrap:wrap;margin-top:auto}
+#lunar-site-planner-designs .sr-main{padding:22px;width:100%}
+#lunar-site-planner-designs .sr-main h1{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 20px}
+#lunar-site-planner-designs .sr-app table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
+#lunar-site-planner-designs .sr-app th{font-size:12px;color:var(--sr-muted);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--sr-line)}
+#lunar-site-planner-designs .sr-app td{padding:16px 12px;border-bottom:1px solid var(--sr-line);font-variant-numeric:tabular-nums}
+#lunar-site-planner-designs .sr-app .sr-site-cell{padding:0}
+#lunar-site-planner-designs .sr-app .sr-site-cell button{border:0;width:100%;text-align:left;padding:16px 12px;color:inherit;background:transparent}
+#lunar-site-planner-designs .sr-selected-row{background:#1e2831}
+#lunar-site-planner-designs .sr-numeric{text-align:right;white-space:nowrap}
+#lunar-site-planner-designs th.sr-numeric{white-space:normal}
+#lunar-site-planner-designs .sr-compare-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:24px}
+#lunar-site-planner-designs .sr-panel-heading{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px;font-size:13px;flex-wrap:wrap}
+#lunar-site-planner-designs .sr-chart{min-width:0}
+#lunar-site-planner-designs .sr-chart svg{display:block;width:100%;height:170px;overflow:visible}
+#lunar-site-planner-designs .sr-horizon-main{padding:28px 24px 8px;width:100%}
+#lunar-site-planner-designs .sr-horizon-title{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+#lunar-site-planner-designs .sr-horizon-title h1{font-size:24px;font-weight:500;margin:0}
+#lunar-site-planner-designs .sr-horizon-main .sr-chart svg{height:260px}
+#lunar-site-planner-designs .sr-key{display:flex;align-items:center;gap:18px;font-size:12px;flex-wrap:wrap}
+#lunar-site-planner-designs .sr-key>span{display:flex;align-items:center;gap:7px;color:var(--sr-muted)}
+#lunar-site-planner-designs .sr-key i{display:inline-block;width:16px;height:2px;background:var(--sr-sun)}
+#lunar-site-planner-designs .sr-key .sr-earth-key{background:var(--sr-earth)}
+#lunar-site-planner-designs .sr-key .sr-terrain-key{background:#89919b;height:7px}
+#lunar-site-planner-designs .sr-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:20px 24px;gap:20px;border-top:1px solid var(--sr-line)}
+#lunar-site-planner-designs .sr-strip dt{color:var(--sr-muted);font-size:12px;margin:0 0 6px}
+#lunar-site-planner-designs .sr-strip dd{font-size:19px;margin:0;font-variant-numeric:tabular-nums}
+#lunar-site-planner-designs .sr-strip dl{margin:0}
+#lunar-site-planner-designs .sr-planner{padding:24px 24px 18px;width:100%}
+#lunar-site-planner-designs .sr-plan-head{display:grid;grid-template-columns:170px 1fr;gap:18px;padding-bottom:14px;border-bottom:1px solid var(--sr-line)}
+#lunar-site-planner-designs .sr-plan-scale{display:flex;justify-content:space-between;color:var(--sr-muted);font:12px ui-monospace,Consolas,monospace}
+#lunar-site-planner-designs .sr-plan-site{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;padding:23px 0;border-bottom:1px solid var(--sr-line);align-items:center}
+#lunar-site-planner-designs .sr-plan-site>button{text-align:left;border:0;padding:0;min-height:36px}
+#lunar-site-planner-designs .sr-app .sr-plan-site>button[aria-pressed=true]{color:var(--sr-text);background:transparent;text-decoration:underline;text-underline-offset:6px}
+#lunar-site-planner-designs .sr-plan-tracks{position:relative;display:grid;gap:12px;padding:7px 0}
+#lunar-site-planner-designs .sr-plan-tracks:before{content:'';position:absolute;left:var(--sr-cursor,35%);top:0;bottom:0;width:1px;background:#e4e7ec;z-index:1}
+#lunar-site-planner-designs .sr-plan-summary{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:20px 24px;background:var(--sr-panel);flex-wrap:wrap}
+#lunar-site-planner-designs .sr-app details{color:var(--sr-muted);font-size:12px}
+#lunar-site-planner-designs .sr-app summary{cursor:pointer}
+#lunar-site-planner-designs .sr-app details p{max-width:70ch;margin:8px 0}
+#lunar-site-planner-designs .sr-foot-details{padding:12px 20px;border-top:1px solid var(--sr-line)}
+#lunar-site-planner-designs svg text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#a6afb9}
+#lunar-site-planner-designs .sr-map svg text{font-size:15px}
+@media(min-width:581px) and (max-width:820px){#lunar-site-planner-designs .sr-app{min-height:1000px}}
+@media(max-width:820px){#lunar-site-planner-designs .sr-workspace{grid-template-columns:180px minmax(0,1fr)}#lunar-site-planner-designs .sr-inspect{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;border-left:0;border-top:1px solid var(--sr-line)}#lunar-site-planner-designs .sr-inspect h2{grid-column:1/-1;margin:0}#lunar-site-planner-designs .sr-readout{margin:0}#lunar-site-planner-designs .sr-inspect .sr-status{grid-column:1/-1}#lunar-site-planner-designs .sr-app{min-height:800px}}
+@media(max-width:580px){#lunar-site-planner-designs .sr-head{gap:10px;padding-left:14px;min-height:80px}#lunar-site-planner-designs .sr-head-title{border:0;padding:0}#lunar-site-planner-designs .sr-toolbar{gap:10px;padding:12px 14px}#lunar-site-planner-designs .sr-toolbar label{flex-wrap:wrap;gap:5px}#lunar-site-planner-designs .sr-workspace{display:block}#lunar-site-planner-designs .sr-sites{display:flex;border-right:0;flex-wrap:wrap}#lunar-site-planner-designs .sr-sites>.sr-label{width:100%}#lunar-site-planner-designs .sr-app .sr-site{width:100%;padding:10px 14px}#lunar-site-planner-designs .sr-app .sr-site span+span{margin-top:0}#lunar-site-planner-designs .sr-inspect{display:grid;grid-template-columns:1fr 1fr}#lunar-site-planner-designs .sr-compare-bottom{grid-template-columns:1fr}#lunar-site-planner-designs .sr-main,#lunar-site-planner-designs .sr-planner{padding:18px 12px}#lunar-site-planner-designs .sr-app table{font-size:12px}#lunar-site-planner-designs .sr-app td,#lunar-site-planner-designs .sr-app th{padding:12px 5px}#lunar-site-planner-designs .sr-app .sr-site-cell button{padding:12px 5px}#lunar-site-planner-designs .sr-coord-col{display:none}#lunar-site-planner-designs .sr-strip{grid-template-columns:1fr 1fr;padding:18px 14px}#lunar-site-planner-designs .sr-horizon-main{padding:20px 14px}#lunar-site-planner-designs .sr-plan-head,#lunar-site-planner-designs .sr-plan-site{grid-template-columns:1fr;gap:12px}#lunar-site-planner-designs .sr-plan-site{padding:16px 0}#lunar-site-planner-designs .sr-plan-head>.sr-label{display:none}#lunar-site-planner-designs .sr-app{min-height:1120px}#lunar-site-planner-designs .sr-ticks span:nth-child(even){display:none}#lunar-site-planner-designs .sr-map svg{height:300px}#lunar-site-planner-designs .sr-map{min-height:300px}}
+@media(pointer:coarse){#lunar-site-planner-designs .sr-app button{min-height:44px}#lunar-site-planner-designs .sr-app input,#lunar-site-planner-designs .sr-app select{font-size:16px;min-height:44px}}
+@media(max-width:580px){#lunar-site-planner-designs .sr-app{min-height:1320px}#lunar-site-planner-designs .sr-map svg text{display:none}}
 </style>
 <script>
 (() => {
-  const root = document.getElementById('seraphim-designs');
+  const root = document.getElementById('lunar-site-planner-designs');
   const sites = [
     {name:'Shackleton rim',coord:'89.9° S · 0.0° E',sun:4.2,earth:5.8,light:72,contact:58},
     {name:'Connecting ridge',coord:'89.5° S · 222.0° E',sun:2.8,earth:3.1,light:64,contact:71},
     {name:'Malapert massif',coord:'85.9° S · 0.0° E',sun:6.1,earth:7.4,light:81,contact:86}
   ];
   const svg = (inside, label, view='0 0 700 260') => `<svg viewBox="${view}" role="img" aria-label="${label}" preserveAspectRatio="none">${inside}</svg>`;
-  const header = title => `<header class="sr-head"><strong class="sr-brand">SERAPHIM</strong><span class="sr-head-title">${title}</span></header>`;
+  const header = title => `<header class="sr-head"><strong class="sr-brand">Lunar Site Planner</strong><span class="sr-head-title">${title}</span></header>`;
   const footer = () => `<footer class="sr-footer"><span>Illustrative data</span><span>UTC · Degrees</span></footer>`;
   const details = () => `<div class="sr-foot-details"><details><summary>Data & assumptions</summary><p>All values, dates, windows, curves and terrain in this design study are illustrative. No ephemerides, terrain data or mission calculations are connected.</p></details></div>`;
   const clock = hour => `${String(Math.floor(hour)).padStart(2,'0')}:${hour%1?'30':'00'} UTC`;
@@ -227,7 +227,7 @@ body{margin:0;font-family:Inter,Arial,sans-serif;color:#eff1f3}
 <script>
 (() => {
   const controls = document.getElementById('reference-layouts');
-  const panels = document.getElementById('seraphim-designs');
+  const panels = document.getElementById('lunar-site-planner-designs');
   controls.addEventListener('click', event => {
     const button = event.target.closest('button[data-view]');
     if (!button) return;

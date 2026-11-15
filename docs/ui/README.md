@@ -1,4 +1,4 @@
-# Lunar Landing Site Navigator UI direction
+# Lunar Site Planner UI direction
 
 This saves the interface direction reviewed with Elliott on November 14, 2026.
 The typography, sharp edges, restrained dark palette, and overall appearance were approved.
@@ -8,8 +8,7 @@ Trek workspace is the selected starting layout. The other three layouts are reta
 
 This direction supersedes the historical layouts and sidebar/dashboard descriptions
 below. The user approved the slim horizontal controls and requested a complete
-implementation retaining all current functionality. Product name: Lunar Landing
-Site Navigator. Keep the existing Inter, dark palette, and square edges.
+implementation retaining all current functionality. Product name: Lunar Site Planner. Keep the existing Inter, dark palette, and square edges.
 
 - One horizontal row: Location, Landing (UTC), Duration, one primary action, and
   Advanced. Individual fields open contextual editors; no persistent sidebar.
