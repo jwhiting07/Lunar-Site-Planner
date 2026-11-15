@@ -1,0 +1,436 @@
+{
+ "schema": 1,
+ "kind": "history",
+ "frame": "MOON_ME_DE440_ME421",
+ "center": "Moon centre (NAIF 301)",
+ "aberration_correction": "LT+S",
+ "units": "km",
+ "layout": "row-major float64 little-endian, 6 values per sample: sun_x, sun_y, sun_z, earth_x, earth_y, earth_z",
+ "time_system": "UTC calendar hours (POSIX time). Leap seconds handled at Jan 1 / Jul 1 marks; before 1972-01-01 SPICE uses a constant TAI-UTC offset (historical UTC differed by up to ~9 s)",
+ "step_s": 3600,
+ "start_utc": "1959-09-13T00:00:00Z",
+ "stop_utc": "2026-01-01T00:00:00Z",
+ "first_contact": "Luna 2 impact, September 1959 (13 September UTC in the NSSDC impacts table; some sources give 14 September). Coverage starts at 1959-09-13 00:00 UTC.",
+ "files": [
+  {
+   "file": "ephemeris_1959.bin",
+   "t0_utc": "1959-09-13T00:00:00Z",
+   "n": 2641,
+   "bytes": 126768
+  },
+  {
+   "file": "ephemeris_1960.bin",
+   "t0_utc": "1960-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1961.bin",
+   "t0_utc": "1961-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1962.bin",
+   "t0_utc": "1962-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1963.bin",
+   "t0_utc": "1963-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1964.bin",
+   "t0_utc": "1964-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1965.bin",
+   "t0_utc": "1965-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1966.bin",
+   "t0_utc": "1966-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1967.bin",
+   "t0_utc": "1967-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1968.bin",
+   "t0_utc": "1968-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1969.bin",
+   "t0_utc": "1969-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1970.bin",
+   "t0_utc": "1970-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1971.bin",
+   "t0_utc": "1971-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1972.bin",
+   "t0_utc": "1972-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1973.bin",
+   "t0_utc": "1973-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1974.bin",
+   "t0_utc": "1974-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1975.bin",
+   "t0_utc": "1975-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1976.bin",
+   "t0_utc": "1976-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1977.bin",
+   "t0_utc": "1977-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1978.bin",
+   "t0_utc": "1978-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1979.bin",
+   "t0_utc": "1979-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1980.bin",
+   "t0_utc": "1980-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1981.bin",
+   "t0_utc": "1981-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1982.bin",
+   "t0_utc": "1982-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1983.bin",
+   "t0_utc": "1983-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1984.bin",
+   "t0_utc": "1984-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1985.bin",
+   "t0_utc": "1985-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1986.bin",
+   "t0_utc": "1986-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1987.bin",
+   "t0_utc": "1987-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1988.bin",
+   "t0_utc": "1988-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1989.bin",
+   "t0_utc": "1989-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1990.bin",
+   "t0_utc": "1990-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1991.bin",
+   "t0_utc": "1991-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1992.bin",
+   "t0_utc": "1992-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1993.bin",
+   "t0_utc": "1993-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1994.bin",
+   "t0_utc": "1994-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1995.bin",
+   "t0_utc": "1995-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1996.bin",
+   "t0_utc": "1996-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_1997.bin",
+   "t0_utc": "1997-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1998.bin",
+   "t0_utc": "1998-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_1999.bin",
+   "t0_utc": "1999-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2000.bin",
+   "t0_utc": "2000-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2001.bin",
+   "t0_utc": "2001-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2002.bin",
+   "t0_utc": "2002-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2003.bin",
+   "t0_utc": "2003-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2004.bin",
+   "t0_utc": "2004-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2005.bin",
+   "t0_utc": "2005-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2006.bin",
+   "t0_utc": "2006-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2007.bin",
+   "t0_utc": "2007-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2008.bin",
+   "t0_utc": "2008-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2009.bin",
+   "t0_utc": "2009-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2010.bin",
+   "t0_utc": "2010-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2011.bin",
+   "t0_utc": "2011-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2012.bin",
+   "t0_utc": "2012-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2013.bin",
+   "t0_utc": "2013-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2014.bin",
+   "t0_utc": "2014-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2015.bin",
+   "t0_utc": "2015-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2016.bin",
+   "t0_utc": "2016-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2017.bin",
+   "t0_utc": "2017-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2018.bin",
+   "t0_utc": "2018-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2019.bin",
+   "t0_utc": "2019-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2020.bin",
+   "t0_utc": "2020-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2021.bin",
+   "t0_utc": "2021-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2022.bin",
+   "t0_utc": "2022-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2023.bin",
+   "t0_utc": "2023-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  },
+  {
+   "file": "ephemeris_2024.bin",
+   "t0_utc": "2024-01-01T00:00:00Z",
+   "n": 8785,
+   "bytes": 421680
+  },
+  {
+   "file": "ephemeris_2025.bin",
+   "t0_utc": "2025-01-01T00:00:00Z",
+   "n": 8761,
+   "bytes": 420528
+  }
+ ],
+ "interpolation": {
+  "method": "linear in the Moon-centred body-fixed vectors between hourly samples",
+  "max_error_vs_spice": {
+   "sun_dir_deg": 1.5451223035047186e-05,
+   "earth_dir_deg": 0.00013312970898552362,
+   "sun_dist_rel": 9.900373229010384e-06,
+   "earth_dist_rel": 9.488263009727049e-07
+  },
+  "check": "6000 random hours x {15, 30, 45} min against direct SPICE evaluation"
+ },
+ "refs": [
+  "R-DE440",
+  "R-NAIF-MOONFK",
+  "R-NAIF-LSK",
+  "R-NAIF-ABCORR",
+  "R-NAIF-PCK",
+  "R-NAIF-TIME"
+ ]
+}

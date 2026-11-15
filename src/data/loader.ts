@@ -5,6 +5,7 @@
 import { mergeTables, tableFromBuffer, type EphemerisTable } from '../science/ephemeris';
 import { parseHorizon, type HorizonMask } from '../science/horizon';
 import type { EphemerisIndex, ProvenanceDoc, SiteDoc, SitesDoc } from '../science/types';
+import type { LandingSitesDoc } from './landingSites';
 
 const BASE = `${import.meta.env.BASE_URL}data/`;
 
@@ -32,8 +33,28 @@ function cached<T>(store: Map<string, Promise<T>>, key: string, make: () => Prom
 
 const jsonCache = new Map<string, Promise<unknown>>();
 export const loadSites = () => cached(jsonCache, 'sites', () => getJson<SitesDoc>('sites.json')) as Promise<SitesDoc>;
+/**
+ * Ephemeris index: the 2026-2028 planning tables plus, when shipped, the historical hourly tables
+ * (ephemeris_history.json, from the Luna 2 arrival date). Both use the same sampling, frame and
+ * file layout, so their year files merge seamlessly.
+ */
 export const loadEphemerisIndex = () =>
-  cached(jsonCache, 'eph', () => getJson<EphemerisIndex>('ephemeris.json')) as Promise<EphemerisIndex>;
+  cached(jsonCache, 'eph', async (): Promise<EphemerisIndex> => {
+    const main = await getJson<EphemerisIndex>('ephemeris.json');
+    const history = await getJson<EphemerisIndex>('ephemeris_history.json').catch(() => null);
+    if (!history) return main;
+    return {
+      ...main,
+      start_utc: history.start_utc,
+      default_start_utc: main.start_utc,
+      first_contact: history.first_contact,
+      history_interpolation: history.interpolation,
+      files: [...history.files, ...main.files],
+    };
+  }) as Promise<EphemerisIndex>;
+/** Optional layer: callers treat a failed load as "no catalogue". */
+export const loadLandingSites = () =>
+  cached(jsonCache, 'landing', () => getJson<LandingSitesDoc>('landing_sites.json')) as Promise<LandingSitesDoc>;
 export const loadProvenance = () =>
   cached(jsonCache, 'prov', () => getJson<ProvenanceDoc>('provenance.json')) as Promise<ProvenanceDoc>;
 

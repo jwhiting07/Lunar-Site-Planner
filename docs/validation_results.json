@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-15T03:38:29Z",
+ "generated_utc": "2026-11-15T04:31:56Z",
  "command": "python scripts/validate.py",
  "environment": {
   "python": "3.12.10",
@@ -8,7 +8,7 @@
   "cspice": "CSPICE_N0067"
  },
  "inputs": {
-  "sites_json_generated_utc": "2026-11-15T03:30:38Z",
+  "sites_json_generated_utc": "2026-11-15T04:24:59Z",
   "observer_height_m": 2.0,
   "kernels_de440": [
    "naif0012.tls",
@@ -2795,6 +2795,212 @@
   "published_within_box_range": true,
   "status": "completed"
  },
+ "V-9": {
+  "id": "V-9",
+  "refs": [
+   "R-HORIZONS",
+   "R-NAIF-LSK"
+  ],
+  "status": "completed",
+  "epochs": [
+   "1959-09-13 12:00",
+   "1962-05-15 03:00",
+   "1969-07-20 20:00",
+   "1972-12-11 14:00",
+   "1985-05-05 00:00",
+   "1998-07-01 09:00",
+   "2009-10-09 11:00",
+   "2023-08-23 12:00"
+  ],
+  "rows": [
+   {
+    "utc": "1959-09-13 12:00",
+    "body": "sun",
+    "app_az_deg": 19.008091411010195,
+    "app_el_deg": 5.302576899409,
+    "horizons_az_deg": 19.009254474,
+    "horizons_el_deg": 5.302545654,
+    "d_az_cos_el_deg": -0.001158085711489147,
+    "d_el_deg": 3.1245408999680535e-05
+   },
+   {
+    "utc": "1959-09-13 12:00",
+    "body": "earth",
+    "app_az_deg": 335.28393385921675,
+    "app_el_deg": 10.20587628846092,
+    "horizons_az_deg": 335.28388106,
+    "horizons_el_deg": 10.205974669,
+    "d_az_cos_el_deg": 5.196379801777603e-05,
+    "d_el_deg": -9.838053907884614e-05
+   },
+   {
+    "utc": "1962-05-15 03:00",
+    "body": "sun",
+    "app_az_deg": 20.800385741995047,
+    "app_el_deg": 6.425346364606283,
+    "horizons_az_deg": 20.801379593,
+    "horizons_el_deg": 6.425314581,
+    "d_az_cos_el_deg": -0.0009876081403705703,
+    "d_el_deg": 3.1783606282864696e-05
+   },
+   {
+    "utc": "1962-05-15 03:00",
+    "body": "earth",
+    "app_az_deg": 329.51027617311354,
+    "app_el_deg": 9.341133085349671,
+    "horizons_az_deg": 329.510382742,
+    "horizons_el_deg": 9.341085469,
+    "d_az_cos_el_deg": -0.00010515572392137141,
+    "d_el_deg": 4.761634967209716e-05
+   },
+   {
+    "utc": "1969-07-20 20:00",
+    "body": "sun",
+    "app_az_deg": 73.68573848729503,
+    "app_el_deg": 0.16235106432158453,
+    "horizons_az_deg": 73.685939434,
+    "horizons_el_deg": 0.162333175,
+    "d_az_cos_el_deg": -0.00020094589827221744,
+    "d_el_deg": 1.7889321584529938e-05
+   },
+   {
+    "utc": "1969-07-20 20:00",
+    "body": "earth",
+    "app_az_deg": 323.62587204351576,
+    "app_el_deg": 2.2585991513128287,
+    "horizons_az_deg": 323.625878934,
+    "horizons_el_deg": 2.258646795,
+    "d_az_cos_el_deg": -6.885131266186107e-06,
+    "d_el_deg": -4.764368717147249e-05
+   },
+   {
+    "utc": "1972-12-11 14:00",
+    "body": "sun",
+    "app_az_deg": 80.15045121115462,
+    "app_el_deg": 1.6718453930278359,
+    "horizons_az_deg": 80.150451224,
+    "horizons_el_deg": 1.671845389,
+    "d_az_cos_el_deg": -1.2839894057012564e-08,
+    "d_el_deg": 4.027835842634886e-09
+   },
+   {
+    "utc": "1972-12-11 14:00",
+    "body": "earth",
+    "app_az_deg": 323.4596386638799,
+    "app_el_deg": 7.913550468372425,
+    "horizons_az_deg": 323.459638975,
+    "horizons_el_deg": 7.913573321,
+    "d_az_cos_el_deg": -3.0815729940694287e-07,
+    "d_el_deg": -2.2852627575176143e-05
+   },
+   {
+    "utc": "1985-05-05 00:00",
+    "body": "sun",
+    "app_az_deg": 329.8126125022333,
+    "app_el_deg": 4.6026137346403955,
+    "horizons_az_deg": 329.812612504,
+    "horizons_el_deg": 4.60261374,
+    "d_az_cos_el_deg": -1.7609962584894866e-09,
+    "d_el_deg": -5.359604315913202e-09
+   },
+   {
+    "utc": "1985-05-05 00:00",
+    "body": "earth",
+    "app_az_deg": 332.24410351343647,
+    "app_el_deg": 4.488045653106413,
+    "horizons_az_deg": 332.244103717,
+    "horizons_el_deg": 4.488044067,
+    "d_az_cos_el_deg": -2.0293931161465214e-07,
+    "d_el_deg": 1.586106413320465e-06
+   },
+   {
+    "utc": "1998-07-01 09:00",
+    "body": "sun",
+    "app_az_deg": 67.3574457188622,
+    "app_el_deg": 3.2873063358719468,
+    "horizons_az_deg": 67.357445743,
+    "horizons_el_deg": 3.28730633,
+    "d_az_cos_el_deg": -2.4098101165059865e-08,
+    "d_el_deg": 5.871946928692751e-09
+   },
+   {
+    "utc": "1998-07-01 09:00",
+    "body": "earth",
+    "app_az_deg": 332.57081761542986,
+    "app_el_deg": 7.924887043684066,
+    "horizons_az_deg": 332.570817916,
+    "horizons_el_deg": 7.924910944,
+    "d_az_cos_el_deg": -2.9769960576153394e-07,
+    "d_el_deg": -2.3900315933467198e-05
+   },
+   {
+    "utc": "2009-10-09 11:00",
+    "body": "sun",
+    "app_az_deg": 262.79183404093146,
+    "app_el_deg": 0.860315149046958,
+    "horizons_az_deg": 262.791834045,
+    "horizons_el_deg": 0.860315154,
+    "d_az_cos_el_deg": -4.068052226537029e-09,
+    "d_el_deg": -4.9530419765630995e-09
+   },
+   {
+    "utc": "2009-10-09 11:00",
+    "body": "earth",
+    "app_az_deg": 327.6809052919968,
+    "app_el_deg": 7.929288659168713,
+    "horizons_az_deg": 327.680905791,
+    "horizons_el_deg": 7.929264985,
+    "d_az_cos_el_deg": -4.942322601653609e-07,
+    "d_el_deg": 2.3674168713405663e-05
+   },
+   {
+    "utc": "2023-08-23 12:00",
+    "body": "sun",
+    "app_az_deg": 64.27222278322449,
+    "app_el_deg": 0.9380198865907761,
+    "horizons_az_deg": 64.272222812,
+    "horizons_el_deg": 0.938019885,
+    "d_az_cos_el_deg": -2.8771646647173612e-08,
+    "d_el_deg": 1.5907760664291004e-09
+   },
+   {
+    "utc": "2023-08-23 12:00",
+    "body": "earth",
+    "app_az_deg": 323.41834397763586,
+    "app_el_deg": 1.4176412719268174,
+    "horizons_az_deg": 323.418344436,
+    "horizons_el_deg": 1.41766602,
+    "d_az_cos_el_deg": -4.5822383090049084e-07,
+    "d_el_deg": -2.474807318253447e-05
+   }
+  ],
+  "site": "im2-athena",
+  "horizons_source": "DE441",
+  "from_1972": {
+   "az_cos_el": {
+    "max": 4.942322601653609e-07,
+    "rms": 2.6088272959453475e-07,
+    "n": 10
+   },
+   "el": {
+    "max": 2.474807318253447e-05,
+    "rms": 1.5062924415180057e-05,
+    "n": 10
+   }
+  },
+  "before_1972": {
+   "az_cos_el": {
+    "max": 0.001158085711489147,
+    "rms": 0.0006285853131867332,
+    "n": 6
+   },
+   "el": {
+    "max": 9.838053907884614e-05,
+    "rms": 5.247613615014151e-05,
+    "n": 6
+   }
+  }
+ },
  "V-8": {
   "id": "V-8",
   "commands": {
@@ -2804,14 +3010,14 @@
   },
   "pytest": {
    "exit_code": 0,
-   "summary": "30 passed in 8.30s",
+   "summary": "30 passed in 8.50s",
    "passed": 30
   },
   "vitest": {
    "exit_code": 0,
    "files": 17,
-   "total": 141,
-   "passed": 141,
+   "total": 142,
+   "passed": 142,
    "failed": 0,
    "skipped": 0,
    "failed_tests": []

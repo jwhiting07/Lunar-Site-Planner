@@ -5,7 +5,7 @@ targets using precomputed SPICE DE440 geometry. The nine shipped sites (two
 as-landed CLPS positions and seven representative points) use
 precomputed NASA LOLA terrain masks. The local Vite server can calculate a terrain
 mask on demand for custom south-polar coordinates.
-The shipped data supports 2026-01-01 through 2029-01-01 UTC.
+The shipped data supports 1959-09-13 (Luna 2 reached the Moon on 13 or 14 September 1959, depending on the source and time zone) through 2029-01-01 UTC; searches without a date look at 2026-2028, and earlier missions are chosen with an exact date or a range.
 
 ## Run locally
 

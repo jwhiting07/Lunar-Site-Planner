@@ -51,6 +51,9 @@ MOON_COLOR = ROOT / "public" / "textures" / "moon-color.jpg"
 #: Ephemeris sampling. [M-EPHEM]
 EPHEM_START_UTC, EPHEM_STOP_UTC, EPHEM_STEP_S = "2026-01-01T00:00:00", "2029-01-01T00:00:00", 3600
 OVERVIEW_PX = 760  # 80S DEM (7600 px) block-averaged 10x -> 800 m/pix
+#: Historical ephemeris: from the day of the first human-made object to reach the Moon
+#: (Luna 2, 1959-09-13) up to the start of the main 2026-2028 tables. [M-EPHEM-HIST]
+HISTORY_START_UTC, HISTORY_STOP_UTC = "1959-09-13T00:00:00", "2026-01-01T00:00:00"
 
 
 def sha256(path: Path) -> str:
@@ -306,7 +309,142 @@ def build_ephemeris() -> tuple[dict, dict, dict]:
     return index, products, worst
 
 
+def build_history_ephemeris() -> tuple[dict, dict, dict]:
+    """Hourly Sun/Earth vectors from 1959-09-13 to 2026-01-01 UTC (same frame, aberration
+    correction and units as build_ephemeris), one file per calendar year.
+
+    Samples are whole UTC calendar hours (POSIX time, the clock the app uses). Leap seconds
+    only occur at the Jan 1 / Jul 1 hour marks, so between two such marks TAI advances exactly
+    like the calendar and ET follows from TAI by the SPICE TAI -> TDB conversion; across a mark
+    ET advances by one extra second. Before the first LSK leap-second entry (1972-01-01) SPICE
+    applies a constant TAI-UTC offset, which differs from the historical UTC (rubber seconds):
+    pre-1972 epochs can be up to ~9 s off, about 0.001 deg of solar motion. [R-NAIF-LSK] [R-NAIF-TIME]
+    """
+    import spiceypy as sp
+    from datetime import datetime, timedelta, timezone
+
+    ml.load_kernels(CACHE / "kernels", ml.DE440_KERNELS)
+    epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)  # timestamp()/fromtimestamp() fail for negative values on Windows
+
+    def posix(text: str) -> int:
+        return int((datetime.fromisoformat(text).replace(tzinfo=timezone.utc) - epoch).total_seconds())
+
+    p0, p1 = posix(HISTORY_START_UTC), posix(HISTORY_STOP_UTC)
+    assert (p1 - p0) % EPHEM_STEP_S == 0
+    n_total = (p1 - p0) // EPHEM_STEP_S
+    p = p0 + EPHEM_STEP_S * np.arange(n_total + 1, dtype=np.int64)
+
+    # Segment starts: the first sample and every Jan 1 / Jul 1 00:00 UTC after it.
+    marks = [HISTORY_START_UTC] + [f"{y}-{m:02d}-01T00:00:00" for y in range(1959, 2027) for m in (1, 7)
+                                   if p0 < posix(f"{y}-{m:02d}-01T00:00:00") <= p1]
+    mark_posix = np.array([posix(m) for m in marks], dtype=np.int64)
+    mark_tai = np.array([sp.unitim(sp.str2et(m), "TDB", "TAI") for m in marks])
+    seg = np.searchsorted(mark_posix, p, side="right") - 1
+    tai = mark_tai[seg] + (p - mark_posix[seg])
+    et = np.array([sp.unitim(t, "TAI", "TDB") for t in tai])
+    assert abs(et[0] - sp.str2et(HISTORY_START_UTC)) < 1e-6 and abs(et[-1] - sp.str2et(HISTORY_STOP_UTC)) < 1e-6
+    sun = ml.moon_centered_km("SUN", et)
+    earth = ml.moon_centered_km("EARTH", et)
+    table = np.hstack([sun, earth]).astype("<f8")
+
+    files, products = [], {}
+    for year in range(int(HISTORY_START_UTC[:4]), int(HISTORY_STOP_UTC[:4])):
+        ya = max(p0, posix(f"{year}-01-01T00:00:00"))
+        yb = min(p1, posix(f"{year + 1}-01-01T00:00:00"))
+        a, b = (ya - p0) // EPHEM_STEP_S, (yb - p0) // EPHEM_STEP_S
+        meta = write_bin(f"ephemeris_{year}.bin", table[a:b + 1])  # inclusive end sample
+        stamp = (epoch + timedelta(seconds=ya)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        files.append({"file": meta["file"], "t0_utc": stamp, "n": b - a + 1, "bytes": meta["bytes"]})
+        products[meta["file"]] = meta
+
+    # Linear interpolation between hourly samples, checked against direct SPICE at 15/30/45 min.
+    rng = np.random.default_rng(11)
+    k = rng.choice(n_total, 6000, replace=False)
+    worst = {"sun_dir_deg": 0.0, "earth_dir_deg": 0.0, "sun_dist_rel": 0.0, "earth_dist_rel": 0.0}
+    for frac in (0.25, 0.5, 0.75):
+        t = et[k] + frac * (et[k + 1] - et[k])
+        for name, col, tab in (("sun", "SUN", sun), ("earth", "EARTH", earth)):
+            exact = ml.moon_centered_km(col, t)
+            lin = tab[k] * (1 - frac) + tab[k + 1] * frac
+            chord = np.linalg.norm(exact / np.linalg.norm(exact, axis=1, keepdims=True)
+                                   - lin / np.linalg.norm(lin, axis=1, keepdims=True), axis=1)
+            rel = np.abs(np.linalg.norm(lin, axis=1) / np.linalg.norm(exact, axis=1) - 1)
+            worst[f"{name}_dir_deg"] = max(worst[f"{name}_dir_deg"], float(np.degrees(chord).max()))
+            worst[f"{name}_dist_rel"] = max(worst[f"{name}_dist_rel"], float(rel.max()))
+
+    index = {
+        "schema": 1,
+        "kind": "history",
+        "frame": ml.ME_FRAME, "center": "Moon centre (NAIF 301)", "aberration_correction": ml.ABCORR, "units": "km",
+        "layout": "row-major float64 little-endian, 6 values per sample: sun_x, sun_y, sun_z, earth_x, earth_y, earth_z",
+        "time_system": "UTC calendar hours (POSIX time). Leap seconds handled at Jan 1 / Jul 1 marks; before 1972-01-01 SPICE uses a constant TAI-UTC offset (historical UTC differed by up to ~9 s)",
+        "step_s": EPHEM_STEP_S,
+        "start_utc": HISTORY_START_UTC + "Z",
+        "stop_utc": HISTORY_STOP_UTC + "Z",
+        "first_contact": "Luna 2 impact, September 1959 (13 September UTC in the NSSDC impacts table; some sources give 14 September). Coverage starts at 1959-09-13 00:00 UTC.",
+        "files": files,
+        "interpolation": {"method": "linear in the Moon-centred body-fixed vectors between hourly samples",
+                          "max_error_vs_spice": worst,
+                          "check": "6000 random hours x {15, 30, 45} min against direct SPICE evaluation"},
+        "refs": ["R-DE440", "R-NAIF-MOONFK", "R-NAIF-LSK", "R-NAIF-ABCORR", "R-NAIF-PCK", "R-NAIF-TIME"],
+    }
+    (OUT / "ephemeris_history.json").write_text(json.dumps(index, indent=1))
+    sp.kclear()
+    return index, products, worst
+
+
 # --------------------------------------------------------------------------
+LANDING_SITE_FILES = ("landing_sites_past.json", "landing_sites_planned.json")
+LANDING_REF_FILES = ("landing_sites_past_refs.json", "landing_sites_planned_refs.json")
+LANDING_SITE_FIELDS = {"id", "name", "mission", "program", "agency", "country", "category", "status", "date",
+                       "lat_deg", "lon_deg", "coord_basis", "coord_note", "precision_deg", "source_refs"}
+
+
+def build_landing_sites(references: list) -> dict:
+    """Merge the researched catalogue of past and planned lunar landing/impact sites into one file.
+
+    Coordinates are copied exactly as sourced (planetocentric, east-positive); nothing is computed or
+    adjusted here. The checks below fail the build on a missing field, an out-of-range coordinate, a
+    duplicate id or a citation of an unknown reference.
+    """
+    here = Path(__file__).parent
+    known = {r["id"] for r in references}
+    for name in LANDING_REF_FILES:
+        for ref in json.loads((here / name).read_text(encoding="utf-8")):
+            if ref["id"] in known:
+                raise ValueError(f"duplicate reference id {ref['id']}")
+            ref.setdefault("role", "catalogue coordinates (display and site selection)")
+            references.append(ref)
+            known.add(ref["id"])
+    sites, unlocated = [], []
+    for name in LANDING_SITE_FILES:
+        doc = json.loads((here / name).read_text(encoding="utf-8"))
+        sites += doc["sites"]
+        unlocated += [{**u, "list": name.removeprefix("landing_sites_").removesuffix(".json")} for u in doc["unlocated"]]
+    seen = set()
+    for s in sites:
+        if set(s) != LANDING_SITE_FIELDS:
+            raise ValueError(f"{s.get('id')}: fields differ from the catalogue schema: {set(s) ^ LANDING_SITE_FIELDS}")
+        if s["id"] in seen:
+            raise ValueError(f"duplicate site id {s['id']}")
+        seen.add(s["id"])
+        if not (-90 <= s["lat_deg"] <= 90 and -180 < s["lon_deg"] <= 180):
+            raise ValueError(f"{s['id']}: coordinates out of range")
+        missing = [r for r in s["source_refs"] if r not in known]
+        if missing or not s["source_refs"]:
+            raise ValueError(f"{s['id']}: unknown or missing references {missing}")
+    doc = {
+        "schema": 1,
+        "description": "Past and planned lunar landing and impact sites, with the coordinates and caveats stated by each cited source",
+        "frame": "planetocentric latitude, east-positive longitude; sources state DE421 Mean Earth/Polar Axis (or LOLA 2011 for USGS feature centres)",
+        "coord_basis_note": "'reported landing/impact position' is a measured or published position of the object; 'region/feature centre' is the centre of a named feature near the intended destination and is not a landing target",
+        "sites": sites,
+        "unlocated": unlocated,
+    }
+    (OUT / "landing_sites.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
+    return doc
+
+
 def main() -> None:
     import rasterio
     from rasterio.io import MemoryFile
@@ -315,6 +453,8 @@ def main() -> None:
     manifest = json.loads((CACHE / "sources_manifest.json").read_text(encoding="utf-8"))
     references = json.loads((Path(__file__).parent / "references.json").read_text(encoding="utf-8"))
     sites_in = json.loads((Path(__file__).parent / "sites_input.json").read_text(encoding="utf-8"))["sites"]
+    landing_doc = build_landing_sites(references)
+    print(f"landing-site catalogue: {len(landing_doc['sites'])} sites, {len(landing_doc['unlocated'])} unlocated")
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     print("loading DEMs ...", flush=True)
@@ -329,6 +469,9 @@ def main() -> None:
     print("ephemeris ...", flush=True)
     eph_index, products, interp = build_ephemeris()
     print("  interpolation error:", interp)
+    hist_index, hist_products, hist_interp = build_history_ephemeris()
+    print("  history interpolation error:", hist_interp)
+    products.update(hist_products)
 
     distances = ml.ray_distances_m(RAY_START_M, RAY_MIN_STEP_M, RAY_REL_STEP, RAY_MAX_M)
     with rasterio.open(MOON_COLOR, GEOREF_SOURCES="NONE") as image:
@@ -422,7 +565,11 @@ def main() -> None:
     eph_refs = ["R-DE440", "R-NAIF-MOONFK", "R-NAIF-LSK", "R-NAIF-ABCORR", "R-NAIF-SPKPOS"]
     product_docs = []
     for name, meta in sorted(products.items()):
-        if name.startswith("ephemeris_"):
+        if name in hist_products:
+            doc = {"description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+                   "inputs": used["ephemeris"], "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+                   "frame": ml.ME_FRAME, "units": "km", "refs": eph_refs}
+        elif name.startswith("ephemeris_"):
             doc = {"description": "Hourly apparent Sun and Earth position vectors relative to the Moon's centre",
                    "inputs": used["ephemeris"], "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at uniform UTC hours (M-EPHEM)",
                    "frame": ml.ME_FRAME, "units": "km", "refs": eph_refs}
@@ -453,7 +600,7 @@ def main() -> None:
         "generated_utc": now,
         "pipeline": {
             "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
-            "scripts": {n: sha256(Path(__file__).parent / n) for n in ("build_data.py", "moonlib.py", "fetch_sources.py", "sites_input.json", "references.json")},
+            "scripts": {n: sha256(Path(__file__).parent / n) for n in ("build_data.py", "moonlib.py", "fetch_sources.py", "sites_input.json", "references.json", *LANDING_SITE_FILES, *LANDING_REF_FILES)},
             "python": platform.python_version(),
             "packages": {"numpy": np.__version__, "spiceypy": spiceypy.__version__,
                          "cspice_toolkit": spiceypy.tkvrsn("TOOLKIT"), "rasterio": rasterio.__version__, "pyproj": pyproj.__version__},
@@ -478,14 +625,20 @@ def main() -> None:
         "self_checks": {
             "stereographic_formulas_vs_proj_max_m": proj_err,
             "ephemeris_linear_interpolation_max_error": interp,
+            "ephemeris_history_linear_interpolation_max_error": hist_interp,
         },
         "sources": [{"file": n, **manifest[n], "used_for": [k for k, v in used.items() if n in v]} for n in used_names],
         "products": product_docs + [
             {"file": "sites.json", "description": "Site coordinates (sourced), DEM elevation and slope (sampled), horizon/terrain statistics (computed)",
              "inputs": used["terrain"] + used["slope"] + used["site_selection"] + ["scripts/sites_input.json"],
              "refs": ["R-LOLA-PGDA", "R-LROC-1360", "R-NASA-IM1", "R-LROC-1408", "R-LOLA-SITES", "R-MAZARICO-2011"], "generated_utc": now},
+            {"file": "landing_sites.json", "description": "Catalogue of past and planned lunar landing and impact sites: coordinates as published by the cited sources (not computed), with per-site caveats and a list of sites that could not be located",
+             "inputs": ["scripts/" + n for n in LANDING_SITE_FILES + LANDING_REF_FILES], "sha256": sha256(OUT / "landing_sites.json"),
+             "refs": sorted({r for s in landing_doc["sites"] for r in s["source_refs"]}), "generated_utc": now},
             {"file": "ephemeris.json", "description": "Index and conventions of the ephemeris sample files; body radii from the PCK",
              "inputs": used["ephemeris"], "refs": eph_refs + ["R-NAIF-PCK"], "generated_utc": now},
+            {"file": "ephemeris_history.json", "description": "Index of the historical ephemeris files (1959-09-13 to 2026-01-01) and their time-system notes",
+             "inputs": used["ephemeris"], "refs": eph_refs + ["R-NAIF-PCK", "R-NAIF-TIME"], "generated_utc": now},
         ],
         "references": references,
     }

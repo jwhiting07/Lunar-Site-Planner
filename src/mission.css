@@ -321,3 +321,21 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .mission-options tbody tr:nth-child(2) td { animation-delay: .05s; }
 .mission-options tbody tr:nth-child(3) td { animation-delay: .1s; }
 .mission-options tbody tr:nth-child(n+4) td { animation-delay: .15s; }
+
+/* Known landing sites: grouped list headings, dot tooltip, layer toggle */
+.select-list .select-group { padding: 10px 14px 4px 12px; color: var(--tx2); font: 600 10px var(--sans); letter-spacing: .08em; text-transform: uppercase; cursor: default; pointer-events: none; }
+.select-list .select-group:not(:first-child) { margin-top: 4px; border-top: 1px solid var(--line); }
+.moon-dot-tip { display: grid; gap: 2px; padding: 8px 10px; white-space: normal; max-width: 300px; font-family: var(--sans); }
+.moon-dot-tip[hidden] { display: none; }
+.moon-dot-tip strong { font-weight: 600; font-size: 12px; }
+.moon-dot-tip span { color: var(--tx1); font: 11px var(--mono); }
+.moon-dot-tip em { margin-top: 4px; color: var(--tx2); font-style: normal; font-size: 10px; }
+.moon-layer-toggle { position: absolute; left: 24px; bottom: 50px; z-index: 3; display: flex; align-items: center; gap: 8px; color: var(--tx1); font: 11px var(--sans); cursor: pointer; text-shadow: 0 1px 2px #0d0f12; }
+.moon-layer-toggle input { margin: 0; accent-color: var(--earth); }
+.moon-legend { display: inline-flex; align-items: center; gap: 5px; margin-left: 6px; color: var(--tx2); }
+.moon-legend i { width: 6px; height: 6px; margin-left: 6px; }
+.moon-legend i:first-child { margin-left: 0; }
+.moon-legend .landed { background: #ebebe6; }
+.moon-legend .impact { background: #7a8594; }
+.moon-legend .planned { background: #dbad4d; }
+@media (max-width: 760px) { .moon-layer-toggle { left: 16px; bottom: 42px; } }

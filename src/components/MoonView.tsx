@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { landmarkBasis, landmarkTone, type LandingSite, type LandmarkTone } from '../data/landingSites';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { enuBasis, type InstantState, type SiteDoc } from '../science';
 import { loadNasaModel, disposeModel } from '../visuals/models';
@@ -9,6 +10,8 @@ import { disposeStarfield, loadStarfield } from '../visuals/stars';
 
 // Body-fixed (X,Y,Z) -> Three (X,Z,-Y), shared with the site's ME coordinates.
 // models.ts aligns the native NASA LRO cube-mesh axes with this convention.
+const LANDMARK_COLORS: Record<LandmarkTone, [number, number, number]> = { landed: [0.92, 0.92, 0.9], impact: [0.48, 0.52, 0.58], planned: [0.86, 0.68, 0.3] };
+
 export function globePosition(lat: number, lon: number): THREE.Vector3 {
   const [x, y, z] = enuBasis(lat, lon).up;
   return new THREE.Vector3(x, z, -y);
@@ -36,12 +39,24 @@ const ZOOM_TAU_MS = 85;
 /** Minimum screen distance between site markers, px (a pin's hit area is 24 px). */
 const MARKER_GAP = 22;
 
-export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels }: {
+export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels, idleRotate = false, landmarks, onLandmark }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
   compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
   savedSiteIds?: ReadonlySet<string>;
   markerLabels?: ReadonlyMap<string, string>;
+  /** Turn the Moon slowly about its axis while nothing is selected and nobody is interacting. */
+  idleRotate?: boolean;
+  /** Known landing and impact sites drawn as dots (explorer only); clicking one calls onLandmark. */
+  landmarks?: LandingSite[]; onLandmark?: (site: LandingSite) => void;
 }) {
+  const landmarkList = useRef<LandingSite[]>(landmarks ?? []);
+  landmarkList.current = landmarks ?? [];
+  const landmarkPick = useRef(onLandmark);
+  landmarkPick.current = onLandmark;
+  const syncLandmarks = useRef(() => {});
+  const dotTip = useRef<HTMLDivElement>(null);
+  const [showLandmarks, setShowLandmarks] = useState(true);
+  const landmarksOn = useRef(true);
   const pick = useRef(onPick);
   pick.current = onPick;
   const host = useRef<HTMLDivElement>(null);
@@ -64,6 +79,9 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   const [showSites, setShowSites] = useState(true);
   const [orientation, setOrientation] = useState('south');
   const activeFocus = useRef<string | null>(null);
+  const spinEnabled = useRef(idleRotate);
+  spinEnabled.current = idleRotate;
+  const spinKick = useRef(() => {});
   // Choosing coordinates on the Moon must not re-centre the view on the new point.
   const skipFocusUntil = useRef(0);
 
@@ -111,6 +129,73 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     scene.add(new THREE.AmbientLight(0xffffff, 0.45));
     const light = new THREE.DirectionalLight(0xffffff, 2.6);
     scene.add(light);
+    // Known landing sites: one Points draw call, depth-tested against the Moon. Hover and click use
+    // screen-space distance to the projected dots (a few dozen points, only on pointer events).
+    const dotGeometry = new THREE.BufferGeometry();
+    const dotMaterial = new THREE.PointsMaterial({ size: 5, sizeAttenuation: false, vertexColors: true, depthWrite: false });
+    const dots = new THREE.Points(dotGeometry, dotMaterial);
+    dots.visible = false;
+    dots.renderOrder = 2;
+    if (explorer && !local) scene.add(dots);
+    let dotPoints: THREE.Vector3[] = [];
+    let hoveredDot: LandingSite | null = null;
+    let dotTipSize = { w: 0, h: 0 };
+    const dotProjected = new THREE.Vector3();
+    syncLandmarks.current = () => {
+      const list = landmarkList.current;
+      dotPoints = list.map(site => globePosition(site.lat_deg, site.lon_deg).multiplyScalar(1.004));
+      const position = new Float32Array(list.length * 3), color = new Float32Array(list.length * 3);
+      dotPoints.forEach((point, i) => { position.set([point.x, point.y, point.z], i * 3); color.set(LANDMARK_COLORS[landmarkTone(list[i])], i * 3); });
+      dotGeometry.setAttribute('position', new THREE.BufferAttribute(position, 3));
+      dotGeometry.setAttribute('color', new THREE.BufferAttribute(color, 3));
+      dotGeometry.computeBoundingSphere();
+      dots.visible = explorer && !local && landmarksOn.current && list.length > 0;
+      hoveredDot = null;
+      if (dotTip.current) dotTip.current.hidden = true;
+      draw();
+    };
+    const dotAt = (x: number, y: number): LandingSite | null => {
+      if (!dots.visible) return null;
+      camera.updateMatrixWorld(); // the camera may have moved since the last frame was rendered
+      let best: LandingSite | null = null;
+      let bestDistance = 10; // px
+      const eye = camera.position;
+      for (let i = 0; i < dotPoints.length; i++) {
+        const p = dotPoints[i];
+        if (p.x * (eye.x - p.x) + p.y * (eye.y - p.y) + p.z * (eye.z - p.z) <= 0) continue; // far side
+        dotProjected.copy(p).project(camera);
+        if (dotProjected.z >= 1) continue;
+        const d = Math.hypot((dotProjected.x + 1) * size.w / 2 - x, (1 - dotProjected.y) * size.h / 2 - y);
+        if (d < bestDistance) { bestDistance = d; best = landmarkList.current[i]; }
+      }
+      return best;
+    };
+    const placeDotTip = () => {
+      const tip = dotTip.current;
+      if (!tip || !pointerPx) return;
+      const x = Math.min(pointerPx.x + 16, Math.max(8, size.w - dotTipSize.w - 8));
+      const y = Math.min(pointerPx.y + 18, Math.max(8, size.h - dotTipSize.h - 8));
+      tip.style.transform = `translate(${x}px, ${y}px)`;
+    };
+    const updateDot = () => {
+      const site = pointerPx ? dotAt(pointerPx.x, pointerPx.y) : null;
+      if (site === hoveredDot) { if (site) placeDotTip(); return; }
+      hoveredDot = site;
+      renderer.domElement.style.cursor = site ? 'pointer' : '';
+      const tip = dotTip.current;
+      if (!tip) return;
+      if (!site) { tip.hidden = true; return; }
+      const [name, detail, where, hint] = Array.from(tip.children);
+      name.textContent = site.name;
+      detail.textContent = `${site.agency} · ${site.date}`;
+      where.textContent = `${site.lat_deg.toFixed(Math.min(4, Math.max(2, Math.ceil(-Math.log10(site.precision_deg)))))}°, ${site.lon_deg.toFixed(Math.min(4, Math.max(2, Math.ceil(-Math.log10(site.precision_deg)))))}° E · ${landmarkBasis(site)}`;
+      hint.textContent = 'Click to use these coordinates';
+      tip.hidden = false;
+      dotTipSize = { w: tip.offsetWidth, h: tip.offsetHeight };
+      const coordinateTip = tipReadout.current;
+      if (coordinateTip) coordinateTip.hidden = true;
+      placeDotTip();
+    };
     let model: THREE.Group | undefined;
     const raycaster = new THREE.Raycaster();
     const sphere = new THREE.Sphere(new THREE.Vector3(), 1);
@@ -157,13 +242,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
           const hoverNow = performance.now();
           if (pointer && hoverReadout.current && hoverNow - lastMotion > 150 && hoverNow - lastHover > 90) {
             lastHover = hoverNow;
+            updateDot();
             raycaster.setFromCamera(pointer, camera);
             const surface = model ? raycaster.intersectObject(model, true)[0]?.point : raycaster.ray.intersectSphere(sphere, hit);
             const tip = tipReadout.current;
             if (surface) {
               const { lat, lon } = globeCoordinates(surface);
               hoverReadout.current.textContent = `Lat: ${lat.toFixed(4)}°, Lon: ${lon.toFixed(4)}°`;
-              if (tip && pick.current && pointerPx) {
+              if (tip && pick.current && pointerPx && !hoveredDot) {
                 tip.hidden = false;
                 tip.textContent = `${lat.toFixed(3)}°, ${lon.toFixed(3)}°`;
                 tip.style.transform = `translate(${pointerPx.x + 16}px, ${pointerPx.y + 18}px)`;
@@ -235,6 +321,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       frame = requestAnimationFrame(() => { frame = 0; render(); });
     };
     redraw.current = draw;
+    syncLandmarks.current();
     focus.current = (id) => {
       zoomTarget = null;
       activeFocus.current = id;
@@ -257,8 +344,34 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       controls.update();
       draw();
     };
+    // Slow idle spin about the polar axis: pauses on any interaction, resumes after a pause.
+    const SPIN_DEG_PER_S = 1.4;
+    const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let spinFrame = 0;
+    let spinLast = 0;
+    let spinResumeAt = 0;
+    const spinOffset = new THREE.Vector3();
+    const spinTick = (now: number) => {
+      spinFrame = 0;
+      if (disposed || !spinEnabled.current || reduced) return;
+      const dt = Math.min(0.1, (now - spinLast) / 1000);
+      spinLast = now;
+      if (now >= spinResumeAt && zoomTarget === null) {
+        spinOffset.copy(camera.position).sub(controls.target).applyAxisAngle(camera.up, THREE.MathUtils.degToRad(SPIN_DEG_PER_S) * dt);
+        camera.position.copy(controls.target).add(spinOffset);
+        render();
+      }
+      spinFrame = requestAnimationFrame(spinTick);
+    };
+    spinKick.current = () => {
+      if (spinFrame || disposed || !spinEnabled.current || reduced) return;
+      spinLast = performance.now();
+      spinFrame = requestAnimationFrame(spinTick);
+    };
     const markMotion = () => {
       lastMotion = performance.now();
+      if (hoveredDot) { hoveredDot = null; renderer.domElement.style.cursor = ''; if (dotTip.current) dotTip.current.hidden = true; }
+      spinResumeAt = lastMotion + 3500;
       window.clearTimeout(hoverTimer);
       hoverTimer = window.setTimeout(() => { hoverTimer = 0; draw(); }, 170);
     };
@@ -296,12 +409,16 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       zoomBy(Math.exp(THREE.MathUtils.clamp(event.deltaY * unit, -240, 240) * 0.0018));
     };
     element.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    const pauseSpin = () => { spinResumeAt = performance.now() + 3500; };
+    element.addEventListener('pointerdown', pauseSpin);
+    spinKick.current();
     controls.addEventListener('change', () => { markMotion(); draw(); });
     const onPointer = (event: PointerEvent) => {
       const bounds = renderer.domElement.getBoundingClientRect();
       pointerPx = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
       const tip = tipReadout.current;
       if (tip && !tip.hidden) tip.style.transform = `translate(${pointerPx.x + 16}px, ${pointerPx.y + 18}px)`;
+      if (!gesture || gesture.moved < 5) updateDot();
       pointer = new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2);
       draw();
     };
@@ -334,11 +451,13 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       gesture = null;
       if (tap) {
         const bounds = renderer.domElement.getBoundingClientRect();
+        const site = landmarkPick.current ? dotAt(event.clientX - bounds.left, event.clientY - bounds.top) : null;
+        if (site) { skipFocusUntil.current = performance.now() + 600; landmarkPick.current?.(site); return; }
         selectAt(new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
       }
     };
     const onCancel = (event: PointerEvent) => { pointers.delete(event.pointerId); gesture = null; };
-    const onLeave = () => { pointer = null; pointerPx = null; if (tipReadout.current) tipReadout.current.hidden = true; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
+    const onLeave = () => { pointer = null; pointerPx = null; hoveredDot = null; renderer.domElement.style.cursor = ''; if (dotTip.current) dotTip.current.hidden = true; if (tipReadout.current) tipReadout.current.hidden = true; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
     const onKey = (event: KeyboardEvent) => {
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
         event.preventDefault();
@@ -388,8 +507,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       focus.current = () => {};
       zoom.current = () => {};
       redraw.current = () => {};
+      syncLandmarks.current = () => {};
+      dotGeometry.dispose();
+      dotMaterial.dispose();
       cancelAnimationFrame(frame);
       cancelAnimationFrame(zoomFrame);
+      cancelAnimationFrame(spinFrame);
+      spinKick.current = () => {};
+      element.removeEventListener('pointerdown', pauseSpin);
       window.clearTimeout(hoverTimer);
       element.removeEventListener('wheel', onWheel, { capture: true });
       resize.disconnect();
@@ -410,6 +535,8 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   }, [explorer, local, compact]);
 
   useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions]);
+  useEffect(() => { spinKick.current(); }, [idleRotate]);
+  useEffect(() => { landmarksOn.current = showLandmarks; syncLandmarks.current(); }, [showLandmarks, landmarks]);
   useEffect(() => { if (explorer) focus.current(null); }, [explorer, local, compact]);
   useEffect(() => { if (!explorer || orientation === 'site') focus.current(primaryId); }, [primaryId, sites, explorer, orientation]);
   useEffect(() => {
@@ -444,6 +571,9 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       <span className="moon-hint">{onPick ? 'Click to select · Enter selects center · ' : ''}Drag to rotate · Scroll to zoom</span>
       {local && <span className="moon-local-reticle" aria-label="Selected landing site" />}
       {explorer && <output ref={tipReadout} className="moon-tip" hidden aria-hidden="true" />}
+      {explorer && <div ref={dotTip} className="moon-tip moon-dot-tip" hidden aria-hidden="true"><strong /><span /><span /><em /></div>}
+      {explorer && !local && landmarks && landmarks.length > 0 && <label className="moon-layer-toggle"><input type="checkbox" checked={showLandmarks} onChange={event => setShowLandmarks(event.target.checked)} />Known landing sites
+        {showLandmarks && <span className="moon-legend" aria-hidden="true"><i className="landed" />Landed<i className="impact" />Impact<i className="planned" />Planned</span>}</label>}
       {explorer && <div className="moon-coordinate-hud" aria-label="Moon surface scale and cursor coordinates">
         <output ref={hoverReadout} aria-label="Moon cursor latitude and longitude" aria-live="off">Lat: —, Lon: —</output>
         <div className="moon-scale-bar"><span ref={scaleLine} /><output ref={scaleReadout} aria-label="Moon distance scale" /></div>

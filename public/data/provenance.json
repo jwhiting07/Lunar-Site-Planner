@@ -1,14 +1,18 @@
 {
  "schema": 1,
- "generated_utc": "2026-11-15T03:30:38Z",
+ "generated_utc": "2026-11-15T04:37:42Z",
  "pipeline": {
   "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
   "scripts": {
-   "build_data.py": "6ac04b625621c0ab924c890134f7c788a4b6c7ac3c78c3a3359e41cecb36a6d8",
+   "build_data.py": "9c433273866be4ae821ebb25c3c064f1fe960ab3d1fa141271974e95ab50b1ba",
    "moonlib.py": "6932b8ea1003c6ab81568ebb25429fb93a5f13119cc3368d770bb0053d929e33",
    "fetch_sources.py": "17122a7596c7c566c818a836257fc3f363046908a2ffd95e57384fdf4e9769ad",
    "sites_input.json": "b9101ec5b09693c1fad032580f87fdaf07c2537f0753c44ec28dc963b7705089",
-   "references.json": "91ece37fe230637cf8b522cf9cb51d89e4d0520340224a9ff2f04788942631e8"
+   "references.json": "91ece37fe230637cf8b522cf9cb51d89e4d0520340224a9ff2f04788942631e8",
+   "landing_sites_past.json": "dbd20969a97fbbedea6040551849fd371ef16558a4d4d0940a264bc9f77b0112",
+   "landing_sites_planned.json": "afd5fd01af120605f4742b9742d20224db0f9d77e1068fc8b0e294d0107a79ef",
+   "landing_sites_past_refs.json": "c5b2644c2bbb1df1f97e8099049a05aab8b5522775e844eeb1509e2636b3edbf",
+   "landing_sites_planned_refs.json": "5bd3b94c3579c1df66691e7936506d5b3a69c9cb0dfd16c0e0fff8542d567911"
   },
   "python": "3.12.10",
   "packages": {
@@ -70,6 +74,12 @@
    "earth_dir_deg": 0.00013296108021038192,
    "sun_dist_rel": 9.89926329630908e-06,
    "earth_dist_rel": 9.567622741846193e-07
+  },
+  "ephemeris_history_linear_interpolation_max_error": {
+   "sun_dir_deg": 1.5451223035047186e-05,
+   "earth_dir_deg": 0.00013312970898552362,
+   "sun_dist_rel": 9.900373229010384e-06,
+   "earth_dist_rel": 9.488263009727049e-07
   }
  },
  "sources": [
@@ -184,6 +194,2016 @@
  ],
  "products": [
   {
+   "file": "ephemeris_1959.bin",
+   "bytes": 126768,
+   "sha256": "9ae620484862492bb5303ffd8255663a6783bea8e84b874b0759b68bbd7f883a",
+   "dtype": "float64",
+   "shape": [
+    2641,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1960.bin",
+   "bytes": 421680,
+   "sha256": "327ed5be9dcee1c08ff4338bad285f25da7756b3bfb527d46acaf7f18ce53b1c",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1961.bin",
+   "bytes": 420528,
+   "sha256": "d813f2afbb32275bd85fef6617d4b4bbd7eeb2df330f44a220c05941f9abf0d5",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1962.bin",
+   "bytes": 420528,
+   "sha256": "a1806cb3712c1951e676ae62a9fe0428e12d8d27e893e131079b985c8146135f",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1963.bin",
+   "bytes": 420528,
+   "sha256": "04778ff843f499a9081b9fa0e143f879e5f81e1ba07631a253dc7fc4826b26c1",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1964.bin",
+   "bytes": 421680,
+   "sha256": "5c3bdb10cc8653281c97b16709f2571ed1db1dea83f55b17b3dafdc72b7d2329",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1965.bin",
+   "bytes": 420528,
+   "sha256": "17601dae66cbbf402225e32ffe3ca19f96fd41982a80d3547b3b3834d50e3ec9",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1966.bin",
+   "bytes": 420528,
+   "sha256": "1d2f5ae36411439e4aecc4cedbea54de053df58b525f430bd82ecf5a2138d2ba",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1967.bin",
+   "bytes": 420528,
+   "sha256": "7a5b5b4f610988bc78b656d310c1f1340ba0eb1fef0afd88eabbcacf0e48adee",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1968.bin",
+   "bytes": 421680,
+   "sha256": "e6bfdf46e1d711ea42958fb186ddfe06e94f736c88054e66e023ab6f0d6bd313",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1969.bin",
+   "bytes": 420528,
+   "sha256": "79806043920fe1ac495efa6e27bc22bf5533e37002473ac4eede80fa815e0b74",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1970.bin",
+   "bytes": 420528,
+   "sha256": "7cb556df2315ae419a4f49f82850c8f3b8189bc2c91a1c698dc3f2b2eb626607",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1971.bin",
+   "bytes": 420528,
+   "sha256": "ff1ce0756282ad634182f4950c372d53049ad988928c199e0dd2488e13d20d6d",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1972.bin",
+   "bytes": 421680,
+   "sha256": "fad87fa30db521b9974079653033a468a92e275c195e252583320b7729749568",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1973.bin",
+   "bytes": 420528,
+   "sha256": "bb11e367b9838c1b808a4b6214bf1dc8bc45d1d21175ffa4c8ed1d23ad26d61d",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1974.bin",
+   "bytes": 420528,
+   "sha256": "9d940bcfdd5d769f0ff5b9c2f6aab9274c3d62c33a80868590252bf7f935c0bf",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1975.bin",
+   "bytes": 420528,
+   "sha256": "19e94dd1d08a9e137d9b820f57bd5bec7d1478dee6194b2d3d4bee1e463a6ea5",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1976.bin",
+   "bytes": 421680,
+   "sha256": "0d70eb4cd7de97440895c6492aff9c3cb362b78e1e68bc7ec384bb03cc681661",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1977.bin",
+   "bytes": 420528,
+   "sha256": "f95e34a31ecc75604999861d56eb93fc9d2c1b44344a8349cc260c1cf67a16cf",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1978.bin",
+   "bytes": 420528,
+   "sha256": "602ffb4b57e1b679c2ebe4f1b68baa7415427101ecdd2b2889984cdc670ead92",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1979.bin",
+   "bytes": 420528,
+   "sha256": "940948bf0f05134192d569bb2d93d0b9d57449e449ddcec2764dc1cff4e3a442",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1980.bin",
+   "bytes": 421680,
+   "sha256": "f7124b17e58f199c6e965963d8e06668522544d4b2a5646aefc894b3924be68a",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1981.bin",
+   "bytes": 420528,
+   "sha256": "764bc6ba0f42fe013ac64eb04d2b7aee33268c9c551a7bdf758a268501d80911",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1982.bin",
+   "bytes": 420528,
+   "sha256": "e0b19bc725c52a6d3f244cd3f56a2d84bf86867386dadd8a30639cf06c5c0096",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1983.bin",
+   "bytes": 420528,
+   "sha256": "feaa5fbdd7217a7b5332492b0f79da84361a2f9a28802fe86ac4582599dce7ca",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1984.bin",
+   "bytes": 421680,
+   "sha256": "f1c328924bbb0697180dc2065efc85c8b83ff3d4f70e9b92f148fd81b9edbe81",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1985.bin",
+   "bytes": 420528,
+   "sha256": "c27b70c6563d54aee9b3b6f5db89480f55d72b6d8bbc45f11d7eea09f84dd534",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1986.bin",
+   "bytes": 420528,
+   "sha256": "f0240008884181c7c6f99d959d12b237087861e241b54e54028983ec82ae9681",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1987.bin",
+   "bytes": 420528,
+   "sha256": "31dfd325306c511f8d49ae82f69935496920a162f12538f7938e004ea1ae6ce9",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1988.bin",
+   "bytes": 421680,
+   "sha256": "a5852b268a73e26b7192726a049a372ba2d8c7682b4e7b5a404b7a91d6eaaa7b",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1989.bin",
+   "bytes": 420528,
+   "sha256": "73e75ef4cee492034c494deae19747905c17a9de9da9edc33995f5a64a16d40a",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1990.bin",
+   "bytes": 420528,
+   "sha256": "b3e18453bd826c2c5c47c04e9f9db38e1329064a696edd49f2573dbbf64ab416",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1991.bin",
+   "bytes": 420528,
+   "sha256": "645209b911e67bed40e042b72fa8ea96a4d3b45af9fdbff6ded608066ed711e2",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1992.bin",
+   "bytes": 421680,
+   "sha256": "d5c33a17b83dcf40586588707dfb929a2d67aeea7f74c213000e8b77635ecc1c",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1993.bin",
+   "bytes": 420528,
+   "sha256": "ad33b48677528b02c78ade3d06e981aeba9b7823a261eda2abffa0081f636091",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1994.bin",
+   "bytes": 420528,
+   "sha256": "0660c34a5a17d0c9911c32cf913e675330986c36373312d9b092afea5d86429e",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1995.bin",
+   "bytes": 420528,
+   "sha256": "3fff8f7429615e09f0ae34a71e036d1f5c54622dd25f0f77cd1c8bf3cd23c857",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1996.bin",
+   "bytes": 421680,
+   "sha256": "8b84dc7f06f898b0f34f0b72886578d9798bea40d73fbd617d656c44f2550ed7",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1997.bin",
+   "bytes": 420528,
+   "sha256": "bddcd65c6e67628780102a87da18b83045e9f3f33371efa4dbdc107282565623",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1998.bin",
+   "bytes": 420528,
+   "sha256": "d060be438b8498f125c90410d1955fe76dc52bd02926ffcdaf4357450f4dd919",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_1999.bin",
+   "bytes": 420528,
+   "sha256": "031e26f1916610f21fcd43e58b4f5b0db7a9b26b8ac4bc78c6b4ac78957ed5e5",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2000.bin",
+   "bytes": 421680,
+   "sha256": "b926049e8fbad3190909f71b40be466e687d1781cb72c1913bd7b5d5f6e21e67",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2001.bin",
+   "bytes": 420528,
+   "sha256": "02bb8812f6937447e03f6ff0f917c0b9701bac0db256d024a31642ca5f03283e",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2002.bin",
+   "bytes": 420528,
+   "sha256": "f5612e3f106ee697b56481cc8d9b6e91522deb14f125d05a31c23a5af38d75f6",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2003.bin",
+   "bytes": 420528,
+   "sha256": "486ab43cee9d2e7e1c13df100c51d7abdbd124099845290443ed020241165351",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2004.bin",
+   "bytes": 421680,
+   "sha256": "da10232a0131cec3707445d444982780b901ab888e06478973d91b2455709239",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2005.bin",
+   "bytes": 420528,
+   "sha256": "d19faa0fed1be5c813a4dbfb12da22b9483966626ad06dc989c67dc494fd829d",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2006.bin",
+   "bytes": 420528,
+   "sha256": "e8a2cd800b0e8892bf5b329f7d3e71849ac5be30ca184e319948bc71633f12a3",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2007.bin",
+   "bytes": 420528,
+   "sha256": "ce4acc60d9b895ef36945ea4aba2abec974fd868c3e48921b6bc9384a83c3992",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2008.bin",
+   "bytes": 421680,
+   "sha256": "b0f938f095c4eb4081a2ba8378befbff68f47ca2053fd34bfdaecb0d09eec69e",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2009.bin",
+   "bytes": 420528,
+   "sha256": "b4e2506603b9a40c61fc397ee8ccf705e0fd57cd9b0f84916dc62eacb86df494",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2010.bin",
+   "bytes": 420528,
+   "sha256": "6e69640b38330b91b920e2333b479fedb4e671a329f5de2c1a69bd348ce95399",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2011.bin",
+   "bytes": 420528,
+   "sha256": "53670b65a7aaf87cfb9ca190a933d403cc6a390eba9614d7be866021f44a9547",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2012.bin",
+   "bytes": 421680,
+   "sha256": "91b519c53d7d2cb14b9395eb022509564186b2ffc351effb7f0a25ba55325079",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2013.bin",
+   "bytes": 420528,
+   "sha256": "a93c96e133b9dbdabdf29dd50f707ab4d96bd873814f737db0e8a5715a97f05d",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2014.bin",
+   "bytes": 420528,
+   "sha256": "9a7e553efb3338bb26c60d73e9293c95ca0c6cf4593305cd3e1491e38430794c",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2015.bin",
+   "bytes": 420528,
+   "sha256": "007d51a61d93ee2b64cf4b57c0d12cfe44bb508aa563c2aabd9f6391ef8dadfd",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2016.bin",
+   "bytes": 421680,
+   "sha256": "3a77142d139936b843ce75a1aa4e6fdac44f6bf0424da0561227ac6814c2d19b",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2017.bin",
+   "bytes": 420528,
+   "sha256": "4a356d72b36f6a9fb678c18316914bc135f8abd35989fae0bb90db4ede176ef3",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2018.bin",
+   "bytes": 420528,
+   "sha256": "1ae1b2df65f47fe0ce4e67db4207533bd1426c743ed7a3007bd52811fcdb4db6",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2019.bin",
+   "bytes": 420528,
+   "sha256": "89714473502282d163fcb2496cacbc83e3335389813b63257bab1ef5b52d9cc1",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2020.bin",
+   "bytes": 421680,
+   "sha256": "d68a1438282db63c6ec7b1fd2eafa164184ac563b1a668f64fa0404ce8bab3f5",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2021.bin",
+   "bytes": 420528,
+   "sha256": "f7bdaee1dfc6f73de5ae5850503d1623724c17bda6df64b81522ee0705bae0b3",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2022.bin",
+   "bytes": 420528,
+   "sha256": "ed3a886fb00585702edf5190316962cc7ac65d5215fa44858f2c7c2f46c81026",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2023.bin",
+   "bytes": 420528,
+   "sha256": "c2a5a23142f707b92a360cbe58fcc1eb8674eb8d793054ecd29a7c674e773a75",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2024.bin",
+   "bytes": 421680,
+   "sha256": "593fe1a828212bd1660e39b65b35db41fcdeb913f53907cdf855db3a6f5ebdec",
+   "dtype": "float64",
+   "shape": [
+    8785,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_2025.bin",
+   "bytes": 420528,
+   "sha256": "5715d3df010fc2b62ced003f4ca4252eefb030068ee4e63a377585ab645ba42d",
+   "dtype": "float64",
+   "shape": [
+    8761,
+    6
+   ],
+   "byte_order": "little-endian",
+   "description": "Historical hourly apparent Sun and Earth position vectors relative to the Moon's centre (1959-09-13 to 2026-01-01)",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "method": "SPICE spkpos(target, et, MOON_ME_DE440_ME421, LT+S, MOON) at UTC calendar hours; ET from TAI between Jan 1 / Jul 1 marks (M-EPHEM-HIST)",
+   "frame": "MOON_ME_DE440_ME421",
+   "units": "km",
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
    "file": "ephemeris_2026.bin",
    "bytes": 420528,
    "sha256": "9ed1a247f15d33f72bc8c37d526472c34502ca537b0e92533e53fe8ad72ed81c",
@@ -211,7 +2231,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "ephemeris_2027.bin",
@@ -241,7 +2261,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "ephemeris_2028.bin",
@@ -271,7 +2291,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_connecting-ridge.bin",
@@ -294,7 +2314,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-1.bin",
@@ -317,7 +2337,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-2.bin",
@@ -340,7 +2360,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-3.bin",
@@ -363,7 +2383,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-4.bin",
@@ -386,7 +2406,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-5.bin",
@@ -409,7 +2429,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_illum-peak-6.bin",
@@ -432,7 +2452,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_im1-odysseus.bin",
@@ -455,7 +2475,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "horizon_im2-athena.bin",
@@ -478,7 +2498,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "overview_80S.png",
@@ -494,7 +2514,7 @@
    "refs": [
     "R-LOLA-PGDA"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_connecting-ridge.png",
@@ -510,7 +2530,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-1.png",
@@ -526,7 +2546,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-2.png",
@@ -542,7 +2562,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-3.png",
@@ -558,7 +2578,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-4.png",
@@ -574,7 +2594,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-5.png",
@@ -590,7 +2610,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_illum-peak-6.png",
@@ -606,7 +2626,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_im1-odysseus.png",
@@ -622,7 +2642,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_color_im2-athena.png",
@@ -638,7 +2658,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_connecting-ridge.bin",
@@ -662,7 +2682,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-1.bin",
@@ -686,7 +2706,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-2.bin",
@@ -710,7 +2730,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-3.bin",
@@ -734,7 +2754,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-4.bin",
@@ -758,7 +2778,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-5.bin",
@@ -782,7 +2802,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_illum-peak-6.bin",
@@ -806,7 +2826,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_im1-odysseus.bin",
@@ -830,7 +2850,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "terrain_im2-athena.bin",
@@ -854,7 +2874,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "sites.json",
@@ -874,7 +2894,62 @@
     "R-LOLA-SITES",
     "R-MAZARICO-2011"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "landing_sites.json",
+   "description": "Catalogue of past and planned lunar landing and impact sites: coordinates as published by the cited sources (not computed), with per-site caveats and a list of sites that could not be located",
+   "inputs": [
+    "scripts/landing_sites_past.json",
+    "scripts/landing_sites_planned.json",
+    "scripts/landing_sites_past_refs.json",
+    "scripts/landing_sites_planned_refs.json"
+   ],
+   "sha256": "7bbe507db3484619a9ab72332f4b9a0a2bc4fb2fc0e9721d85dd854228249441",
+   "refs": [
+    "R-LS-FIREFLY-BGM2",
+    "R-LS-FIREFLY-BGM3",
+    "R-LS-ISRO-LPSC2026-1198",
+    "R-LS-LROC-2016",
+    "R-LS-LROC-CE6",
+    "R-LS-LROC-CH3",
+    "R-LS-NASA-ARTEMIS-III",
+    "R-LS-NASA-ARTEMIS-IV",
+    "R-LS-NASA-CLPS-DELIVERIES",
+    "R-LS-NASA-CP11",
+    "R-LS-NASA-CP21",
+    "R-LS-NASA-CP22",
+    "R-LS-NASA-CS11",
+    "R-LS-NASA-CS3",
+    "R-LS-NASA-HIST-LUNA2",
+    "R-LS-NASA-IM4-EVENT",
+    "R-LS-NASA-MOONBASE-PHASES",
+    "R-LS-NASA-REL24-136",
+    "R-LS-NASA-TO20A",
+    "R-LS-NASA-VIPER",
+    "R-LS-NSSDC-APOLLO",
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-SURVEYOR",
+    "R-LS-NSSDC-USSR",
+    "R-LS-NTRS-20250011660",
+    "R-LS-PTI-THEPRINT-CH4",
+    "R-LS-SCIAM-CHANGE7-DELAY",
+    "R-LS-SIDDIQI-2018",
+    "R-LS-TPS-CHANGE7",
+    "R-LS-USGS-1439",
+    "R-LS-USGS-14502",
+    "R-LS-USGS-16070",
+    "R-LS-USGS-16338",
+    "R-LS-USGS-3982",
+    "R-LS-USGS-4159",
+    "R-LS-USGS-4321",
+    "R-LS-USGS-4987",
+    "R-LS-USGS-5381",
+    "R-LS-USGS-5450",
+    "R-LS-USGS-8058",
+    "R-LS-ZHAO2025-CE7"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
   },
   {
    "file": "ephemeris.json",
@@ -894,7 +2969,28 @@
     "R-NAIF-SPKPOS",
     "R-NAIF-PCK"
    ],
-   "generated_utc": "2026-11-15T03:30:38Z"
+   "generated_utc": "2026-11-15T04:37:42Z"
+  },
+  {
+   "file": "ephemeris_history.json",
+   "description": "Index of the historical ephemeris files (1959-09-13 to 2026-01-01) and their time-system notes",
+   "inputs": [
+    "naif0012.tls",
+    "pck00011.tpc",
+    "de440s.bsp",
+    "moon_pa_de440_200625.bpc",
+    "moon_de440_250416.tf"
+   ],
+   "refs": [
+    "R-DE440",
+    "R-NAIF-MOONFK",
+    "R-NAIF-LSK",
+    "R-NAIF-ABCORR",
+    "R-NAIF-SPKPOS",
+    "R-NAIF-PCK",
+    "R-NAIF-TIME"
+   ],
+   "generated_utc": "2026-11-15T04:37:42Z"
   }
  ],
  "references": [
@@ -1328,6 +3424,512 @@
    "role": "background",
    "verified": "NOT VERIFIED: page not retrievable (TLS certificate verification failure); certificate checks were not bypassed",
    "accessed": "2026-11-14"
+  },
+  {
+   "id": "R-LS-NSSDC-APOLLO",
+   "authority": "NASA NSSDCA (Goddard Space Flight Center), curator D. R. Williams",
+   "title": "Apollo Landing Site Coordinates",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html",
+   "version": "Last updated 06 March 2017 (DRW)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table 'Lunar Module' rows read Apollo 11 0.67416 N / 23.47314 E, Apollo 12 -3.0128 / -23.4219, Apollo 14 -3.64589 / -17.47194, Apollo 15 26.13239 / 3.63330, Apollo 16 -8.9734 / 15.5011, Apollo 17 20.1911 / 30.7723; page states planetocentric Mean Earth/Polar Axis, DE421, from LRO images per Wagner et al., Icarus 283, 92-103 (2017).",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NSSDC-IMPACTS",
+   "authority": "NASA NSSDCA (Goddard Space Flight Center), curator D. R. Williams",
+   "title": "Table of Anthropogenic Impacts and Spacecraft on the Moon",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_artifact_impacts.html",
+   "version": "Last updated 13 August 2025 (DRW)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table gives date and lat/lon (N/S, E/W and N,E-positive columns) for each object, e.g. Chang'e 4 '45.4561 S, 177.5885 E', SLIM '13.3160 S, 25.2510 E', Hakuto-R Mission 2 '60.4445 N, 4.588 W'; page states DE 421 mean Earth/polar axis frame, precision reflected by decimal places (0.001 deg ~ 30 m), footnote 'd' marks objects imaged by LROC, footnote 'f' says LROC shows no lander at the Luna 9 coordinates and footnote 'n' says the Luna 18 landing is unconfirmed.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-LROC-2016",
+   "authority": "LROC Science Operations Team, Arizona State University (Wagner, Nelson, Plescia, Robinson, Speyerer, Mazarico)",
+   "title": "Coordinates of Lunar Anthropogenic Targets (2016 LROC Coordinates of Robotic Spacecraft)",
+   "url": "https://lroc.im-ldi.com/data/support/downloads/2016_LROC_Coordinates_of_Robotic_Spacecraft.pdf",
+   "version": "Table dated 28 July 2016 (PDF created 2016-09-29)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table of mean observed lat / lon (0-360 E) in the mean Earth/polar axis (ME) system with per-object uncertainty in metres, e.g. Surveyor 1 -2.4745 / 316.6602 (5.6 m), Luna 17 38.23764 / 324.99837 (0.5 m), Lunokhod 2 25.8323 / 30.9222 (7.5 m), Chang'e 3 44.1214 / 340.4883 (9.1 m), A13 SIVB -2.5550 / 332.1125, GRAIL-A 75.6088 / 333.4060, LADEE 11.8494 / 266.7506.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NSSDC-SURVEYOR",
+   "authority": "NASA NSSDCA (Goddard Space Flight Center), curator D. R. Williams",
+   "title": "Surveyor (1966 - 1968)",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/surveyor.html",
+   "version": "Last updated 21 November 2018 (DRW)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Older (pre-LROC) landing positions: Surveyor 1 '2.45 S, 316.79 E', Surveyor 3 '3.01 S, 336.66 E', Surveyor 5 '1.41 N, 23.18 E', Surveyor 6 '0.49 N, 358.60 E', Surveyor 7 '40.86 S, 348.53 E'; used only to document discrepancies.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-SIDDIQI-2018",
+   "authority": "NASA History Program Office (A. A. Siddiqi, NASA SP-2018-4041)",
+   "title": "Beyond Earth: A Chronicle of Deep Space Exploration, 1958-2016",
+   "url": "https://www.nasa.gov/wp-content/uploads/2018/09/beyond-earth-tagged.pdf",
+   "version": "Second edition, 2018",
+   "kind": "paper",
+   "accessed": "2026-11-14",
+   "verified": "Luna 2 entry: launch '12 September 1959 / 06:39:42 UT'; 'impacted the surface of the Moon at 21:02:23 UT on 14 September 1959'; impact point 'approximately at 30° N / 0° longitude on the slope of the Autolycus crater'. Ranger IV entry: impact 'at 12:49:53 UT on 26 April 1962', 'Impact coordinates were 15.5° S / 229.3° E'.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-HIST-LUNA2",
+   "authority": "NASA History (J. Uri)",
+   "title": "60 Years Ago: Luna 2 Makes Impact in Moon Race",
+   "url": "https://www.nasa.gov/history/60-years-ago-luna-2-makes-impact-in-moon-race/",
+   "version": "Sep 12, 2019",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'On Sep. 13, Luna 2 became the first spacecraft to make contact with another celestial body', impacting 'between Mare Imbrium and Mare Serenitatis'; no time of day or coordinates given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NSSDC-USSR",
+   "authority": "NASA NSSDCA (Goddard Space Flight Center), curator D. R. Williams",
+   "title": "Soviet Missions to the Moon",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunarussr.html",
+   "version": "Last updated 27 September 2005 (DRW)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Luna 2: 'Launched 12 Sep 1959', 'Impacted Moon 14 Sep 1959 at ~07:30:00 UT', 'Latitude 29.10 N, Longitude 0.00 - Palus Putredinis'; used only to document the discrepancy (older page).",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-LROC-CE6",
+   "authority": "LROC Science Operations Center (NASA LRO)",
+   "title": "First Look: Chang'e 6",
+   "url": "https://lroc.im-ldi.com/images/1374",
+   "version": "Posted 14 June 2024 (image acquired 07 June 2024)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Page gives the lander at '41.6385°S, 206.0148°E', '-5256 meters elevation', with 'an estimated horizontal accuracy of plus-or-minus 30 meters'.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-LROC-CH3",
+   "authority": "LROC Science Operations Center (NASA LRO), M. Robinson",
+   "title": "Chandrayaan-3 Landing Site",
+   "url": "https://lroc.im-ldi.com/images/1314",
+   "version": "Published 5 September 2023",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Page gives the landing site as '(69.3741°S, 32.32°E, 532 m elevation)'.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CLPS-DELIVERIES",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CLPS Deliveries",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/",
+   "version": "Oct 23, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Lists TO20A Astrobotic Griffin -> 'Mons Mouton, lunar south pole'; CP-11 Intuitive Machines Nova-C -> 'Reiner Gamma, lunar nearside'; CS-11 lander to be determined -> 'Schrödinger Basin'; CS-3/4 Firefly Blue Ghost 2 -> 'Lunar far side'; CP-21 Firefly Blue Ghost 3 -> 'Gruithuisen Domes'; CP-22 Intuitive Machines Nova-C -> 'Mons Mouton'; CT-3 Blue Origin Blue Moon Mark 1, CS-6 Firefly Blue Ghost Mission 4 and CT-4 Intuitive Machines Nova-D -> lunar south pole; CS-8 and CX-2 with no location; no coordinates given anywhere.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-TO20A",
+   "authority": "NASA Science Mission Directorate",
+   "title": "TO20A: Astrobotic (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/to20a-astrobotic/",
+   "version": "Aug 19, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Names the landing site 'Mons Mouton (South Pole)' for the 'Griffin-1 lander', gives no coordinates and no date, and carries an editor's note: 'VIPER and its instruments will be delivered to Mons Mouton by a Blue Origin Blue Moon MK-1 lander.'",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CP11",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CP-11 (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-11/",
+   "version": "Nov 02, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States the Intuitive Machines 'Nova-C IM-3 lander' will deliver four CLPS payloads to 'Reiner Gamma on the lunar nearside' 'in 2026'; no coordinates given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CS11",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CS-11 (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-11/",
+   "version": "Oct 23, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'A lunar lander to be determined will deliver three NASA CLPS payloads' to 'Schrödinger Basin'; no coordinates and no date given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CS3",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CS-3 (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-3/",
+   "version": "Nov 10, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'Firefly's Blue Ghost 2 lander' will deliver CS-3 payloads 'to the lunar far side' and is 'Scheduled to land on the far side of the Moon in 2025' (wording not updated); names no crater and gives no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CP21",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CP-21 Science (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-21-science/",
+   "version": "Jun 10, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States Firefly's 'Blue Ghost 3 lander' ('Blue Ghost Mission 3') will deliver six CLPS payloads to 'the Gruithuisen Domes'; no coordinates and no date given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CP22",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CP-22 Science (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/",
+   "version": "Jun 10, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'The Intuitive Machines Nova-C lander (IM-4) will deliver six NASA CLPS science payloads to Mons Mouton', payloads LEIA, PROSPECT ('developed by the European Space Agency (ESA)'), L-CIRiS, SEAL, MAG, LRA; no coordinates and no date given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-IM4-EVENT",
+   "authority": "NASA",
+   "title": "CLPS Flight: Intuitive Machines IM-4 (event page)",
+   "url": "https://www.nasa.gov/event/clps-flight-intuitive-machines-im-4-2/",
+   "version": "Oct 21, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "When field reads '2027'; IM-4 'will deliver science and technology to Mons Mouton near the Moon's South Pole'; no coordinates given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CT3",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CT-3 Science (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/clps-deliveries/ct-3-science/",
+   "version": "Nov 03, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States the 'Blue Origin Blue Moon Mark 1 (MK1) lander' will deliver two CLPS payloads 'to the lunar south pole'; no named site, no coordinates, no date.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-CS6",
+   "authority": "NASA Science Mission Directorate",
+   "title": "CS-6 Science (CLPS delivery page)",
+   "url": "https://science.nasa.gov/lunar-science/programs/clps/cs-6-science/",
+   "version": "Nov 05, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'The Firefly Aerospace Blue Ghost Mission 4 lander will deliver four NASA CLPS science payloads to the lunar south pole'; no named site, no coordinates, no date.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-VIPER",
+   "authority": "NASA Science Mission Directorate",
+   "title": "VIPER mission page",
+   "url": "https://science.nasa.gov/mission/viper/",
+   "version": "Sep 21, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States VIPER will be 'delivered to Mons Mouton by a Blue Origin Blue Moon MK-1 lander as part of task order CS-7' (announced September 19, 2025); no coordinates and no date given.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-MOONBASE-PHASES",
+   "authority": "NASA",
+   "title": "Moon Base phases",
+   "url": "https://www.nasa.gov/moonbase-phases/",
+   "version": "Nov 12, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Names Shackleton Connecting Ridge as Endurance's (Blue Moon Mark 1) planned landing target, Reiner Gamma as IM-3's landing site, the far side for Blue Ghost Mission 2; gives Griffin-1 (attributed to 'Voyager Technologies') planned launch 'in late 2026', VIPER arrival at the South Pole 'in late 2027', MoonFall 2028 and LTV delivery 2028; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-REL26-046",
+   "authority": "NASA",
+   "title": "NASA Provides Update on Moon Base Rovers, Landers, Missions (RELEASE 26-046)",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+   "version": "May 26, 2026 (updated May 27, 2026)",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States for Moon Base I (Blue Origin Blue Moon Mark 1 'Endurance') 'The mission will land on the Shackleton Connecting Ridge', no earlier than fall 2026; names the 'lunar South Pole region' generally for LTV and cargo deliveries; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-REL24-136",
+   "authority": "NASA",
+   "title": "NASA Provides Update on Artemis III Moon Landing Regions (RELEASE 24-136)",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/",
+   "version": "Oct 28, 2024",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Lists nine regions 'in no priority order': Peak near Cabeus B, Haworth, Malapert Massif, Mons Mouton Plateau, Mons Mouton, Nobile Rim 1, Nobile Rim 2, de Gerlache Rim 2, Slater Plain; gives no coordinates; sites within regions to be chosen 'after it identifies the mission's target launch dates'.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NTRS-20250011660",
+   "authority": "NASA (NTRS); George, Rubio, Lawrence, Curell",
+   "title": "Artemis III Site Selection Update: Downselection From Thirteen to Nine Candidate Regions (LPSC 2026 abstract)",
+   "url": "https://ntrs.nasa.gov/citations/20250011660",
+   "version": "LPSC, March 16-20, 2026 (NTRS acquired Dec 21, 2025)",
+   "kind": "paper",
+   "accessed": "2026-11-14",
+   "verified": "Abstract (record and attached .docx) repeats the same nine region names, states 'Each region includes multiple landing sites' and that the nine regions 'are specific to Artemis III', and contains no latitude/longitude values.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-ARTEMIS-III",
+   "authority": "NASA",
+   "title": "Artemis III mission page",
+   "url": "https://www.nasa.gov/mission/artemis-iii/",
+   "version": "Oct 19, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'Artemis III will carry out a series of objectives in low Earth orbit' (launch '2027', 'Crewed Demonstration') and that Americans return to the Moon on Artemis IV; mentions no landing regions.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-ARTEMIS-IV",
+   "authority": "NASA",
+   "title": "Artemis IV mission page",
+   "url": "https://www.nasa.gov/mission/artemis-iv/",
+   "version": "Mar 16, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Launch 'Early 2028', 'Crewed Surface Landing' near 'the lunar South Pole region'; states 'the agency has identified nine candidate landing regions near the lunar South Pole' with 'multiple potential landing sites'; no region names or coordinates on the page.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-FIREFLY-BGM2",
+   "authority": "Firefly Aerospace",
+   "title": "Blue Ghost Mission 2 (Riders 2 the Dark)",
+   "url": "https://fireflyspace.com/blue-ghost-mission-2/",
+   "version": "n/a",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Mission details list landing site 'Moon's Far Side, Nassau Crater' ('near the Moon's Nassau crater'), 'Set to launch no earlier than 2027', payloads include MBRSC 'Rashid Rover 2' and ESA/SSTL 'Lunar Pathfinder'; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-FIREFLY-BGM3",
+   "authority": "Firefly Aerospace",
+   "title": "Blue Ghost Mission 3",
+   "url": "https://fireflyspace.com/missions/blue-ghost-mission-3/",
+   "version": "n/a",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Landing site 'Moon's Near Side, Gruithuisen Domes', mission will 'explore the unique composition of the Gamma Dome', 'targeted to launch no earlier than 2028'; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-ISRO-LPSC2026-1198",
+   "authority": "Space Applications Centre (ISRO); Amitabh et al.",
+   "title": "Identification and Characterisation of Potential Landing Sites on Lunar South Polar area for Chandrayaan-4 Mission using OHRC Images (57th LPSC 2026, abstract 1198)",
+   "url": "https://www.hou.usra.edu/meetings/lpsc2026/pdf/1198.pdf",
+   "version": "57th LPSC (2026)",
+   "kind": "paper",
+   "accessed": "2026-11-14",
+   "verified": "Table-2 gives Latitude/Longitude MM-1 -84.944/25.110, MM-3 -84.745/29.297, MM-4 -84.289/32.808, MM-5 -84.641/36.170 (Mons Mouton, 84-86 S), and concludes '1km x 1km area around MM-4 (-84.289, 32.808)' has the lowest hazard (9.89 %) and 'can be considered for the potential site of Chandrayaan-4 mission'; coordinate reference frame not stated.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-PTI-THEPRINT-CH4",
+   "authority": "Press Trust of India (via ThePrint), quoting ISRO officials",
+   "title": "ISRO identifies site for Chandrayaan-4 lander",
+   "url": "https://theprint.in/india/isro-identifies-site-for-chandrayaan-4-lander/2850080",
+   "version": "9 February 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports ISRO officials characterised sites MM-1, MM-3, MM-4 and MM-5 in the Mons Mouton area with OHRC multi-view data and chose MM-4; quotes ISRO chairman V Narayanan: 'We are targeting 2028 for Chandrayaan-4'; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-TPS-CHANGE7",
+   "authority": "The Planetary Society",
+   "title": "Chang'e-7: China's water-hunting lunar south pole mission",
+   "url": "https://www.planetary.org/space-missions/change-7",
+   "version": "n/a",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States 'Chang'e-7 has not publicly announced a final landing area, but the preferred candidate site is known to be the rim of Shackleton crater' and that the mission calls for 'a landing accuracy of better than 100 meters'; no coordinates (launch wording 'second half of 2026' is outdated).",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-SCIAM-CHANGE7-DELAY",
+   "authority": "Scientific American",
+   "title": "China delays ambitious Chang'e-7 Moon mission until 2027",
+   "url": "https://scientificamerican.com/article/china-delays-ambitious-change-7-moon-mission-until-2027",
+   "version": "August 24, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Says the mission is 'put on ice until at least 2027' and that the probe targets Shackleton Crater, which 'sits beside the lunar south pole'; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-ZHAO2025-CE7",
+   "authority": "Zhao et al., Remote Sensing 17(7):1121, doi:10.3390/rs17071121 (author copy at PolyU repository)",
+   "title": "Selection of Landing Sites for the Chang'E-7 Mission Using Multi-Source Remote Sensing Data",
+   "url": "https://ira.lib.polyu.edu.hk/bitstream/10397/117857/1/remotesensing-17-01121-v2.pdf",
+   "version": "Published 21 March 2025",
+   "kind": "paper",
+   "accessed": "2026-11-14",
+   "verified": "States 'The CNSA has officially announced that the landing site for CE-7 will be located within 85°S'; the authors' six proposed sites (around de Gerlache, an unnamed cold trap at (167.10°E, 88.71°S), Faustini and Shackleton) are their own proposals, not CNSA targets.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-XINHUA-CHANGE8",
+   "authority": "Xinhua via China Aerospace Science and Technology Corp. (english.spacechina.com)",
+   "title": "Chang'e-8 announcement (Space Day 2025)",
+   "url": "https://english.spacechina.com/n17212/c4320459/content.html",
+   "version": "2025-04-29",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "States Chang'e-8 'will target the Leibnitz-Beta Plateau near the lunar south pole region' and is 'scheduled for launch around 2029'; no coordinates.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-ISPACE-ULTRA-20260327",
+   "authority": "ispace, inc.",
+   "title": "ispace-U.S. mission schedule updated due to engine development delays & model update (press release)",
+   "url": "https://ispace-inc.com/wp-content/uploads/2026/03/20260327-ULTRA.pdf",
+   "version": "March 27, 2026",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Renumbers missions: Mission 3 lander launch 2028 (ispace Japan), Mission 4 launch 2029 ('High-Precision Landing Technology in the Lunar Poles'), Mission 5 launch 2030 (formerly ispace-U.S. Mission 3 / Team Draper, CLPS CP-12, pending NASA approval); names no landing sites.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-16070",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Mons Mouton",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/16070",
+   "version": "Updated May 13, 2022",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Control network LOLA 2011, coordinate system 'Planetographic, +East, -180 - 180': Center Latitude -84.60°, Center Longitude 31.00°, Diameter 130.00 km (adopted May 13, 2022).",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-4987",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Reiner Gamma",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/4987",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Albedo feature; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude 7.39°, Center Longitude -58.96°, Diameter 73.44 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-5381",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Schrödinger",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/5381",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -74.73°, Center Longitude 132.93°, Diameter 316.39 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-3982",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Mons Gruithuisen Gamma",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/3982",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Mons; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude 36.56°, Center Longitude -40.72°, Diameter 19.65 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-4159",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Nassau",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/4159",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -24.91°, Center Longitude 177.34°, Diameter 75.80 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-8058",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Cabeus B",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/8058",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Satellite feature (crater); LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -82.26°, Center Longitude -54.58°, Diameter 59.62 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-14502",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Haworth",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/14502",
+   "version": "Updated Aug 26, 2024",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block (selected network), 'Planetographic, +East, -180 - 180': Center Latitude -87.45°, Center Longitude -5.17°, Diameter 51.42 km (the page's UNKNOWN-network block reads -86.90°/-4.00°, ULCN 2005 -87.20°/-7.49°).",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-16338",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Mons Malapert",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/16338",
+   "version": "Updated Aug 04, 2025",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Mons; LOLA 2011, 'Planetographic, +East, -180 - 180': Center Latitude -85.98°, Center Longitude -1.67°, Diameter 67.00 km; adopted Aug 26, 2024, 'Named for nearby crater, Malapert.'",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-4321",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Nobile",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/4321",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -85.28°, Center Longitude 53.27°, Diameter 79.27 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-1439",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "de Gerlache",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/1439",
+   "version": "Updated Oct 18, 2010",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -88.48°, Center Longitude -88.34°, Diameter 32.71 km.",
+   "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-USGS-5450",
+   "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+   "title": "Shackleton",
+   "url": "https://planetarynames.wr.usgs.gov/Feature/5450",
+   "version": "Updated Oct 04, 2023",
+   "kind": "gazetteer",
+   "accessed": "2026-11-14",
+   "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -89.67°, Center Longitude 129.78°, Diameter 20.92 km.",
+   "role": "catalogue coordinates (display and site selection)"
   }
  ]
 }

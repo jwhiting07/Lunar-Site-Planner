@@ -68,6 +68,26 @@ R-NAIF-SPKPOS, R-NAIF-ABCORR, R-NAIF-TIME).
 `ephemeris.ts bodyVectorKm` linearly interpolates the shipped vectors without
 extrapolation. This is computed geometry with an hourly interpolation approximation.
 
+M-EPHEM-HIST: the same hourly vectors for 1959-09-13 00:00 UTC to 2026-01-01 UTC, written by
+`build_data.py build_history_ephemeris` to `ephemeris_{year}.bin` and indexed by
+`ephemeris_history.json`; the app merges both indexes (`loader.ts loadEphemerisIndex`), so
+searches and analyses use one continuous table. Same kernels, frame and aberration as M-EPHEM.
+Epoch conversion differs in one respect: the SPICE leapseconds kernel has no entries before
+1972-01-01, so each UTC hour is converted through TAI from the nearest 1 January / 1 July mark,
+which applies a constant TAI-UTC offset before 1972 (historical UTC used drifting seconds).
+Expected effect: up to about 9 s, about 0.001 deg of solar motion. V-9 compares eight epochs from
+1959 to 2023 with JPL Horizons: at most 5e-7 deg (azimuth x cos elevation) and 2.5e-5 deg
+(elevation) from 1972, and about 1.2e-3 deg before 1972. The terrain horizon (M-HORIZON) is
+today's LOLA topography and is applied unchanged to historical dates.
+
+Landing-site catalogue (`landing_sites.json`): coordinates of past landing and impact sites and
+of planned or candidate sites, copied exactly as published by the cited sources
+(`scripts/landing_sites_past.json`, `landing_sites_planned.json` and their `_refs.json` files,
+merged and checked by `build_data.py build_landing_sites`). Nothing in it is computed. Each entry
+states what its coordinates are (`coord_basis`) and the stated precision. The Moon view draws the
+entries as dots and the Location editor lists them; choosing one only copies its latitude and
+longitude into the query, which then follows the same M-PLAN path as typed coordinates.
+
 M-GEOM: subtract the site observer vector from the Moon-centred body vector.
 For latitude p and east longitude L, project onto
 E=(-sin L,cos L,0), N=(-sin p cos L,-sin p sin L,cos p),
@@ -285,6 +305,7 @@ orbits) and `node scripts/prepare_stars.mjs` (stars).
 | R-IAU-WGCCRE | R_MOON (`constants.ts`, `moonlib.py`) |
 | R-LOLA-PGDA, R-SNYDER | M-SITE, M-HORIZON, M-SLOPE, M-PATCH; `moonlib.py`; `build_data.py` |
 | R-LOLA-SITES, R-MAZARICO-2011 | ridge selection (M-SITE); V-5 |
+| R-LS-* | landing-site catalogue only (`landing_sites.json`); display and coordinate entry, never a computed value |
 | R-LROC-1360, R-NASA-IM1, R-LROC-1408 | site coordinates (`sites_input.json`) |
 | R-LROC-1401, R-CLPS, R-CP22, R-ARTEMIS3-REGIONS, R-SVS-5027, R-USGS-GAZ-MOUTON, R-USGS-LUNAR-STD, R-CHALLENGE | background / context notes only |
 | R-TSI, R-TSI-MEAS, R-AU | M-POWER (`constants.ts`, `power.ts`); R-TSI also R_SUN |

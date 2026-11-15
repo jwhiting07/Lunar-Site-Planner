@@ -62,7 +62,7 @@ export const METHODS: MethodDoc[] = [
     title: 'Sun and Earth positions (SPICE)',
     kind: 'computed',
     summary:
-      'Apparent positions of the Sun and Earth relative to the Moon centre are computed offline with NASA SPICE (DE440) in the lunar Mean-Earth body-fixed frame, once per UTC hour for 2026-2028, and interpolated linearly between hours.',
+      'Apparent positions of the Sun and Earth relative to the Moon centre are computed offline with NASA SPICE (DE440) in the lunar Mean-Earth body-fixed frame, once per UTC hour from 13 September 1959 (the start of the Luna 2 arrival date, 13 September 1959 UTC) to 1 January 2029, and interpolated linearly between hours.',
     formula:
       'r_body(t) = spkpos(body, t, MOON_ME_DE440_ME421, LT+S, MOON) [km]; between samples r(t) = (1 - w) r_i + w r_(i+1)',
     inputs: ['de440s.bsp', 'moon_pa_de440_200625.bpc', 'moon_de440_250416.tf', 'naif0012.tls', 'pck00011.tpc'],
@@ -70,9 +70,11 @@ export const METHODS: MethodDoc[] = [
     limitations: [
       'Light time and stellar aberration are evaluated for the Moon centre rather than the surface point (difference measured in docs/VALIDATION.md).',
       'UTC after 2026 assumes no new leap second; each future leap second would shift times by 1 s.',
+      'Before 1972-01-01 the SPICE leapseconds kernel has no entries, so UTC is treated with a constant TAI-UTC offset while the historical UTC used drifting "rubber" seconds: pre-1972 times can be up to about 9 s off (about 0.001 deg of solar motion).',
+      'The terrain horizon comes from today\'s LOLA topography; it is applied unchanged to historical dates.',
       'Linear interpolation error is below 0.001 deg (recorded in ephemeris.json).',
     ],
-    code: ['scripts/build_data.py build_ephemeris', 'src/science/ephemeris.ts bodyVectorKm'],
+    code: ['scripts/build_data.py build_ephemeris, build_history_ephemeris', 'src/science/ephemeris.ts bodyVectorKm'],
   },
   {
     id: 'M-GEOM',

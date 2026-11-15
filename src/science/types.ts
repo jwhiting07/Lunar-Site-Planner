@@ -81,6 +81,11 @@ export interface EphemerisIndex {
   start_utc: string;
   stop_utc: string;
   files: { file: string; t0_utc: string; n: number; bytes: number }[];
+  /** Start of the default planning window (searches without a date use it); start_utc may be earlier (historical data). */
+  default_start_utc?: string;
+  /** Why the historical coverage begins where it does. */
+  first_contact?: string;
+  history_interpolation?: { max_error_vs_spice: Record<string, number>; check: string };
   body_radii_km: { sun: number; earth_equatorial: number; moon: number; source: string };
   interpolation: {
     method: string;

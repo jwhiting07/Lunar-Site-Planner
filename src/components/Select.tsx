@@ -1,8 +1,8 @@
-import { useId, useRef, useState, type KeyboardEvent } from 'react';
+import { Fragment, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { Chevron } from './Chevron';
 import { placePopover } from '../ui/placePopover';
 
-export interface SelectOption<T extends string | number> { value: T; label: string }
+export interface SelectOption<T extends string | number> { value: T; label: string; /** Options sharing a group are listed together under its heading (keep them adjacent). */ group?: string }
 
 /**
  * Themed replacement for native <select>, whose option list ignores page
@@ -44,7 +44,10 @@ export function Select<T extends string | number>({ value, options, onChange, la
     </button>
     <ul ref={list} id={id} popover="auto" role="listbox" aria-label={label} className="select-list"
       style={{ left: box.left, top: box.top, minWidth: box.width }} onKeyDown={move} onToggle={event => setOpen(event.newState === 'open')}>
-      {options.map(option => <li key={option.value} role="option" tabIndex={-1} aria-selected={option.value === value} onClick={() => choose(option.value)}>{option.label}</li>)}
+      {options.map((option, i) => <Fragment key={option.value}>
+        {option.group && option.group !== options[i - 1]?.group && <li role="presentation" className="select-group">{option.group}</li>}
+        <li role="option" tabIndex={-1} aria-selected={option.value === value} onClick={() => choose(option.value)}>{option.label}</li>
+      </Fragment>)}
     </ul>
   </>;
 }

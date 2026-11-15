@@ -1,0 +1,372 @@
+[
+  {
+    "id": "R-LS-NASA-CLPS-DELIVERIES",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CLPS Deliveries",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/",
+    "version": "Oct 23, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Lists TO20A Astrobotic Griffin -> 'Mons Mouton, lunar south pole'; CP-11 Intuitive Machines Nova-C -> 'Reiner Gamma, lunar nearside'; CS-11 lander to be determined -> 'Schrödinger Basin'; CS-3/4 Firefly Blue Ghost 2 -> 'Lunar far side'; CP-21 Firefly Blue Ghost 3 -> 'Gruithuisen Domes'; CP-22 Intuitive Machines Nova-C -> 'Mons Mouton'; CT-3 Blue Origin Blue Moon Mark 1, CS-6 Firefly Blue Ghost Mission 4 and CT-4 Intuitive Machines Nova-D -> lunar south pole; CS-8 and CX-2 with no location; no coordinates given anywhere."
+  },
+  {
+    "id": "R-LS-NASA-TO20A",
+    "authority": "NASA Science Mission Directorate",
+    "title": "TO20A: Astrobotic (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/to20a-astrobotic/",
+    "version": "Aug 19, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Names the landing site 'Mons Mouton (South Pole)' for the 'Griffin-1 lander', gives no coordinates and no date, and carries an editor's note: 'VIPER and its instruments will be delivered to Mons Mouton by a Blue Origin Blue Moon MK-1 lander.'"
+  },
+  {
+    "id": "R-LS-NASA-CP11",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CP-11 (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-11/",
+    "version": "Nov 02, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States the Intuitive Machines 'Nova-C IM-3 lander' will deliver four CLPS payloads to 'Reiner Gamma on the lunar nearside' 'in 2026'; no coordinates given."
+  },
+  {
+    "id": "R-LS-NASA-CS11",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CS-11 (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-11/",
+    "version": "Oct 23, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'A lunar lander to be determined will deliver three NASA CLPS payloads' to 'Schrödinger Basin'; no coordinates and no date given."
+  },
+  {
+    "id": "R-LS-NASA-CS3",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CS-3 (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cs-3/",
+    "version": "Nov 10, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'Firefly's Blue Ghost 2 lander' will deliver CS-3 payloads 'to the lunar far side' and is 'Scheduled to land on the far side of the Moon in 2025' (wording not updated); names no crater and gives no coordinates."
+  },
+  {
+    "id": "R-LS-NASA-CP21",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CP-21 Science (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-21-science/",
+    "version": "Jun 10, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States Firefly's 'Blue Ghost 3 lander' ('Blue Ghost Mission 3') will deliver six CLPS payloads to 'the Gruithuisen Domes'; no coordinates and no date given."
+  },
+  {
+    "id": "R-LS-NASA-CP22",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CP-22 Science (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/cp-22-science/",
+    "version": "Jun 10, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'The Intuitive Machines Nova-C lander (IM-4) will deliver six NASA CLPS science payloads to Mons Mouton', payloads LEIA, PROSPECT ('developed by the European Space Agency (ESA)'), L-CIRiS, SEAL, MAG, LRA; no coordinates and no date given."
+  },
+  {
+    "id": "R-LS-NASA-IM4-EVENT",
+    "authority": "NASA",
+    "title": "CLPS Flight: Intuitive Machines IM-4 (event page)",
+    "url": "https://www.nasa.gov/event/clps-flight-intuitive-machines-im-4-2/",
+    "version": "Oct 21, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "When field reads '2027'; IM-4 'will deliver science and technology to Mons Mouton near the Moon's South Pole'; no coordinates given."
+  },
+  {
+    "id": "R-LS-NASA-CT3",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CT-3 Science (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/clps-deliveries/ct-3-science/",
+    "version": "Nov 03, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States the 'Blue Origin Blue Moon Mark 1 (MK1) lander' will deliver two CLPS payloads 'to the lunar south pole'; no named site, no coordinates, no date."
+  },
+  {
+    "id": "R-LS-NASA-CS6",
+    "authority": "NASA Science Mission Directorate",
+    "title": "CS-6 Science (CLPS delivery page)",
+    "url": "https://science.nasa.gov/lunar-science/programs/clps/cs-6-science/",
+    "version": "Nov 05, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'The Firefly Aerospace Blue Ghost Mission 4 lander will deliver four NASA CLPS science payloads to the lunar south pole'; no named site, no coordinates, no date."
+  },
+  {
+    "id": "R-LS-NASA-VIPER",
+    "authority": "NASA Science Mission Directorate",
+    "title": "VIPER mission page",
+    "url": "https://science.nasa.gov/mission/viper/",
+    "version": "Sep 21, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States VIPER will be 'delivered to Mons Mouton by a Blue Origin Blue Moon MK-1 lander as part of task order CS-7' (announced September 19, 2025); no coordinates and no date given."
+  },
+  {
+    "id": "R-LS-NASA-MOONBASE-PHASES",
+    "authority": "NASA",
+    "title": "Moon Base phases",
+    "url": "https://www.nasa.gov/moonbase-phases/",
+    "version": "Nov 12, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Names Shackleton Connecting Ridge as Endurance's (Blue Moon Mark 1) planned landing target, Reiner Gamma as IM-3's landing site, the far side for Blue Ghost Mission 2; gives Griffin-1 (attributed to 'Voyager Technologies') planned launch 'in late 2026', VIPER arrival at the South Pole 'in late 2027', MoonFall 2028 and LTV delivery 2028; no coordinates."
+  },
+  {
+    "id": "R-LS-NASA-REL26-046",
+    "authority": "NASA",
+    "title": "NASA Provides Update on Moon Base Rovers, Landers, Missions (RELEASE 26-046)",
+    "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+    "version": "May 26, 2026 (updated May 27, 2026)",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States for Moon Base I (Blue Origin Blue Moon Mark 1 'Endurance') 'The mission will land on the Shackleton Connecting Ridge', no earlier than fall 2026; names the 'lunar South Pole region' generally for LTV and cargo deliveries; no coordinates."
+  },
+  {
+    "id": "R-LS-NASA-REL24-136",
+    "authority": "NASA",
+    "title": "NASA Provides Update on Artemis III Moon Landing Regions (RELEASE 24-136)",
+    "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/",
+    "version": "Oct 28, 2024",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Lists nine regions 'in no priority order': Peak near Cabeus B, Haworth, Malapert Massif, Mons Mouton Plateau, Mons Mouton, Nobile Rim 1, Nobile Rim 2, de Gerlache Rim 2, Slater Plain; gives no coordinates; sites within regions to be chosen 'after it identifies the mission's target launch dates'."
+  },
+  {
+    "id": "R-LS-NTRS-20250011660",
+    "authority": "NASA (NTRS); George, Rubio, Lawrence, Curell",
+    "title": "Artemis III Site Selection Update: Downselection From Thirteen to Nine Candidate Regions (LPSC 2026 abstract)",
+    "url": "https://ntrs.nasa.gov/citations/20250011660",
+    "version": "LPSC, March 16-20, 2026 (NTRS acquired Dec 21, 2025)",
+    "kind": "paper",
+    "accessed": "2026-11-14",
+    "verified": "Abstract (record and attached .docx) repeats the same nine region names, states 'Each region includes multiple landing sites' and that the nine regions 'are specific to Artemis III', and contains no latitude/longitude values."
+  },
+  {
+    "id": "R-LS-NASA-ARTEMIS-III",
+    "authority": "NASA",
+    "title": "Artemis III mission page",
+    "url": "https://www.nasa.gov/mission/artemis-iii/",
+    "version": "Oct 19, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'Artemis III will carry out a series of objectives in low Earth orbit' (launch '2027', 'Crewed Demonstration') and that Americans return to the Moon on Artemis IV; mentions no landing regions."
+  },
+  {
+    "id": "R-LS-NASA-ARTEMIS-IV",
+    "authority": "NASA",
+    "title": "Artemis IV mission page",
+    "url": "https://www.nasa.gov/mission/artemis-iv/",
+    "version": "Mar 16, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Launch 'Early 2028', 'Crewed Surface Landing' near 'the lunar South Pole region'; states 'the agency has identified nine candidate landing regions near the lunar South Pole' with 'multiple potential landing sites'; no region names or coordinates on the page."
+  },
+  {
+    "id": "R-LS-FIREFLY-BGM2",
+    "authority": "Firefly Aerospace",
+    "title": "Blue Ghost Mission 2 (Riders 2 the Dark)",
+    "url": "https://fireflyspace.com/blue-ghost-mission-2/",
+    "version": "n/a",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Mission details list landing site 'Moon's Far Side, Nassau Crater' ('near the Moon's Nassau crater'), 'Set to launch no earlier than 2027', payloads include MBRSC 'Rashid Rover 2' and ESA/SSTL 'Lunar Pathfinder'; no coordinates."
+  },
+  {
+    "id": "R-LS-FIREFLY-BGM3",
+    "authority": "Firefly Aerospace",
+    "title": "Blue Ghost Mission 3",
+    "url": "https://fireflyspace.com/missions/blue-ghost-mission-3/",
+    "version": "n/a",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Landing site 'Moon's Near Side, Gruithuisen Domes', mission will 'explore the unique composition of the Gamma Dome', 'targeted to launch no earlier than 2028'; no coordinates."
+  },
+  {
+    "id": "R-LS-ISRO-LPSC2026-1198",
+    "authority": "Space Applications Centre (ISRO); Amitabh et al.",
+    "title": "Identification and Characterisation of Potential Landing Sites on Lunar South Polar area for Chandrayaan-4 Mission using OHRC Images (57th LPSC 2026, abstract 1198)",
+    "url": "https://www.hou.usra.edu/meetings/lpsc2026/pdf/1198.pdf",
+    "version": "57th LPSC (2026)",
+    "kind": "paper",
+    "accessed": "2026-11-14",
+    "verified": "Table-2 gives Latitude/Longitude MM-1 -84.944/25.110, MM-3 -84.745/29.297, MM-4 -84.289/32.808, MM-5 -84.641/36.170 (Mons Mouton, 84-86 S), and concludes '1km x 1km area around MM-4 (-84.289, 32.808)' has the lowest hazard (9.89 %) and 'can be considered for the potential site of Chandrayaan-4 mission'; coordinate reference frame not stated."
+  },
+  {
+    "id": "R-LS-PTI-THEPRINT-CH4",
+    "authority": "Press Trust of India (via ThePrint), quoting ISRO officials",
+    "title": "ISRO identifies site for Chandrayaan-4 lander",
+    "url": "https://theprint.in/india/isro-identifies-site-for-chandrayaan-4-lander/2850080",
+    "version": "9 February 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Reports ISRO officials characterised sites MM-1, MM-3, MM-4 and MM-5 in the Mons Mouton area with OHRC multi-view data and chose MM-4; quotes ISRO chairman V Narayanan: 'We are targeting 2028 for Chandrayaan-4'; no coordinates."
+  },
+  {
+    "id": "R-LS-TPS-CHANGE7",
+    "authority": "The Planetary Society",
+    "title": "Chang'e-7: China's water-hunting lunar south pole mission",
+    "url": "https://www.planetary.org/space-missions/change-7",
+    "version": "n/a",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States 'Chang'e-7 has not publicly announced a final landing area, but the preferred candidate site is known to be the rim of Shackleton crater' and that the mission calls for 'a landing accuracy of better than 100 meters'; no coordinates (launch wording 'second half of 2026' is outdated)."
+  },
+  {
+    "id": "R-LS-SCIAM-CHANGE7-DELAY",
+    "authority": "Scientific American",
+    "title": "China delays ambitious Chang'e-7 Moon mission until 2027",
+    "url": "https://scientificamerican.com/article/china-delays-ambitious-change-7-moon-mission-until-2027",
+    "version": "August 24, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Says the mission is 'put on ice until at least 2027' and that the probe targets Shackleton Crater, which 'sits beside the lunar south pole'; no coordinates."
+  },
+  {
+    "id": "R-LS-ZHAO2025-CE7",
+    "authority": "Zhao et al., Remote Sensing 17(7):1121, doi:10.3390/rs17071121 (author copy at PolyU repository)",
+    "title": "Selection of Landing Sites for the Chang'E-7 Mission Using Multi-Source Remote Sensing Data",
+    "url": "https://ira.lib.polyu.edu.hk/bitstream/10397/117857/1/remotesensing-17-01121-v2.pdf",
+    "version": "Published 21 March 2025",
+    "kind": "paper",
+    "accessed": "2026-11-14",
+    "verified": "States 'The CNSA has officially announced that the landing site for CE-7 will be located within 85°S'; the authors' six proposed sites (around de Gerlache, an unnamed cold trap at (167.10°E, 88.71°S), Faustini and Shackleton) are their own proposals, not CNSA targets."
+  },
+  {
+    "id": "R-LS-XINHUA-CHANGE8",
+    "authority": "Xinhua via China Aerospace Science and Technology Corp. (english.spacechina.com)",
+    "title": "Chang'e-8 announcement (Space Day 2025)",
+    "url": "https://english.spacechina.com/n17212/c4320459/content.html",
+    "version": "2025-04-29",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "States Chang'e-8 'will target the Leibnitz-Beta Plateau near the lunar south pole region' and is 'scheduled for launch around 2029'; no coordinates."
+  },
+  {
+    "id": "R-LS-ISPACE-ULTRA-20260327",
+    "authority": "ispace, inc.",
+    "title": "ispace-U.S. mission schedule updated due to engine development delays & model update (press release)",
+    "url": "https://ispace-inc.com/wp-content/uploads/2026/03/20260327-ULTRA.pdf",
+    "version": "March 27, 2026",
+    "kind": "mission record",
+    "accessed": "2026-11-14",
+    "verified": "Renumbers missions: Mission 3 lander launch 2028 (ispace Japan), Mission 4 launch 2029 ('High-Precision Landing Technology in the Lunar Poles'), Mission 5 launch 2030 (formerly ispace-U.S. Mission 3 / Team Draper, CLPS CP-12, pending NASA approval); names no landing sites."
+  },
+  {
+    "id": "R-LS-USGS-16070",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Mons Mouton",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/16070",
+    "version": "Updated May 13, 2022",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Control network LOLA 2011, coordinate system 'Planetographic, +East, -180 - 180': Center Latitude -84.60°, Center Longitude 31.00°, Diameter 130.00 km (adopted May 13, 2022)."
+  },
+  {
+    "id": "R-LS-USGS-4987",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Reiner Gamma",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/4987",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Albedo feature; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude 7.39°, Center Longitude -58.96°, Diameter 73.44 km."
+  },
+  {
+    "id": "R-LS-USGS-5381",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Schrödinger",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/5381",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -74.73°, Center Longitude 132.93°, Diameter 316.39 km."
+  },
+  {
+    "id": "R-LS-USGS-3982",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Mons Gruithuisen Gamma",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/3982",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Mons; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude 36.56°, Center Longitude -40.72°, Diameter 19.65 km."
+  },
+  {
+    "id": "R-LS-USGS-4159",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Nassau",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/4159",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -24.91°, Center Longitude 177.34°, Diameter 75.80 km."
+  },
+  {
+    "id": "R-LS-USGS-8058",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Cabeus B",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/8058",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Satellite feature (crater); LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -82.26°, Center Longitude -54.58°, Diameter 59.62 km."
+  },
+  {
+    "id": "R-LS-USGS-14502",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Haworth",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/14502",
+    "version": "Updated Aug 26, 2024",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block (selected network), 'Planetographic, +East, -180 - 180': Center Latitude -87.45°, Center Longitude -5.17°, Diameter 51.42 km (the page's UNKNOWN-network block reads -86.90°/-4.00°, ULCN 2005 -87.20°/-7.49°)."
+  },
+  {
+    "id": "R-LS-USGS-16338",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Mons Malapert",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/16338",
+    "version": "Updated Aug 04, 2025",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Mons; LOLA 2011, 'Planetographic, +East, -180 - 180': Center Latitude -85.98°, Center Longitude -1.67°, Diameter 67.00 km; adopted Aug 26, 2024, 'Named for nearby crater, Malapert.'"
+  },
+  {
+    "id": "R-LS-USGS-4321",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Nobile",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/4321",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -85.28°, Center Longitude 53.27°, Diameter 79.27 km."
+  },
+  {
+    "id": "R-LS-USGS-1439",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "de Gerlache",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/1439",
+    "version": "Updated Oct 18, 2010",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -88.48°, Center Longitude -88.34°, Diameter 32.71 km."
+  },
+  {
+    "id": "R-LS-USGS-5450",
+    "authority": "USGS / IAU Gazetteer of Planetary Nomenclature",
+    "title": "Shackleton",
+    "url": "https://planetarynames.wr.usgs.gov/Feature/5450",
+    "version": "Updated Oct 04, 2023",
+    "kind": "gazetteer",
+    "accessed": "2026-11-14",
+    "verified": "Crater; LOLA 2011 block, 'Planetographic, +East, -180 - 180': Center Latitude -89.67°, Center Longitude 129.78°, Diameter 20.92 km."
+  }
+]

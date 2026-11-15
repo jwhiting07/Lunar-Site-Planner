@@ -417,6 +417,73 @@ def v7_im1(sites_doc, dem80) -> dict:
     return out
 
 
+# =============================================================== V-9 historical epochs
+V9_EPOCHS = ["1959-09-13 12:00", "1962-05-15 03:00", "1969-07-20 20:00", "1972-12-11 14:00",
+             "1985-05-05 00:00", "1998-07-01 09:00", "2009-10-09 11:00", "2023-08-23 12:00"]
+
+
+def v9_history(sites_doc) -> dict:
+    """Shipped historical ephemeris (hourly samples, linear interpolation) against JPL Horizons at
+    epochs from the day Luna 2 reached the Moon to 2023, at the IM-2 analysis point."""
+    import requests
+
+    out = {"id": "V-9", "refs": ["R-HORIZONS", "R-NAIF-LSK"], "status": "completed", "epochs": V9_EPOCHS}
+    idx = json.loads((ROOT / "public" / "data" / "ephemeris_history.json").read_text(encoding="utf-8"))
+    epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
+    posix = lambda s: (datetime.fromisoformat(s.replace("Z", "+00:00")) - epoch).total_seconds()
+    tables = [(posix(f["t0_utc"]), np.fromfile(ROOT / "public" / "data" / f["file"], "<f8").reshape(-1, 6)) for f in idx["files"]]
+
+    def vectors(p: float) -> np.ndarray:
+        for t0, arr in tables:
+            if t0 <= p <= t0 + (len(arr) - 1) * 3600:
+                fr = (p - t0) / 3600
+                i = min(int(fr), len(arr) - 2)
+                w = fr - i
+                return arr[i] * (1 - w) + arr[i + 1] * w
+        raise ValueError(p)
+
+    site = next(s for s in sites_doc["sites"] if s["id"] == "im2-athena")
+    obs_h = sites_doc["observer_height_m"]
+    obs = ml.site_position_km(site["lat_deg"], site["lon_deg"], ml.R_MOON_M + site["elevation_m"] + obs_h)
+    rows, headers = [], []
+    for utc in V9_EPOCHS:
+        p = posix(utc.replace(" ", "T") + ":00Z")
+        v = vectors(p)
+        for name, command, off in (("sun", "10", 0), ("earth", "399", 3)):
+            params = {
+                "format": "text", "COMMAND": f"'{command}'", "OBJ_DATA": "NO", "MAKE_EPHEM": "YES", "EPHEM_TYPE": "OBSERVER",
+                "CENTER": "'coord@301'", "COORD_TYPE": "GEODETIC",
+                "SITE_COORD": f"'{site['lon_deg']:.6f},{site['lat_deg']:.6f},{(site['elevation_m'] + obs_h) / 1000.0:.6f}'",
+                "TLIST": f"'{utc}'", "QUANTITIES": "'4,20'", "ANG_FORMAT": "DEG", "CSV_FORMAT": "YES", "APPARENT": "AIRLESS",
+                "EXTRA_PREC": "YES", "TIME_DIGITS": "MINUTES",
+            }
+            key = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()[:16]
+            path = HCACHE / f"history_{command}_{key}.txt"
+            if path.exists():
+                text = path.read_text(encoding="utf-8")
+            else:
+                HCACHE.mkdir(parents=True, exist_ok=True)
+                r = requests.get(HORIZONS_URL, params=params, timeout=120, headers={"User-Agent": "validation-script"})
+                r.raise_for_status()
+                text = r.text
+                path.write_text(text, encoding="utf-8")
+                time.sleep(1.0)
+            head, hrows = parse_horizons(text)
+            if not hrows:
+                out.update(status="failed", error=f"no Horizons rows for {utc}"); return out
+            headers.append(head)
+            _, h_az, h_el, _ = hrows[0]
+            az, el = ml.az_el_deg(v[off:off + 3] - obs, site["lat_deg"], site["lon_deg"])
+            rows.append({"utc": utc, "body": name, "app_az_deg": float(az), "app_el_deg": float(el), "horizons_az_deg": h_az, "horizons_el_deg": h_el,
+                         "d_az_cos_el_deg": float(wrap(az - h_az) * np.cos(np.radians(el))), "d_el_deg": float(el - h_el)})
+    out["rows"] = rows
+    out["site"] = site["id"]
+    out["horizons_source"] = headers[0].get("target", {}).get("ephemeris_source") if headers else None
+    for label, sel in (("from_1972", [r for r in rows if r["utc"] >= "1972"]), ("before_1972", [r for r in rows if r["utc"] < "1972"])):
+        out[label] = {"az_cos_el": stats([r["d_az_cos_el_deg"] for r in sel]), "el": stats([r["d_el_deg"] for r in sel])}
+    return out
+
+
 # =============================================================== V-8 automated tests
 def v8_tests(run: bool) -> dict:
     out = {"id": "V-8", "commands": {"vitest": "npx vitest run", "tsc": "npx tsc --noEmit",
@@ -647,6 +714,27 @@ def render_md(R: dict) -> str:
       f"LOLA slope product (80 m baseline): pixel {v['slope_ldsm_pixel_deg']}°, 3×3 mean {v['slope_ldsm_mean3x3_deg']}°, "
       f"box range {f(v['slope_box_min_deg'],2)}–{f(v['slope_box_max_deg'],2)}°.")
     a("")
+    # V-9
+    v = R["V-9"]
+    a("## V-9 Historical epochs (1959-2023) vs JPL Horizons [R-HORIZONS] [R-NAIF-LSK]")
+    a("")
+    if v["status"] != "completed":
+        a(f"**Not completed:** {v.get('error')}")
+    else:
+        a(f"Shipped historical ephemeris (hourly samples, linear interpolation, `ephemeris_history.json`) at the {v['site']} analysis point against Horizons "
+          f"(source {v['horizons_source']}), one epoch per row and body. Differences are app minus Horizons, in degrees.")
+        a("")
+        a("| UTC epoch | Body | App az / el | Horizons az / el | Az×cos(el) diff | El diff |")
+        a("|---|---|---|---|---|---|")
+        for r in v["rows"]:
+            a(f"| {r['utc']} | {r['body']} | {f(r['app_az_deg'], 4)} / {f(r['app_el_deg'], 4)} | {f(r['horizons_az_deg'], 4)} / {f(r['horizons_el_deg'], 4)} | {f(r['d_az_cos_el_deg'], 5)} | {f(r['d_el_deg'], 5)} |")
+        a("")
+        a(f"Maxima from 1972 on: az×cos(el) {f(v['from_1972']['az_cos_el']['max'], 6, True)} deg, el {f(v['from_1972']['el']['max'], 6, True)} deg. "
+          f"Before 1972: az×cos(el) {f(v['before_1972']['az_cos_el']['max'], 6, True)} deg, el {f(v['before_1972']['el']['max'], 6, True)} deg. "
+          "The larger pre-1972 differences are the expected effect of time scales, not of the geometry: the SPICE leapseconds kernel has no entries before 1972-01-01 "
+          "and applies a constant TAI-UTC offset, while the historical UTC used drifting seconds (Horizons additionally treats times before 1962 as UT1); a few seconds of "
+          "timing difference is about 0.001 deg of solar motion. Only eight epochs were compared, not a statistical sample.")
+        a("")
     # V-8
     v = R["V-8"]
     a("## V-8 Automated tests")
@@ -704,7 +792,7 @@ def main() -> None:
     dem80 = ml.Dem.open(vc.CACHE / "lola" / "LDEM_80S_80MPP_ADJ.TIF")
     dem240 = ml.Dem.open(vc.CACHE / "lola" / "LDEM_60S_240MPP_ADJ.TIF")
     for k, fn in (("V-5", lambda: v5_maps(sites_doc, eph, dem240)), ("V-6", lambda: v6_convergence(sites_doc, eph, [dem80, dem240])),
-                  ("V-7", lambda: v7_im1(sites_doc, dem80))):
+                  ("V-7", lambda: v7_im1(sites_doc, dem80)), ("V-9", lambda: v9_history(sites_doc))):
         t = time.time()
         print(k, "...", flush=True)
         R[k] = fn()

@@ -28,8 +28,8 @@ export async function loadStarfield() {
       uniform float pixelRatio;
       varying float vStarLuminance;
       void main() {
-        vStarLuminance = 0.055 + 0.22 * pow(brightness, 0.8);
-        gl_PointSize = (0.9 + 0.8 * brightness) * pixelRatio;
+        vStarLuminance = 0.11 + 0.5 * pow(brightness, 0.8);
+        gl_PointSize = (1.1 + 1.2 * brightness) * pixelRatio;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
     `,

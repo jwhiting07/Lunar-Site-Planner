@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { SiteDoc } from '../science';
 import { normalizeLon } from '../science/planner';
+import { LANDMARK_GROUPS, landmarkLabel, type LandingSite } from '../data/landingSites';
 import { Chevron } from './Chevron';
 import { Select } from './Select';
 
@@ -38,12 +39,12 @@ export function queryLabels(query: MissionQuery) {
 type Editor = 'location' | 'landing' | 'duration' | 'advanced';
 interface Props {
   query: MissionQuery; onChange: (query: MissionQuery) => void;
-  sites: SiteDoc[]; firstDate: string; lastDate: string;
+  sites: SiteDoc[]; landmarks: LandingSite[]; firstDate: string; anyFirstDate: string; lastDate: string;
   busy: boolean; ready: boolean; collapsed: boolean; zoneLabel: string;
   onRun: () => void; onPick: () => void; advanced: ReactNode;
 }
 
-export function MissionControls({ query, onChange, sites, firstDate, lastDate, busy, ready, collapsed, zoneLabel, onRun, onPick, advanced }: Props) {
+export function MissionControls({ query, onChange, sites, landmarks, firstDate, anyFirstDate, lastDate, busy, ready, collapsed, zoneLabel, onRun, onPick, advanced }: Props) {
   const [editor, setEditor] = useState<Editor | null>(null);
   const root = useRef<HTMLDivElement>(null);
   const triggers = useRef(new Map<Editor, HTMLButtonElement>());
@@ -90,6 +91,10 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
         </div>
         <button type="button" className="btn mission-pick" onClick={() => { setEditor(null); onPick(); }}>Choose Coordinates on the Moon</button>
         {query.location === 'nearby' && <label>Radius (km)<input type="number" required min="0.001" max="1000" step="any" value={query.radius} onChange={event => change({ radius: event.target.value })} /></label>}
+        {landmarks.length > 0 && <details className="mission-known-sites"><summary>Known landing sites</summary><div className="mission-select-field"><span>Past and planned sites</span><Select label="Known landing site" value="" placeholder="Choose a site" options={LANDMARK_GROUPS.flatMap(group => landmarks.filter(group.match).map(site => ({ value: site.id, label: landmarkLabel(site), group: group.label })))} onChange={id => {
+          const site = landmarks.find(item => item.id === id);
+          if (site) change({ lat: String(Number(site.lat_deg.toFixed(6))), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) });
+        }} /></div></details>}
         <details className="mission-known-sites"><summary>Sites with terrain data</summary><div className="mission-select-field"><span>Terrain site</span><Select label="Terrain site" value="" placeholder="Choose a site" options={sites.filter(site => site.terrain_aware).map(site => ({ value: site.id, label: site.short }))} onChange={id => {
           const site = sites.find(item => item.id === id);
           if (site) change({ lat: String(Number(site.lat_deg.toFixed(6))), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) });
@@ -98,7 +103,7 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
     </>)}
     {field('landing', `Landing (${zoneLabel})`, labels.landing, <>
       {choices('Landing date scope', query.landing, [['any', 'Any date'], ['exact', 'Exact date'], ['range', 'Date range']], landing => change({ landing }))}
-      {query.landing === 'any' ? <p>Available landing dates: {firstDate}–{lastDate}.</p> : <div className={query.landing === 'range' ? 'mission-fields' : ''}>
+      {query.landing === 'any' ? <p>Searches {anyFirstDate} to {lastDate}. To simulate an earlier mission choose an exact date or a range: the ephemeris reaches back to {firstDate}, the date Luna 2 first reached the Moon.</p> : <div className={query.landing === 'range' ? 'mission-fields' : ''}>
         <label>{query.landing === 'range' ? `First landing (${zoneLabel})` : `Landing date (${zoneLabel})`}<input type="date" required min={firstDate} max={lastDate} value={query.date} onChange={event => change({ date: event.target.value })} /></label>
         {query.landing === 'range' && <label>Last landing ({zoneLabel})<input type="date" required min={query.date} max={lastDate} value={query.lastDate} onChange={event => change({ lastDate: event.target.value })} /></label>}
       </div>}

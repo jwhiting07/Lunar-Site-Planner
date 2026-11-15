@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, loadProvenance, loadSites } from './data/loader';
+import { loadCustomHorizon, loadEphemeris, loadEphemerisIndex, loadHorizon, loadLandingSites, loadProvenance, loadSites } from './data/loader';
+import type { LandingSite } from './data/landingSites';
 import { analyzeSite, flatHorizon, makeSiteContext, type EphemerisIndex, type EphemerisTable, type HorizonMask, type ProvenanceDoc, type SitesDoc } from './science';
 import { assessment, compareCandidates, coordinateSite, dateGrid, distanceKm, durationGrid, DAY, DEFAULT_TARGETS, locationGrid, normalizeLon, searchCandidates, type Candidate, type Point, type Targets } from './science/planner';
 import { formatRowValue, summaryRows } from './science/summary';
@@ -17,6 +18,7 @@ import './mission.css';
 
 const Moon = lazy(() => import('./components/MoonView').then(m => ({ default: m.MoonView })));
 const Sources = lazy(() => import('./components/ProvenancePanel').then(m => ({ default: m.ProvenancePanel })));
+const utcDay = (ms: number) => new Date(ms).toISOString().slice(0, 10);
 const errorText = (e: unknown) => e instanceof Error ? e.message : String(e);
 const percent = (v: number) => `${(v * 100).toFixed(1)}%`;
 const coords = (r: Candidate['result']) => `${r.site.lat_deg.toFixed(4)}°, ${r.site.lon_deg.toFixed(4)}°`;
@@ -35,6 +37,8 @@ export default function MissionPlanner() {
   const [targets, setTargets] = useState<Targets>({ ...DEFAULT_TARGETS });
   const [params, setParams] = useState<ParamState>(DEFAULT_PARAM_STATE);
   const [pick, setPick] = useState(false);
+  const chooseLandmark = (site: LandingSite) => { setQuery(current => ({ ...current, location: current.location === 'any' ? 'exact' : current.location, lat: String(Number(site.lat_deg.toFixed(6))), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) })); setMarkerScenarioId(null); setPick(false); };
+  const [landmarks, setLandmarks] = useState<LandingSite[]>([]);
   const [active, setActive] = useState<Candidate | null>(null);
   const [terrainStatus, setTerrainStatus] = useState<'pending' | 'uncovered' | 'unavailable' | null>(null);
   const [saved, setSaved] = useState<Saved[]>([]);
@@ -75,6 +79,12 @@ export default function MissionPlanner() {
     return () => { current = false; abort.current?.abort(); terrainRequest.current?.abort(); };
   }, []);
   useEffect(() => {
+    // Optional layer: the planner works without the catalogue.
+    let current = true;
+    loadLandingSites().then(doc => { if (current) setLandmarks(doc.sites); }).catch(() => {});
+    return () => { current = false; };
+  }, []);
+  useEffect(() => {
     if (!sources) return;
     loadProvenance().then(setProvenance).catch(e => setProvError(errorText(e)));
   }, [sources]);
@@ -88,13 +98,15 @@ export default function MissionPlanner() {
   }, [dashboard]);
 
   const startCoverage = data ? Date.parse(data.index.start_utc) : Date.UTC(2026, 0, 1);
+  // Searches without a date look at the current planning window; earlier dates must be chosen explicitly.
+  const defaultStart = data ? Date.parse(data.index.default_start_utc ?? data.index.start_utc) : Date.UTC(2026, 0, 1);
   const endCoverage = data ? Date.parse(data.index.stop_utc) : Date.UTC(2029, 0, 1);
   const validDuration = Number.isFinite(Number(duration)) ? Math.max(1 / 24, Math.min(365, Number(duration))) : 1;
   const lastAllowedDate = lastDayOnOrBefore(endCoverage - validDuration * DAY, tz.zone);
   const chosen = useMemo(() => {
-    if (lat.trim() === '' || lon.trim() === '' || !Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180) return [];
+    if (query.location === 'any' || lat.trim() === '' || lon.trim() === '' || !Number.isFinite(Number(lat)) || !Number.isFinite(Number(lon)) || Math.abs(Number(lat)) > 90 || Math.abs(Number(lon)) > 180) return [];
     return [coordinateSite({ lat: Number(lat), lon: Number(lon) }, data?.sites.sites)];
-  }, [lat, lon, data]);
+  }, [query.location, lat, lon, data]);
   const savedSites = useMemo(() => new Map(saved.map(entry => [entry.result.site.id, entry.result.site])), [saved]);
   const savedSiteIds = useMemo(() => new Set(savedSites.keys()), [savedSites]);
   const mapSites = useMemo(() => {
@@ -196,7 +208,7 @@ export default function MissionPlanner() {
       const days = base ? (base.result.endMs - base.result.startMs) / DAY : Number(duration);
       const durations = durationGrid(days, !base && query.durationRange ? Number(query.maxDuration) : days);
       const maxDays = Math.max(...durations);
-      const start = base ? base.result.startMs : query.landing === 'any' ? startCoverage : parseDate(query.date, tz.zone);
+      const start = base ? base.result.startMs : query.landing === 'any' ? defaultStart : parseDate(query.date, tz.zone);
       if (start === null) throw new Error('Enter a valid landing date.');
       const point: Point = base ? { lat: base.result.site.lat_deg, lon: base.result.site.lon_deg } : query.location === 'any' ? { lat: 0, lon: 0 } : { lat: Number(lat), lon: Number(lon) };
       if (!base) setOrigin(query.location === 'any' ? null : point);
@@ -209,7 +221,7 @@ export default function MissionPlanner() {
         if (km !== null && (!Number.isFinite(km) || km <= 0 || km > 1000)) throw new Error('Search radius must be greater than 0 and at most 1,000 km.');
         const first = base ? Math.max(startCoverage, start - 7 * DAY) : start;
         const last = base ? Math.min(endCoverage - days * DAY, start + 7 * DAY) : query.landing === 'any' ? endCoverage - days * DAY : query.landing === 'range' ? parseDate(query.lastDate, tz.zone) : start;
-        if (last === null || first < startCoverage || last + days * DAY > endCoverage || last < first) throw new Error('The landing range and full mission must fit within 2026–2028.');
+        if (last === null || first < startCoverage || last + days * DAY > endCoverage || last < first) throw new Error(`The landing range and full mission must fit within ${utcDay(startCoverage)} and ${utcDay(endCoverage)} UTC.`);
         let points = !base && query.location === 'exact' ? [point] : locationGrid(point, km);
         // An unrestricted search also checks the shipped terrain sites, so polar matches can use real LOLA terrain.
         if (!base && query.location === 'any') points = [...points, ...data.sites.sites.filter(s => s.terrain_aware).map(s => ({ lat: s.lat_deg, lon: normalizeLon(s.lon_deg) }))];
@@ -246,7 +258,7 @@ export default function MissionPlanner() {
         setSearchSummary(base ? 'Nearby dates and locations · ' + days + ' days' : labels.location + ' · ' + labels.landing + ' · ' + labels.duration);
         if (!base && found[0]) showResult(found[0], data.index, eph);
       } else {
-        if (start < startCoverage || start + days * DAY > endCoverage) throw new Error('The full mission must fit within January 1, 2026 and January 1, 2029 UTC.');
+        if (start < startCoverage || start + days * DAY > endCoverage) throw new Error(`The full mission must fit within ${utcDay(startCoverage)} and ${utcDay(endCoverage)} UTC.`);
         const site = coordinateSite(point, data.sites.sites);
         const [eph, mask] = await Promise.all([
           loadEphemeris(data.index, start, start + days * DAY),
@@ -277,6 +289,7 @@ export default function MissionPlanner() {
     setOptions([]); setActive(null); setSaved([]); setOrigin(null);
     setSearchNote(''); setSearchSummary(''); setError('');
     setMarkerScenarioId(null); setDashboard(null);
+    setQuery(INITIAL_QUERY); // also drops the entered location, so its marker goes too
   };
   const resetComparison = () => { setSaved([]); setMarkerScenarioId(null); };
   const verdict = active ? assessment(active.result, active.targets) : null;
@@ -334,7 +347,7 @@ export default function MissionPlanner() {
       <h1>Lunar Landing Site Navigator</h1>
       <button className="mission-text-button mission-toggle" aria-expanded={!controlsHidden} aria-controls="mission-controls" onClick={() => setControlsHidden(hidden => !hidden)}>Controls<Chevron /></button>
     </header>
-    <MissionControls query={query} onChange={setQuery} sites={data?.sites.sites ?? []} firstDate={firstDayOnOrAfter(startCoverage, tz.zone)} lastDate={lastAllowedDate} zoneLabel={tz.label}
+    <MissionControls query={query} onChange={setQuery} sites={data?.sites.sites ?? []} landmarks={landmarks} firstDate={firstDayOnOrAfter(startCoverage, tz.zone)} anyFirstDate={firstDayOnOrAfter(defaultStart, tz.zone)} lastDate={lastAllowedDate} zoneLabel={tz.label}
       busy={busy} ready={Boolean(data)} collapsed={controlsHidden}
       onRun={() => void run()} onPick={() => { setPick(true); setDashboard(null); }} advanced={advanced} />
     <main className="mission-workspace">
@@ -346,7 +359,7 @@ export default function MissionPlanner() {
       {error && <button className="mission-icon-button" aria-label="Dismiss error" onClick={() => setError('')}>×</button>}
     </div>}
         <Suspense fallback={<div className="view-loading" role="status">Loading Moon…</div>}>
-          <Moon compact explorer sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={markerSiteId ?? (query.location !== 'any' ? chosen[0]?.id : undefined) ?? active?.result.site.id ?? ''} onSelect={selectMarker}
+          <Moon compact explorer landmarks={landmarks} onLandmark={chooseLandmark} idleRotate={mapSites.length === 0 && !pick} sites={mapSites} markerLabels={markerLabels} savedSiteIds={savedSiteIds} primaryId={markerSiteId ?? (query.location !== 'any' ? chosen[0]?.id : undefined) ?? active?.result.site.id ?? ''} onSelect={selectMarker}
             onPick={pick && !busy ? point => { setQuery(current => ({ ...current, location: current.location === 'any' ? 'exact' : current.location, lat: point.lat.toFixed(6), lon: point.lon.toFixed(6) })); setMarkerScenarioId(null); setPick(false); } : undefined} />
         </Suspense>
         {markerScenario && <MarkerSummary scenario={markerScenario} atLocation={markerDates} onSelect={setMarkerScenarioId} onClose={() => setMarkerScenarioId(null)} />}
