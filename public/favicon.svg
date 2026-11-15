@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>Lunar Site Planner</title>
+  <rect width="256" height="256" rx="38" fill="#000000"/>
+  <!-- Four-point sunlight/star symbol -->
+  <path d="M72 39 C78 64 82 68 104 73 C82 78 78 83 72 107 C67 83 62 78 40 73 C62 68 67 64 72 39Z" fill="#FFFFFF"/>
+  <!-- Lunar horizon -->
+  <path d="M25 224 C52 151 129 116 226 118 L226 204 Q226 224 206 224Z" fill="#FFFFFF"/>
+  <!-- Craters as actual black cut-outs -->
+  <g fill="#000000">
+    <ellipse cx="98" cy="181" rx="20" ry="8" transform="rotate(-23 98 181)"/>
+    <ellipse cx="177" cy="199" rx="19" ry="9" transform="rotate(-8 177 199)"/>
+    <ellipse cx="204" cy="144" rx="10" ry="5" transform="rotate(-13 204 144)"/>
+    <ellipse cx="64" cy="211" rx="11" ry="5" transform="rotate(-23 64 211)"/>
+  </g>
+  <!-- Site selection marker, kept separate for tiny sizes -->
+  <path d="M159 84 C139 84 124 99 124 118 C124 134 143 155 159 179 C176 155 194 134 194 118 C194 99 179 84 159 84Z" fill="#FFFFFF" stroke="#000000" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="159" cy="117" r="13" fill="#000000"/>
+</svg>

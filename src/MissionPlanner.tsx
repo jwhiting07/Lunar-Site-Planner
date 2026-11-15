@@ -73,7 +73,6 @@ export default function MissionPlanner() {
   const [provenance, setProvenance] = useState<ProvenanceDoc | null>(null);
   const [provError, setProvError] = useState<string | null>(null);
   const [dashboard, setDashboard] = useState<DashboardTab | null>(null);
-  const [originalMission, setOriginalMission] = useState<Candidate | null>(null);
   const [detailed, setDetailed] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const terrainRequest = useRef<AbortController | null>(null);
@@ -147,7 +146,6 @@ export default function MissionPlanner() {
     if (dashboard && !element?.open) element?.showModal();
     if (!dashboard && element?.open) {
       element.close();
-      setOriginalMission(null);
       const trigger = (openedFromCompare.current ? compareTrigger : dashboardTrigger).current;
       (trigger?.isConnected ? trigger : compareTrigger.current)?.focus();
     }
@@ -166,7 +164,7 @@ export default function MissionPlanner() {
     return [landmark ? missionSite(site, landmark) : site];
   }, [query.location, lat, lon, data, landmark]);
   const comparedLandmarks = useMemo(() => new Set(saved.flatMap(entry => entry.mission ? [entry.mission.id] : [])), [saved]);
-  const missions = useMemo(() => missionEntries(options, saved, [originalMission, active]), [options, saved, originalMission, active]);
+  const missions = useMemo(() => missionEntries(options, saved, active), [options, saved, active]);
   const mapSites = useMemo(() => [
     ...missions.map(({ id, candidate }) => ({ ...candidate.result.site, id })),
     ...chosen.filter(site => !missions.some(entry => entry.candidate.result.site.id === site.id)),
@@ -416,7 +414,9 @@ export default function MissionPlanner() {
   const displayed = options.length ? options : active ? [active] : saved;
   const viewedMission = active ?? saved[0];
   const viewedId = viewedMission ? scenarioKey(viewedMission) : '';
-  const missionChoices = missions.map(({ id, label, candidate: { result } }) => ({
+  const viewedLabel = missions.find(entry => entry.id === viewedId)?.label ?? 'Open mission';
+  const comparedMissions = missions.filter(entry => entry.saved);
+  const missionChoices = comparedMissions.map(({ id, label, candidate: { result } }) => ({
     value: id, label: `${label} · ${tz.dateTime(result.startMs)} · ${Number((result.metrics.intervalHours / 24).toFixed(3))} d`,
   }));
   const missionTime = landmark ? comparisonStart(landmark) : null;
@@ -473,10 +473,9 @@ export default function MissionPlanner() {
       <header className="mission-dialog-bar">
         <div><h2>Mission details</h2>{viewedMission && <p className="mission-dialog-sub mono">{fmtLat(viewedMission.result.site.lat_deg)} / {fmtLon(viewedMission.result.site.lon_deg)}</p>}</div>
         {(dashboard === 'Results' || dashboard === 'Timeline') && missionChoices.length > 0 && <div className="mission-dialog-pick">
-          <Select label="Mission" value={viewedId} options={missionChoices} onChange={value => {
-            const next = missions.find(entry => entry.id === value);
+          <Select label="Compared mission" placeholder="Choose compared mission" value={comparedMissions.some(entry => entry.id === viewedId) ? viewedId : ''} options={missionChoices} onChange={value => {
+            const next = comparedMissions.find(entry => entry.id === value);
             if (!next || value === viewedId) return;
-            if (viewedMission && missions.some(entry => entry.id === viewedId && !entry.sampled && !entry.saved)) setOriginalMission(viewedMission);
             setMarkerScenarioId(null);
             use(next.candidate, data?.index);
           }} />
@@ -494,8 +493,8 @@ export default function MissionPlanner() {
         {dashboard === 'Compare' && comparison}
         {dashboard === 'Timeline' && (!data ? <p>Loading…</p> : viewedMission ? <>
           {terrainNotice}
-          <ScenarioTimeline key={viewedId} result={viewedMission.result} missionId={viewedId}
-            missions={missions.map(({ id, label, candidate }) => ({ id, label, result: candidate.result }))} index={data.index} terrain={terrainStatus} />
+          <ScenarioTimeline key={viewedId} mission={{ id: viewedId, label: viewedLabel, result: viewedMission.result }}
+            comparedMissions={comparedMissions.map(({ id, label, candidate }) => ({ id, label, result: candidate.result }))} index={data.index} terrain={terrainStatus} />
         </> : <p>Run an analysis to view the timeline and local horizon.</p>)}
       </div>
     </dialog>

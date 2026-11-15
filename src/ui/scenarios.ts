@@ -15,7 +15,7 @@ export function scenarioKey({ result, targets }: Candidate): string {
 }
 
 /** A mission keeps its own label and marker even when another mission shares its coordinates. */
-export function missionEntries(sampled: Candidate[], saved: SavedComparison[], open: (Candidate | null)[]) {
+export function missionEntries(sampled: Candidate[], saved: SavedComparison[], active: Candidate | null) {
   const entries = new Map<string, { id: string; label: string; candidate: Candidate; sampled: boolean; saved?: SavedComparison }>();
   sampled.forEach((candidate, index) => {
     const id = scenarioKey(candidate);
@@ -28,11 +28,10 @@ export function missionEntries(sampled: Candidate[], saved: SavedComparison[], o
       id, candidate, sampled: false, saved: candidate, label: candidate.mission ? candidate.result.site.short : `Scenario ${index + 1}`,
     });
   });
-  for (const candidate of open) {
-    if (!candidate) continue;
-    const id = scenarioKey(candidate);
+  if (active) {
+    const id = scenarioKey(active);
     const entry = entries.get(id);
-    entries.set(id, entry ? { ...entry, candidate } : { id, candidate, sampled: false, label: 'Open mission' });
+    entries.set(id, entry ? { ...entry, candidate: active } : { id, candidate: active, sampled: false, label: 'Open mission' });
   }
   return [...entries.values()];
 }

@@ -93,12 +93,14 @@ function horizonState(mask: HorizonMask | null, terrain: TerrainState): string {
   return 'Flat 0° horizon · No terrain data for this site';
 }
 
-export function ScenarioTimeline({ result, missionId, missions, index, terrain = null }: {
-  result: AnalysisResult; missionId: string; missions: TimelineMission[]; index: EphemerisIndex; terrain?: TerrainState;
+export function ScenarioTimeline({ mission, comparedMissions, index, terrain = null }: {
+  mission: TimelineMission; comparedMissions: TimelineMission[]; index: EphemerisIndex; terrain?: TerrainState;
 }) {
+  const { result, id: missionId } = mission;
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
-  const rangeStart = Math.min(startMs, ...missions.map(mission => mission.result.startMs));
-  const rangeEnd = Math.max(endMs, ...missions.map(mission => mission.result.endMs));
+  const compareStart = Math.min(...comparedMissions.map(entry => entry.result.startMs));
+  const compareEnd = Math.max(...comparedMissions.map(entry => entry.result.endMs));
+  const powerMission = useMemo(() => [mission], [mission]);
   const [eph, setEph] = useState<EphemerisTable | null>(null);
   const [loadedMask, setLoadedMask] = useState<HorizonMask | null>(null);
   const [error, setError] = useState('');
@@ -131,7 +133,7 @@ export function ScenarioTimeline({ result, missionId, missions, index, terrain =
 
   return <div className="mission-timeline tl">
     <div className="mission-timeline-controls">
-      <TimeControls startMs={rangeStart} endMs={rangeEnd} cursorMs={cursor} onCursor={setCursor} />
+      <TimeControls startMs={Math.min(startMs, compareStart)} endMs={Math.max(endMs, compareEnd)} cursorMs={cursor} onCursor={setCursor} />
     </div>
     <section className="tl-panel" aria-label="Sky view from the lander">
       <header className="tl-panel-h"><h3>Sky view from the lander</h3><span className="tl-state">{horizonState(mask, terrain)}</span></header>
@@ -145,12 +147,14 @@ export function ScenarioTimeline({ result, missionId, missions, index, terrain =
       </div>
     </section>
     <section className="tl-panel" aria-label="Mission timeline">
-      <header className="tl-panel-h"><h3>Mission timeline</h3><span className="tl-state">Drag to change time</span></header>
-      <div className="tl-body"><TimelineChart missions={missions} primaryId={missionId} part="visibility" startMs={rangeStart} endMs={rangeEnd} cursorMs={cursor} onCursor={setCursor} /></div>
+      <header className="tl-panel-h"><h3>Mission timeline</h3>{comparedMissions.length > 0 && <span className="tl-state">Drag to change time</span>}</header>
+      <div className="tl-body">{comparedMissions.length > 0
+        ? <TimelineChart missions={comparedMissions} primaryId={missionId} part="visibility" startMs={compareStart} endMs={compareEnd} cursorMs={cursor} onCursor={setCursor} />
+        : <p className="muted">Check missions in the results table to add them to the timeline.</p>}</div>
     </section>
     <section className="tl-panel" aria-label="Selected mission power">
       <header className="tl-panel-h"><h3>Power details</h3><span className="tl-state">Selected mission</span></header>
-      <div className="tl-body"><TimelineChart missions={missions} primaryId={missionId} part="power" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
+      <div className="tl-body"><TimelineChart missions={powerMission} primaryId={missionId} part="power" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
     </section>
   </div>;
 }

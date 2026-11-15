@@ -51,7 +51,7 @@ describe('scenario identity and model labels', () => {
 
   it('keeps distinct mission choices for two landing windows at the same site', () => {
     const later = { ...candidate, result: { ...result, startMs: startMs + DAY, endMs: result.endMs + DAY }, id: 12 };
-    const entries = missionEntries([candidate, later], [later], [later]);
+    const entries = missionEntries([candidate, later], [later], later);
     expect(entries.map(({ id, label }) => [id, label])).toEqual([
       [scenarioKey(candidate), 'Site 1'], [scenarioKey(later), 'Site 2'],
     ]);
