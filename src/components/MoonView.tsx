@@ -13,6 +13,9 @@ import { MOON_FOV, moonFitDistance, MoonNavigationControls, MoonPlaceholder } fr
 // Body-fixed (X,Y,Z) -> Three (X,Z,-Y), shared with the site's ME coordinates.
 // models.ts aligns the native NASA LRO cube-mesh axes with this convention.
 const LANDMARK_COLORS: Record<LandmarkTone, [number, number, number]> = { landed: [0.92, 0.92, 0.9], impact: [0.48, 0.52, 0.58], planned: [0.86, 0.68, 0.3] };
+const LANDMARK_SHAPES: Record<LandmarkTone, number> = { landed: 0, impact: 1, planned: 2 };
+// Hide screen-sized symbols just before the limb, where they would straddle the silhouette.
+const LANDMARK_MIN_FACING = 0.34;
 const bodyFixedToScene = ([x, y, z]: Vec3) => new THREE.Vector3(x, z, -y);
 
 export function globePosition(lat: number, lon: number): THREE.Vector3 {
@@ -46,7 +49,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   markerLabels?: ReadonlyMap<string, string>;
   /** Turn the Moon slowly about its axis while nothing is selected and nobody is interacting. */
   idleRotate?: boolean;
-  /** Known landing and impact sites drawn as dots (explorer only); clicking one calls onLandmark. */
+  /** Known landing sites drawn as map symbols (explorer only); clicking one calls onLandmark. */
   landmarks?: LandingSite[]; onLandmark?: (site: LandingSite) => void;
   ephemerisIndex?: EphemerisIndex;
   startupReady?: boolean; onLoadComplete?: () => void;
@@ -146,10 +149,30 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     let sunDirection: THREE.Vector3 | null = null;
     let earthDirection: THREE.Vector3 | null = null;
     let interacted = false;
-    // Known landing sites: one Points draw call, depth-tested against the Moon. Hover and click use
-    // screen-space distance to the projected dots (a few dozen points, only on pointer events).
+    // Draw each visible symbol whole. The facing check hides it before the limb and also gates picking.
     const dotGeometry = new THREE.BufferGeometry();
-    const dotMaterial = new THREE.PointsMaterial({ size: 5, sizeAttenuation: false, vertexColors: true, depthWrite: false });
+    const dotMaterial = new THREE.PointsMaterial({ size: 9, sizeAttenuation: false, vertexColors: true, depthTest: false, depthWrite: false });
+    dotMaterial.onBeforeCompile = shader => {
+      shader.vertexShader = `attribute float landmarkShape;
+varying float vLandmarkShape;
+${shader.vertexShader}`.replace('#include <project_vertex>', `
+        #include <project_vertex>
+        vLandmarkShape = landmarkShape;
+        float facing = dot(normalize(position), normalize(cameraPosition - position));
+        if (facing <= ${LANDMARK_MIN_FACING}) gl_Position = vec4(0.0, 0.0, 2.0, 1.0);
+      `);
+      shader.fragmentShader = `varying float vLandmarkShape;
+${shader.fragmentShader}`.replace('#include <color_fragment>', `
+        #include <color_fragment>
+        vec2 p = abs(gl_PointCoord - 0.5);
+        // Landed: square. Impact: diagonal cross. Planned: diamond.
+        if (vLandmarkShape < 0.5) {
+          if (max(p.x, p.y) > 0.33) discard;
+        } else if (vLandmarkShape < 1.5) {
+          if (max(p.x, p.y) > 0.44 || abs(p.x - p.y) > 0.14) discard;
+        } else if (p.x + p.y > 0.48) discard;
+      `);
+    };
     const dots = new THREE.Points(dotGeometry, dotMaterial);
     dots.visible = false;
     dots.renderOrder = 2;
@@ -160,13 +183,26 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     const dotProjected = new THREE.Vector3();
     syncLandmarks.current = () => {
       const list = landmarkList.current;
-      dotPoints = list.map(site => globePosition(site.lat_deg, site.lon_deg).multiplyScalar(1.004));
+      model?.updateMatrixWorld(true);
+      dotPoints = list.map(site => {
+        const direction = globePosition(site.lat_deg, site.lon_deg);
+        raycaster.set(direction.clone().multiplyScalar(2), direction.clone().negate());
+        const surface = model ? raycaster.intersectObject(model, true)[0]?.point : undefined;
+        return direction.multiplyScalar((surface?.length() ?? 1) + 0.008);
+      });
       const position = new Float32Array(list.length * 3), color = new Float32Array(list.length * 3);
-      dotPoints.forEach((point, i) => { position.set([point.x, point.y, point.z], i * 3); color.set(LANDMARK_COLORS[landmarkTone(list[i])], i * 3); });
+      const shape = new Float32Array(list.length);
+      dotPoints.forEach((point, i) => {
+        const tone = landmarkTone(list[i]);
+        position.set([point.x, point.y, point.z], i * 3);
+        color.set(LANDMARK_COLORS[tone], i * 3);
+        shape[i] = LANDMARK_SHAPES[tone];
+      });
       dotGeometry.setAttribute('position', new THREE.BufferAttribute(position, 3));
       dotGeometry.setAttribute('color', new THREE.BufferAttribute(color, 3));
+      dotGeometry.setAttribute('landmarkShape', new THREE.BufferAttribute(shape, 1));
       dotGeometry.computeBoundingSphere();
-      dots.visible = explorer && !local && landmarksOn.current && list.length > 0;
+      dots.visible = explorer && !local && Boolean(model) && landmarksOn.current && list.length > 0;
       hoveredDot = null;
       if (dotTip.current) dotTip.current.hidden = true;
       draw();
@@ -178,9 +214,10 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       let bestDistance = 10; // px
       let preferredDistance = Infinity;
       const eye = camera.position;
+      const toEye = new THREE.Vector3();
       for (let i = 0; i < dotPoints.length; i++) {
         const p = dotPoints[i];
-        if (p.x * (eye.x - p.x) + p.y * (eye.y - p.y) + p.z * (eye.z - p.z) <= 0) continue; // far side
+        if (p.dot(toEye.subVectors(eye, p).normalize()) <= LANDMARK_MIN_FACING * p.length()) continue;
         dotProjected.copy(p).project(camera);
         if (dotProjected.z >= 1) continue;
         const d = Math.hypot((dotProjected.x + 1) * size.w / 2 - x, (1 - dotProjected.y) * size.h / 2 - y);
@@ -588,7 +625,10 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     const modelReady = loadMoonModel().then(loaded => {
       if (disposed) { disposeModel(loaded); return; }
       if (!local) smoothMoonLighting(loaded);
-      model = loaded; scene.add(loaded); if (local) focus.current(activeFocus.current);
+      model = loaded;
+      scene.add(loaded);
+      if (local) focus.current(activeFocus.current);
+      else if (explorer) syncLandmarks.current();
     });
     void Promise.all([modelReady, starsReady]).then(async () => {
       if (disposed) return;

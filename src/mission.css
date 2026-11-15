@@ -355,8 +355,8 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .moon-legend i { width: 6px; height: 6px; margin-left: 6px; }
 .moon-legend i:first-child { margin-left: 0; }
 .moon-legend .landed { background: #ebebe6; }
-.moon-legend .impact { background: #7a8594; }
-.moon-legend .planned { background: #dbad4d; }
+.moon-legend .impact { background: #7a8594; clip-path: polygon(0 18%, 18% 0, 50% 32%, 82% 0, 100% 18%, 68% 50%, 100% 82%, 82% 100%, 50% 68%, 18% 100%, 0 82%, 32% 50%); }
+.moon-legend .planned { background: #dbad4d; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 @media (max-width: 760px) { .moon-layer-toggle { left: 16px; bottom: 60px; } }
 
 /* Startup text and controls share the prepared scene's reveal, with no stagger. */
