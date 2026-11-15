@@ -52,6 +52,15 @@ No SQL database, Firebase, Supabase, MongoDB, paid map API, or external database
 
 The NASA.gov, Moon Trek, Worldview, Open MCT, NASA Eyes and Horizon Design System links in `docs/ui/README.md` are design references. Leaflet, uPlot, MMGIS and 3D Tiles Renderer are suggested references there, **not installed dependencies or implemented tools**. Do not list them as software used. Design-reference links are included separately below for provenance.
 
+## Public project links
+
+| Link Text | Link URL | Use / credit |
+|---|---|---|
+| Project Seraphim demonstration | https://youtu.be/2hjhapZHjLc | Team-provided demonstration hosted on YouTube (Google); linked from Sources & methods. No video content is copied or bundled. |
+| Project Seraphim Space Apps submission | https://www.spaceappschallenge.org/2026/find-a-team/seraphim/?tab=project | Team project page hosted by NASA Space Apps Challenge; linked from Sources & methods. No page content is copied or bundled. |
+
+These are project destinations, not scientific data sources. Linking does not grant reproduction rights; each provider's terms continue to apply.
+
 ## Complete source appendix
 
 The current scientific provenance contains 105 reference records; two display-source records are added here. Duplicate URLs can be entered once while retaining all relevant uses. NASA-hosted resources go in NASA Data; partner-agency, USGS, publisher, commercial mission-provider, and other external links go in Space Agency Partner & Other Data. LROC source pages describe NASA LRO instrument products despite their non-NASA host. Journal citations can be entered under Other Data with the NASA dataset listed separately.

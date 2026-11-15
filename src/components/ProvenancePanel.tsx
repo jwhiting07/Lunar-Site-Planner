@@ -120,8 +120,8 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
           </div>
           <div className="provenance-project-links" role="group" aria-label="Project links">
             <a href="https://github.com/jwhiting07/Lunar-Site-Planner" target="_blank" rel="noreferrer">Github</a>
-            <button type="button" disabled title="Demo video coming soon">Demo</button>
-            <button type="button" disabled title="Space Apps submission coming soon">Space App Submission</button>
+            <a href="https://youtu.be/2hjhapZHjLc" target="_blank" rel="noreferrer">Demo</a>
+            <a href="https://www.spaceappschallenge.org/2026/find-a-team/seraphim/?tab=project" target="_blank" rel="noreferrer">Space App Submission</a>
           </div>
         </div>
         <div className="provenance-body" ref={bodyRef} role="tabpanel" id={`pane-${tab}`} aria-labelledby={`tab-${tab}`} tabIndex={0}>
