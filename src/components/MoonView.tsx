@@ -423,7 +423,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       const first = earthDirection === null;
       sunDirection = bodyFixedToScene(sun).normalize();
       earthDirection = bodyFixedToScene(earth).normalize();
-      ambient.intensity = 0.06;
+      ambient.intensity = 0.18;
       if (first && !interacted && !primaryRef.current) focus.current(null);
       else draw();
     };

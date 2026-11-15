@@ -1,4 +1,4 @@
-# Lunar Landing Site Navigator
+# Lunar Site Planner
 
 Check a lunar location or search for a mission that meets sunlight and Earth-visibility
 targets using precomputed SPICE DE440 geometry. The nine shipped sites (two

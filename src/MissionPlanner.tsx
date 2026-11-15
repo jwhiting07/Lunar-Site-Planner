@@ -430,7 +430,7 @@ export default function MissionPlanner() {
   const comparedMission = landmark ? saved.find(entry => entry.mission?.id === landmark.id) : undefined;
   return <div className={`mission-app${chromeReady ? ' mission-ready' : ''}`}>
     <header className="mission-top">
-      <h1>Lunar Landing Site Navigator</h1>
+      <h1>Lunar Site Planner</h1>
       <button className="mission-text-button mission-toggle" aria-expanded={!controlsHidden} aria-controls="mission-controls" onClick={() => setControlsHidden(hidden => !hidden)}>Controls<Chevron /></button>
     </header>
     <MissionControls query={query} onChange={next => {
