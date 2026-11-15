@@ -1,10 +1,9 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { loadEphemeris, loadHorizon } from '../data/loader';
 import { flatHorizon, instantState, makeSiteContext, type AnalysisResult, type EphemerisIndex, type EphemerisTable, type HorizonMask } from '../science';
 import { formatRowValue, summaryRows } from '../science/summary';
-import { TimeControls, TimelinesPanel } from './Timelines';
-import { SkyView } from './SkyView';
-const Terrain = lazy(() => import('./TerrainView').then(module => ({ default: module.TerrainView })));
+import { TimeControls, TimelineChart } from './Timelines';
+import { SkyReadout, SkyView } from './SkyView';
 
 export function ScenarioDetails({ result }: { result: AnalysisResult }) {
   return <details className="mission-data"><summary>Detailed data</summary>
@@ -22,7 +21,18 @@ export function ScenarioDetails({ result }: { result: AnalysisResult }) {
   </details>;
 }
 
-export function ScenarioTimeline({ result, index, view = 'timeline' }: { result: AnalysisResult; index: EphemerisIndex; view?: 'timeline' | 'terrain' }) {
+export type TerrainState = 'pending' | 'uncovered' | 'unavailable' | null;
+
+/** One-line description of the horizon behind the sky view. */
+function horizonState(mask: HorizonMask | null, terrain: TerrainState): string {
+  if (mask?.terrainAware) return `LOLA terrain horizon · ${mask.azStepDeg}° azimuth steps`;
+  if (terrain === 'pending') return 'Flat 0° horizon · Calculating terrain…';
+  if (terrain === 'uncovered') return 'Flat 0° horizon · Outside LOLA coverage';
+  if (terrain === 'unavailable') return 'Flat 0° horizon · Terrain calculator unavailable';
+  return 'Flat 0° horizon · No terrain data for this site';
+}
+
+export function ScenarioTimeline({ result, index, terrain = null }: { result: AnalysisResult; index: EphemerisIndex; terrain?: TerrainState }) {
   const { startMs, endMs, site, observerHeightM, terrainAware, earthMinClearanceDeg, horizonMask } = result;
   const timelineResults = useMemo(() => [result], [result]);
   const [eph, setEph] = useState<EphemerisTable | null>(null);
@@ -54,15 +64,27 @@ export function ScenarioTimeline({ result, index, view = 'timeline' }: { result:
     return instantState(makeSiteContext(site, observerHeightM, mask), eph, cursor, earthMinClearanceDeg);
   }, [site, observerHeightM, eph, mask, cursor, earthMinClearanceDeg]);
 
-  return <div className="mission-timeline">
+  return <div className="mission-timeline tl">
     <div className="mission-timeline-controls">
       <TimeControls startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
     </div>
-    {view === 'terrain' ? site.terrain.file ? <Suspense fallback={<p>Loading terrain…</p>}><Terrain site={site} inst={instant} /></Suspense> : <p>3-D terrain is unavailable at these coordinates. The local horizon and calculated values remain available in Timeline.</p> : <>
-    {error ? <p role="alert" className="mission-error">{error}</p> :
-      <SkyView result={result} mask={mask} inst={instant} cursorMs={cursor}
-        earthMinClearanceDeg={earthMinClearanceDeg} onCursor={setCursor} />}
-    <TimelinesPanel results={timelineResults} primaryId={site.id} startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} />
-    </>}
+    <section className="tl-panel" aria-label="Sky view from the lander">
+      <header className="tl-panel-h"><h3>Sky view from the lander</h3><span className="tl-state">{horizonState(mask, terrain)}</span></header>
+      <div className="tl-sky">
+        <div className="tl-sky-chart">
+          {error ? <p role="alert" className="mission-error">{error}</p> :
+            <SkyView result={result} mask={mask} inst={instant} cursorMs={cursor} onCursor={setCursor} />}
+        </div>
+        <SkyReadout inst={instant} earthMinClearanceDeg={earthMinClearanceDeg} terrainAware={Boolean(mask?.terrainAware)} />
+      </div>
+    </section>
+    <section className="tl-panel" aria-label="Mission timeline">
+      <header className="tl-panel-h"><h3>Mission timeline</h3><span className="tl-state">Drag to change time</span></header>
+      <div className="tl-body"><TimelineChart results={timelineResults} primaryId={site.id} part="visibility" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
+    </section>
+    <details className="tl-power">
+      <summary><span>Power details</span><small>Battery energy / Array power</small></summary>
+      <div className="tl-body"><TimelineChart results={timelineResults} primaryId={site.id} part="power" startMs={startMs} endMs={endMs} cursorMs={cursor} onCursor={setCursor} /></div>
+    </details>
   </div>;
 }

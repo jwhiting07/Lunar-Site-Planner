@@ -8,9 +8,15 @@
       "lat_deg": -84.7906,
       "lon_deg": 29.1957,
       "coord_class": "verified_landing",
-      "coord_refs": ["R-LROC-1408"],
+      "coord_refs": [
+        "R-LROC-1408"
+      ],
       "coord_note": "As-landed position of Intuitive Machines IM-2 'Athena' (CLPS PRIME-1 delivery, 2025-03-06) reported by the LROC team: 84.7906°S, 29.1957°E. NASA's CP-22 delivery (Intuitive Machines IM-4) also targets Mons Mouton, but NASA has published no CP-22 coordinates; this point is NOT a CP-22 landing target.",
-      "context_refs": ["R-LROC-1401", "R-CP22", "R-CLPS"],
+      "context_refs": [
+        "R-LROC-1401",
+        "R-CP22",
+        "R-CLPS"
+      ],
       "published_elevation_m": null
     },
     {
@@ -20,9 +26,14 @@
       "lat_deg": -80.13,
       "lon_deg": 1.44,
       "coord_class": "verified_landing",
-      "coord_refs": ["R-LROC-1360", "R-NASA-IM1"],
+      "coord_refs": [
+        "R-LROC-1360",
+        "R-NASA-IM1"
+      ],
       "coord_note": "As-landed position of Intuitive Machines IM-1 'Odysseus' (CLPS TO2-IM delivery, 2024-02-22) reported by the LROC team and NASA: 80.13°S, 1.44°E, 2579 m elevation. Published to 0.01° (about 300 m), so the analysis point may be up to a few hundred metres from the actual lander.",
-      "context_refs": ["R-CLPS"],
+      "context_refs": [
+        "R-CLPS"
+      ],
       "published_elevation_m": 2579
     },
     {
@@ -31,14 +42,156 @@
       "short": "Connecting ridge (Site 01)",
       "select": {
         "method": "max_avg_illumination_in_box",
-        "box_stereo_m": {"x_min": -19000, "x_max": -3000, "y_min": -20000, "y_max": -4000},
+        "box_stereo_m": {
+          "x_min": -19000,
+          "x_max": -3000,
+          "y_min": -20000,
+          "y_max": -4000
+        },
         "box_source": "Footprint of the NASA PGDA 5 m/pix 'Site01: Connecting ridge' DEM (Site01_final_adj_5mpp_surf.tif GeoTIFF bounds, south polar stereographic metres)",
         "map": "AVGVISIB_65S_240M_201608.TIF"
       },
       "coord_class": "representative_point",
-      "coord_refs": ["R-LOLA-SITES", "R-MAZARICO-2011"],
+      "coord_refs": [
+        "R-LOLA-SITES",
+        "R-MAZARICO-2011"
+      ],
       "coord_note": "Representative analysis point chosen by this project: the centre of the 240 m pixel with the highest 18.6-year average solar illumination (Mazarico et al. 2011 map AVGVISIB_65S_240M_201608) inside the footprint of NASA PGDA 'Site01: Connecting ridge'. It is not a mission landing target.",
-      "context_refs": ["R-ARTEMIS3-REGIONS"],
+      "context_refs": [
+        "R-ARTEMIS3-REGIONS"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-1",
+      "name": "Sunlit peak 1 — NASA average-illumination map",
+      "short": "Sunlit peak 1",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 1,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-1 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-2",
+      "name": "Sunlit peak 2 — NASA average-illumination map",
+      "short": "Sunlit peak 2",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 2,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-2 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-3",
+      "name": "Sunlit peak 3 — NASA average-illumination map",
+      "short": "Sunlit peak 3",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 3,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-3 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-4",
+      "name": "Sunlit peak 4 — NASA average-illumination map",
+      "short": "Sunlit peak 4",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 4,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-4 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-5",
+      "name": "Sunlit peak 5 — NASA average-illumination map",
+      "short": "Sunlit peak 5",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 5,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-5 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
+      "published_elevation_m": null
+    },
+    {
+      "id": "illum-peak-6",
+      "name": "Sunlit peak 6 — NASA average-illumination map",
+      "short": "Sunlit peak 6",
+      "select": {
+        "method": "illumination_peak_rank",
+        "rank": 6,
+        "count": 6,
+        "map": "AVGVISIB_65S_240M_201608.TIF",
+        "min_separation_m": 25000,
+        "max_radius_m": 300000
+      },
+      "coord_class": "representative_point",
+      "coord_refs": [
+        "R-MAZARICO-2011"
+      ],
+      "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-6 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+      "context_refs": [
+        "R-LOLA-PGDA"
+      ],
       "published_elevation_m": null
     }
   ]

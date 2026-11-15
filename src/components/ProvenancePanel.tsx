@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { METHODS, type EphemerisIndex, type ProvenanceDoc, type SiteDoc } from '../science';
 import { KindTag, RefLinks } from './Common';
+import { Select } from './Select';
 import { COORD_CLASS_LABEL, fmtLat, fmtLon, num } from '../ui/labels';
 import './ProvenancePanel.css';
 import { MethodCalculation } from './MethodCalculation';
@@ -124,11 +125,9 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
                 <p className="provenance-intro">
                   Every displayed quantity traces to one of these entries. Classification: see the Conventions tab.
                 </p>
-                <select aria-label="Jump to method" defaultValue="" onChange={(e) => document.getElementById(e.target.value)?.scrollIntoView({ block: 'start' })}>
-                  <option value="" disabled>Jump to method</option>
-                  {METHODS.map((m) => <option key={m.id} value={`method-${m.id}`}>{m.title}</option>)}
-                  <option value="method-display">Moon display &amp; local terrain</option>
-                </select>
+                <div className="provenance-jump"><Select label="Jump to method" value="" placeholder="Jump to method"
+                  options={[...METHODS.map((m) => ({ value: `method-${m.id}`, label: m.title })), { value: 'method-display', label: 'Moon display & local terrain' }]}
+                  onChange={(id) => document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'smooth' })} /></div>
               </div>
               {METHODS.map((m) => (
                 <article key={m.id} id={`method-${m.id}`} className={`method${focusMethodId === m.id ? ' focus' : ''}`}>
@@ -230,24 +229,22 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
               {!p ? (
                 <p className="muted">Provenance not loaded.</p>
               ) : (
-                <div className="table-scroll">
-                  <table className="doc-table">
-                    <thead>
-                      <tr><th>ID</th><th>Authority</th><th>Title</th><th>Version</th><th>Link</th></tr>
-                    </thead>
-                    <tbody>
-                      {p.references.map((r) => (
-                        <tr key={r.id}>
-                          <td className="mono">{r.id}</td>
-                          <td>{r.authority}</td>
-                          <td>{r.title}</td>
-                          <td>{r.version}</td>
-                          <td><a href={r.url} target="_blank" rel="noreferrer">open</a>{r.doi ? <> &middot; <a href={`https://doi.org/${r.doi}`} target="_blank" rel="noreferrer">DOI</a></> : null}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <ol className="refs-list">
+                  {p.references.map((r) => {
+                    const doi = r.doi ? (r.doi.startsWith('http') ? r.doi : 'https://doi.org/' + r.doi) : null;
+                    return (
+                      <li key={r.id} className="refs-item">
+                        <span className="refs-id mono">{r.id}</span>
+                        <div className="refs-main">
+                          <a className="refs-title" href={r.url} target="_blank" rel="noreferrer">{r.title}</a>
+                          <p className="refs-meta">{r.authority}</p>
+                          <p className="refs-meta">{r.version}</p>
+                          {doi && <p className="refs-links"><a href={doi} target="_blank" rel="noreferrer">{doi.replace('https://doi.org/', 'doi:')}</a></p>}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
               )}
             </div>
           )}

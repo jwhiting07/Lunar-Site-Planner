@@ -1,10 +1,10 @@
 import { memo, useId, useMemo, useRef } from 'react';
 import { HOUR_MS, type AnalysisResult, type HorizonMask, type InstantState } from '../science';
-import { DAY_MS, clamp, deg, fmtUtc, num } from '../ui/labels';
-import { Panel } from './Common';
+import { DAY_MS, clamp, deg, num } from '../ui/labels';
+import { useTimeZone } from '../ui/timeZone';
 
-const W = 960;
-const H = 330;
+const W = 760;
+const H = 340;
 const ML = 46;
 const MR = 14;
 const MT = 12;
@@ -18,7 +18,6 @@ interface Props {
   result: AnalysisResult | null;
   inst: InstantState | null;
   cursorMs: number;
-  earthMinClearanceDeg: number;
   onCursor?: (time: number) => void;
 }
 
@@ -50,7 +49,8 @@ function earthState(inst: InstantState, minClear: number): { label: string; cls:
   return { label: 'Earth: below horizon', cls: 'off' };
 }
 
-function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCursor }: Props) {
+function SkyViewImpl({ mask, result, inst, cursorMs, onCursor }: Props) {
+  const tz = useTimeZone();
   const clipId = useId();
   const drag = useRef<{ pointerId: number; x: number; time: number; width: number } | null>(null);
   const canScrub = Boolean(onCursor && result);
@@ -108,8 +108,6 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCur
   for (let e = Math.ceil(lo / step) * step; e <= hi; e += step) elTicks.push(e);
   const azTicks = [0, 45, 90, 135, 180, 225, 270, 315, 360];
   const cardinal: Record<number, string> = { 0: 'N', 90: 'E', 180: 'S', 270: 'W', 360: 'N' };
-  const sun = inst ? sunState(inst) : null;
-  const earth = inst ? earthState(inst, earthMinClearanceDeg) : null;
   const sunRadiusY = inst ? (inst.sun.angularRadiusDeg / (hi - lo)) * PH : 0;
   const sunRadiusX = inst ? inst.sun.angularRadiusDeg * PW / 360 : 0;
   const sunPartlyHidden = Boolean(inst && inst.sun.diskFraction > 0 && inst.sun.diskFraction < 1);
@@ -117,15 +115,12 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCur
   const groundId = `${clipId}-ground`;
 
   return (
-    <Panel
-      title="Sky view from the lander"
-      help="What the horizon looks like from the site: terrain skyline, and where the Sun and Earth are in the sky. Azimuth is the compass direction measured clockwise from north."
-    >
+    <>
       <svg viewBox={`0 0 ${W} ${H}`} className={`sky-svg${canScrub ? ' sky-scrub' : ''}`}
         role={canScrub ? 'slider' : 'img'} tabIndex={canScrub ? 0 : undefined}
         aria-label={canScrub ? 'Local horizon time' : 'Sky view: terrain horizon with Sun and Earth tracks and current positions'}
         aria-valuemin={canScrub ? result?.startMs : undefined} aria-valuemax={canScrub ? result?.endMs : undefined}
-        aria-valuenow={canScrub ? cursorMs : undefined} aria-valuetext={canScrub ? fmtUtc(cursorMs) : undefined}
+        aria-valuenow={canScrub ? cursorMs : undefined} aria-valuetext={canScrub ? tz.dateTime(cursorMs) : undefined}
         onPointerDown={event => {
           if (!canScrub || event.button !== 0 || !event.isPrimary) return;
           const width = event.currentTarget.getBoundingClientRect().width;
@@ -192,6 +187,12 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCur
               <g className={`horizon-body${inst.sun.diskFraction === 0 || sunPartlyHidden ? ' horizon-body-hidden' : ''}`}>
                 <circle cx={x(inst.sun.azDeg)} cy={y(inst.sun.elDeg)} r={Math.max(5, sunRadiusY)} className="mark-sun" />
               </g>
+              {terrainMask && ([['sun', inst.sun], ['earth', inst.earth]] as const).map(([name, body]) => body.clearanceDeg < 0 && body.elDeg > -2 ? (
+                <g key={name} className={`obstruction obstruction-${name}`} aria-hidden="true">
+                  <line x1={x(body.azDeg)} x2={x(body.azDeg)} y1={y(body.elDeg)} y2={y(body.horizonDeg)} />
+                  <text x={Number(x(body.azDeg)) + 7} y={(Number(y(body.elDeg)) + Number(y(body.horizonDeg))) / 2 + 3}>{num(body.clearanceDeg, 1)}°</text>
+                </g>
+              ) : null)}
               {sunPartlyHidden &&
                 <ellipse cx={x(inst.sun.azDeg)} cy={y(inst.sun.elDeg)} rx={sunRadiusX} ry={sunRadiusY}
                   className="horizon-sun-limb" clipPath={`url(#${skyId})`} />}
@@ -222,43 +223,55 @@ function SkyViewImpl({ mask, result, inst, cursorMs, earthMinClearanceDeg, onCur
       </svg>
       <p className="caption">
         {canScrub && 'Drag left or right to move through time. '}
-        Tracks show {PATH_DAYS} days either side of the cursor. {terrainMask
-          ? 'The ridge line comes from LOLA terrain. Hollow markers show bodies hidden by the skyline.'
-          : result?.terrainAware ? 'Loading the site’s terrain skyline…'
-            : 'Terrain skyline unavailable for these coordinates. The analysis uses a flat, 0° horizon.'} Markers show the Sun (amber) and Earth (blue).
+        Tracks show {PATH_DAYS} days either side of the cursor.{terrainMask ? ' Dashed lines mark how far the skyline hides a body; hollow markers are hidden.' : ''}
       </p>
-      {inst ? (
-        <div className="readout" aria-live="polite">
-          <div className="readout-time">
-            <span className="field-label">Cursor</span> <span className="mono">{fmtUtc(inst.tMs)} UTC</span>
-          </div>
-          <div className="readout-col sun">
-            <span className={`chip ${sun?.cls}`}>{sun?.label}</span>
-            <dl>
-              <dt>Azimuth / elevation</dt>
-              <dd>{deg(inst.sun.azDeg, 2)} / {deg(inst.sun.elDeg, 2)}</dd>
-              <dt>Terrain horizon / clearance</dt>
-              <dd>{deg(inst.sun.horizonDeg, 2)} / {deg(inst.sun.clearanceDeg, 2)}</dd>
-              <dt>Visible solar disk</dt>
-              <dd>{num(inst.sun.diskFraction * 100, 0)} %</dd>
-            </dl>
-          </div>
-          <div className="readout-col earth">
-            <span className={`chip ${earth?.cls}`}>{earth?.label}</span>
-            <dl>
-              <dt>Azimuth / elevation</dt>
-              <dd>{deg(inst.earth.azDeg, 2)} / {deg(inst.earth.elDeg, 2)}</dd>
-              <dt>Terrain horizon / clearance</dt>
-              <dd>{deg(inst.earth.horizonDeg, 2)} / {deg(inst.earth.clearanceDeg, 2)}</dd>
-              <dt>Min. clearance setting</dt>
-              <dd>{deg(earthMinClearanceDeg, 1)}</dd>
-            </dl>
-          </div>
-        </div>
-      ) : (
-        <p className="muted">Waiting for ephemeris and horizon data{'…'}</p>
-      )}
-    </Panel>
+    </>
+  );
+}
+
+const km = (meters: number) => (meters >= 100_000 ? `${num(meters / 1000, 0)} km` : meters > 0 ? `${num(meters / 1000, 1)} km` : '—');
+
+/** Sun and Earth status cards for the cursor time, with the terrain obstruction behind each. */
+export function SkyReadout({ inst, earthMinClearanceDeg, terrainAware }: { inst: InstantState | null; earthMinClearanceDeg: number; terrainAware: boolean }) {
+  if (!inst) return <p className="muted">Waiting for ephemeris and horizon data{'…'}</p>;
+  const sun = sunState(inst);
+  const earth = earthState(inst, earthMinClearanceDeg);
+  return (
+    <aside className="sky-cards" aria-live="polite">
+      <section className={`sky-card sky-card-sun ${sun.cls}`}>
+        <h4>{sun.label}</h4>
+        <strong className="sky-big mono">{deg(inst.sun.elDeg, 2)}</strong>
+        <span className="sky-sub">Elevation</span>
+        <dl>
+          <dt>Azimuth</dt><dd>{deg(inst.sun.azDeg, 2)}</dd>
+          <dt>Visible disk</dt><dd>{num(inst.sun.diskFraction * 100, 0)} %</dd>
+          {terrainAware && <><dt>Terrain horizon</dt><dd>{deg(inst.sun.horizonDeg, 2)}</dd><dt>Clearance</dt><dd>{deg(inst.sun.clearanceDeg, 2)}</dd></>}
+        </dl>
+      </section>
+      <section className={`sky-card sky-card-earth ${earth.cls}`}>
+        <h4>{earth.label.replace('Earth: ', 'Earth ')}</h4>
+        <strong className="sky-big mono">{deg(inst.earth.elDeg, 2)}</strong>
+        <span className="sky-sub">Elevation</span>
+        <dl>
+          <dt>Azimuth</dt><dd>{deg(inst.earth.azDeg, 2)}</dd>
+          {terrainAware && <><dt>Terrain horizon</dt><dd>{deg(inst.earth.horizonDeg, 2)}</dd></>}
+          <dt>Clearance</dt><dd>{deg(inst.earth.clearanceDeg, 2)}</dd>
+        </dl>
+      </section>
+      <details className="sky-details">
+        <summary>Geometry details</summary>
+        <dl>
+          <dt>Sun distance</dt><dd>{num(inst.sun.distKm / 1e6, 4)} million km</dd>
+          <dt>Sun angular radius</dt><dd>{deg(inst.sun.angularRadiusDeg, 3)}</dd>
+          <dt>Earth distance</dt><dd>{num(inst.earth.distKm, 0)} km</dd>
+          <dt>Earth above flat horizon</dt><dd>{inst.earth.aboveFlatHorizon ? 'yes' : 'no'}</dd>
+          <dt>Earth min. clearance</dt><dd>{deg(earthMinClearanceDeg, 1)}</dd>
+          {terrainAware
+            ? <><dt>Terrain toward Sun</dt><dd>{km(inst.sun.horizonDistM)} away</dd><dt>Terrain toward Earth</dt><dd>{km(inst.earth.horizonDistM)} away</dd></>
+            : <><dt>Terrain</dt><dd>flat 0° horizon</dd></>}
+        </dl>
+      </details>
+    </aside>
   );
 }
 

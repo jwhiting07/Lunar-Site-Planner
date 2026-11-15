@@ -118,4 +118,18 @@ describe('coordinate planning and mission targets', () => {
     const key = (c: ReturnType<typeof evaluate>) => `${c.result.site.lat_deg.toFixed(6)},${c.result.site.lon_deg.toFixed(6)},${c.result.startMs}`;
     expect(out.map(key)).toEqual(expected.map(key));
   });
+it('prefers terrain-verified results when scores tie, ignores distance without an origin, and caps dates per location', async () => {
+    const flat = { targets: { ...DEFAULT_TARGETS }, result };
+    const terrain = { targets: { ...DEFAULT_TARGETS }, result: { ...result, terrainAware: true } };
+    expect(compareCandidates(flat, terrain, null, start)).toBeGreaterThan(0);
+    expect(compareCandidates(terrain, flat, null, start)).toBeLessThan(0);
+    const far = { targets: { ...DEFAULT_TARGETS }, result: { ...result, site: { ...result.site, lat_deg: 5, lon_deg: 5 } } };
+    expect(compareCandidates(flat, far, null, start)).toBe(0); // same dates, same scores: no distance term
+    expect(compareCandidates(flat, far, { lat: result.site.lat_deg, lon: result.site.lon_deg }, start)).toBeLessThan(0);
+
+    const config = { points: [{ lat: -85, lon: 0 }], dates: [start, start + DAY, start + 2 * DAY, start + 3 * DAY], durationDays: 3, targets: DEFAULT_TARGETS,
+      lander: DEFAULT_LANDER, clearance: 0, origin: null, startMs: start, known: [], observerHeight: 2, masks: new Map() };
+    const out = await searchCandidates(eph, config, new AbortController().signal, () => {});
+    expect(out).toHaveLength(2);
+  });
 });

@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-14T22:23:10Z",
+ "generated_utc": "2026-11-15T03:38:29Z",
  "command": "python scripts/validate.py",
  "environment": {
   "python": "3.12.10",
@@ -8,7 +8,7 @@
   "cspice": "CSPICE_N0067"
  },
  "inputs": {
-  "sites_json_generated_utc": "2026-11-14T21:14:41Z",
+  "sites_json_generated_utc": "2026-11-15T03:30:38Z",
   "observer_height_m": 2.0,
   "kernels_de440": [
    "naif0012.tls",
@@ -347,6 +347,642 @@
       }
      }
     }
+   },
+   "illum-peak-1": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -2.710380552,
+      2.744155624
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.9149163083275198e-08,
+       "rms": 7.329980598762491e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.9149056300674968e-08,
+       "rms": 7.328565204623942e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.532277458890732e-08,
+       "rms": 5.149499086652532e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.002503722906112671,
+       "rms": 0.00165871828344592,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.314994501124602e-06,
+       "rms": 1.2104230668205707e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.314994325589057e-06,
+       "rms": 1.2102677207084436e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.5167026803597494e-05,
+       "rms": 7.699390672134398e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.205561131239,
+       "rms": 1071.1638005505831,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -7.738468728,
+      5.855683916
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.594055778601614e-07,
+       "rms": 3.7283071495371403e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.556166296497375e-07,
+       "rms": 3.7158628536731317e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 5.972467631565337e-08,
+       "rms": 3.21335320999323e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.00407139997696504,
+       "rms": 0.002336431017433973,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010651385102278255,
+       "rms": 4.4233451736936935e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010634460657049159,
+       "rms": 4.408545945321227e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011575300033683789,
+       "rms": 4.430343161518362e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2829220988205634,
+       "rms": 0.1191192062114163,
+       "n": 160
+      }
+     }
+    }
+   },
+   "illum-peak-2": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -5.449090356,
+      5.553355369
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.8383340122672962e-08,
+       "rms": 7.290367915542265e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.827868915971172e-08,
+       "rms": 7.278190619417561e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.520446506006692e-08,
+       "rms": 5.204964850172905e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.002504408359527588,
+       "rms": 0.0016586707377633134,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.6086120474010386e-06,
+       "rms": 1.2506715231635304e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.6034525055032e-06,
+       "rms": 1.249195895994369e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.4951471406732253e-05,
+       "rms": 7.692032980678074e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.1918301284313,
+       "rms": 1071.1639301477458,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -3.067045846,
+      10.566247262
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.557920133014704e-07,
+       "rms": 3.73822588677968e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.554439964426342e-07,
+       "rms": 3.7172261615322774e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 5.4894385037584925e-08,
+       "rms": 3.172696433418231e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004070846480317414,
+       "rms": 0.002335972425841147,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010673715303255449,
+       "rms": 4.3911296493668945e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.0001056855334093417,
+       "rms": 4.364525877239649e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011474395315680397,
+       "rms": 4.473257543273192e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2746731454972178,
+       "rms": 0.11916921562782498,
+       "n": 160
+      }
+     }
+    }
+   },
+   "illum-peak-3": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -2.808610776,
+      2.843912073
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.809258603519993e-08,
+       "rms": 7.2842914976066045e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.8083868880986438e-08,
+       "rms": 7.281710691558439e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.632117533986957e-08,
+       "rms": 5.271219392159443e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0025041401386260986,
+       "rms": 0.0016587152318526986,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.0975037930147664e-06,
+       "rms": 1.1980087302009805e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.095074666833108e-06,
+       "rms": 1.1973631898001443e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.5151042870531484e-05,
+       "rms": 7.699218553042318e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.1994994580746,
+       "rms": 1071.1639626815831,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -6.719871051,
+      7.13648292
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.572712211687758e-07,
+       "rms": 3.72813126980275e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.545926715839849e-07,
+       "rms": 3.7154681283980854e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 6.188474693802348e-08,
+       "rms": 3.293832394606494e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004071214119903743,
+       "rms": 0.002336727043778383,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010484420187140131,
+       "rms": 4.338213648588656e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010450120406451139,
+       "rms": 4.3226390301515136e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011438531273899599,
+       "rms": 4.508814015744476e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2760860331472941,
+       "rms": 0.11942505943892505,
+       "n": 160
+      }
+     }
+    }
+   },
+   "illum-peak-4": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -3.492448762,
+      3.456792026
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.7753117137763184e-08,
+       "rms": 7.270241285895407e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.7748522777426254e-08,
+       "rms": 7.266766661216092e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.5500617051885683e-08,
+       "rms": 5.208093783911852e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0025037527084350586,
+       "rms": 0.0016587193171373805,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.5307745918089495e-06,
+       "rms": 1.2153868296486418e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.529689042966941e-06,
+       "rms": 1.2148514642094212e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.5235707057525971e-05,
+       "rms": 7.697204618456338e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.2067334651947,
+       "rms": 1071.16388898291,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -9.032288576,
+      4.637375316
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.603210411209147e-07,
+       "rms": 3.730823904884744e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.548428151028919e-07,
+       "rms": 3.7158017427006655e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 5.427474847330416e-08,
+       "rms": 3.2089384350879534e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004070946190040559,
+       "rms": 0.0023369600953106495,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010502291846137268,
+       "rms": 4.3672501348947374e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010495012487575141,
+       "rms": 4.349749827862851e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011496168193758649,
+       "rms": 4.482352568299504e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.28300917689921334,
+       "rms": 0.11957088133227108,
+       "n": 160
+      }
+     }
+    }
+   },
+   "illum-peak-5": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -5.693412973,
+      5.638766609
+     ],
+     "spice": {
+      "daz": {
+       "max": 2.576123847575218e-08,
+       "rms": 7.149518628568994e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 2.5759091827815e-08,
+       "rms": 7.138426838998199e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.778108175784723e-08,
+       "rms": 5.430675307098354e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.002503126859664917,
+       "rms": 0.0016587135965452746,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.4963807991061913e-06,
+       "rms": 1.2493635370945706e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.484680956646804e-06,
+       "rms": 1.2466208518411363e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.5266567352512084e-05,
+       "rms": 7.689103086559492e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.2017779648304,
+       "rms": 1071.164114449002,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -9.343837451,
+      5.124943455
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.586451834460604e-07,
+       "rms": 3.723124974622061e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.531675909274397e-07,
+       "rms": 3.707496445900006e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 8.458566824742775e-08,
+       "rms": 4.0659713924290855e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004070992930792272,
+       "rms": 0.0023374601936526082,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010195769687015854,
+       "rms": 4.235400679991187e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.0001018498821271524,
+       "rms": 4.2171822632207653e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011287985343333418,
+       "rms": 4.598754465126342e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2764511175919324,
+       "rms": 0.12042542376874849,
+       "n": 160
+      }
+     }
+    }
+   },
+   "illum-peak-6": {
+    "sun": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -6.0928263,
+      6.192547499
+     ],
+     "spice": {
+      "daz": {
+       "max": 3.1352271889772965e-08,
+       "rms": 7.434988509891063e-09,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.12582744594515e-08,
+       "rms": 7.42140569538719e-09,
+       "n": 160
+      },
+      "del": {
+       "max": 4.4246274200077096e-08,
+       "rms": 5.043138478067054e-09,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.0025028884410858154,
+       "rms": 0.0016587503176457056,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 3.842674146881109e-06,
+       "rms": 1.286423191858316e-06,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 3.842671219475779e-06,
+       "rms": 1.2849614099635394e-06,
+       "n": 160
+      },
+      "del": {
+       "max": 1.4901352375695787e-05,
+       "rms": 7.689187679193511e-06,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 1502.1969913840294,
+       "rms": 1071.1637159101863,
+       "n": 160
+      }
+     }
+    },
+    "earth": {
+     "n_epochs": 160,
+     "n_non_hourly": 158,
+     "el_range_deg": [
+      -3.358106846,
+      10.245930229
+     ],
+     "spice": {
+      "daz": {
+       "max": 5.556551059271442e-07,
+       "rms": 3.7329311402681997e-07,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 5.552470108624162e-07,
+       "rms": 3.7139236148886595e-07,
+       "n": 160
+      },
+      "del": {
+       "max": 7.182170191910586e-08,
+       "rms": 3.58070740156649e-08,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.004070350085385144,
+       "rms": 0.0023354395872327827,
+       "n": 160
+      }
+     },
+     "app": {
+      "daz": {
+       "max": 0.00010910161847732525,
+       "rms": 4.506943602169361e-05,
+       "n": 160
+      },
+      "dazcos": {
+       "max": 0.00010820130323154231,
+       "rms": 4.483085030124646e-05,
+       "n": 160
+      },
+      "del": {
+       "max": 0.00011652672565709565,
+       "rms": 4.364387413181754e-05,
+       "n": 160
+      },
+      "drange_km": {
+       "max": 0.2764783976599574,
+       "rms": 0.11872661034250721,
+       "n": 160
+      }
+     }
+    }
    }
   },
   "headers": [
@@ -439,6 +1075,186 @@
     "center_geodetic": "222.686278, -89.445496, 1.957",
     "light_bending": "Sun, EARTH",
     "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-1",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:06 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "123.637358, -88.806984, 1.6492",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-1",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:08 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "123.637358, -88.806984, 1.6492",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-2",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:10 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "356.580908, -85.954027, 4.9607",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-2",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:12 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "356.580908, -85.954027, 4.9607",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-3",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:13 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "291.639283, -88.701551, 1.7822",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-3",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:15 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "291.639283, -88.701551, 1.7822",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-4",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:17 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "193.570434, -87.993202, 1.2669",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-4",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:19 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "193.570434, -87.993202, 1.2669",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-5",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:21 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "243.702343, -85.830426, 2.6994",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-5",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:23 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "243.702343, -85.830426, 2.6994",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-6",
+    "body": "sun",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:25 2026",
+    "target": {
+     "name": "Sun (10)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "37.053383, -85.306815, 6.7483",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
+   },
+   {
+    "site": "illum-peak-6",
+    "body": "earth",
+    "api_version": "1.2",
+    "query_banner": "Sat Nov 14 19:34:27 2026",
+    "target": {
+     "name": "Earth (399)",
+     "ephemeris_source": "DE441"
+    },
+    "center_pole_equ": "MEAN_ME (high precision)",
+    "center_radii": "1737.4, 1737.4, 1737.4 km",
+    "center_geodetic": "37.053383, -85.306815, 6.7483",
+    "light_bending": "Sun, EARTH",
+    "refraction": "NO (AIRLESS)"
    }
   ],
   "queries": [
@@ -489,98 +1305,194 @@
     "body": "earth",
     "n_epochs": 160,
     "site_coord": "'222.686278,-89.445496,1.957000'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-1_10_23b579455aa9c048.txt",
+    "fetched": false,
+    "site": "illum-peak-1",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'123.637358,-88.806984,1.649200'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-1_399_ad76b184b4505c65.txt",
+    "fetched": false,
+    "site": "illum-peak-1",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'123.637358,-88.806984,1.649200'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-2_10_f0a83a435115b41b.txt",
+    "fetched": false,
+    "site": "illum-peak-2",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'356.580908,-85.954027,4.960700'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-2_399_7a8cc8cdc2f03e65.txt",
+    "fetched": false,
+    "site": "illum-peak-2",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'356.580908,-85.954027,4.960700'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-3_10_3273d490851cdc70.txt",
+    "fetched": false,
+    "site": "illum-peak-3",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'291.639283,-88.701551,1.782200'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-3_399_a28567559c85544a.txt",
+    "fetched": false,
+    "site": "illum-peak-3",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'291.639283,-88.701551,1.782200'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-4_10_e9e753ecac531726.txt",
+    "fetched": false,
+    "site": "illum-peak-4",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'193.570434,-87.993202,1.266900'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-4_399_f4c3d5c20a8f7701.txt",
+    "fetched": false,
+    "site": "illum-peak-4",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'193.570434,-87.993202,1.266900'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-5_10_33fc396f36e84dd4.txt",
+    "fetched": false,
+    "site": "illum-peak-5",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'243.702343,-85.830426,2.699400'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-5_399_29ccaaffdec9919f.txt",
+    "fetched": false,
+    "site": "illum-peak-5",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'243.702343,-85.830426,2.699400'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-6_10_61b05065117f7f73.txt",
+    "fetched": false,
+    "site": "illum-peak-6",
+    "body": "sun",
+    "n_epochs": 160,
+    "site_coord": "'37.053383,-85.306815,6.748300'"
+   },
+   {
+    "cache_file": "data_cache\\horizons\\illum-peak-6_399_6f0a554ccfe51582.txt",
+    "fetched": false,
+    "site": "illum-peak-6",
+    "body": "earth",
+    "n_epochs": 160,
+    "site_coord": "'37.053383,-85.306815,6.748300'"
    }
   ],
   "summary": {
    "sun": {
     "spice": {
      "daz": {
-      "max": 3.12548991132644e-08,
-      "rms": 7.353627394998124e-09,
-      "n": 480
+      "max": 3.1352271889772965e-08,
+      "rms": 7.313743297954068e-09,
+      "n": 1440
      },
      "dazcos": {
-      "max": 3.112347873746251e-08,
-      "rms": 7.3254394461125776e-09,
-      "n": 480
+      "max": 3.12582744594515e-08,
+      "rms": 7.2993890491858025e-09,
+      "n": 1440
      },
      "del": {
-      "max": 4.537429615369959e-08,
-      "rms": 5.128620251127163e-09,
-      "n": 480
+      "max": 4.778108175784723e-08,
+      "rms": 5.189227214123216e-09,
+      "n": 1440
      },
      "drange_km": {
-      "max": 0.0025041699409484863,
-      "rms": 0.0016586941140578593,
-      "n": 480
+      "max": 0.002504408359527588,
+      "rms": 0.0016587077586435698,
+      "n": 1440
      }
     },
     "app": {
      "daz": {
       "max": 5.05823265939398e-06,
-      "rms": 1.344247552273351e-06,
-      "n": 480
+      "rms": 1.2727263668822543e-06,
+      "n": 1440
      },
      "dazcos": {
       "max": 5.042701999260108e-06,
-      "rms": 1.340516701783682e-06,
-      "n": 480
+      "rms": 1.2706483685007143e-06,
+      "n": 1440
      },
      "del": {
-      "max": 1.5176126300531223e-05,
-      "rms": 7.677864766889297e-06,
-      "n": 480
+      "max": 1.5266567352512084e-05,
+      "rms": 7.688863873171136e-06,
+      "n": 1440
      },
      "drange_km": {
-      "max": 1502.2029457092285,
-      "rms": 1071.1638635497957,
-      "n": 480
+      "max": 1502.2067334651947,
+      "rms": 1071.1638892634937,
+      "n": 1440
      }
     }
    },
    "earth": {
     "spice": {
      "daz": {
-      "max": 5.579695994128997e-07,
-      "rms": 3.75096570053944e-07,
-      "n": 480
+      "max": 5.603210411209147e-07,
+      "rms": 3.7371748433888837e-07,
+      "n": 1440
      },
      "dazcos": {
-      "max": 5.555820133195333e-07,
-      "rms": 3.7167118775514174e-07,
-      "n": 480
+      "max": 5.556166296497375e-07,
+      "rms": 3.7151027074672026e-07,
+      "n": 1440
      },
      "del": {
-      "max": 6.921288475680853e-08,
-      "rms": 3.29016098610561e-08,
-      "n": 480
+      "max": 8.458566824742775e-08,
+      "rms": 3.388990771403151e-08,
+      "n": 1440
      },
      "drange_km": {
       "max": 0.004071656439919025,
-      "rms": 0.0023356345049959084,
-      "n": 480
+      "rms": 0.002336210528066156,
+      "n": 1440
      }
     },
     "app": {
      "daz": {
       "max": 0.0001097806999155182,
-      "rms": 4.448735324404213e-05,
-      "n": 480
+      "rms": 4.401588993858898e-05,
+      "n": 1440
      },
      "dazcos": {
-      "max": 0.00010804234749226312,
-      "rms": 4.406168766395786e-05,
-      "n": 480
+      "max": 0.00010820130323154231,
+      "rms": 4.3743639849763266e-05,
+      "n": 1440
      },
      "del": {
-      "max": 0.00011628638941729719,
-      "rms": 4.432232266402072e-05,
-      "n": 480
+      "max": 0.00011652672565709565,
+      "rms": 4.462053969807126e-05,
+      "n": 1440
      },
      "drange_km": {
       "max": 0.2836388210998848,
-      "rms": 0.11938537925726919,
-      "n": 480
+      "rms": 0.11939994638043928,
+      "n": 1440
      }
     }
    }
@@ -597,13 +1509,13 @@
   "per_body": {
    "sun": {
     "max": 1.65743638862912e-07,
-    "rms": 7.690365171215674e-08,
-    "n": 3000
+    "rms": 5.434895091198264e-08,
+    "n": 9000
    },
    "earth": {
-    "max": 2.7056226273382796e-05,
-    "rms": 1.7767229490851142e-05,
-    "n": 3000
+    "max": 2.7086224448422136e-05,
+    "rms": 1.7817280705971802e-05,
+    "n": 9000
    }
   },
   "metric_effect_2026_2028": {
@@ -624,6 +1536,42 @@
     "earth_visible_hours": 0.0001769055161275901,
     "sunlit_fraction": 1.681188521729382e-10,
     "earth_visible_fraction": 6.7254226632229575e-09
+   },
+   "illum-peak-1": {
+    "sunlit_hours": -7.087546691764146e-07,
+    "earth_visible_hours": 0.00046391038813453633,
+    "sunlit_fraction": -2.6944779740745162e-11,
+    "earth_visible_fraction": 1.763649593033989e-08
+   },
+   "illum-peak-2": {
+    "sunlit_hours": 5.391368176788092e-06,
+    "earth_visible_hours": 0.0008223350014304742,
+    "sunlit_fraction": 2.0496382369117327e-10,
+    "earth_visible_fraction": 3.126273573350602e-08
+   },
+   "illum-peak-3": {
+    "sunlit_hours": 3.977929736720398e-06,
+    "earth_visible_hours": 0.0002016534435824724,
+    "sunlit_fraction": 1.512290292993157e-10,
+    "earth_visible_fraction": 7.666265289252294e-09
+   },
+   "illum-peak-4": {
+    "sunlit_hours": 6.843736628070474e-06,
+    "earth_visible_hours": -8.783325210970361e-05,
+    "sunlit_fraction": 2.601785453748562e-10,
+    "earth_visible_fraction": -3.3391595044562905e-09
+   },
+   "illum-peak-5": {
+    "sunlit_hours": -1.0205823855358176e-05,
+    "earth_visible_hours": 0.000599804281591787,
+    "sunlit_fraction": -3.8799513601972535e-10,
+    "earth_visible_fraction": 2.280277833222044e-08
+   },
+   "illum-peak-6": {
+    "sunlit_hours": 2.1094419935252517e-06,
+    "earth_visible_hours": 0.00029487101164704654,
+    "sunlit_fraction": 8.019462871544647e-11,
+    "earth_visible_fraction": 1.1210120609561613e-08
    }
   },
   "status": "completed"
@@ -640,35 +1588,35 @@
    "sun": {
     "daz": {
      "max": 8.710980097248466e-06,
-     "rms": 4.152827472980659e-06,
-     "n": 900
+     "rms": 4.0458385889101285e-06,
+     "n": 2700
     },
     "dazcos": {
      "max": 8.606737437955912e-06,
-     "rms": 4.1381742816737095e-06,
-     "n": 900
+     "rms": 4.038177863574512e-06,
+     "n": 2700
     },
     "del": {
-     "max": 1.4063790687912636e-05,
-     "rms": 7.465562577098899e-06,
-     "n": 900
+     "max": 1.4064404469216196e-05,
+     "rms": 7.520121450427006e-06,
+     "n": 2700
     }
    },
    "earth": {
     "daz": {
-     "max": 9.214412159508356e-06,
-     "rms": 4.483403193601573e-06,
-     "n": 900
+     "max": 9.251817743916035e-06,
+     "rms": 4.4021715794567256e-06,
+     "n": 2700
     },
     "dazcos": {
-     "max": 9.21251983725912e-06,
-     "rms": 4.4440165846283555e-06,
-     "n": 900
+     "max": 9.246585801924851e-06,
+     "rms": 4.376492228242574e-06,
+     "n": 2700
     },
     "del": {
-     "max": 1.2457469273030597e-05,
-     "rms": 8.720804527370562e-06,
-     "n": 900
+     "max": 1.2472568235111225e-05,
+     "rms": 8.752559310786866e-06,
+     "n": 2700
     }
    }
   },
@@ -697,6 +1645,36 @@
     "max": 0.45188342642571994,
     "rms": 0.3262051782347445,
     "n": 300
+   },
+   "illum-peak-1": {
+    "max": 0.45371453479151685,
+    "rms": 0.3250887157733129,
+    "n": 300
+   },
+   "illum-peak-2": {
+    "max": 0.45760428370403566,
+    "rms": 0.3238099208002742,
+    "n": 300
+   },
+   "illum-peak-3": {
+    "max": 0.45149453073659146,
+    "rms": 0.32636670315702054,
+    "n": 300
+   },
+   "illum-peak-4": {
+    "max": 0.449701790243632,
+    "rms": 0.3270344596474519,
+    "n": 300
+   },
+   "illum-peak-5": {
+    "max": 0.4439636524158614,
+    "rms": 0.3295070607268939,
+    "n": 300
+   },
+   "illum-peak-6": {
+    "max": 0.4615403272291929,
+    "rms": 0.3208451431384945,
+    "n": 300
    }
   },
   "note": "az/el differences combine the DE421 vs DE440 ephemerides and the frame realizations; the pxform rotation isolates the frame part.",
@@ -721,8 +1699,8 @@
    },
    "topocentric_elevation_deg_all_sites": {
     "max": 1.540157581247925e-05,
-    "rms": 7.676101289422197e-06,
-    "n": 60000
+    "rms": 7.688160082644414e-06,
+    "n": 180000
    }
   },
   "earth": {
@@ -737,9 +1715,9 @@
     "n": 20000
    },
    "topocentric_elevation_deg_all_sites": {
-    "max": 9.940985362000276e-05,
-    "rms": 4.017184781344607e-05,
-    "n": 60000
+    "max": 0.00010152998963874893,
+    "rms": 4.045275820686167e-05,
+    "n": 180000
    }
   },
   "shipped_self_check": {
@@ -964,6 +1942,378 @@
      "earth_any_part": -0.0015183473983320095,
      "earth_center": -0.04761520231222238
     }
+   },
+   "illum-peak-1": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       3293,
+       3335
+      ],
+      "nearest_raw_dn": 22047.0,
+      "nearest": 0.881879985332489,
+      "bilinear": 0.8818738931597926,
+      "nbhd3x3_min": 0.5016399621963501,
+      "nbhd3x3_max": 0.881879985332489
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       3293,
+       3335
+      ],
+      "nearest_raw_dn": 15043.0,
+      "nearest": 0.6017199754714966,
+      "bilinear": 0.6017202812556486,
+      "nbhd3x3_min": 0.42819997668266296,
+      "nbhd3x3_max": 0.6061999797821045
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 1646.5494402568531,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8266869416460749,
+       "sun_mean_disk_fraction": 0.7898546479248693,
+       "earth_center_fraction": 0.543166698346322,
+       "earth_any_part_fraction": 0.590496103402395
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8183479711496001,
+       "sun_mean_disk_fraction": 0.7783434437281861,
+       "earth_center_fraction": 0.5428830773759874,
+       "earth_any_part_fraction": 0.5895196506550219
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8852309446873218,
+       "sun_mean_disk_fraction": 0.8556947739003872,
+       "earth_center_fraction": 0.5605018057403536,
+       "earth_any_part_fraction": 0.6082873978331116
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.879790000490653,
+       "sun_mean_disk_fraction": 0.8484657367387286,
+       "earth_center_fraction": 0.5600743339384721,
+       "earth_any_part_fraction": 0.6072751582356116
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.0635320141828889,
+     "earth_any_part": -0.012200324816474706,
+     "earth_center": -0.05883689809550918
+    }
+   },
+   "illum-peak-2": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       2699,
+       3179
+      ],
+      "nearest_raw_dn": 20838.0,
+      "nearest": 0.8335199952125549,
+      "bilinear": 0.8335074881812219,
+      "nbhd3x3_min": 0.4812399744987488,
+      "nbhd3x3_max": 0.8335199952125549
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       2699,
+       3179
+      ],
+      "nearest_raw_dn": 19532.0,
+      "nearest": 0.781279981136322,
+      "bilinear": 0.7812674575876473,
+      "nbhd3x3_min": 0.4097200036048889,
+      "nbhd3x3_max": 1.0
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 4955.947783593036,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8285497053792055,
+       "sun_mean_disk_fraction": 0.7977930974613249,
+       "earth_center_fraction": 0.6635240448583919,
+       "earth_any_part_fraction": 0.7175061775327884
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8186791619645748,
+       "sun_mean_disk_fraction": 0.787925882590223,
+       "earth_center_fraction": 0.6682755998233649,
+       "earth_any_part_fraction": 0.7237868603110741
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8330735601596655,
+       "sun_mean_disk_fraction": 0.8048334475673541,
+       "earth_center_fraction": 0.7378445162516631,
+       "earth_any_part_fraction": 0.8066147120319331
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8228435798047201,
+       "sun_mean_disk_fraction": 0.7957790972964831,
+       "earth_center_fraction": 0.7413767724841764,
+       "earth_any_part_fraction": 0.8116014915853
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.014840833247980134,
+     "earth_any_part": -0.057493120825247934,
+     "earth_center": -0.11300438131295709
+    }
+   },
+   "illum-peak-3": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       3149,
+       3057
+      ],
+      "nearest_raw_dn": 20135.0,
+      "nearest": 0.8053999543190002,
+      "bilinear": 0.8053824489971521,
+      "nbhd3x3_min": 0.4466799795627594,
+      "nbhd3x3_max": 0.8053999543190002
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       3149,
+       3057
+      ],
+      "nearest_raw_dn": 15275.0,
+      "nearest": 0.6110000014305115,
+      "bilinear": 0.6109946729009076,
+      "nbhd3x3_min": 0.4028399884700775,
+      "nbhd3x3_max": 0.6115599870681763
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 1778.6035509209262,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.7947158334917316,
+       "sun_mean_disk_fraction": 0.7431092916957184,
+       "earth_center_fraction": 0.5633529747196351,
+       "earth_any_part_fraction": 0.6105303174301464
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.7817329866051714,
+       "sun_mean_disk_fraction": 0.727746836999968,
+       "earth_center_fraction": 0.5652691232029832,
+       "earth_any_part_fraction": 0.6127888719886169
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8022049040106444,
+       "sun_mean_disk_fraction": 0.7555292446365262,
+       "earth_center_fraction": 0.5632769435468542,
+       "earth_any_part_fraction": 0.6104923018437559
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.7897735636131691,
+       "sun_mean_disk_fraction": 0.7414832751356965,
+       "earth_center_fraction": 0.5646987390216378,
+       "earth_any_part_fraction": 0.6121816888278299
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.023666967713828813,
+     "earth_any_part": 0.0017888705581053932,
+     "earth_center": -0.045730878227528304
+    }
+   },
+   "illum-peak-4": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       3456,
+       3150
+      ],
+      "nearest_raw_dn": 20072.0,
+      "nearest": 0.8028799891471863,
+      "bilinear": 0.8028731641486546,
+      "nbhd3x3_min": 0.3347199857234955,
+      "nbhd3x3_max": 0.8028799891471863
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       3456,
+       3150
+      ],
+      "nearest_raw_dn": 11321.0,
+      "nearest": 0.45284000039100647,
+      "bilinear": 0.4528394737316611,
+      "nbhd3x3_min": 0.27476000785827637,
+      "nbhd3x3_max": 0.4530399739742279
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 1262.5776249824596,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.7228283596274473,
+       "sun_mean_disk_fraction": 0.6512151828308915,
+       "earth_center_fraction": 0.40710891465500854,
+       "earth_any_part_fraction": 0.4526896027371222
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.7132991511702076,
+       "sun_mean_disk_fraction": 0.6391246422168411,
+       "earth_center_fraction": 0.4067084539522104,
+       "earth_any_part_fraction": 0.45317329866051714
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.7852119368941266,
+       "sun_mean_disk_fraction": 0.7296213655312315,
+       "earth_center_fraction": 0.40707089906861815,
+       "earth_any_part_fraction": 0.45272761832351266
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.780911142730975,
+       "sun_mean_disk_fraction": 0.7237086351465933,
+       "earth_center_fraction": 0.406677788136009,
+       "earth_any_part_fraction": 0.4531426328443158
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.08958083797697869,
+     "earth_any_part": 0.00033329826951067343,
+     "earth_center": -0.04613154643879608
+    }
+   },
+   "illum-peak-5": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       3443,
+       2737
+      ],
+      "nearest_raw_dn": 19809.0,
+      "nearest": 0.7923600077629089,
+      "bilinear": 0.7923444298018779,
+      "nbhd3x3_min": 0.4301999807357788,
+      "nbhd3x3_max": 0.7923600077629089
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       3443,
+       2737
+      ],
+      "nearest_raw_dn": 15136.0,
+      "nearest": 0.6054399609565735,
+      "bilinear": 0.6054350585071848,
+      "nbhd3x3_min": 0.2431199997663498,
+      "nbhd3x3_max": 0.6054399609565735
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 2698.38786393931,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.4380536019768105,
+       "sun_mean_disk_fraction": 0.37772019179780464,
+       "earth_center_fraction": 0.5544193119178863,
+       "earth_any_part_fraction": 0.5995057973769246
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.4288798390657966,
+       "sun_mean_disk_fraction": 0.37070056383484185,
+       "earth_center_fraction": 0.5585165104754428,
+       "earth_any_part_fraction": 0.6053922771208479
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8190458087816005,
+       "sun_mean_disk_fraction": 0.7860378626696799,
+       "earth_center_fraction": 0.5545333586770576,
+       "earth_any_part_fraction": 0.5995818285497054
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8148091359599627,
+       "sun_mean_disk_fraction": 0.7810042606614696,
+       "earth_center_fraction": 0.5586207742505275,
+       "earth_any_part_fraction": 0.6054965408959325
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": -0.36348016869711236,
+     "earth_any_part": -4.7683835725620405e-05,
+     "earth_center": -0.04692345048113067
+    }
+   },
+   "illum-peak-6": {
+    "map": {
+     "sun": {
+      "nearest_pixel_rc": [
+       2736,
+       3567
+      ],
+      "nearest_raw_dn": 19689.0,
+      "nearest": 0.787559986114502,
+      "bilinear": 0.7875469764984129,
+      "nbhd3x3_min": 0.48443999886512756,
+      "nbhd3x3_max": 0.787559986114502
+     },
+     "earth": {
+      "nearest_pixel_rc": [
+       2736,
+       3567
+      ],
+      "nearest_raw_dn": 14866.0,
+      "nearest": 0.5946399569511414,
+      "bilinear": 0.5946329481127617,
+      "nbhd3x3_min": 0.31595999002456665,
+      "nbhd3x3_max": 0.7019599676132202
+     }
+    },
+    "mask_240m_only_obs0m_site_height_m": 6743.515549716558,
+    "ours": {
+     "shipped_mask_80m+240m_obs2m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8880440980802129,
+       "sun_mean_disk_fraction": 0.8363604574092912,
+       "earth_center_fraction": 0.5484508648545904,
+       "earth_any_part_fraction": 0.595019958182855
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.8817158137480987,
+       "sun_mean_disk_fraction": 0.8272388164072099,
+       "earth_center_fraction": 0.549549825818164,
+       "earth_any_part_fraction": 0.5961434669545165
+      }
+     },
+     "mask_240m_only_obs0m": {
+      "app_2026_2028": {
+       "sun_any_part_fraction": 0.8830260406766774,
+       "sun_mean_disk_fraction": 0.827920686895483,
+       "earth_center_fraction": 0.5369701577646835,
+       "earth_any_part_fraction": 0.5834632199201673
+      },
+      "long_18p6yr": {
+       "sun_any_part_fraction": 0.876889014278004,
+       "sun_mean_disk_fraction": 0.8191573594317363,
+       "earth_center_fraction": 0.5378109513762819,
+       "earth_any_part_fraction": 0.584061135371179
+      }
+     }
+    },
+    "diff_ours_long_shipped_minus_map_nearest": {
+     "sun_any_part": 0.09415582763359676,
+     "earth_any_part": 0.0015035100033751192,
+     "earth_center": -0.04509013113297733
+    }
    }
   },
   "long_span": {
@@ -1123,6 +2473,294 @@
      "d_sunlit_fraction": -0.00272883300089255,
      "d_earth_visible_fraction": -1.3639357835715238e-05
     }
+   },
+   "illum-peak-1": {
+    "shipped": {
+     "sunlit_fraction": 0.8267972496419392,
+     "earth_visible_fraction": 0.5430191326755072
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 1.147462325157278e-07,
+      "rms": 3.583668841672118e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.03999959677182763,
+      "rms": 0.003823316898209362,
+      "n": 1440
+     },
+     "d_sunlit_fraction": 6.782162463159214e-05,
+     "d_earth_visible_fraction": -9.955546205642207e-06
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.15487178734370755,
+      "rms": 0.040900652122201536,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.15487178734370755,
+      "rms": 0.040900652122201536,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.0027014627704867733,
+     "d_earth_visible_fraction": -1.1500163463740165e-06
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.15487178734370755,
+      "rms": 0.040900652122201536,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.15487178734370755,
+      "rms": 0.04102761647557079,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.0026325343362921805,
+     "d_earth_visible_fraction": -1.1258758499610444e-05
+    }
+   },
+   "illum-peak-2": {
+    "shipped": {
+     "sunlit_fraction": 0.8285254294348033,
+     "earth_visible_fraction": 0.6635621872115592
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 2.3827443751400779e-07,
+      "rms": 7.486728704118262e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.06271898084383531,
+      "rms": 0.004674241898109895,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -4.181376269341008e-06,
+     "d_earth_visible_fraction": -9.93339371535562e-07
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.1714382170938591,
+      "rms": 0.03837998454069884,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.1714382170938591,
+      "rms": 0.03837998454069884,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.00012329204797278948,
+     "d_earth_visible_fraction": -5.6944560178351367e-11
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.1714382170938591,
+      "rms": 0.03837998454069884,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.1714382170938591,
+      "rms": 0.0386443741797681,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.00012510521643027683,
+     "d_earth_visible_fraction": -9.93339371535562e-07
+    }
+   },
+   "illum-peak-3": {
+    "shipped": {
+     "sunlit_fraction": 0.7947596348157022,
+     "earth_visible_fraction": 0.5634798681281328
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 1.1829743540303639e-07,
+      "rms": 4.173892379740241e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.04984157089768093,
+      "rms": 0.004657971161683834,
+      "n": 1440
+     },
+     "d_sunlit_fraction": 5.374698916849052e-05,
+     "d_earth_visible_fraction": -2.2045010401372522e-05
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.11495949399474004,
+      "rms": 0.010612176005840322,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.11495949399474004,
+      "rms": 0.010612176005840322,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.0005112676115749393,
+     "d_earth_visible_fraction": -6.544066027180939e-06
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.11495949399474004,
+      "rms": 0.010612176005840322,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.11495949399474004,
+      "rms": 0.011386021908069175,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.0004472323778094145,
+     "d_earth_visible_fraction": -2.6945564347902184e-05
+    }
+   },
+   "illum-peak-4": {
+    "shipped": {
+     "sunlit_fraction": 0.7227111876673181,
+     "earth_visible_fraction": 0.40711960287722937
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 1.1815201839127099e-07,
+      "rms": 3.608459402591443e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.04978643403290439,
+      "rms": 0.004453971571606109,
+      "n": 1440
+     },
+     "d_sunlit_fraction": 1.879349832567545e-05,
+     "d_earth_visible_fraction": -3.117538107183515e-05
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.2397079344650116,
+      "rms": 0.044501694388603595,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.2397079344650116,
+      "rms": 0.044501694388603595,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.003977964790516375,
+     "d_earth_visible_fraction": -1.1250248452887579e-05
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.2397079344650116,
+      "rms": 0.044501694388603595,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.2397079344650116,
+      "rms": 0.04471023037996163,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.00396875627494242,
+     "d_earth_visible_fraction": -3.921968436104706e-05
+    }
+   },
+   "illum-peak-5": {
+    "shipped": {
+     "sunlit_fraction": 0.43793145287574836,
+     "earth_visible_fraction": 0.5545394878913403
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 2.376531273995397e-07,
+      "rms": 8.453873275650322e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.03673878381068896,
+      "rms": 0.003651646311249624,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -4.662383175180196e-05,
+     "d_earth_visible_fraction": -6.10364633355509e-05
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.48179977394458234,
+      "rms": 0.07913459550046122,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.48179977394458234,
+      "rms": 0.07913459550046122,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.00535208622334038,
+     "d_earth_visible_fraction": -4.797452267668589e-06
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.48179977394458234,
+      "rms": 0.07913459550046122,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.48179977394458234,
+      "rms": 0.0792115434062182,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.0053995560212481974,
+     "d_earth_visible_fraction": -6.704545520719307e-05
+    }
+   },
+   "illum-peak-6": {
+    "shipped": {
+     "sunlit_fraction": 0.8879487077160788,
+     "earth_visible_fraction": 0.5484540107670794
+    },
+    "az0.25": {
+     "dH_common_az_deg": {
+      "max": 2.3779816871183357e-07,
+      "rms": 9.664444944060948e-08,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.061191246744323635,
+      "rms": 0.004714307871226376,
+      "n": 1440
+     },
+     "d_sunlit_fraction": 2.4009657573986765e-05,
+     "d_earth_visible_fraction": -8.744581727615497e-07
+    },
+    "rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.07474463101996598,
+      "rms": 0.012821688258345515,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.07474463101996598,
+      "rms": 0.012821688258345515,
+      "n": 720
+     },
+     "d_sunlit_fraction": -0.0007004581872460669,
+     "d_earth_visible_fraction": 2.891161754448035e-10
+    },
+    "az0.25_rays_half": {
+     "dH_common_az_deg": {
+      "max": 0.07474463101996598,
+      "rms": 0.012821688258345515,
+      "n": 720
+     },
+     "dH_vs_interpolated_shipped_deg": {
+      "max": 0.07474463101996598,
+      "rms": 0.013594575929031794,
+      "n": 1440
+     },
+     "d_sunlit_fraction": -0.0006817186050847024,
+     "d_earth_visible_fraction": -8.744581727615497e-07
+    }
    }
   },
   "variants": {
@@ -1166,14 +2804,14 @@
   },
   "pytest": {
    "exit_code": 0,
-   "summary": "30 passed in 8.06s",
+   "summary": "30 passed in 8.30s",
    "passed": 30
   },
   "vitest": {
    "exit_code": 0,
-   "files": 15,
-   "total": 107,
-   "passed": 107,
+   "files": 17,
+   "total": 141,
+   "passed": 141,
    "failed": 0,
    "skipped": 0,
    "failed_tests": []

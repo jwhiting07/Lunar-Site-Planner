@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generated_utc": "2026-11-14T21:14:41Z",
+ "generated_utc": "2026-11-15T03:30:38Z",
  "frame": "Lunar Mean-Earth/Polar-Axis (ME, DE421-aligned); planetocentric latitude, east-positive longitude",
  "reference_radius_m": 1737400.0,
  "observer_height_m": 2.0,
@@ -197,6 +197,420 @@
     "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
     "min_m": -2863.7,
     "max_m": 1957.0,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-1",
+   "name": "Sunlit peak 1 — NASA average-illumination map",
+   "short": "Sunlit peak 1",
+   "lat_deg": -88.806984,
+   "lon_deg": 123.637358,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-1 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 1,
+    "map_pixel_raw_value": 22047,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     30120.0,
+     -20040.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 1647.2,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 0.69,
+    "mean3x3_deg": 1.57,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    30120.0,
+    -20040.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-1.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -2.189,
+    "max_deg": -0.28,
+    "mean_deg": -1.397,
+    "max_obstruction_distance_km": 173.3,
+    "fraction_azimuths_beyond_patch": 0.362,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 6.83,
+    "samples_from_240m_dem_fraction": 0.156
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-1.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-1.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -1908.1,
+    "max_m": 1647.2,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-2",
+   "name": "Sunlit peak 2 — NASA average-illumination map",
+   "short": "Sunlit peak 2",
+   "lat_deg": -85.954027,
+   "lon_deg": 356.580908,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-2 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 2,
+    "map_pixel_raw_value": 20838,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     -7320.0,
+     122520.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 4958.7,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 4.29,
+    "mean3x3_deg": 4.3,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    -7320.0,
+    122520.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-2.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -4.903,
+    "max_deg": 0.837,
+    "mean_deg": -1.95,
+    "max_obstruction_distance_km": 227.2,
+    "fraction_azimuths_beyond_patch": 0.392,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 4.43,
+    "samples_from_240m_dem_fraction": 0.175
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-2.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-2.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -1291.2,
+    "max_m": 5172.1,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-3",
+   "name": "Sunlit peak 3 — NASA average-illumination map",
+   "short": "Sunlit peak 3",
+   "lat_deg": -88.701551,
+   "lon_deg": 291.639283,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-3 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 3,
+    "map_pixel_raw_value": 20135,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     -36600.0,
+     14520.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 1780.2,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 0.71,
+    "mean3x3_deg": 1.93,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    -36600.0,
+    14520.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-3.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -2.751,
+    "max_deg": 1.802,
+    "mean_deg": -1.012,
+    "max_obstruction_distance_km": 164.4,
+    "fraction_azimuths_beyond_patch": 0.45,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 6.28,
+    "samples_from_240m_dem_fraction": 0.157
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-3.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-3.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -2347.9,
+    "max_m": 1812.5,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-4",
+   "name": "Sunlit peak 4 — NASA average-illumination map",
+   "short": "Sunlit peak 4",
+   "lat_deg": -87.993202,
+   "lon_deg": 193.570434,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-4 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 4,
+    "map_pixel_raw_value": 20072,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     -14280.0,
+     -59160.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 1264.9,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 4.41,
+    "mean3x3_deg": 5.35,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    -14280.0,
+    -59160.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-4.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -3.521,
+    "max_deg": 2.036,
+    "mean_deg": -0.63,
+    "max_obstruction_distance_km": 212.1,
+    "fraction_azimuths_beyond_patch": 0.531,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 5.46,
+    "samples_from_240m_dem_fraction": 0.159
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-4.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-4.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -3026.3,
+    "max_m": 1270.8,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-5",
+   "name": "Sunlit peak 5 — NASA average-illumination map",
+   "short": "Sunlit peak 5",
+   "lat_deg": -85.830426,
+   "lon_deg": 243.702343,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-5 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 5,
+    "map_pixel_raw_value": 19809,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     -113400.0,
+     -56040.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 2697.4,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 6.17,
+    "mean3x3_deg": 5.38,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    -113400.0,
+    -56040.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-5.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -3.897,
+    "max_deg": 5.283,
+    "mean_deg": 0.491,
+    "max_obstruction_distance_km": 218.1,
+    "fraction_azimuths_beyond_patch": 0.26,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 5.22,
+    "samples_from_240m_dem_fraction": 0.175
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-5.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-5.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -2426.0,
+    "max_m": 3378.6,
+    "samples_from_240m_dem_fraction": 0.0
+   }
+  },
+  {
+   "id": "illum-peak-6",
+   "name": "Sunlit peak 6 — NASA average-illumination map",
+   "short": "Sunlit peak 6",
+   "lat_deg": -85.306815,
+   "lon_deg": 37.053383,
+   "coord_class": "representative_point",
+   "coord_refs": [
+    "R-MAZARICO-2011"
+   ],
+   "coord_note": "Representative analysis point chosen by this project, not a mission landing target: the rank-6 local maximum of the NASA 18.6-year average solar-illumination map AVGVISIB_65S_240M_201608 (Mazarico et al. 2011) within 300 km of the pole, at least 25 km from the other analysis points and from higher-ranked peaks. The 240 m map pixel centre is used.",
+   "context_refs": [
+    "R-LOLA-PGDA"
+   ],
+   "selection": {
+    "method": "illumination_peak_rank",
+    "map": "AVGVISIB_65S_240M_201608.TIF",
+    "rank": 6,
+    "map_pixel_raw_value": 19689,
+    "map_scale": 4e-05,
+    "map_offset": 0.0,
+    "map_dtype": "int16",
+    "pixel_center_stereo_m": [
+     85800.0,
+     113640.0
+    ],
+    "min_separation_m": 25000,
+    "max_radius_m": 300000
+   },
+   "elevation_m": 6746.3,
+   "elevation_source": "Bilinear sample of LDEM_80S_80MPP_ADJ.TIF at the site coordinates; height above the 1737.4 km sphere [R-LOLA-PGDA]",
+   "published_elevation_m": null,
+   "slope": {
+    "pixel_deg": 5.78,
+    "mean3x3_deg": 6.04,
+    "source": "LDSM_80S_80MPP_ADJ.TIF pixel containing the site, and mean of the 3x3 pixels around it [R-LOLA-PGDA]",
+    "note": "Regional slope over an 80 m pixel; context only, not a landing-hazard assessment."
+   },
+   "stereo_xy_m": [
+    85800.0,
+    113640.0
+   ],
+   "terrain_aware": true,
+   "horizon": {
+    "file": "horizon_illum-peak-6.bin",
+    "layout": "float32 little-endian: n_az horizon elevations (deg) followed by n_az distances (m) of the horizon-defining terrain sample; azimuth i*az_step_deg clockwise from north",
+    "n_az": 720,
+    "az_step_deg": 0.5,
+    "min_deg": -5.521,
+    "max_deg": 3.378,
+    "mean_deg": -1.65,
+    "max_obstruction_distance_km": 184.4,
+    "fraction_azimuths_beyond_patch": 0.401,
+    "coverage_min_km": 600.4,
+    "unseen_terrain_margin_min_deg": 3.98,
+    "samples_from_240m_dem_fraction": 0.181
+   },
+   "terrain": {
+    "file": "terrain_illum-peak-6.bin",
+    "n": 201,
+    "half_width_m": 20000.0,
+    "texture_file": "terrain_color_illum-peak-6.png",
+    "spacing_m": 200.0,
+    "layout": "float32 little-endian heights (m above the 1737.4 km sphere), row-major [j][i]; node (i,j) lies at local azimuthal-equidistant offsets east = -half + i*spacing, north = -half + j*spacing from the site",
+    "min_m": -404.3,
+    "max_m": 7024.3,
     "samples_from_240m_dem_fraction": 0.0
    }
   }

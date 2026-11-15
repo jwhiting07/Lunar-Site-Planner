@@ -30,6 +30,12 @@ export function moonScaleBar(kmPerPixel: number, maxWidth = 100) {
   return { km, pixels: km / kmPerPixel };
 }
 
+const kmFormat = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
+/** Time constant of the eased zoom, ms: the camera closes ~63 % of the remaining distance in this time. */
+const ZOOM_TAU_MS = 85;
+/** Minimum screen distance between site markers, px (a pin's hit area is 24 px). */
+const MARKER_GAP = 22;
+
 export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
   compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
@@ -45,8 +51,11 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   const focus = useRef<(id: string | null) => void>(() => {});
   const zoom = useRef<(factor: number) => void>(() => {});
   const hoverReadout = useRef<HTMLOutputElement>(null);
+  const tipReadout = useRef<HTMLOutputElement>(null);
   const scaleReadout = useRef<HTMLOutputElement>(null);
   const scaleLine = useRef<HTMLSpanElement>(null);
+  const primaryRef = useRef(primaryId);
+  primaryRef.current = primaryId;
   const illumination = useRef(inst);
   illumination.current = inst;
   const redraw = useRef(() => {});
@@ -55,12 +64,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   const [showSites, setShowSites] = useState(true);
   const [orientation, setOrientation] = useState('south');
   const activeFocus = useRef<string | null>(null);
+  // Choosing coordinates on the Moon must not re-centre the view on the new point.
+  const skipFocusUntil = useRef(0);
 
   useEffect(() => {
     const element = host.current;
     if (!element) return;
     let renderer: THREE.WebGLRenderer;
-    try { renderer = new THREE.WebGLRenderer({ antialias: true }); }
+    try { renderer = new THREE.WebGLRenderer({ antialias: (devicePixelRatio || 1) < 2, powerPreference: 'high-performance' }); }
     catch { setError('3-D unavailable. Enter coordinates to continue.'); setLoading(false); return; }
     let disposed = false;
     let frame = 0;
@@ -105,10 +116,19 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     const sphere = new THREE.Sphere(new THREE.Vector3(), 1);
     const hit = new THREE.Vector3();
     let pointer: THREE.Vector2 | null = null;
-    const draw = () => {
-      if (disposed || frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
+    let pointerPx: { x: number; y: number } | null = null;
+    // Layout is read once (resize observer), never per frame.
+    const size = { w: element.clientWidth, h: element.clientHeight };
+    let lastMotion = 0;
+    let lastHover = 0;
+    let hoverTimer = 0;
+    let lastScale = '';
+    let lastScaleWidth = -1;
+    const labelWidths = new Map<HTMLElement, { text: string; width: number }>();
+    const pinSpot = new WeakMap<HTMLElement, string>(); // keyed by element: a re-created pin must be positioned again
+    const render = () => {
+      if (disposed) return;
+      {
         // Display lighting never supplies the scientific horizon calculation.
         const state = illumination.current;
         const site = sites[0];
@@ -129,53 +149,94 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         renderer.render(scene, camera);
         if (explorer) {
           // Perspective scale at the facing surface rather than the centre plane.
-          const kmPerPixel = 2 * Math.max(0.01, camera.position.length() - 1) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1737.4 / element.clientHeight;
+          const kmPerPixel = 2 * Math.max(0.01, camera.position.length() - 1) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1737.4 / size.h;
           const bar = moonScaleBar(kmPerPixel);
-          if (scaleReadout.current) scaleReadout.current.textContent = `${new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(bar.km)} km`;
-          if (scaleLine.current) scaleLine.current.style.width = `${bar.pixels}px`;
-          if (pointer && hoverReadout.current) {
+          const scaleText = `${kmFormat.format(bar.km)} km`;
+          if (scaleReadout.current && scaleText !== lastScale) { scaleReadout.current.textContent = scaleText; lastScale = scaleText; }
+          if (scaleLine.current && Math.abs(bar.pixels - lastScaleWidth) >= 0.5) { scaleLine.current.style.width = `${bar.pixels}px`; lastScaleWidth = bar.pixels; }
+          const hoverNow = performance.now();
+          if (pointer && hoverReadout.current && hoverNow - lastMotion > 150 && hoverNow - lastHover > 90) {
+            lastHover = hoverNow;
             raycaster.setFromCamera(pointer, camera);
             const surface = model ? raycaster.intersectObject(model, true)[0]?.point : raycaster.ray.intersectSphere(sphere, hit);
+            const tip = tipReadout.current;
             if (surface) {
               const { lat, lon } = globeCoordinates(surface);
               hoverReadout.current.textContent = `Lat: ${lat.toFixed(4)}°, Lon: ${lon.toFixed(4)}°`;
-            } else hoverReadout.current.textContent = 'Lat: —, Lon: —';
-          }
+              if (tip && pick.current && pointerPx) {
+                tip.hidden = false;
+                tip.textContent = `${lat.toFixed(3)}°, ${lon.toFixed(3)}°`;
+                tip.style.transform = `translate(${pointerPx.x + 16}px, ${pointerPx.y + 18}px)`;
+              } else if (tip) tip.hidden = true;
+            } else {
+              hoverReadout.current.textContent = 'Lat: —, Lon: —';
+              if (tip) tip.hidden = true;
+            }
+          } else if (pointer && !hoverTimer) hoverTimer = window.setTimeout(() => { hoverTimer = 0; draw(); }, 100);
         }
-        const occupied: { left: number; top: number; right: number; bottom: number }[] = [];
-        for (const { id, point } of positionsRef.current) {
+        // Markers keep a minimum spacing: a pin that would overlap an earlier one
+        // (the selected pin is placed first) moves to the nearest free spot.
+        const order = [...positionsRef.current].sort((p, q) => Number(q.id === primaryRef.current) - Number(p.id === primaryRef.current));
+        const spots = new Map<string, { x: number; y: number }>();
+        const apart = (x: number, y: number) => { for (const spot of spots.values()) if (Math.hypot(spot.x - x, spot.y - y) < MARKER_GAP) return false; return true; };
+        for (const { id, point } of order) {
           const pin = pins.current.get(id);
           if (!pin) continue;
           const screen = point.clone().multiplyScalar(1.006).project(camera);
           const visible = point.dot(camera.position.clone().sub(point)) > 0 && Math.abs(screen.x) < 0.95 && Math.abs(screen.y) < 0.95 && screen.z < 1;
           pin.hidden = !visible;
-          pin.style.left = `${(screen.x + 1) * 50}%`;
-          pin.style.top = `${(1 - screen.y) * 50}%`;
-          if (visible && compact && explorer) {
-            const label = pin.querySelector<HTMLElement>('.moon-callout-label');
-            const leader = pin.querySelector('polyline');
-            if (label && leader) {
-              const x = (screen.x + 1) * element.clientWidth / 2;
-              const y = (1 - screen.y) * element.clientHeight / 2;
-              const width = label.offsetWidth;
-              const direction = x + width + 40 > element.clientWidth - 20 ? -1 : 1;
-              let rise = 28;
-              const left = direction === 1 ? x + 28 : x - 28 - width;
-              while (rise < 224 && occupied.some(rect => left < rect.right + 8 && left + width > rect.left - 8 && y - rise - 20 < rect.bottom + 6 && y - rise > rect.top - 6)) rise += 28;
-              // Keep labels inside the map at the upper edge, too.
-              const endY = y - rise - 20 < 8 ? 28 : -rise;
-              const elbow = direction * 28;
-              leader.setAttribute('points', `0,0 ${elbow},${endY} ${elbow + direction * width},${endY}`);
-              label.style.left = `${12 + (direction === 1 ? 28 : -28 - width)}px`;
-              label.style.top = `${12 + endY - 21}px`;
-              occupied.push({ left, right: left + width, top: y + endY - 21, bottom: y + endY });
+          if (!visible) continue;
+          let x = (screen.x + 1) * size.w / 2;
+          let y = (1 - screen.y) * size.h / 2;
+          if (!apart(x, y)) {
+            const [bx, by] = [x, y];
+            search: for (let ring = 1; ring <= 6; ring++) for (let step = 0; step < 8; step++) {
+              const angle = (step + (ring % 2) / 2) * Math.PI / 4;
+              const cx = bx + Math.cos(angle) * MARKER_GAP * ring, cy = by + Math.sin(angle) * MARKER_GAP * ring;
+              if (apart(cx, cy)) { x = cx; y = cy; break search; }
             }
           }
+          spots.set(id, { x, y });
+          const spotKey = `${x.toFixed(1)},${y.toFixed(1)}`;
+          if (pinSpot.get(pin) !== spotKey) { pinSpot.set(pin, spotKey); pin.style.left = `${x}px`; pin.style.top = `${y}px`; }
         }
-      });
+        if (compact && explorer) {
+          // Labels avoid every marker dot as well as each other.
+          const occupied: { left: number; top: number; right: number; bottom: number }[] = [...spots.values()].map(({ x, y }) => ({ left: x - 10, right: x + 10, top: y - 10, bottom: y + 10 }));
+          for (const [id, { x, y }] of spots) {
+            const label = pins.current.get(id)?.querySelector<HTMLElement>('.moon-callout-label');
+            const leader = pins.current.get(id)?.querySelector('polyline');
+            if (!label || !leader) continue;
+            let measured = labelWidths.get(label);
+            if (!measured || measured.text !== label.textContent) {
+              measured = { text: label.textContent ?? '', width: label.offsetWidth };
+              if (measured.width > 0) labelWidths.set(label, measured);
+            }
+            const width = measured.width;
+            const direction = x + width + 40 > size.w - 20 ? -1 : 1;
+            let rise = 28;
+            const left = direction === 1 ? x + 28 : x - 28 - width;
+            while (rise < 224 && occupied.some(rect => left < rect.right + 8 && left + width > rect.left - 8 && y - rise - 20 < rect.bottom + 6 && y - rise > rect.top - 6)) rise += 28;
+            // Keep labels inside the map at the upper edge, too.
+            const endY = y - rise - 20 < 8 ? 28 : -rise;
+            const elbow = direction * 28;
+            const points = `0,0 ${elbow},${endY} ${elbow + direction * width},${endY}`;
+            if (leader.getAttribute('points') !== points) leader.setAttribute('points', points);
+            const labelLeft = `${12 + (direction === 1 ? 28 : -28 - width)}px`, labelTop = `${12 + endY - 21}px`;
+            if (label.style.left !== labelLeft) label.style.left = labelLeft;
+            if (label.style.top !== labelTop) label.style.top = labelTop;
+            occupied.push({ left, right: left + width, top: y + endY - 21, bottom: y + endY });
+          }
+        }
+      }
+    };
+    const draw = () => {
+      if (disposed || frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; render(); });
     };
     redraw.current = draw;
     focus.current = (id) => {
+      zoomTarget = null;
       activeFocus.current = id;
       const point = positionsRef.current.find(p => p.id === id)?.point ?? globePosition(-90, 0);
       const coords = globeCoordinates(point);
@@ -196,14 +257,51 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       controls.update();
       draw();
     };
-    zoom.current = (factor) => {
-      camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);
-      updateLimits();
-      controls.update(); draw();
+    const markMotion = () => {
+      lastMotion = performance.now();
+      window.clearTimeout(hoverTimer);
+      hoverTimer = window.setTimeout(() => { hoverTimer = 0; draw(); }, 170);
     };
-    controls.addEventListener('change', draw);
+    // Zoom eases toward a target distance (in log space, so every wheel tick feels the same at any
+    // altitude) and renders once per frame, synchronously, while it moves.
+    let zoomTarget: number | null = null;
+    let zoomFrame = 0;
+    let zoomLast = 0;
+    const offset = new THREE.Vector3();
+    const stepZoom = (now: number) => {
+      zoomFrame = 0;
+      if (disposed || zoomTarget === null) return;
+      const goal = THREE.MathUtils.clamp(zoomTarget, controls.minDistance, controls.maxDistance);
+      const current = camera.position.distanceTo(controls.target);
+      const k = 1 - Math.exp(-Math.min(64, now - zoomLast) / ZOOM_TAU_MS);
+      zoomLast = now;
+      const next = Math.exp(Math.log(current) + (Math.log(goal) - Math.log(current)) * k);
+      const done = Math.abs(Math.log(goal / next)) < 0.0004;
+      offset.copy(camera.position).sub(controls.target).setLength(done ? goal : next);
+      camera.position.copy(controls.target).add(offset);
+      markMotion();
+      render();
+      if (done) zoomTarget = null;
+      else zoomFrame = requestAnimationFrame(stepZoom);
+    };
+    const zoomBy = (factor: number) => {
+      zoomTarget = THREE.MathUtils.clamp((zoomTarget ?? camera.position.distanceTo(controls.target)) * factor, controls.minDistance, controls.maxDistance);
+      if (!zoomFrame) { zoomLast = performance.now(); zoomFrame = requestAnimationFrame(stepZoom); }
+    };
+    zoom.current = zoomBy;
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      event.stopPropagation(); // keep OrbitControls' stepped wheel zoom out of the way
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 400 : 1;
+      zoomBy(Math.exp(THREE.MathUtils.clamp(event.deltaY * unit, -240, 240) * 0.0018));
+    };
+    element.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    controls.addEventListener('change', () => { markMotion(); draw(); });
     const onPointer = (event: PointerEvent) => {
       const bounds = renderer.domElement.getBoundingClientRect();
+      pointerPx = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+      const tip = tipReadout.current;
+      if (tip && !tip.hidden) tip.style.transform = `translate(${pointerPx.x + 16}px, ${pointerPx.y + 18}px)`;
       pointer = new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2);
       draw();
     };
@@ -224,7 +322,10 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       if (!pick.current || !model) return;
       raycaster.setFromCamera(ndc, camera);
       const surface = raycaster.intersectObject(model, true)[0]?.point;
-      if (surface) pick.current(globeCoordinates(surface));
+      if (surface) {
+        skipFocusUntil.current = performance.now() + 600;
+        pick.current(globeCoordinates(surface));
+      }
     };
     const onUp = (event: PointerEvent) => {
       pointers.delete(event.pointerId);
@@ -237,7 +338,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       }
     };
     const onCancel = (event: PointerEvent) => { pointers.delete(event.pointerId); gesture = null; };
-    const onLeave = () => { pointer = null; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
+    const onLeave = () => { pointer = null; pointerPx = null; if (tipReadout.current) tipReadout.current.hidden = true; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
     const onKey = (event: KeyboardEvent) => {
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
         event.preventDefault();
@@ -260,9 +361,11 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     renderer.domElement.addEventListener('pointerup', onUp);
     renderer.domElement.addEventListener('pointercancel', onCancel);
     renderer.domElement.addEventListener('keydown', onKey);
-    if (explorer) { renderer.domElement.addEventListener('pointermove', onPointer); renderer.domElement.addEventListener('pointerleave', onLeave); }
+    if (explorer) { element.addEventListener('pointermove', onPointer); element.addEventListener('pointerleave', onLeave); }
     const resize = new ResizeObserver(() => {
       if (!element.clientWidth || !element.clientHeight) return;
+      size.w = element.clientWidth;
+      size.h = element.clientHeight;
       const previousFit = fittedDistance();
       renderer.setSize(element.clientWidth, element.clientHeight, false);
       camera.aspect = element.clientWidth / element.clientHeight;
@@ -271,7 +374,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       if (!local) camera.position.multiplyScalar(fittedDistance() / previousFit);
       updateLimits();
       camera.updateProjectionMatrix();
-      draw();
+      render(); // before paint, so the resized canvas is never shown empty
     });
     resize.observe(element);
     loadNasaModel('moon').then(loaded => {
@@ -286,13 +389,16 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       zoom.current = () => {};
       redraw.current = () => {};
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(zoomFrame);
+      window.clearTimeout(hoverTimer);
+      element.removeEventListener('wheel', onWheel, { capture: true });
       resize.disconnect();
       controls.dispose();
       if (model) disposeModel(model);
       if (stars) disposeStarfield(stars);
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
-      renderer.domElement.removeEventListener('pointermove', onPointer);
-      renderer.domElement.removeEventListener('pointerleave', onLeave);
+      element.removeEventListener('pointermove', onPointer);
+      element.removeEventListener('pointerleave', onLeave);
       renderer.domElement.removeEventListener('keydown', onKey);
       renderer.domElement.removeEventListener('pointerdown', onDown);
       renderer.domElement.removeEventListener('pointermove', onMove);
@@ -306,11 +412,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions]);
   useEffect(() => { if (explorer) focus.current(null); }, [explorer, local, compact]);
   useEffect(() => { if (!explorer || orientation === 'site') focus.current(primaryId); }, [primaryId, sites, explorer, orientation]);
-  useEffect(() => { if (compact && explorer && primaryId) focus.current(primaryId); }, [primaryId, compact, explorer]);
+  useEffect(() => {
+    if (performance.now() < skipFocusUntil.current) return;
+    if (compact && explorer && primaryId) focus.current(primaryId);
+  }, [primaryId, compact, explorer]);
   useEffect(() => { redraw.current(); }, [inst]);
 
   return <>
-    <div className={`moon-stage${explorer ? ' moon-stage-full' : ''}${showSites ? '' : ' moon-hide-sites'}`} ref={host}>
+    <div className={`moon-stage${explorer ? ' moon-stage-full' : ''}${showSites ? '' : ' moon-hide-sites'}${onPick ? ' moon-picking' : ''}`} ref={host}>
       {explorer && !compact ? <div className="moon-simple-controls">
         <label className="moon-sites-toggle"><input type="checkbox" checked={showSites} onChange={event => setShowSites(event.target.checked)} />Landing sites</label>
         {showSites && <ul className="moon-site-list">{sites.map(site => <li key={site.id}><button type="button" aria-pressed={site.id === primaryId} onClick={() => { onSelect(site.id); setOrientation('site'); focus.current(site.id); }}><span>{site.short}</span><small>{COORD_CLASS_LABEL[site.coord_class]}</small></button></li>)}</ul>}
@@ -334,6 +443,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       {error && <div className="moon-message" role="alert">{error}</div>}
       <span className="moon-hint">{onPick ? 'Click to select · Enter selects center · ' : ''}Drag to rotate · Scroll to zoom</span>
       {local && <span className="moon-local-reticle" aria-label="Selected landing site" />}
+      {explorer && <output ref={tipReadout} className="moon-tip" hidden aria-hidden="true" />}
       {explorer && <div className="moon-coordinate-hud" aria-label="Moon surface scale and cursor coordinates">
         <output ref={hoverReadout} aria-label="Moon cursor latitude and longitude" aria-live="off">Lat: —, Lon: —</output>
         <div className="moon-scale-bar"><span ref={scaleLine} /><output ref={scaleReadout} aria-label="Moon distance scale" /></div>

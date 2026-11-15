@@ -80,21 +80,24 @@ export function durationGrid(min: number, max = min): number[] {
 }
 
 export interface Candidate { result: AnalysisResult; targets: Targets }
-export function compareCandidates(a: Candidate, b: Candidate, origin: Point, startMs: number) {
+export function compareCandidates(a: Candidate, b: Candidate, origin: Point | null, startMs: number) {
   const x = assessment(a.result, a.targets), y = assessment(b.result, b.targets);
   if (x.good !== y.good) return x.good ? -1 : 1;
   if (Math.abs(x.deficit - y.deficit) > 1e-7) return x.deficit - y.deficit;
   const availability = (r: AnalysisResult) => r.metrics.sunlitFraction + r.metrics.earthVisibleFraction;
   const delta = availability(b.result) - availability(a.result);
   if (Math.abs(delta) > 1e-7) return delta;
-  const cost = (r: AnalysisResult) => distanceKm(origin, { lat: r.site.lat_deg, lon: r.site.lon_deg }) + Math.abs(r.startMs - startMs) / DAY;
+  // A terrain-verified result is a real value, a flat-horizon one only an upper bound: prefer the former when equal.
+  if (a.result.terrainAware !== b.result.terrainAware) return a.result.terrainAware ? -1 : 1;
+  // With no entered location (unrestricted search) distance does not matter, only the date offset.
+  const cost = (r: AnalysisResult) => (origin ? distanceKm(origin, { lat: r.site.lat_deg, lon: r.site.lon_deg }) : 0) + Math.abs(r.startMs - startMs) / DAY;
   return cost(a.result) - cost(b.result);
 }
 
 export interface SearchOptions {
   points: Point[]; dates: number[]; durationDays: number; targets: Targets;
   durationsDays?: number[]; coverageEndMs?: number;
-  lander: LanderParams; clearance: number; origin: Point; startMs: number;
+  lander: LanderParams; clearance: number; origin: Point | null; startMs: number;
   known: SiteDoc[]; observerHeight: number; masks: Map<string, HorizonMask>;
 }
 
@@ -129,7 +132,7 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
     const result = analyzeSite(makeSiteContext(site, o.observerHeight, mask), eph, {
       startMs, endMs: startMs + days * DAY, stepMs, params: o.lander, earthMinClearanceDeg: o.clearance,
     });
-    if (mask.terrainAware && !site.horizon.file) result.horizonMask = mask;
+    if (mask.terrainAware) result.horizonMask = mask;
     return { targets: { ...o.targets }, result };
   };
   const durations = o.durationsDays ?? durationGrid(o.durationDays);
@@ -154,5 +157,7 @@ export async function searchCandidates(eph: EphemerisTable, o: SearchOptions, si
     if (sliceOver()) await rest();
   }
   progress(total, total);
-  return refined.sort(rank).slice(0, 5);
+  // At most two dates per location and mission length, so the list is not five copies of one point.
+  const perSite = new Map<string, number>();
+  return refined.sort(rank).filter(c => { const key = c.result.site.id + "|" + Math.round(c.result.metrics.intervalHours); const n = (perSite.get(key) ?? 0) + 1; perSite.set(key, n); return n <= 2; }).slice(0, 5);
 }

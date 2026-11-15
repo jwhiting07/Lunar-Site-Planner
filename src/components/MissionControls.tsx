@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { SiteDoc } from '../science';
 import { normalizeLon } from '../science/planner';
+import { Chevron } from './Chevron';
+import { Select } from './Select';
 
 export type LocationMode = 'any' | 'exact' | 'nearby';
 export type LandingMode = 'any' | 'exact' | 'range';
@@ -37,11 +39,11 @@ type Editor = 'location' | 'landing' | 'duration' | 'advanced';
 interface Props {
   query: MissionQuery; onChange: (query: MissionQuery) => void;
   sites: SiteDoc[]; firstDate: string; lastDate: string;
-  busy: boolean; ready: boolean; collapsed: boolean; onCollapse: () => void;
+  busy: boolean; ready: boolean; collapsed: boolean; zoneLabel: string;
   onRun: () => void; onPick: () => void; advanced: ReactNode;
 }
 
-export function MissionControls({ query, onChange, sites, firstDate, lastDate, busy, ready, collapsed, onCollapse, onRun, onPick, advanced }: Props) {
+export function MissionControls({ query, onChange, sites, firstDate, lastDate, busy, ready, collapsed, zoneLabel, onRun, onPick, advanced }: Props) {
   const [editor, setEditor] = useState<Editor | null>(null);
   const root = useRef<HTMLDivElement>(null);
   const triggers = useRef(new Map<Editor, HTMLButtonElement>());
@@ -70,7 +72,7 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
 
   const field = (key: Editor, label: string, value: string, contents: ReactNode) => <div className={`mission-control mission-control-${key}`}>
     <button type="button" className="mission-control-trigger" ref={el => { if (el) triggers.current.set(key, el); }} aria-expanded={editor === key} aria-controls={`mission-editor-${key}`} onClick={() => setEditor(editor === key ? null : key)} disabled={busy}>
-      <span>{label}</span><strong>{value}</strong><span className="mission-chevron" aria-hidden="true">⌄</span>
+      <span>{label}</span><strong>{value}</strong><Chevron className="mission-chevron" />
     </button>
     {editor === key && <form ref={popup} id={`mission-editor-${key}`} className={`mission-editor mission-editor-${key}`} aria-label={`${label} settings`} onSubmit={event => { event.preventDefault(); close(); }}>
       {contents}
@@ -78,7 +80,7 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
     </form>}
   </div>;
 
-  return <div ref={root} id="mission-controls" className="mission-controls" hidden={collapsed}>
+  return <div className="mission-controls-wrap" data-collapsed={collapsed}><div ref={root} id="mission-controls" className="mission-controls" inert={collapsed}>
     {field('location', 'Location', labels.location, <>
       {choices('Location scope', query.location, [['any', 'Anywhere'], ['exact', 'Coordinates'], ['nearby', 'Nearby']], location => change({ location }))}
       {query.location !== 'any' ? <>
@@ -86,19 +88,19 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
           <label>Latitude (°)<input aria-label="Latitude (°)" type="number" required min="-90" max="90" step="any" placeholder="−90 to 90" value={query.lat} onChange={event => change({ lat: event.target.value })} /></label>
           <label>Longitude (° E)<input aria-label="Longitude (° E)" type="number" required min="-180" max="180" step="any" placeholder="−180 to 180" value={query.lon} onChange={event => change({ lon: event.target.value })} /></label>
         </div>
-        <button type="button" className="mission-text-button mission-pick" onClick={() => { setEditor(null); onPick(); }}>Choose on Moon ↗</button>
+        <button type="button" className="btn mission-pick" onClick={() => { setEditor(null); onPick(); }}>Choose Coordinates on the Moon</button>
         {query.location === 'nearby' && <label>Radius (km)<input type="number" required min="0.001" max="1000" step="any" value={query.radius} onChange={event => change({ radius: event.target.value })} /></label>}
-        <details className="mission-known-sites"><summary>Sites with terrain data</summary><label>Terrain site<select value="" onChange={event => {
-          const site = sites.find(item => item.id === event.target.value);
-          if (site) change({ lat: String(site.lat_deg), lon: String(normalizeLon(site.lon_deg)) });
-        }}><option value="" disabled>Choose a site</option>{sites.filter(site => site.terrain_aware).map(site => <option key={site.id} value={site.id}>{site.short}</option>)}</select></label></details>
+        <details className="mission-known-sites"><summary>Sites with terrain data</summary><div className="mission-select-field"><span>Terrain site</span><Select label="Terrain site" value="" placeholder="Choose a site" options={sites.filter(site => site.terrain_aware).map(site => ({ value: site.id, label: site.short }))} onChange={id => {
+          const site = sites.find(item => item.id === id);
+          if (site) change({ lat: String(Number(site.lat_deg.toFixed(6))), lon: String(Number(normalizeLon(site.lon_deg).toFixed(6))) });
+        }} /></div></details>
       </> : <p>Search across the Moon.</p>}
     </>)}
-    {field('landing', 'Landing (UTC)', labels.landing, <>
+    {field('landing', `Landing (${zoneLabel})`, labels.landing, <>
       {choices('Landing date scope', query.landing, [['any', 'Any date'], ['exact', 'Exact date'], ['range', 'Date range']], landing => change({ landing }))}
       {query.landing === 'any' ? <p>Available landing dates: {firstDate}–{lastDate}.</p> : <div className={query.landing === 'range' ? 'mission-fields' : ''}>
-        <label>{query.landing === 'range' ? 'First landing (UTC)' : 'Landing date (UTC)'}<input type="date" required min={firstDate} max={lastDate} value={query.date} onChange={event => change({ date: event.target.value })} /></label>
-        {query.landing === 'range' && <label>Last landing (UTC)<input type="date" required min={query.date} max={lastDate} value={query.lastDate} onChange={event => change({ lastDate: event.target.value })} /></label>}
+        <label>{query.landing === 'range' ? `First landing (${zoneLabel})` : `Landing date (${zoneLabel})`}<input type="date" required min={firstDate} max={lastDate} value={query.date} onChange={event => change({ date: event.target.value })} /></label>
+        {query.landing === 'range' && <label>Last landing ({zoneLabel})<input type="date" required min={query.date} max={lastDate} value={query.lastDate} onChange={event => change({ lastDate: event.target.value })} /></label>}
       </div>}
     </>)}
     {field('duration', 'Duration', labels.duration, <>
@@ -110,6 +112,5 @@ export function MissionControls({ query, onChange, sites, firstDate, lastDate, b
     </>)}
     <button type="button" className="mission-run" disabled={busy || !ready} onClick={() => { setEditor(null); onRun(); }}>{isDiscovery(query) ? 'Find options' : 'Analyze'} <span aria-hidden="true">→</span></button>
     {field('advanced', 'Advanced', '', advanced)}
-    <button type="button" className="mission-icon-button mission-collapse" aria-label="Hide mission controls" aria-expanded="true" aria-controls="mission-controls" onClick={() => { setEditor(null); onCollapse(); }}><span aria-hidden="true">⌃</span></button>
-  </div>;
+  </div></div>;
 }

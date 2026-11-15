@@ -1,13 +1,13 @@
 {
  "schema": 1,
- "generated_utc": "2026-11-14T21:14:41Z",
+ "generated_utc": "2026-11-15T03:30:38Z",
  "pipeline": {
   "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
   "scripts": {
-   "build_data.py": "bb1eebf906370a1e97bc9b0767e98cc095423bbe3a104fe84eab6d87bd02adff",
+   "build_data.py": "6ac04b625621c0ab924c890134f7c788a4b6c7ac3c78c3a3359e41cecb36a6d8",
    "moonlib.py": "6932b8ea1003c6ab81568ebb25429fb93a5f13119cc3368d770bb0053d929e33",
    "fetch_sources.py": "17122a7596c7c566c818a836257fc3f363046908a2ffd95e57384fdf4e9769ad",
-   "sites_input.json": "c9b15c62e62296c1e5873f69ecce7af025c77ba308939f0179ca4cf8b9944309",
+   "sites_input.json": "b9101ec5b09693c1fad032580f87fdaf07c2537f0753c44ec28dc963b7705089",
    "references.json": "91ece37fe230637cf8b522cf9cb51d89e4d0520340224a9ff2f04788942631e8"
   },
   "python": "3.12.10",
@@ -211,7 +211,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "ephemeris_2027.bin",
@@ -241,7 +241,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "ephemeris_2028.bin",
@@ -271,7 +271,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "horizon_connecting-ridge.bin",
@@ -294,7 +294,145 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-1.bin",
+   "bytes": 5760,
+   "sha256": "c4f9ea6414af5c6628f7779838a4d10f344a6490487eef44ae45786311a1f51b",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-2.bin",
+   "bytes": 5760,
+   "sha256": "9d5fe066617d6e292807d4eb3c0a55c33db01ac3eec77bb75ba0c49b6d42ce4b",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-3.bin",
+   "bytes": 5760,
+   "sha256": "db4f32ce51d52fe260f9099815ecbca798a43b344cee04353336696e89536ad1",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-4.bin",
+   "bytes": 5760,
+   "sha256": "dea935557f5d870f6f789c596a514d3f1b6272f69267e1212f52c77417ee3d52",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-5.bin",
+   "bytes": 5760,
+   "sha256": "3cc458365d1ee65ee672359b47a22d2645768200fd59af9b7028cbb38b50e7e3",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "horizon_illum-peak-6.bin",
+   "bytes": 5760,
+   "sha256": "fba7c8bea297860ea2d73b501faf7befded01fbe4f7d93de81c316ecf5c26e4a",
+   "dtype": "float32",
+   "shape": [
+    1440
+   ],
+   "byte_order": "little-endian",
+   "description": "Terrain horizon mask H(A) and distance of the horizon-defining terrain sample",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Great-circle ray sampling of the DEM with exact spherical curvature (M-HORIZON): azimuth step 0.5 deg, samples from 40.0 m to 600 km (step max(40.0 m, 0.001 x distance)), 80 m DEM where available else 240 m DEM, bilinear interpolation, observer 2.0 m above the DEM surface",
+   "frame": "local East-North-Up at the site; azimuth clockwise from north",
+   "units": "deg, m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "horizon_im1-odysseus.bin",
@@ -317,7 +455,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "horizon_im2-athena.bin",
@@ -340,7 +478,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "overview_80S.png",
@@ -356,7 +494,7 @@
    "refs": [
     "R-LOLA-PGDA"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_color_connecting-ridge.png",
@@ -372,7 +510,103 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-1.png",
+   "bytes": 18268,
+   "sha256": "769a5137edb8fd8371733e8b40261779c3fa01c2a5a635a83d76feed4c36cafc",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-2.png",
+   "bytes": 9703,
+   "sha256": "38df4d5f86f8a6531a9b5fdb4aaedf1e6d58f09368c7596ee5f1f4d31dc98c71",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-3.png",
+   "bytes": 14643,
+   "sha256": "4d86ed468b9b4a895088c9587428b73441f683ea37634fa04112c5f569012258",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-4.png",
+   "bytes": 13347,
+   "sha256": "01b7e5f214943b984b1e7b96612e09b7bf4f7173f18d65b017f6125328c6335c",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-5.png",
+   "bytes": 7946,
+   "sha256": "babbfec09a68db38bbc975c67bcc5874789a8497ef9eea071b6bc2b27f2a57c2",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_color_illum-peak-6.png",
+   "bytes": 6811,
+   "sha256": "a4902617f2613dcf530f79583362eead280cd2a9445d76b02589751dd5fb39fb",
+   "description": "Local terrain display texture",
+   "inputs": [
+    "public/textures/moon-color.jpg"
+   ],
+   "method": "Bilinear reprojection of the NASA SVS CGI Moon Kit color map onto the site terrain grid; display only",
+   "frame": "local azimuthal-equidistant grid, rows run south to north",
+   "units": "8-bit RGB",
+   "refs": [
+    "R-SVS-MOON-KIT"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_color_im1-odysseus.png",
@@ -388,7 +622,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_color_im2-athena.png",
@@ -404,7 +638,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_connecting-ridge.bin",
@@ -428,7 +662,151 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-1.bin",
+   "bytes": 161604,
+   "sha256": "3ed47e7837b3b79ce1682a9ff10f7eb1bcb8ec286ec00a2ee0e472e9bb78a43c",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-2.bin",
+   "bytes": 161604,
+   "sha256": "8f8123b48ea4615469297e477bd35d8bfad174fe4358b07b3cb7ecadb293ed0b",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-3.bin",
+   "bytes": 161604,
+   "sha256": "2c0eefdabca46f3910290cc25da0a646c56cf6cd66b86cb4b31807f0b19201da",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-4.bin",
+   "bytes": 161604,
+   "sha256": "aaab387d96ba2a743fa9cd3d17d7c78460dbf53d1578aa914c699c0954798e46",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-5.bin",
+   "bytes": 161604,
+   "sha256": "74c4babaaba0b493994b57f7491f9eb165d3c046d0ffe5e905817eaa52b860f3",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
+  },
+  {
+   "file": "terrain_illum-peak-6.bin",
+   "bytes": 161604,
+   "sha256": "a60231d52a38c1a0c8d896d182ca5b063fa1d312624737825ec3d670d1f9e4e0",
+   "dtype": "float32",
+   "shape": [
+    201,
+    201
+   ],
+   "byte_order": "little-endian",
+   "description": "Reduced local terrain patch for 3-D display",
+   "inputs": [
+    "LDEM_80S_80MPP_ADJ.TIF",
+    "LDEM_60S_240MPP_ADJ.TIF"
+   ],
+   "method": "Bilinear DEM samples on a 201x201 local azimuthal-equidistant grid, +/-20 km (M-PATCH)",
+   "frame": "heights above the 1737.4 km reference sphere",
+   "units": "m",
+   "refs": [
+    "R-LOLA-PGDA",
+    "R-SNYDER"
+   ],
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_im1-odysseus.bin",
@@ -452,7 +830,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "terrain_im2-athena.bin",
@@ -476,7 +854,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "sites.json",
@@ -496,7 +874,7 @@
     "R-LOLA-SITES",
     "R-MAZARICO-2011"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   },
   {
    "file": "ephemeris.json",
@@ -516,7 +894,7 @@
     "R-NAIF-SPKPOS",
     "R-NAIF-PCK"
    ],
-   "generated_utc": "2026-11-14T21:14:41Z"
+   "generated_utc": "2026-11-15T03:30:38Z"
   }
  ],
  "references": [

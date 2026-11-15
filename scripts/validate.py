@@ -483,7 +483,7 @@ def render_md(R: dict) -> str:
     else:
         h = v["headers"][0]
         n_ep = sum(q["n_epochs"] for q in v["queries"])
-        a(f"Queries: {len(v['queries'])} (3 sites × Sun/Earth), {n_ep} epochs in total, "
+        a(f"Queries: {len(v['queries'])} ({len(v['queries']) // 2} sites × Sun/Earth), {n_ep} epochs in total, "
           f"{min(q['n_epochs'] for q in v['queries'])} per query, START 2026-01-01 00:07 UT, STEP 9917 min to 2028-12-31 "
           "(mostly non-hourly times). CENTER=coord@301, COORD_TYPE=GEODETIC, SITE_COORD = E-lon, lat, (elevation_m + 2 m)/1000 km, "
           "QUANTITIES=4,20, APPARENT=AIRLESS, EXTRA_PREC=YES. Raw responses cached in `data_cache/horizons/`.")
@@ -512,7 +512,7 @@ def render_md(R: dict) -> str:
     a("## V-2 Moon-centre light time/aberration vs surface observer [R-NAIF-ABCORR]")
     a("")
     a(f"Angle between (Moon-centred LT+S vector − site vector) and spkcpo with the surface point as observer, "
-      f"{v['n_epochs_per_site']} random epochs × 3 sites, exact SPICE at each epoch (no interpolation):")
+      f"{v['n_epochs_per_site']} random epochs × every shipped site, exact SPICE at each epoch (no interpolation):")
     a("")
     for b in ("sun", "earth"):
         a(f"- {b}: max {f(v['per_body'][b]['max'],2,True)} deg, rms {f(v['per_body'][b]['rms'],2,True)} deg")
@@ -529,7 +529,7 @@ def render_md(R: dict) -> str:
     a("## V-3 Frame consistency: MOON_ME_DE440_ME421 vs MOON_ME_DE421 (frame of the LOLA products) [R-NAIF-MOONFK] [R-DE421]")
     a("")
     a(f"Full DE421 stack (de421.bsp, moon_pa_de421_1900-2050.bpc, moon_080317.tf, frame `MOON_ME_DE421`) vs the shipped DE440 stack, "
-      f"spkcpo at the app observer points, {v['n_epochs_per_site']} random epochs 2026–2028 × 3 sites. DE421 − DE440:")
+      f"spkcpo at the app observer points, {v['n_epochs_per_site']} random epochs 2026–2028 × every shipped site. DE421 − DE440:")
     a("")
     a("| Body | Az max | Az×cos(el) max | El max | El rms |")
     a("|---|---|---|---|---|")

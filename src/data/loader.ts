@@ -46,10 +46,17 @@ export function loadHorizon(site: SiteDoc): Promise<HorizonMask> {
   );
 }
 
-export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal) {
+type CustomHorizon = { site: SiteDoc; mask: HorizonMask; observerHeightM: number } | null;
+const customCache = new Map<string, CustomHorizon>();
+
+export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal): Promise<CustomHorizon> {
+  const cacheKey = `${site.lat_deg},${site.lon_deg}`;
+  const cached = customCache.get(cacheKey);
+  if (cached !== undefined) return cached;
   const query = new URLSearchParams({ lat: String(site.lat_deg), lon: String(site.lon_deg) });
   const url = `${import.meta.env.BASE_URL}api/custom-horizon?${query}`;
-  const deadline = Date.now() + 30_000;
+  // Longer than the server-side timeout, so a busy calculator is waited for rather than reported as unavailable.
+  const deadline = Date.now() + 75_000;
   let response = await fetch(url, { signal });
   // A new request can arrive before the server notices the previous one was cancelled.
   while (response.status === 409 && Date.now() < deadline) {
@@ -60,7 +67,7 @@ export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal) {
   }
   if (!response.ok) throw new Error('The local terrain calculator is unavailable.');
   const data = await response.json();
-  if (data === null) return null;
+  if (data === null) { customCache.set(cacheKey, null); return null; }
   const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM } = data;
   if (![elevationM, observerHeightM, coverageKm].every(Number.isFinite) ||
       !(azStepDeg > 0) || !Array.isArray(elevDeg) || !Array.isArray(distM) ||
@@ -80,7 +87,9 @@ export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal) {
       max_obstruction_distance_km: Math.max(...distM) / 1000,
     },
   };
-  return { site: resolvedSite, mask, observerHeightM };
+  const resolved = { site: resolvedSite, mask, observerHeightM };
+  customCache.set(cacheKey, resolved);
+  return resolved;
 }
 
 /** Terrain patch heights (m above the 1737.4 km sphere), row-major [j][i], n x n. */

@@ -34,7 +34,7 @@ export const METHODS: MethodDoc[] = [
     refs: [],
     limitations: [
       'Check a site can compute a LOLA horizon for custom coordinates within sufficient south-polar coverage. Other custom coordinates and sampled search locations use zero elevation and a flat skyline unless an existing terrain profile is available.',
-      'Local search samples the center and 8 bearings on each of two radius rings. Unrestricted search samples 48 equal-area sphere points and a neutral equatorial point. Dates sample daily or at a whole-day spacing that limits the grid to 32 dates, including both boundaries.',
+      'Local search samples the center and 8 bearings on each of two radius rings. Unrestricted search samples 48 equal-area sphere points, a neutral equatorial point and the shipped terrain sites. Dates sample daily or at a whole-day spacing that limits the grid to 32 dates, including both boundaries.',
       'Duration ranges sample at most eight lengths, including both endpoints. Exact coordinates or an exact landing date remain fixed when other fields are searched. Scenarios extending beyond ephemeris coverage are excluded. Ranking uses visibility targets and availability, not a guarantee of the longest possible mission.',
       'Search screens each mission at a whole-hour spacing of ceil(duration hours / 168), at least one hour, and refines its leading 12 candidates hourly. The best five refined candidates are shown; unsampled sites, dates and brief visibility events may be missed.',
       'Nearby alternatives test date offsets within 7 days at the same site, and 16 points within 50 km on the original date. Duration and targets are preserved. The search is bounded, not a global optimum guarantee.',

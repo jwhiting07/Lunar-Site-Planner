@@ -91,15 +91,61 @@ def check_dem_crs(dem: ml.Dem) -> float:
     return err_fwd
 
 
-def select_site_point(site: dict) -> tuple[float, float, dict]:
+_PEAKS: dict = {}
+
+
+def illumination_peaks(sel: dict, fixed_xy: list[tuple[float, float]]) -> list[dict]:
+    """Ranked local maxima of a NASA average-illumination map.
+
+    Rule (documented in docs/REFERENCES_AND_ASSUMPTIONS.md): within max_radius_m of
+    the pole, take map pixels in descending order of value (ties: raster order) and
+    accept a pixel when it is at least min_separation_m from every already accepted
+    peak and from every fixed analysis point. Pixel centres are used.
+    """
+    import rasterio
+
+    key = (sel["map"], sel["count"], sel["min_separation_m"], sel["max_radius_m"], tuple(fixed_xy))
+    if key not in _PEAKS:
+        with rasterio.open(CACHE / "illumination" / sel["map"]) as ds:
+            data = ds.read(1)
+            t, scale, offset, dtype = ds.transform, (ds.scales[0] if ds.scales else 1.0), (ds.offsets[0] if ds.offsets else 0.0), ds.dtypes[0]
+        h, w = data.shape
+        xs = t.c + (np.arange(w) + 0.5) * t.a
+        ys = t.f + (np.arange(h) + 0.5) * t.e
+        inside = (xs[None, :] ** 2 + ys[:, None] ** 2 <= sel["max_radius_m"] ** 2) & (data > 0)
+        idx = np.flatnonzero(inside)
+        vals = data.ravel()[idx].astype(np.int64)
+        order = idx[np.argsort(-vals, kind="stable")]
+        taken = [(x, y) for x, y in fixed_xy]
+        peaks: list[dict] = []
+        for flat in order:
+            r, c = divmod(int(flat), w)
+            x, y = float(xs[c]), float(ys[r])
+            if all(np.hypot(x - tx, y - ty) >= sel["min_separation_m"] for tx, ty in taken):
+                taken.append((x, y))
+                peaks.append({"x": x, "y": y, "raw": int(data[r, c]), "scale": scale, "offset": offset, "dtype": dtype})
+                if len(peaks) == sel["count"]:
+                    break
+        _PEAKS[key] = peaks
+    return _PEAKS[key]
+
+
+def select_site_point(site: dict, fixed_xy: list[tuple[float, float]] | None = None) -> tuple[float, float, dict]:
     """Resolve a site's coordinates. Sourced coordinates pass through unchanged;
-    'select' sites are located from a published NASA map (documented rule)."""
+    'select' sites are located from a published NASA map (documented rules)."""
     if "select" not in site:
         return site["lat_deg"], site["lon_deg"], {}
     import rasterio
     from rasterio.windows import from_bounds
 
     sel = site["select"]
+    if sel["method"] == "illumination_peak_rank":
+        peak = illumination_peaks(sel, fixed_xy or [])[sel["rank"] - 1]
+        lat, lon = ml.stereo_south_inverse(peak["x"], peak["y"])
+        info = {"method": sel["method"], "map": sel["map"], "rank": sel["rank"], "map_pixel_raw_value": peak["raw"],
+                "map_scale": peak["scale"], "map_offset": peak["offset"], "map_dtype": peak["dtype"],
+                "pixel_center_stereo_m": [peak["x"], peak["y"]], "min_separation_m": sel["min_separation_m"], "max_radius_m": sel["max_radius_m"]}
+        return float(lat), float(lon) % 360.0, info
     assert sel["method"] == "max_avg_illumination_in_box"
     b = sel["box_stereo_m"]
     with rasterio.open(CACHE / "illumination" / sel["map"]) as ds:
@@ -288,8 +334,15 @@ def main() -> None:
     with rasterio.open(MOON_COLOR, GEOREF_SOURCES="NONE") as image:
         moon_color = image.read()
     sites_out = []
+    # Fixed analysis points (sourced or box-selected) that ranked illumination peaks must stay clear of.
+    fixed_xy = []
     for s in sites_in:
-        lat, lon, sel = select_site_point(s)
+        if s.get("select", {}).get("method") != "illumination_peak_rank":
+            la, lo, _ = select_site_point(s)
+            fx, fy = ml.stereo_south_forward(la, lo)
+            fixed_xy.append((float(fx), float(fy)))
+    for s in sites_in:
+        lat, lon, sel = select_site_point(s, fixed_xy)
         print(f"site {s['id']}: lat {lat:.4f} lon {lon:.4f}", flush=True)
         hz = ml.compute_horizon(dems, lat, lon, OBSERVER_HEIGHT_M, AZ_STEP_DEG, distances)
         bound = ml.unseen_terrain_bound_deg(hz.obs_radius_m, hz.coverage_m, UNSEEN_TERRAIN_HEIGHT_M)

@@ -116,10 +116,9 @@
 .provenance-body a { color: #d0dae3; text-decoration-color: #596570; text-underline-offset: 4px; }
 .provenance-body a:hover { color: #fff; text-decoration-color: #fff; }
 .provenance-body .reflist { gap: 6px 16px; }
-.provenance-body .site-source-details { margin: 24px 0; padding: 0 0 0 20px; border-left: 1px solid var(--line); }
-.provenance-body .site-source-details h4 { margin: 0 0 10px; font-size: 14px; font-weight: 500; }
-.provenance-body .site-source-details p, .provenance-body .site-source-details .reflist { font-size: 13px; }
-.provenance-body .site-source-details p { margin-bottom: 10px; }
+.provenance-body .site-source-details { display: grid; gap: 8px; margin: 20px 0 0; padding: 18px 0 0; border: 0; border-top: 1px solid var(--line); }
+.provenance-body .site-source-details h4 { margin: 0; font-size: 14px; font-weight: 500; }
+.provenance-body .site-source-details p, .provenance-body .site-source-details .reflist { margin: 0; font-size: 13px; line-height: 1.6; }
 .provenance-body .table-scroll { max-width: 100%; overflow: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
 .provenance-body .doc-table { font-size: 13px; line-height: 1.65; }
 .provenance-body .table-scroll .doc-table { min-width: 760px; }
@@ -174,9 +173,20 @@
   .provenance-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; overflow: visible; }
   .provenance-tabs button { text-align: left; padding: 12px 0; font-size: 11px; }
   .provenance-field, .provenance-body .legend-list li, .provenance-body .facts .dl-row, .provenance-symbols > div { grid-template-columns: minmax(0,1fr); gap: 6px; }
-  .provenance-body .site-source-details { padding-left: 14px; }
 }
 @media (pointer: coarse) {
   .provenance-close, .provenance-tabs button { min-height: 44px; }
   .provenance-notation summary { min-height: 44px; padding-top: 12px; }
 }
+
+/* References: a readable list instead of a five-column table */
+.provenance-body .refs-list { margin: 0; padding: 0; list-style: none; }
+.provenance-body .refs-item { display: grid; grid-template-columns: 156px minmax(0, 1fr); gap: 4px 28px; padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+.provenance-body .refs-item:first-child { padding-top: 4px; }
+.provenance-body .refs-id { padding-top: 3px; font-size: 11px; color: var(--tx1); overflow-wrap: anywhere; }
+.provenance-body .refs-title { color: var(--tx0); font-size: 14px; line-height: 1.5; text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color .15s ease; }
+.provenance-body .refs-title:hover { border-bottom-color: var(--tx0); }
+.provenance-body .refs-meta { margin: 6px 0 0; font-size: 12px; line-height: 1.55; color: var(--tx1); }
+.provenance-body .refs-links { margin: 8px 0 0; font: 11px var(--mono); }
+.provenance-body .refs-links a { color: var(--tx1); }
+@media (max-width: 640px) { .provenance-body .refs-item { grid-template-columns: minmax(0, 1fr); gap: 6px; } }

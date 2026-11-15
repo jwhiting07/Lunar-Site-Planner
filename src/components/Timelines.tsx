@@ -1,7 +1,7 @@
 import { memo, useMemo, useRef, type PointerEvent as RPointerEvent } from 'react';
 import { HOUR_MS, windowHours, type AnalysisResult, type TimeWindow } from '../science';
-import { DAY_MS, clamp, fmtUtc, isoDate, num } from '../ui/labels';
-import { Panel } from './Common';
+import { DAY_MS, clamp, isoDate, num } from '../ui/labels';
+import { useTimeZone, type TimeZoneValue } from '../ui/timeZone';
 import { useScrubSelection } from '../ui/useScrubSelection';
 
 const VW = 1000;
@@ -77,30 +77,35 @@ function seriesPath(t: Float64Array, v: Float64Array, tx: (t: number) => number,
 interface Props {
   results: AnalysisResult[];
   primaryId: string;
+  /** Which charts to draw: Sun/Earth visibility bars, battery and power, or both. */
+  part?: 'visibility' | 'power' | 'all';
   startMs: number;
   endMs: number;
   cursorMs: number;
   onCursor: (ms: number) => void;
 }
 
-function winTitle(label: string, w: TimeWindow): string {
-  return `${label}: ${fmtUtc(w.startMs)} to ${fmtUtc(w.endMs)} UTC, ${num(windowHours(w), 1)} h${w.truncatedStart || w.truncatedEnd ? ' (cut by the interval)' : ''}`;
+function winTitle(label: string, w: TimeWindow, tz: TimeZoneValue): string {
+  return `${label}: ${tz.dateTime(w.startMs)} to ${tz.dateTime(w.endMs)}, ${num(windowHours(w), 1)} h${w.truncatedStart || w.truncatedEnd ? ' (cut by the interval)' : ''}`;
 }
 
-function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor }: Props) {
+function TimelinesImpl({ results, primaryId, part = 'all', startMs, endMs, cursorMs, onCursor }: Props) {
+  const tz = useTimeZone();
   const selection = useScrubSelection();
   const svgRef = useRef<SVGSVGElement>(null);
   const dragging = useRef<number | null>(null);
   const tx = (t: number) => LX + ((t - startMs) / (endMs - startMs)) * PWID;
 
+  const showRows = part !== 'power';
+  const showPower = part !== 'visibility';
   const layout = useMemo(() => {
-    const rowsH = results.length * (2 * BAR_H + BAR_GAP + SITE_GAP);
-    const chart1Y = AXIS_H + rowsH + 14;
+    const rowsH = showRows ? results.length * (2 * BAR_H + BAR_GAP + SITE_GAP) : 0;
+    const chart1Y = AXIS_H + rowsH + (showRows ? 14 : 6);
     const batH = 86;
     const powY = chart1Y + batH + 22;
     const powH = 58;
-    return { rowsH, chart1Y, batH, powY, powH, total: powY + powH + 8 };
-  }, [results.length]);
+    return { rowsH, chart1Y, batH, powY, powH, total: showPower ? powY + powH + 8 : AXIS_H + rowsH + 8 };
+  }, [results.length, showRows, showPower]);
 
   const staticPart = useMemo(() => {
     const ticks = makeTicks(startMs, endMs);
@@ -110,7 +115,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
     const bars = (ws: TimeWindow[], y: number, cls: string, label: string) =>
       ws.map((w, i) => (
         <rect key={`${cls}${i}`} x={x(w.startMs)} y={y} width={Math.max(0.6, x(w.endMs) - x(w.startMs))} height={BAR_H} className={cls}>
-          <title>{winTitle(label, w)}</title>
+          <title>{winTitle(label, w, tz)}</title>
         </rect>
       ));
     let batteryPath = '';
@@ -118,7 +123,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
     let deficit: [number, number][] = [];
     let cap = 0;
     let pMax = 1;
-    if (primary) {
+    if (primary && showPower) {
       const s = primary.series;
       cap = primary.params.batteryCapacityWh;
       const bmax = cap > 0 ? cap : 1;
@@ -150,9 +155,9 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
               {k.label}
             </text>
           ))}
-          <text x={LX - 8} y={AXIS_H - 8} textAnchor="end">UTC</text>
+          <text x={LX - 28} y={AXIS_H - 8} textAnchor="end">UTC</text>
         </g>
-        {results.map((r, idx) => {
+        {showRows && results.map((r, idx) => {
           const y0 = AXIS_H + 6 + idx * (2 * BAR_H + BAR_GAP + SITE_GAP);
           return (
             <g key={r.site.id}>
@@ -169,7 +174,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
             </g>
           );
         })}
-        {primary && (
+        {showPower && primary && (
           <g>
             <text x={LX - 8} y={chart1Y + 10} textAnchor="end" className="row-label primary">Battery energy</text>
             <text x={LX - 8} y={chart1Y + 24} textAnchor="end" className="axis-text-small">{primary.site.short}</text>
@@ -189,7 +194,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
         )}
       </g>
     );
-  }, [results, primaryId, startMs, endMs, layout]);
+  }, [results, primaryId, startMs, endMs, layout, tz, showRows, showPower]);
 
   const setFromEvent = (e: RPointerEvent<SVGSVGElement>) => {
     const el = svgRef.current;
@@ -215,7 +220,7 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
         aria-valuemin={startMs}
         aria-valuemax={endMs}
         aria-valuenow={cursorMs}
-        aria-valuetext={`${fmtUtc(cursorMs)} UTC`}
+        aria-valuetext={tz.dateTime(cursorMs)}
         aria-label="Timelines of Sun visibility, Earth line of sight, battery energy and array power. Click or drag to set the cursor time."
         onKeyDown={(e) => {
           const step = e.shiftKey ? DAY_MS : HOUR_MS;
@@ -256,11 +261,15 @@ function TimelinesImpl({ results, primaryId, startMs, endMs, cursorMs, onCursor 
           </>
         )}
       </svg>
+      {showRows ? (
       <p className="caption">
         <span className="key"><i className="lg lg-sun" /> Sun visible (any part of disk)</span>{' '}
         <span className="key"><i className="lg lg-earth" /> Earth line of sight (geometric)</span>{' '}
         1 h samples; transitions interpolated. Click or drag on the chart to move the cursor.
       </p>
+      ) : (
+        <p className="caption">Stored energy is limited to the assumed battery capacity; red marks show when the battery is empty. Engineering estimate from assumed lander parameters.</p>
+      )}
     </div>
   );
 }
@@ -274,13 +283,22 @@ interface ControlsProps {
   onCursor: (ms: number) => void;
 }
 
+const dayFormats = new Map<string, Intl.DateTimeFormat>();
+/** "15 Dec" for an instant in a display zone (styled uppercase by CSS). */
+function shortDay(ms: number, zone: string): string {
+  let f = dayFormats.get(zone);
+  if (!f) { f = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', timeZone: zone }); dayFormats.set(zone, f); }
+  return f.format(ms);
+}
+
 function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps) {
+  const tz = useTimeZone();
   const selection = useScrubSelection();
   const step = (ms: number) => onCursor(clamp(cursorMs + ms, startMs, endMs));
   return (
     <div className="timebar">
       <div className="time-now">
-        <output className="mono time-val" aria-label="Cursor time, UTC" aria-live="off">{fmtUtc(cursorMs)}</output>
+        <output className="mono time-val" aria-label={`Cursor time, ${tz.label}`} aria-live="off">{tz.dateTime(cursorMs)}</output>
       </div>
       <div className="time-btns" role="group" aria-label="Step cursor time">
         <button type="button" className="btn small" onClick={() => step(-DAY_MS)} aria-label="Back 1 day">{'−'}1 d</button>
@@ -288,6 +306,7 @@ function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps)
         <button type="button" className="btn small" onClick={() => step(HOUR_MS)} aria-label="Forward 1 hour">+1 h</button>
         <button type="button" className="btn small" onClick={() => step(DAY_MS)} aria-label="Forward 1 day">+1 d</button>
       </div>
+      <div className="time-slider">
       <input
         type="range"
         className="scrubber"
@@ -298,22 +317,13 @@ function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps)
         step={HOUR_MS}
         value={clamp(cursorMs, startMs, endMs)}
         onChange={(e) => onCursor(Number(e.target.value))}
-        aria-label="Time scrubber, UTC"
-        aria-valuetext={`${fmtUtc(cursorMs)} UTC`}
+        aria-label={`Time scrubber, ${tz.label}`}
+        aria-valuetext={tz.dateTime(cursorMs)}
       />
+      <div className="time-ends" aria-hidden="true"><span>{shortDay(startMs, tz.zone)}</span><span>{shortDay(endMs, tz.zone)}</span></div>
+      </div>
     </div>
   );
 }
 
 export const TimeControls = memo(TimeControlsImpl);
-
-export function TimelinesPanel(props: Props) {
-  return (
-    <Panel
-      title="Timelines"
-      help="When the Sun and Earth are visible from each selected site over the chosen date range, plus battery energy and array power for the primary site."
-    >
-      <TimelineChart {...props} />
-    </Panel>
-  );
-}

@@ -1,17 +1,10 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { TIME_ZONES, timeZoneChoices } from '../ui/timeZones';
-
-const zoneKey = 'seraphim-clock-time-zone';
+import { useTimeZone } from '../ui/timeZone';
 
 export function UtcClock() {
   const [now, setNow] = useState(() => new Date());
-  const [zone, setZone] = useState(() => {
-    try {
-      const saved = localStorage.getItem(zoneKey);
-      if (saved && TIME_ZONES.includes(saved)) return saved;
-    } catch { /* Storage can be disabled. */ }
-    return 'UTC';
-  });
+  const { zone, setZone } = useTimeZone();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const chooser = useRef<HTMLDivElement>(null);
@@ -23,7 +16,6 @@ export function UtcClock() {
   const filtered = choices.filter(choice => (choice.id + ' ' + choice.place + ' ' + choice.name + ' ' + choice.offset).toLowerCase().includes(search.toLowerCase().trim()));
   const choose = (next: string) => {
     setZone(next);
-    try { localStorage.setItem(zoneKey, next); } catch { /* Keep the choice for this session. */ }
     chooser.current?.hidePopover();
     button.current?.focus();
   };
@@ -60,7 +52,7 @@ export function UtcClock() {
         </button>)}
         {!filtered.length && <p>No matching time zones.</p>}
       </div>
-      <p className="clock-zone-note">{filtered.length} of {TIME_ZONES.length} zones · West to east · Mission dates use UTC</p>
+      <p className="clock-zone-note">{filtered.length} of {TIME_ZONES.length} zones · West to east · Calculations run in UTC; dates and times shown follow this zone</p>
     </div>
   </div>;
 }

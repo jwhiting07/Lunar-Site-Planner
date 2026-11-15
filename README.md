@@ -1,7 +1,8 @@
 # Lunar Landing Site Navigator
 
 Check a lunar location or search for a mission that meets sunlight and Earth-visibility
-targets using precomputed SPICE DE440 geometry. The three shipped sites use
+targets using precomputed SPICE DE440 geometry. The nine shipped sites (two
+as-landed CLPS positions and seven representative points) use
 precomputed NASA LOLA terrain masks. The local Vite server can calculate a terrain
 mask on demand for custom south-polar coordinates.
 The shipped data supports 2026-01-01 through 2029-01-01 UTC.

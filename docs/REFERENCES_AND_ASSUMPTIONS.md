@@ -124,7 +124,7 @@ These assets are shipped under `public/` for visual context. Their provenance is
 | Asset | Source (as recorded in the manifest) | Credit (manifest) | Processing (manifest) | Manifest | Used by |
 |---|---|---|---|---|---|
 | `public/textures/moon-color.jpg` | https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg (page https://svs.gsfc.nasa.gov/4720/) [R-SVS-MOON-KIT] | NASA's Scientific Visualization Studio | none recorded; equirectangular, centred on longitude 0; "aesthetically processed, with polar fill" | `public/textures/provenance.json` | `build_data.py terrain_texture` (build time) |
-| `public/data/terrain_color_<id>.png` (3 files, 201 x 201 RGB) | derived from `moon-color.jpg` | - | bilinear reprojection onto the terrain patch grid | `public/data/provenance.json products` | `src/components/TerrainView.tsx` |
+| `public/data/terrain_color_<id>.png` (one per shipped site, 201 x 201 RGB) | derived from `moon-color.jpg` | - | bilinear reprojection onto the terrain patch grid | `public/data/provenance.json products` | `src/components/TerrainView.tsx` |
 | `public/models/moon.glb` | https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/moon_small.glb (page https://svs.gsfc.nasa.gov/14959/) | NASA's Goddard Space Flight Center / LRO | geometry/UVs preserved; embedded maps resized to 4096 px, JPEG quality 92; runtime centring and radius normalisation | `public/models/provenance.json` (source and derived SHA-256, bytes) | `src/components/MoonView.tsx` via `src/visuals/models.ts` |
 | `public/models/sun.glb`, `earth.glb` | NASA Science 3-D model pages (URLs in manifest) | NASA/JPL-Caltech | maps resized to 2048 px; body sizes and separations exaggerated | `public/models/provenance.json` | parked Solar view (`docs/ui/SOLAR_PARKED.md`) |
 | `public/data/stars.json` (4103 stars) | https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_bsc5p.tdat.gz | "Yale Bright Star Catalog, 5th Revised Edition (Preliminary), Hoffleit and Warren (1991); hosted by NASA/GSFC HEASARC" | J2000 RA/Dec and magnitude, V <= 5.8, non-stellar entries removed; no epoch alignment | `public/data/stars.provenance.json` | `src/visuals/stars.ts` |
@@ -346,7 +346,7 @@ Each quantity appears once. IDs refer to `methods.ts`; references to Section 2.
 | Trapezoidal energy integration | M-BATTERY |
 | Spherical reference body, radial "Up" | M-GEOM |
 | Horizon distance read at the nearest table azimuth | M-HORIZON |
-| All results for user-entered coordinates (any point other than the three shipped sites, matched exactly): flat horizon H = 0, no terrain, labelled "Flat-horizon estimate" | M-PLAN |
+| All results for user-entered coordinates (any point other than the nine shipped sites, matched exactly): flat horizon H = 0, no terrain, labelled "Flat-horizon estimate" | M-PLAN |
 | Site search: bounded location/date grid, coarse screening step, hourly refinement of the 12 leading candidates | M-PLAN |
 | 3-D patch covers ±20 km at 200 m spacing with a NASA SVS display texture and simple directional lighting | M-PATCH |
 
@@ -456,6 +456,8 @@ Node (i, j): east = -20 km + 200 m i, north = -20 km + 200 m j. Arc s = hypot(ea
 ### 7.15 Connecting-ridge site-selection rule (M-SITE)
 
 Within the Site01 box [R-LOLA-SITES], take the 240 m pixel of AVGVISIB_65S_240M_201608 with the highest value (first maximum in raster order), use its pixel centre (x, y) and convert with 7.4 inverse. Selected pixel centre (-11400, -12360) m, raw DN 23369 (recorded in `sites.json selection`). Code: `build_data.py select_site_point`.
+
+Six further representative points ("Sunlit peak 1-6", ids `illum-peak-1` to `illum-peak-6`) use a ranked rule on the same map (R-MAZARICO-2011), implemented in `build_data.py illumination_peaks`: within 300 km of the pole take the map pixels in descending order of value (ties in raster order) and accept a pixel when it is at least 25 km from every analysis point already fixed (the two landing sites and the connecting-ridge point) and from every higher-ranked peak, until six are accepted; the pixel centre is converted with 7.4 inverse. The raw map value, rank and parameters are recorded in `sites.json selection`. These points are classified as representative points chosen by this project: they are not mission landing targets, carry no published elevation, and say nothing about hazards. Their horizon masks, elevations and slopes are computed exactly like those of the other sites (M-HORIZON, M-SITE, M-SLOPE).
 
 ---
 

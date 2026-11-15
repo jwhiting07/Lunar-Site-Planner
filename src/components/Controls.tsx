@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useId, useRef, useState, type KeyboardEvent } from 'react';
+import { Chevron } from './Chevron';
+import { placePopover } from '../ui/placePopover';
 import type { AnalysisResult, ProvenanceDoc } from '../science';
 import { buildExportJson, buildSeriesCsv, buildSummaryCsv } from '../export/exporters';
 import { downloadText } from '../export/download';
 import { DAY_MS, clamp, isoDate } from '../ui/labels';
 import type { Targets } from '../science/planner';
+import { zoneDayStart } from '../ui/timeZone';
 
 interface RangeProps {
   startMs: number;
@@ -13,11 +16,8 @@ interface RangeProps {
   onChange: (startMs: number, endMs: number) => void;
 }
 
-export const parseDate = (s: string): number | null => {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
-  const t = Date.parse(`${s}T00:00:00Z`);
-  return Number.isFinite(t) && isoDate(t) === s ? t : null;
-};
+/** Start of calendar day `s` ("YYYY-MM-DD") in `zone` (UTC by default); null if it is not a real date. */
+export const parseDate = (s: string, zone = 'UTC'): number | null => zoneDayStart(s, zone);
 
 export function DateRange({ startMs, endMs, covStartMs, covEndMs, onChange }: RangeProps) {
   const setStart = (s: string) => {
@@ -73,24 +73,11 @@ interface ExportProps {
 }
 
 export function ExportMenu({ results, primaryId, provenance, targets }: ExportProps) {
+  const id = useId();
+  const trigger = useRef<HTMLButtonElement>(null);
+  const popup = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    document.addEventListener('mousedown', onDown);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('mousedown', onDown);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, [open]);
+  const [box, setBox] = useState({ left: 8, top: 8, width: 160 });
 
   const primary = results.find((r) => r.site.id === primaryId) ?? results[0];
   const disabled = results.length === 0;
@@ -98,43 +85,46 @@ export function ExportMenu({ results, primaryId, provenance, targets }: ExportPr
   const ids = results.map((r) => r.site.id).join('+').slice(0, 90);
   const targetMetadata = targets?.map((t, i) => `# scenario_${i + 1}_targets: ${JSON.stringify(t)}`).join('\n');
 
+  const show = () => {
+    const box = popup.current, anchor = trigger.current;
+    if (!box || !anchor || box.matches(':popover-open')) return;
+    box.showPopover();
+    setBox(placePopover(anchor, box));
+    box.querySelector<HTMLElement>('[role=menuitem]')?.focus();
+  };
+  const done = (download: () => void) => () => { download(); popup.current?.hidePopover(); trigger.current?.focus(); };
+  const move = (event: KeyboardEvent<HTMLDivElement>) => {
+    const items = [...event.currentTarget.querySelectorAll<HTMLElement>('[role=menuitem]')];
+    const at = items.indexOf(document.activeElement as HTMLElement);
+    const to = event.key === 'ArrowDown' ? at + 1 : event.key === 'ArrowUp' ? at - 1 : event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1 : null;
+    if (to === null) return;
+    event.preventDefault();
+    items[(to + items.length) % items.length]?.focus();
+  };
+
   return (
-    <div className="menu" ref={ref}>
-      <button type="button" className="btn" aria-haspopup="true" aria-expanded={open} disabled={disabled} onClick={() => setOpen((o) => !o)}>
-        Export {'▾'}
+    <div className="menu">
+      <button ref={trigger} type="button" className="btn export-trigger" aria-haspopup="menu" aria-expanded={open} aria-controls={id} disabled={disabled} onClick={show}>
+        Export<Chevron />
       </button>
-      {open && (
-        <div className="menu-pop" role="group" aria-label="Export options">
-          <button
-            type="button"
-            onClick={() => {
-              if (primary) downloadText(`${primary.site.id}_${range}_series.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSeriesCsv(primary), 'text/csv');
-              setOpen(false);
-            }}
-          >
-            Series CSV (primary site)
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              downloadText(`comparison_${ids}_${range}.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSummaryCsv(results), 'text/csv');
-              setOpen(false);
-            }}
-          >
-            Comparison CSV
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const doc = buildExportJson(results, provenance, new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'));
-              downloadText(`clps_${ids}_${range}.json`, JSON.stringify(targets ? { ...doc, planning_targets: targets } : doc), 'application/json');
-              setOpen(false);
-            }}
-          >
-            JSON (all selected sites)
-          </button>
-        </div>
-      )}
+      <div ref={popup} id={id} popover="auto" role="menu" aria-label="Export options" className="export-pop"
+        style={{ left: box.left, top: box.top, minWidth: Math.max(box.width, 260) }} onKeyDown={move} onToggle={(event) => setOpen(event.newState === 'open')}>
+        <button type="button" role="menuitem" tabIndex={-1}
+          onClick={done(() => { if (primary) downloadText(`${primary.site.id}_${range}_series.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSeriesCsv(primary), 'text/csv'); })}>
+          <span>Series CSV</span><small>Hourly values for the primary site</small>
+        </button>
+        <button type="button" role="menuitem" tabIndex={-1}
+          onClick={done(() => downloadText(`comparison_${ids}_${range}.csv`, (targetMetadata ? targetMetadata + '\n' : '') + buildSummaryCsv(results), 'text/csv'))}>
+          <span>Comparison CSV</span><small>Summary metrics, one column per scenario</small>
+        </button>
+        <button type="button" role="menuitem" tabIndex={-1}
+          onClick={done(() => {
+            const doc = buildExportJson(results, provenance, new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'));
+            downloadText(`clps_${ids}_${range}.json`, JSON.stringify(targets ? { ...doc, planning_targets: targets } : doc), 'application/json');
+          })}>
+          <span>JSON</span><small>Full results for all selected sites</small>
+        </button>
+      </div>
     </div>
   );
 }
