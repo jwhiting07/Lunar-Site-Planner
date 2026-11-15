@@ -1,20 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { landmarkBasis, landmarkTone, type LandingSite, type LandmarkTone } from '../data/landingSites';
+import { loadEphemeris } from '../data/loader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { enuBasis, type InstantState, type SiteDoc } from '../science';
-import { loadNasaModel, disposeModel } from '../visuals/models';
-import { clampMoonCamera, moonZoomLimits } from '../visuals/moonNavigation';
+import { bodyVectorKm, enuBasis, type EphemerisIndex, type InstantState, type SiteDoc, type Vec3 } from '../science';
+import { loadNasaModel, disposeModel, smoothMoonLighting } from '../visuals/models';
+import { clampMoonCamera, markerOffset, moonZoomLimits } from '../visuals/moonNavigation';
 import { COORD_CLASS_LABEL } from '../ui/labels';
 import { disposeStarfield, loadStarfield } from '../visuals/stars';
 
 // Body-fixed (X,Y,Z) -> Three (X,Z,-Y), shared with the site's ME coordinates.
 // models.ts aligns the native NASA LRO cube-mesh axes with this convention.
 const LANDMARK_COLORS: Record<LandmarkTone, [number, number, number]> = { landed: [0.92, 0.92, 0.9], impact: [0.48, 0.52, 0.58], planned: [0.86, 0.68, 0.3] };
+const bodyFixedToScene = ([x, y, z]: Vec3) => new THREE.Vector3(x, z, -y);
 
 export function globePosition(lat: number, lon: number): THREE.Vector3 {
-  const [x, y, z] = enuBasis(lat, lon).up;
-  return new THREE.Vector3(x, z, -y);
+  return bodyFixedToScene(enuBasis(lat, lon).up);
 }
 
 /** Moon body-fixed, east-positive coordinates, using the existing site convention. */
@@ -36,10 +37,8 @@ export function moonScaleBar(kmPerPixel: number, maxWidth = 100) {
 const kmFormat = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
 /** Time constant of the eased zoom, ms: the camera closes ~63 % of the remaining distance in this time. */
 const ZOOM_TAU_MS = 85;
-/** Minimum screen distance between site markers, px (a pin's hit area is 24 px). */
-const MARKER_GAP = 22;
 
-export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels, idleRotate = false, landmarks, onLandmark }: {
+export function MoonView({ sites, primaryId, onSelect, explorer = false, local = false, inst = null, compact = false, onPick, savedSiteIds, markerLabels, idleRotate = false, landmarks, onLandmark, ephemerisIndex }: {
   sites: SiteDoc[]; primaryId: string; onSelect: (id: string) => void; explorer?: boolean; local?: boolean; inst?: InstantState | null;
   compact?: boolean; onPick?: (point: { lat: number; lon: number }) => void;
   savedSiteIds?: ReadonlySet<string>;
@@ -48,6 +47,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   idleRotate?: boolean;
   /** Known landing and impact sites drawn as dots (explorer only); clicking one calls onLandmark. */
   landmarks?: LandingSite[]; onLandmark?: (site: LandingSite) => void;
+  ephemerisIndex?: EphemerisIndex;
 }) {
   const landmarkList = useRef<LandingSite[]>(landmarks ?? []);
   landmarkList.current = landmarks ?? [];
@@ -71,8 +71,11 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
   const scaleLine = useRef<HTMLSpanElement>(null);
   const primaryRef = useRef(primaryId);
   primaryRef.current = primaryId;
+  const savedRef = useRef(savedSiteIds);
+  savedRef.current = savedSiteIds;
   const illumination = useRef(inst);
   illumination.current = inst;
+  const applyLiveLighting = useRef<(sun: Vec3, earth: Vec3) => void>(() => {});
   const redraw = useRef(() => {});
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -111,7 +114,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     }).catch(() => { /* The Moon remains usable if the optional background fails. */ });
     const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 30);
     // OrbitControls caches the up-axis transform at construction.
-    camera.up.copy(local && sites[0] ? globePosition(sites[0].lat_deg, sites[0].lon_deg) : new THREE.Vector3(0, 0, -1));
+    camera.up.copy(local && sites[0] ? globePosition(sites[0].lat_deg, sites[0].lon_deg) : new THREE.Vector3(0, 1, 0));
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enablePan = false;
     controls.enableDamping = false;
@@ -126,9 +129,13 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       controls.minPolarAngle = Math.PI / 12;
       controls.maxPolarAngle = Math.PI / 3;
     }
-    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    const ambient = new THREE.AmbientLight(0xffffff, 0.45);
+    scene.add(ambient);
     const light = new THREE.DirectionalLight(0xffffff, 2.6);
     scene.add(light);
+    let sunDirection: THREE.Vector3 | null = null;
+    let earthDirection: THREE.Vector3 | null = null;
+    let interacted = false;
     // Known landing sites: one Points draw call, depth-tested against the Moon. Hover and click use
     // screen-space distance to the projected dots (a few dozen points, only on pointer events).
     const dotGeometry = new THREE.BufferGeometry();
@@ -154,11 +161,12 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       if (dotTip.current) dotTip.current.hidden = true;
       draw();
     };
-    const dotAt = (x: number, y: number): LandingSite | null => {
+    const dotAt = (x: number, y: number, preferred?: LandingSite | null): LandingSite | null => {
       if (!dots.visible) return null;
       camera.updateMatrixWorld(); // the camera may have moved since the last frame was rendered
       let best: LandingSite | null = null;
       let bestDistance = 10; // px
+      let preferredDistance = Infinity;
       const eye = camera.position;
       for (let i = 0; i < dotPoints.length; i++) {
         const p = dotPoints[i];
@@ -166,9 +174,10 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         dotProjected.copy(p).project(camera);
         if (dotProjected.z >= 1) continue;
         const d = Math.hypot((dotProjected.x + 1) * size.w / 2 - x, (1 - dotProjected.y) * size.h / 2 - y);
+        if (landmarkList.current[i] === preferred) preferredDistance = d;
         if (d < bestDistance) { bestDistance = d; best = landmarkList.current[i]; }
       }
-      return best;
+      return preferred && preferredDistance < bestDistance + 2 ? preferred : best;
     };
     const placeDotTip = () => {
       const tip = dotTip.current;
@@ -178,7 +187,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       tip.style.transform = `translate(${x}px, ${y}px)`;
     };
     const updateDot = () => {
-      const site = pointerPx ? dotAt(pointerPx.x, pointerPx.y) : null;
+      const site = pointerPx ? dotAt(pointerPx.x, pointerPx.y, hoveredDot) : null;
       if (site === hoveredDot) { if (site) placeDotTip(); return; }
       hoveredDot = site;
       renderer.domElement.style.cursor = site ? 'pointer' : '';
@@ -209,7 +218,9 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     let hoverTimer = 0;
     let lastScale = '';
     let lastScaleWidth = -1;
-    const labelWidths = new Map<HTMLElement, { text: string; width: number }>();
+    const labelWidths = new WeakMap<HTMLElement, { text: string; width: number }>();
+    const offsets = new WeakMap<HTMLElement, { x: number; y: number }>();
+    const labelPlacement = new WeakMap<HTMLElement, { direction: number; endY: number }>();
     const pinSpot = new WeakMap<HTMLElement, string>(); // keyed by element: a re-created pin must be positioned again
     const render = () => {
       if (disposed) return;
@@ -223,9 +234,11 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
           const el = THREE.MathUtils.degToRad(state.sun.elDeg);
           const direction = new THREE.Vector3();
           for (const [axis, weight] of [[basis.east, Math.cos(el) * Math.sin(az)], [basis.north, Math.cos(el) * Math.cos(az)], [basis.up, Math.sin(el)]] as const) {
-            direction.addScaledVector(new THREE.Vector3(axis[0], axis[2], -axis[1]), weight);
+            direction.addScaledVector(bodyFixedToScene(axis), weight);
           }
           light.position.copy(direction).multiplyScalar(10);
+        } else if (sunDirection) {
+          light.position.copy(sunDirection).multiplyScalar(10);
         } else light.position.copy(camera.position).applyAxisAngle(camera.up, -0.6).add(new THREE.Vector3(0, 2, 0));
         if (stars) {
           stars.position.copy(camera.position);
@@ -262,26 +275,49 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
         }
         // Markers keep a minimum spacing: a pin that would overlap an earlier one
         // (the selected pin is placed first) moves to the nearest free spot.
-        const order = [...positionsRef.current].sort((p, q) => Number(q.id === primaryRef.current) - Number(p.id === primaryRef.current));
+        const priority = (id: string) => Number(id === primaryRef.current) * 2 + Number(savedRef.current?.has(id) ?? false);
+        const order = [...positionsRef.current].sort((p, q) => priority(q.id) - priority(p.id) || p.id.localeCompare(q.id));
         const spots = new Map<string, { x: number; y: number }>();
-        const apart = (x: number, y: number) => { for (const spot of spots.values()) if (Math.hypot(spot.x - x, spot.y - y) < MARKER_GAP) return false; return true; };
+        const apart = (x: number, y: number, gap: number) => { for (const spot of spots.values()) if (Math.hypot(spot.x - x, spot.y - y) < gap) return false; return true; };
+        const cameraDirection = camera.position.clone().normalize();
+        const limbCos = Math.min(1, 1 / camera.position.length());
+        const withinMap = (x: number, y: number) => x >= 14 && x <= size.w - 14 && y >= 14 && y <= size.h - 14;
         for (const { id, point } of order) {
           const pin = pins.current.get(id);
           if (!pin) continue;
-          const screen = point.clone().multiplyScalar(1.006).project(camera);
-          const visible = point.dot(camera.position.clone().sub(point)) > 0 && Math.abs(screen.x) < 0.95 && Math.abs(screen.y) < 0.95 && screen.z < 1;
-          pin.hidden = !visible;
-          if (!visible) continue;
+          const previousPosition = pin.dataset.position;
+          const facing = point.dot(cameraDirection) - limbCos > (previousPosition === 'behind' ? 0.003 : -0.003);
+          const screen = point.clone().project(camera);
+          const edge = previousPosition === 'offscreen' ? 0.94 : 0.96;
+          const onScreen = Math.abs(screen.x) < edge && Math.abs(screen.y) < edge && screen.z < 1;
+          const visible = facing && onScreen;
+          const keepMarked = compact && explorer && savedRef.current?.has(id);
+          pin.hidden = !visible && !keepMarked;
+          const position = facing ? (onScreen ? 'surface' : 'offscreen') : 'behind';
+          if (previousPosition !== position) {
+            pin.dataset.position = position;
+            if (position === 'surface') pin.removeAttribute('aria-description');
+            else pin.setAttribute('aria-description', position === 'behind' ? 'Behind the visible lunar limb. Activate to center the site.' : 'Outside the current view. Activate to center the site.');
+          }
+          if (pin.hidden) continue;
+          // Keep the bearing of an obscured comparison site at the visible limb.
+          if (!facing) {
+            const bearing = point.clone().addScaledVector(cameraDirection, -point.dot(cameraDirection));
+            if (bearing.lengthSq() < 1e-12) bearing.setFromMatrixColumn(camera.matrixWorld, 0);
+            screen.copy(cameraDirection).multiplyScalar(limbCos)
+              .addScaledVector(bearing.normalize(), Math.sqrt(1 - limbCos * limbCos)).project(camera);
+          }
           let x = (screen.x + 1) * size.w / 2;
           let y = (1 - screen.y) * size.h / 2;
-          if (!apart(x, y)) {
-            const [bx, by] = [x, y];
-            search: for (let ring = 1; ring <= 6; ring++) for (let step = 0; step < 8; step++) {
-              const angle = (step + (ring % 2) / 2) * Math.PI / 4;
-              const cx = bx + Math.cos(angle) * MARKER_GAP * ring, cy = by + Math.sin(angle) * MARKER_GAP * ring;
-              if (apart(cx, cy)) { x = cx; y = cy; break search; }
-            }
+          if (keepMarked) {
+            x = THREE.MathUtils.clamp(x, 14, Math.max(14, size.w - 14));
+            y = THREE.MathUtils.clamp(y, 14, Math.max(14, size.h - 14));
           }
+          const offset = markerOffset({ x, y }, id === primaryRef.current ? undefined : offsets.get(pin),
+            (cx, cy, gap) => ((cx === x && cy === y) || withinMap(cx, cy)) && apart(cx, cy, gap));
+          offsets.set(pin, offset);
+          x += offset.x;
+          y += offset.y;
           spots.set(id, { x, y });
           const spotKey = `${x.toFixed(1)},${y.toFixed(1)}`;
           if (pinSpot.get(pin) !== spotKey) { pinSpot.set(pin, spotKey); pin.style.left = `${x}px`; pin.style.top = `${y}px`; }
@@ -299,12 +335,26 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
               if (measured.width > 0) labelWidths.set(label, measured);
             }
             const width = measured.width;
-            const direction = x + width + 40 > size.w - 20 ? -1 : 1;
-            let rise = 28;
+            const previous = labelPlacement.get(label);
+            const direction = x + width + 40 > size.w - (previous?.direction === -1 ? 32 : 20) ? -1 : 1;
             const left = direction === 1 ? x + 28 : x - 28 - width;
-            while (rise < 224 && occupied.some(rect => left < rect.right + 8 && left + width > rect.left - 8 && y - rise - 20 < rect.bottom + 6 && y - rise > rect.top - 6)) rise += 28;
-            // Keep labels inside the map at the upper edge, too.
-            const endY = y - rise - 20 < 8 ? 28 : -rise;
+            const fits = (offset: number, gap: number) => {
+              const bottom = y + offset;
+              return bottom - 21 >= 8 + gap && bottom <= size.h - 8 - gap &&
+                !occupied.some(rect => left < rect.right + gap && left + width > rect.left - gap && bottom - 21 < rect.bottom + gap && bottom > rect.top - gap);
+            };
+            let endY = -28;
+            if (!fits(endY, previous && previous.endY !== -28 ? 12 : 6)) {
+              if (previous?.direction === direction && fits(previous.endY, 3)) endY = previous.endY;
+              else {
+                for (let distance = 28; distance <= 224; distance += 28) {
+                  if (fits(-distance, 6)) { endY = -distance; break; }
+                  if (fits(distance, 6)) { endY = distance; break; }
+                }
+                if (y + endY - 21 < 8) endY = 28;
+              }
+            }
+            if (previous?.direction !== direction || previous?.endY !== endY) labelPlacement.set(label, { direction, endY });
             const elbow = direction * 28;
             const points = `0,0 ${elbow},${endY} ${elbow + direction * width},${endY}`;
             if (leader.getAttribute('points') !== points) leader.setAttribute('points', points);
@@ -325,7 +375,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     focus.current = (id) => {
       zoomTarget = null;
       activeFocus.current = id;
-      const point = positionsRef.current.find(p => p.id === id)?.point ?? globePosition(-90, 0);
+      const point = positionsRef.current.find(p => p.id === id)?.point ?? earthDirection ?? globePosition(0, 0);
       const coords = globeCoordinates(point);
       const north = enuBasis(coords.lat, coords.lon).north;
       const northVector = new THREE.Vector3(north[0], north[2], -north[1]);
@@ -344,6 +394,14 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       controls.update();
       draw();
     };
+    applyLiveLighting.current = (sun, earth) => {
+      const first = earthDirection === null;
+      sunDirection = bodyFixedToScene(sun).normalize();
+      earthDirection = bodyFixedToScene(earth).normalize();
+      ambient.intensity = 0.06;
+      if (first && !interacted && !primaryRef.current) focus.current(null);
+      else draw();
+    };
     // Slow idle spin about the polar axis: pauses on any interaction, resumes after a pause.
     const SPIN_DEG_PER_S = 1.4;
     const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -359,6 +417,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       if (now >= spinResumeAt && zoomTarget === null) {
         spinOffset.copy(camera.position).sub(controls.target).applyAxisAngle(camera.up, THREE.MathUtils.degToRad(SPIN_DEG_PER_S) * dt);
         camera.position.copy(controls.target).add(spinOffset);
+        camera.lookAt(controls.target);
         render();
       }
       spinFrame = requestAnimationFrame(spinTick);
@@ -398,6 +457,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       else zoomFrame = requestAnimationFrame(stepZoom);
     };
     const zoomBy = (factor: number) => {
+      interacted = true;
       zoomTarget = THREE.MathUtils.clamp((zoomTarget ?? camera.position.distanceTo(controls.target)) * factor, controls.minDistance, controls.maxDistance);
       if (!zoomFrame) { zoomLast = performance.now(); zoomFrame = requestAnimationFrame(stepZoom); }
     };
@@ -409,7 +469,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       zoomBy(Math.exp(THREE.MathUtils.clamp(event.deltaY * unit, -240, 240) * 0.0018));
     };
     element.addEventListener('wheel', onWheel, { passive: false, capture: true });
-    const pauseSpin = () => { spinResumeAt = performance.now() + 3500; };
+    const pauseSpin = () => { interacted = true; spinResumeAt = performance.now() + 3500; };
     element.addEventListener('pointerdown', pauseSpin);
     spinKick.current();
     controls.addEventListener('change', () => { markMotion(); draw(); });
@@ -451,7 +511,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       gesture = null;
       if (tap) {
         const bounds = renderer.domElement.getBoundingClientRect();
-        const site = landmarkPick.current ? dotAt(event.clientX - bounds.left, event.clientY - bounds.top) : null;
+        const site = landmarkPick.current ? dotAt(event.clientX - bounds.left, event.clientY - bounds.top, hoveredDot) : null;
         if (site) { skipFocusUntil.current = performance.now() + 600; landmarkPick.current?.(site); return; }
         selectAt(new THREE.Vector2((event.clientX - bounds.left) / bounds.width * 2 - 1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
       }
@@ -460,6 +520,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     const onLeave = () => { pointer = null; pointerPx = null; hoveredDot = null; renderer.domElement.style.cursor = ''; if (dotTip.current) dotTip.current.hidden = true; if (tipReadout.current) tipReadout.current.hidden = true; if (hoverReadout.current) hoverReadout.current.textContent = 'Lat: —, Lon: —'; };
     const onKey = (event: KeyboardEvent) => {
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+        interacted = true;
         event.preventDefault();
         const rotation = new THREE.Quaternion().setFromUnitVectors(camera.up, new THREE.Vector3(0, 1, 0));
         const spherical = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target).applyQuaternion(rotation));
@@ -498,6 +559,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     resize.observe(element);
     loadNasaModel('moon').then(loaded => {
       if (disposed) { disposeModel(loaded); return; }
+      if (!local) smoothMoonLighting(loaded);
       model = loaded; scene.add(loaded); if (local) focus.current(activeFocus.current); setLoading(false); draw();
     }).catch(() => { if (!disposed) { setLoading(false); setError('Moon model could not load. Enter coordinates to continue.'); } });
     const contextLost = (event: Event) => { event.preventDefault(); setLoading(false); setError('The 3D display was interrupted. Reload to restore it; Planning remains available.'); };
@@ -505,6 +567,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     return () => {
       disposed = true;
       focus.current = () => {};
+      applyLiveLighting.current = () => {};
       zoom.current = () => {};
       redraw.current = () => {};
       syncLandmarks.current = () => {};
@@ -534,7 +597,7 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     };
   }, [explorer, local, compact]);
 
-  useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions]);
+  useEffect(() => { positionsRef.current = positions; redraw.current(); }, [positions, savedSiteIds]);
   useEffect(() => { spinKick.current(); }, [idleRotate]);
   useEffect(() => { landmarksOn.current = showLandmarks; syncLandmarks.current(); }, [showLandmarks, landmarks]);
   useEffect(() => { if (explorer) focus.current(null); }, [explorer, local, compact]);
@@ -544,6 +607,24 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
     if (compact && explorer && primaryId) focus.current(primaryId);
   }, [primaryId, compact, explorer]);
   useEffect(() => { redraw.current(); }, [inst]);
+  useEffect(() => {
+    if (!ephemerisIndex || local) return;
+    const start = Date.parse(ephemerisIndex.start_utc);
+    const end = Date.parse(ephemerisIndex.stop_utc);
+    let disposed = false;
+    const refresh = async () => {
+      const now = Date.now();
+      if (now < start || now >= end) return;
+      try {
+        const table = await loadEphemeris(ephemerisIndex, now, Math.min(now + 1000, end));
+        if (!disposed) applyLiveLighting.current(bodyVectorKm(table, now, 'sun'), bodyVectorKm(table, now, 'earth'));
+      } catch { /* Keep fallback display lighting available if the ephemeris fails to load. */ }
+    };
+    void refresh();
+    const timer = window.setInterval(refresh, 60_000);
+    window.addEventListener('focus', refresh);
+    return () => { disposed = true; window.clearInterval(timer); window.removeEventListener('focus', refresh); };
+  }, [ephemerisIndex, local, explorer, compact]);
 
   return <>
     <div className={`moon-stage${explorer ? ' moon-stage-full' : ''}${showSites ? '' : ' moon-hide-sites'}${onPick ? ' moon-picking' : ''}`} ref={host}>
@@ -557,9 +638,9 @@ export function MoonView({ sites, primaryId, onSelect, explorer = false, local =
       </div>}
       {!local && sites.map((site, i) => <button key={site.id} ref={el => { if (el) pins.current.set(site.id, el); else pins.current.delete(site.id); }}
         className={`moon-pin${site.id === primaryId ? ' selected' : ''}${savedSiteIds?.has(site.id) ? ' saved' : ''}`} hidden
-        aria-label={savedSiteIds?.has(site.id) ? `Saved scenarios at ${site.lat_deg.toFixed(4)}°, ${site.lon_deg.toFixed(4)}°` : `Select ${site.short}`}
+        aria-label={savedSiteIds?.has(site.id) ? `Saved: ${markerLabels?.get(site.id) ?? site.short}` : `Select ${site.short}`}
         aria-pressed={site.id === primaryId}
-        title={site.short} onClick={() => { onSelect(site.id); if (!compact) focus.current(site.id); }}>
+        title={site.short} onClick={event => { onSelect(site.id); if (!compact || event.currentTarget.dataset.position !== 'surface') focus.current(site.id); }}>
         {compact && explorer ? <>
           <span aria-hidden="true" className="moon-callout-dot" />
           <svg className="moon-leader" aria-hidden="true"><polyline points="0,0 28,-28 112,-28" /></svg>

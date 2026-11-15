@@ -36,7 +36,7 @@ export function MissionMatches({ candidates, active, note, summary, hidden, onTo
             <td className="mono">{result.site.lat_deg.toFixed(4)}°, {result.site.lon_deg.toFixed(4)}°</td>
             <td className="mono">{tz.dateTime(result.startMs)}</td><td>{Number((result.metrics.intervalHours / 24).toFixed(3))} days</td>
             <td className="num mono">{reference ? distanceKm(reference.point, { lat: result.site.lat_deg, lon: result.site.lon_deg }).toFixed(1) + ' km' : '—'}</td><td className="num mono">{percent(result.metrics.sunlitFraction)}</td><td className="num mono">{percent(result.metrics.earthVisibleFraction)}</td>
-            <td>{assessment(result, candidate.targets).good ? 'Meets targets' : 'Below targets'}<small title={difference ? 'Compared to the open mission: ' + difference : undefined}>{result.terrainAware ? 'LOLA terrain' : result.site.lat_deg > -60 ? 'Flat horizon · no LOLA data here' : 'Flat horizon'}</small></td>
+            <td>{assessment(result, candidate.targets).good ? 'Meets targets' : 'Below targets'}<small title={difference ? 'Compared to the open mission: ' + difference : undefined}>{result.horizonMask?.resolutionM ? 'Regional LOLA' : result.terrainAware ? 'LOLA terrain' : 'Flat horizon'}</small></td>
             <td><button className="btn small" onClick={event => onOpen(candidate, event.currentTarget)}>View</button></td>
           </tr>;
         })}</tbody></table></div>

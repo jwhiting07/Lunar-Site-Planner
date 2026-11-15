@@ -53,6 +53,8 @@ SOURCES = [
      "LOLA DEM 60S-90S, 240 m/pix (far-field terrain horizon)", "R-LOLA-PGDA"),
     ("lola", "LDSM_80S_80MPP_ADJ.TIF", f"{PGDA}/LDSM_80S_80MPP_ADJ.TIF",
      "LOLA slope map 80S-90S, 80 m/pix (site slope context)", "R-LOLA-PGDA"),
+    ("lola", "ldem_16_uint.tif", "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_16_uint.tif",
+     "Global LOLA at 16 pixels/degree (on-demand regional horizons)", "R-SVS-MOON-KIT"),
     # Published illumination maps: validation (V-5) and selection of the
     # connecting-ridge analysis point. Not an input to any runtime calculation.
     ("illumination", "AVGVISIB_65S_240M_201608.TIF", f"{PGDA_ILLUM}/AVGVISIB_65S_240M_201608.TIF",

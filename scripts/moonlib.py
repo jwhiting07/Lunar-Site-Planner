@@ -186,14 +186,14 @@ def sample_terrain(dems: list[Dem], lat_deg, lon_deg) -> tuple[np.ndarray, np.nd
 
     Returns (height_m, dem_index) with NaN / -1 where no DEM has data.
     """
-    x, y = stereo_south_forward(lat_deg, lon_deg)
-    h = np.full(np.shape(x), np.nan)
-    idx = np.full(np.shape(x), -1, dtype=np.int8)
+    shape = np.broadcast_shapes(np.shape(lat_deg), np.shape(lon_deg))
+    h = np.full(shape, np.nan)
+    idx = np.full(shape, -1, dtype=np.int8)
     for i, dem in enumerate(dems):
         need = np.isnan(h)
         if not need.any():
             break
-        hi = dem.sample_xy(x, y)
+        hi = dem.sample_latlon(lat_deg, lon_deg)
         take = need & ~np.isnan(hi)
         h = np.where(take, hi, h)
         idx = np.where(take, i, idx)

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { landmarkBasis, landmarkLabel, landmarkTone, LANDMARK_GROUPS, type LandingSitesDoc } from './landingSites';
+import { landmarkBasis, landmarkLabel, landmarkStart, landmarkTone, LANDMARK_GROUPS, type LandingSitesDoc } from './landingSites';
 
 const read = <T,>(name: string): T => JSON.parse(readFileSync(new URL(`../../public/data/${name}`, import.meta.url), 'utf8')) as T;
 const catalogue = read<LandingSitesDoc>('landing_sites.json');
@@ -23,6 +23,24 @@ describe('landing-site catalogue', () => {
 
   it('lists every site in exactly one picker group', () => {
     for (const s of catalogue.sites) expect(LANDMARK_GROUPS.filter(g => g.match(s)).length, s.id).toBe(1);
+  });
+
+  it('keeps historical event instants distinct from date-only records', () => {
+    for (const site of catalogue.sites) {
+      if (site.category === 'planned') expect(site.event_utc, site.id).toBeUndefined();
+      if (site.event_utc) expect(new Date(site.event_utc).toISOString().slice(0, 10), site.id).toBe(site.date);
+    }
+    expect(catalogue.sites.find(site => site.id === 'apollo-11')?.event_utc).toBe('1969-07-20T20:17:39Z');
+    expect(catalogue.sites.find(site => site.id === 'im-2-athena')?.event_utc).toBe('2025-03-06T17:28Z');
+  });
+
+  it('uses a recorded instant, a dated estimate, or today when there is no date', () => {
+    const apollo = catalogue.sites.find(site => site.id === 'apollo-11')!;
+    const now = Date.parse('2026-11-15T04:30:00Z');
+    expect(landmarkStart(apollo, now)).toEqual({ ms: Date.parse('1969-07-20T20:17:39Z'), kind: 'recorded' });
+    expect(landmarkStart({ ...apollo, event_utc: undefined }, now)).toEqual({ ms: Date.parse('1969-07-20'), kind: 'estimated' });
+    expect(landmarkStart({ ...apollo, date: 'no earlier than 2027', event_utc: undefined }, now)).toEqual({ ms: Date.parse('2027-01-01'), kind: 'estimated' });
+    expect(landmarkStart({ ...apollo, date: 'not announced', event_utc: undefined }, now)).toEqual({ ms: Date.parse('2026-11-15'), kind: 'today' });
   });
 
   it('keeps the well-known Apollo 11 position and labels feature centres honestly', () => {

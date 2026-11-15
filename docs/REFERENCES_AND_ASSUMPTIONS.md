@@ -114,7 +114,7 @@ Roles: **computational input** = file read by the pipeline (listed in `provenanc
 | CLPS / CP-22 pages, Artemis III regions release, SVS 5027 | **background** only |
 | NASA Moon Trek | **not used** |
 | LRO data products page | **not used** |
-| NASA SVS CGI Moon Kit colour map (R-SVS-MOON-KIT) | **display only**: read at build time to colour the local terrain patch (`terrain_color_<id>.png`) |
+| NASA SVS CGI Moon Kit (R-SVS-MOON-KIT) | The colour map supplies the local terrain texture. The global 16 pixels/degree LOLA elevation map supplies on-demand regional skylines. |
 | NASA SVS 14959 Moon GLB, NASA Sun/Earth GLBs, HEASARC Yale Bright Star Catalog | **display only** (Section 2.5) |
 
 ### 2.5 Display-only assets (not inputs to any calculation)
@@ -261,7 +261,7 @@ Every numeric constant or parameter in the scientific code. Line numbers refer t
 | LSK TDB parameters | DELTA_T_A 32.184 s, K 1.657e-3 s, EB 1.671e-2, M = (6.239996, 1.99096871e-7) | s, -, rad, rad/s | sourced | R-NAIF-LSK | inside SPICE |
 | Illumination map scale | 0.00004 per DN | - | sourced | R-MAZARICO-2011 (PDS label) | read via rasterio in `select_site_point` (recorded in `sites.json selection`) |
 | Build self-check tolerances | projection forward < 1e-3 m, inverse < 1e-9 deg; interpolation check 4000 random hours x {15, 30, 45} min; RNG seeds 1 and 7 | - | test parameters | - | `build_data.py check_dem_crs, build_ephemeris` |
-| Moon model lighting | ambient 0.45; directional intensity 2.6; overview viewing light or calculated Sun direction in local terrain | - | display only; no ray-traced shadows | - | `src/components/MoonView.tsx` |
+| Moon model lighting | SPICE Sun direction at the device time, with the Earth-facing view on startup. Directional intensity 2.6, ambient 0.06 with the live ephemeris, and a softened transition at the globe's terminator. | - | display only | R-DE440 | `src/components/MoonView.tsx`, `src/visuals/models.ts` |
 | Mission targets (default) | sunlight >= 50 %, Earth visible >= 50 %; darkness and blackout limits off | %, h | assumed (editable; not NASA requirements) | M-PLAN | `src/science/planner.ts DEFAULT_TARGETS` |
 | Target comparison tolerance | 1e-7 | % or h | numerical tolerance | M-PLAN | `planner.ts assessment` |
 | Arbitrary-coordinate site | elevation 0 m on the 1737.4 km sphere; flat horizon H = 0 with 1 deg table step; `terrain_aware = false` | m, deg | assumed / approximated | M-PLAN, M-SUNVIS, M-EARTHVIS | `planner.ts coordinateSite`; `horizon.ts flatHorizon` |

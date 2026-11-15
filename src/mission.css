@@ -37,8 +37,16 @@ body:has(.mission-app) { min-width: 0; }
 .mission-editor-actions { display: flex; justify-content: flex-end; }
 .mission-editor-actions button { color: var(--tx0); }
 .mission-pick { justify-self: stretch; }
-.mission-known-sites summary, .mission-data summary { cursor: pointer; font-size: 12px; color: var(--tx1); }
-.mission-known-sites[open] summary { margin-bottom: 14px; }
+.mission-data summary { cursor: pointer; font-size: 12px; color: var(--tx1); }
+.mission-known-sites summary { list-style: none; }
+.mission-known-sites summary::-webkit-details-marker { display: none; }
+.mission-known-sites[open] summary svg { transform: rotate(180deg); }
+.mission-landmark-list { max-height: 248px; overflow: auto; border: 1px solid var(--line); border-top: 0; }
+.mission-landmark-group { padding: 9px 10px 4px; color: var(--tx2); font-size: 11px; }
+.mission-landmark-row { display: flex; align-items: center; gap: 9px; padding: 0 10px; }
+.mission-landmark-row:hover { background: var(--bg2); }
+.mission-landmark-row button { flex: 1; text-align: left; }
+.mission-landmark-row input { width: 14px; min-height: 14px; padding: 0; margin: 0; accent-color: var(--earth); cursor: pointer; }
 .mission-power { border: 0; border-top: 1px solid var(--line); margin: 0; padding: 12px 0 0; min-width: 0; display: grid; gap: 16px; }
 .mission-power legend { padding: 0 12px 0 0; color: var(--tx1); font-size: 12px; }
 .mission-feedback { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--tx1); }
@@ -53,7 +61,12 @@ body:has(.mission-app) { min-width: 0; }
 .mission-map .moon-zoom .btn { width: 34px; height: 34px; min-height: 34px; padding: 0; background: transparent; font-size: 18px; }
 /* The dot remains anchored to the surface while leaders stagger to avoid labels. */
 .mission-map .moon-pin { width: 24px; height: 24px; padding: 0; background: transparent; border: 0; color: var(--tx0); overflow: visible; }
-.mission-map .moon-pin.selected, .mission-map .moon-pin.saved { color: var(--earth); background: transparent; }
+.mission-map .moon-pin.selected { color: var(--tx0); background: transparent; }
+.mission-map .moon-pin.saved { color: var(--earth); background: transparent; }
+.mission-map .moon-pin.saved { z-index: 2; }
+.mission-map .moon-pin.selected { z-index: 3; }
+.moon-pin.saved:is([data-position=behind], [data-position=offscreen]) .moon-callout-dot { background: var(--bg0); border: 1px solid currentColor; }
+.moon-pin.saved:is([data-position=behind], [data-position=offscreen]) .moon-leader polyline { stroke-dasharray: 3 2; }
 .mission-map .moon-pin:hover { color: var(--earth); outline: none; }
 .mission-map .moon-pin:focus-visible { outline: 1px solid var(--earth); outline-offset: 3px; }
 .moon-callout-dot { position: absolute; left: 9px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
@@ -62,8 +75,9 @@ body:has(.mission-app) { min-width: 0; }
 .moon-callout-label { position: absolute; left: 40px; top: -37px; white-space: nowrap; width: max-content; min-width: 56px; max-width: 176px; overflow: hidden; text-overflow: ellipsis; font: 12px/20px var(--sans); text-align: left; padding: 0 4px; text-shadow: 0 1px 2px #000; }
 .mission-marker-summary { position: absolute; z-index: 3; top: 20px; right: 24px; width: min(310px, calc(100% - 48px)); max-height: calc(100% - 100px); overflow: auto; padding: 16px; border: 1px solid var(--line); background: var(--bg1); font-size: 12px; }
 .mission-marker-summary header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.mission-marker-summary p, .mission-marker-summary label { margin-top: 8px; }
-.mission-marker-summary label { display: block; }
+.mission-marker-summary p { margin-top: 8px; }
+.mission-marker-summary .mission-check { width: fit-content; margin: 8px 0 0; }
+.mission-marker-summary .mission-check input { width: 15px; height: 15px; margin: 0; accent-color: var(--earth); }
 .mission-marker-summary dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; margin: 12px 0 0; }
 .mission-marker-summary dd { margin: 0; text-align: right; font-family: var(--mono); }
 .mission-marker-angles { padding-top: 12px; border-top: 1px solid var(--line); color: var(--tx1); }
@@ -201,6 +215,7 @@ button[aria-expanded=true] .chev { transform: rotate(180deg); }
 .mission-app summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .mission-app summary::-webkit-details-marker { display: none; }
 .mission-app summary::after { content: ''; flex: none; width: 5px; height: 5px; margin-top: -3px; border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor; transform: rotate(45deg); transition: transform .2s ease; }
+.mission-app .mission-known-sites > summary::after { content: none; }
 .mission-app details[open] > summary::after { margin-top: 2px; transform: rotate(225deg); }
 
 /* ---------- themed select ---------- */

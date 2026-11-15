@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { clampMoonCamera, moonZoomLimits } from './moonNavigation';
+import { clampMoonCamera, markerOffset, moonZoomLimits } from './moonNavigation';
 import { globePosition } from '../components/MoonView';
 import type { SitesDoc } from '../science';
 
@@ -46,4 +46,16 @@ describe('bounded Moon navigation', () => {
       // No DOM was connected, so there are no event listeners to dispose.
     }
   });
+});
+
+it('holds a displaced marker through small movements near the overlap threshold', () => {
+  const fits = (x: number, y: number, gap: number) => Math.hypot(x, y) >= gap;
+  const displaced = markerOffset({ x: 21, y: 0 }, undefined, fits);
+  expect(displaced).not.toEqual({ x: 0, y: 0 });
+  for (const x of [22.1, 21.9, 22.3, 20.9, 29]) {
+    expect(markerOffset({ x, y: 0 }, displaced, fits)).toBe(displaced);
+  }
+  const centered = markerOffset({ x: 31, y: 0 }, displaced, fits);
+  expect(centered).toEqual({ x: 0, y: 0 });
+  expect(markerOffset({ x: 25, y: 0 }, centered, fits)).toBe(centered);
 });

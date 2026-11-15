@@ -17,6 +17,8 @@ export interface HorizonMask {
   distM: Float32Array;
   /** False for the mathematical flat horizon (no terrain data used). */
   terrainAware: boolean;
+  /** Approximate equatorial DEM cell size for the global regional estimate. */
+  resolutionM?: number;
 }
 
 /** Parse horizon_<id>.bin: nAz float32 elevations (deg) then nAz float32 distances (m). */

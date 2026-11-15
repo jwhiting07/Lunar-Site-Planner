@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-15T04:31:56Z",
+ "generated_utc": "2026-11-15T04:44:49Z",
  "command": "python scripts/validate.py",
  "environment": {
   "python": "3.12.10",
@@ -8,7 +8,7 @@
   "cspice": "CSPICE_N0067"
  },
  "inputs": {
-  "sites_json_generated_utc": "2026-11-15T04:24:59Z",
+  "sites_json_generated_utc": "2026-11-15T04:43:51Z",
   "observer_height_m": 2.0,
   "kernels_de440": [
    "naif0012.tls",
@@ -3010,14 +3010,14 @@
   },
   "pytest": {
    "exit_code": 0,
-   "summary": "30 passed in 8.50s",
+   "summary": "30 passed in 8.71s",
    "passed": 30
   },
   "vitest": {
    "exit_code": 0,
-   "files": 17,
-   "total": 142,
-   "passed": 142,
+   "files": 18,
+   "total": 145,
+   "passed": 145,
    "failed": 0,
    "skipped": 0,
    "failed_tests": []

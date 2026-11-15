@@ -28,9 +28,9 @@ export function zoneDate(ms: number, zone: string): string {
 }
 
 /** "YYYY-MM-DD HH:mm" of an instant in `zone`. */
-export function zoneDateTime(ms: number, zone: string): string {
+export function zoneDateTime(ms: number, zone: string, seconds = false): string {
   const f = fields(ms, zone);
-  return `${zoneDate(ms, zone)} ${pad(f.h)}:${pad(f.min)}`;
+  return `${zoneDate(ms, zone)} ${pad(f.h)}:${pad(f.min)}${seconds ? `:${pad(new Date(ms).getUTCSeconds())}` : ''}`;
 }
 
 const nameFormatters = new Map<string, Intl.DateTimeFormat>();
@@ -87,7 +87,7 @@ export interface TimeZoneValue {
   label: string;
   date: (ms: number) => string;
   /** "2026-12-01 06:00 UTC" */
-  dateTime: (ms: number) => string;
+  dateTime: (ms: number, seconds?: boolean) => string;
 }
 
 function makeValue(zone: string, setZone: (zone: string) => void): TimeZoneValue {
@@ -95,7 +95,7 @@ function makeValue(zone: string, setZone: (zone: string) => void): TimeZoneValue
     zone, setZone,
     label: zoneAbbreviation(Date.now(), zone),
     date: ms => zoneDate(ms, zone),
-    dateTime: ms => `${zoneDateTime(ms, zone)} ${zoneAbbreviation(ms, zone)}`,
+    dateTime: (ms, seconds) => `${zoneDateTime(ms, zone, seconds)} ${zoneAbbreviation(ms, zone)}`,
   };
 }
 

@@ -314,9 +314,13 @@ function TimeControlsImpl({ startMs, endMs, cursorMs, onCursor }: ControlsProps)
         onLostPointerCapture={selection.stop}
         min={startMs}
         max={endMs}
-        step={HOUR_MS}
+        step="any"
         value={clamp(cursorMs, startMs, endMs)}
         onChange={(e) => onCursor(Number(e.target.value))}
+        onKeyDown={event => {
+          const direction = ['ArrowLeft', 'ArrowDown'].includes(event.key) ? -1 : ['ArrowRight', 'ArrowUp'].includes(event.key) ? 1 : 0;
+          if (direction) { event.preventDefault(); step(direction * (event.shiftKey ? DAY_MS : HOUR_MS)); }
+        }}
         aria-label={`Time scrubber, ${tz.label}`}
         aria-valuetext={tz.dateTime(cursorMs)}
       />

@@ -100,10 +100,10 @@ export const METHODS: MethodDoc[] = [
       'For each azimuth (0.5 deg steps) a ray is marched along the lunar surface out to 600 km. At each sample the LOLA terrain height is converted to an elevation angle as seen from the observer, including lunar curvature; the highest angle along the ray is the horizon in that direction.',
     formula:
       'theta = s / R;  elev(s) = atan2((R + h(s)) cos(theta) - r_o, (R + h(s)) sin(theta));  H(A) = max over s of elev(s);  between table azimuths H is interpolated linearly',
-    inputs: ['LDEM_80S_80MPP_ADJ.TIF (80 m)', 'LDEM_60S_240MPP_ADJ.TIF (240 m, beyond the 80 m coverage)', 'M-SITE', 'A-OBS-HEIGHT'],
-    refs: ['R-LOLA-PGDA', 'R-SNYDER', 'R-MAZARICO-2011'],
+    inputs: ['LDEM_80S_80MPP_ADJ.TIF (80 m)', 'LDEM_60S_240MPP_ADJ.TIF (240 m)', 'ldem_16_uint.tif (global fallback)', 'M-SITE', 'A-OBS-HEIGHT'],
+    refs: ['R-LOLA-PGDA', 'R-SVS-MOON-KIT', 'R-SNYDER', 'R-MAZARICO-2011'],
     limitations: [
-      'Terrain smaller than the DEM pixel (80 m near the site, 240 m far away) is not represented: boulders, small craters and the lander itself are ignored.',
+      'The south-polar DEM samples at 80 or 240 m. The global fallback samples at about 1.9 km per pixel at the equator and describes regional relief.',
       'Azimuth sampling is 0.5 deg; narrow distant peaks between rays can be missed.',
       'The same horizon is used for the whole solar disk width (0.53 deg).',
       'The 3-D view covers +/- 20 km around the site; the horizon can come from farther away (distance shown in the sky view).',

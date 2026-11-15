@@ -39,7 +39,11 @@ export function Select<T extends string | number>({ value, options, onChange, la
   return <>
     <button ref={trigger} type="button" className="select-trigger" aria-haspopup="listbox" aria-expanded={open} aria-controls={id}
       aria-label={`${label}: ${selected?.label ?? placeholder}`}
-      onClick={show} onKeyDown={event => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); show(); } }}>
+      popoverTarget={id} onClick={event => {
+        event.preventDefault();
+        if (list.current?.matches(':popover-open')) list.current.hidePopover();
+        else show();
+      }} onKeyDown={event => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); show(); } }}>
       <span className={selected ? '' : 'select-placeholder'}>{selected?.label ?? placeholder}</span><Chevron />
     </button>
     <ul ref={list} id={id} popover="auto" role="listbox" aria-label={label} className="select-list"

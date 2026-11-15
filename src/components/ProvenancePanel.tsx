@@ -297,7 +297,7 @@ export function ProvenancePanel({ provenance, provenanceError, ephIndex, focusMe
               )}
               <h3>Limitations in short</h3>
               <ul>
-                <li>Visibility uses an 80/240 m DEM and a 0.5 degree azimuth grid: boulders, small craters and the lander itself are not represented.</li>
+                <li>Terrain profiles use a 0.5 degree azimuth grid and either the 80/240 m polar DEMs or the global DEM at about 1.9 km per pixel at the equator.</li>
                 <li>Hourly samples: events shorter than one hour between samples are not detected.</li>
                 <li>Earth visibility is geometric line of sight only, not a radio-link assessment.</li>
                 <li>Energy values are an engineering estimate from assumed parameters, not a NASA CLPS spacecraft model.</li>

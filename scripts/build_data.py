@@ -423,8 +423,13 @@ def build_landing_sites(references: list) -> dict:
         unlocated += [{**u, "list": name.removeprefix("landing_sites_").removesuffix(".json")} for u in doc["unlocated"]]
     seen = set()
     for s in sites:
-        if set(s) != LANDING_SITE_FIELDS:
-            raise ValueError(f"{s.get('id')}: fields differ from the catalogue schema: {set(s) ^ LANDING_SITE_FIELDS}")
+        if set(s) - {"event_utc"} != LANDING_SITE_FIELDS:
+            raise ValueError(f"{s.get('id')}: fields differ from the catalogue schema")
+        if "event_utc" in s:
+            event = s["event_utc"]
+            parsed = datetime.fromisoformat(event.removesuffix("Z"))
+            if s["category"] == "planned" or event not in {parsed.isoformat(timespec="minutes") + "Z", parsed.isoformat(timespec="seconds") + "Z"} or parsed.date().isoformat() != s["date"]:
+                raise ValueError(f"{s['id']}: expected a verified UTC time on the catalogue date")
         if s["id"] in seen:
             raise ValueError(f"duplicate site id {s['id']}")
         seen.add(s["id"])
@@ -632,7 +637,7 @@ def main() -> None:
             {"file": "sites.json", "description": "Site coordinates (sourced), DEM elevation and slope (sampled), horizon/terrain statistics (computed)",
              "inputs": used["terrain"] + used["slope"] + used["site_selection"] + ["scripts/sites_input.json"],
              "refs": ["R-LOLA-PGDA", "R-LROC-1360", "R-NASA-IM1", "R-LROC-1408", "R-LOLA-SITES", "R-MAZARICO-2011"], "generated_utc": now},
-            {"file": "landing_sites.json", "description": "Catalogue of past and planned lunar landing and impact sites: coordinates as published by the cited sources (not computed), with per-site caveats and a list of sites that could not be located",
+            {"file": "landing_sites.json", "description": "Catalogue of lunar landing and impact sites with published coordinates, sourced UTC event times where available, and per-site caveats",
              "inputs": ["scripts/" + n for n in LANDING_SITE_FILES + LANDING_REF_FILES], "sha256": sha256(OUT / "landing_sites.json"),
              "refs": sorted({r for s in landing_doc["sites"] for r in s["source_refs"]}), "generated_utc": now},
             {"file": "ephemeris.json", "description": "Index and conventions of the ephemeris sample files; body radii from the PCK",

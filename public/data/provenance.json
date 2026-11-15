@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "generated_utc": "2026-11-15T04:37:42Z",
+ "generated_utc": "2026-11-15T04:43:51Z",
  "pipeline": {
   "command": "python scripts/fetch_sources.py && python scripts/build_data.py",
   "scripts": {
-   "build_data.py": "9c433273866be4ae821ebb25c3c064f1fe960ab3d1fa141271974e95ab50b1ba",
+   "build_data.py": "7196f2f85fafdb5bb00b132c6967b6c06c68b38cdd43599d38eb05cd45ae7c61",
    "moonlib.py": "6932b8ea1003c6ab81568ebb25429fb93a5f13119cc3368d770bb0053d929e33",
    "fetch_sources.py": "17122a7596c7c566c818a836257fc3f363046908a2ffd95e57384fdf4e9769ad",
    "sites_input.json": "b9101ec5b09693c1fad032580f87fdaf07c2537f0753c44ec28dc963b7705089",
@@ -221,7 +221,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1960.bin",
@@ -251,7 +251,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1961.bin",
@@ -281,7 +281,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1962.bin",
@@ -311,7 +311,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1963.bin",
@@ -341,7 +341,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1964.bin",
@@ -371,7 +371,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1965.bin",
@@ -401,7 +401,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1966.bin",
@@ -431,7 +431,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1967.bin",
@@ -461,7 +461,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1968.bin",
@@ -491,7 +491,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1969.bin",
@@ -521,7 +521,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1970.bin",
@@ -551,7 +551,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1971.bin",
@@ -581,7 +581,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1972.bin",
@@ -611,7 +611,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1973.bin",
@@ -641,7 +641,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1974.bin",
@@ -671,7 +671,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1975.bin",
@@ -701,7 +701,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1976.bin",
@@ -731,7 +731,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1977.bin",
@@ -761,7 +761,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1978.bin",
@@ -791,7 +791,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1979.bin",
@@ -821,7 +821,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1980.bin",
@@ -851,7 +851,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1981.bin",
@@ -881,7 +881,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1982.bin",
@@ -911,7 +911,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1983.bin",
@@ -941,7 +941,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1984.bin",
@@ -971,7 +971,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1985.bin",
@@ -1001,7 +1001,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1986.bin",
@@ -1031,7 +1031,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1987.bin",
@@ -1061,7 +1061,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1988.bin",
@@ -1091,7 +1091,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1989.bin",
@@ -1121,7 +1121,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1990.bin",
@@ -1151,7 +1151,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1991.bin",
@@ -1181,7 +1181,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1992.bin",
@@ -1211,7 +1211,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1993.bin",
@@ -1241,7 +1241,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1994.bin",
@@ -1271,7 +1271,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1995.bin",
@@ -1301,7 +1301,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1996.bin",
@@ -1331,7 +1331,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1997.bin",
@@ -1361,7 +1361,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1998.bin",
@@ -1391,7 +1391,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_1999.bin",
@@ -1421,7 +1421,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2000.bin",
@@ -1451,7 +1451,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2001.bin",
@@ -1481,7 +1481,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2002.bin",
@@ -1511,7 +1511,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2003.bin",
@@ -1541,7 +1541,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2004.bin",
@@ -1571,7 +1571,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2005.bin",
@@ -1601,7 +1601,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2006.bin",
@@ -1631,7 +1631,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2007.bin",
@@ -1661,7 +1661,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2008.bin",
@@ -1691,7 +1691,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2009.bin",
@@ -1721,7 +1721,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2010.bin",
@@ -1751,7 +1751,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2011.bin",
@@ -1781,7 +1781,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2012.bin",
@@ -1811,7 +1811,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2013.bin",
@@ -1841,7 +1841,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2014.bin",
@@ -1871,7 +1871,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2015.bin",
@@ -1901,7 +1901,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2016.bin",
@@ -1931,7 +1931,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2017.bin",
@@ -1961,7 +1961,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2018.bin",
@@ -1991,7 +1991,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2019.bin",
@@ -2021,7 +2021,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2020.bin",
@@ -2051,7 +2051,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2021.bin",
@@ -2081,7 +2081,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2022.bin",
@@ -2111,7 +2111,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2023.bin",
@@ -2141,7 +2141,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2024.bin",
@@ -2171,7 +2171,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2025.bin",
@@ -2201,7 +2201,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2026.bin",
@@ -2231,7 +2231,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2027.bin",
@@ -2261,7 +2261,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_2028.bin",
@@ -2291,7 +2291,7 @@
     "R-NAIF-ABCORR",
     "R-NAIF-SPKPOS"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_connecting-ridge.bin",
@@ -2314,7 +2314,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-1.bin",
@@ -2337,7 +2337,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-2.bin",
@@ -2360,7 +2360,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-3.bin",
@@ -2383,7 +2383,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-4.bin",
@@ -2406,7 +2406,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-5.bin",
@@ -2429,7 +2429,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_illum-peak-6.bin",
@@ -2452,7 +2452,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_im1-odysseus.bin",
@@ -2475,7 +2475,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "horizon_im2-athena.bin",
@@ -2498,7 +2498,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "overview_80S.png",
@@ -2514,7 +2514,7 @@
    "refs": [
     "R-LOLA-PGDA"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_connecting-ridge.png",
@@ -2530,7 +2530,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-1.png",
@@ -2546,7 +2546,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-2.png",
@@ -2562,7 +2562,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-3.png",
@@ -2578,7 +2578,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-4.png",
@@ -2594,7 +2594,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-5.png",
@@ -2610,7 +2610,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_illum-peak-6.png",
@@ -2626,7 +2626,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_im1-odysseus.png",
@@ -2642,7 +2642,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_color_im2-athena.png",
@@ -2658,7 +2658,7 @@
    "refs": [
     "R-SVS-MOON-KIT"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_connecting-ridge.bin",
@@ -2682,7 +2682,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-1.bin",
@@ -2706,7 +2706,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-2.bin",
@@ -2730,7 +2730,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-3.bin",
@@ -2754,7 +2754,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-4.bin",
@@ -2778,7 +2778,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-5.bin",
@@ -2802,7 +2802,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_illum-peak-6.bin",
@@ -2826,7 +2826,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_im1-odysseus.bin",
@@ -2850,7 +2850,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "terrain_im2-athena.bin",
@@ -2874,7 +2874,7 @@
     "R-LOLA-PGDA",
     "R-SNYDER"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "sites.json",
@@ -2894,27 +2894,40 @@
     "R-LOLA-SITES",
     "R-MAZARICO-2011"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "landing_sites.json",
-   "description": "Catalogue of past and planned lunar landing and impact sites: coordinates as published by the cited sources (not computed), with per-site caveats and a list of sites that could not be located",
+   "description": "Catalogue of lunar landing and impact sites with published coordinates, sourced UTC event times where available, and per-site caveats",
    "inputs": [
     "scripts/landing_sites_past.json",
     "scripts/landing_sites_planned.json",
     "scripts/landing_sites_past_refs.json",
     "scripts/landing_sites_planned_refs.json"
    ],
-   "sha256": "7bbe507db3484619a9ab72332f4b9a0a2bc4fb2fc0e9721d85dd854228249441",
+   "sha256": "7d83d692c391ae62e32d4ff98bd9c97d633f18e3a7da9bae171ad9309d01bf0e",
    "refs": [
+    "R-LS-CNSA-CE1-TIME",
+    "R-LS-CNSA-CE3-TIME",
+    "R-LS-CNSA-CE4-TIME",
+    "R-LS-CNSA-CE5-TIME",
+    "R-LS-CNSA-CE6-TIME",
+    "R-LS-ESA-SMART1-TIME",
     "R-LS-FIREFLY-BGM2",
     "R-LS-FIREFLY-BGM3",
+    "R-LS-GRAIL-LPSC-TIMES",
+    "R-LS-ISRO-CH3-TIME",
     "R-LS-ISRO-LPSC2026-1198",
+    "R-LS-JAXA-KAGUYA-TIME",
+    "R-LS-JAXA-SLIM-TIME",
+    "R-LS-JPL-RANGER6-TIME",
     "R-LS-LROC-2016",
     "R-LS-LROC-CE6",
     "R-LS-LROC-CH3",
+    "R-LS-NASA-APOLLO-TIMES",
     "R-LS-NASA-ARTEMIS-III",
     "R-LS-NASA-ARTEMIS-IV",
+    "R-LS-NASA-BGM1-TIME",
     "R-LS-NASA-CLPS-DELIVERIES",
     "R-LS-NASA-CP11",
     "R-LS-NASA-CP21",
@@ -2922,19 +2935,27 @@
     "R-LS-NASA-CS11",
     "R-LS-NASA-CS3",
     "R-LS-NASA-HIST-LUNA2",
+    "R-LS-NASA-IM1-TIME",
+    "R-LS-NASA-IM2-TIME",
     "R-LS-NASA-IM4-EVENT",
+    "R-LS-NASA-LCROSS-TIME",
+    "R-LS-NASA-LP-TIME",
+    "R-LS-NASA-LUNA2-TIME",
     "R-LS-NASA-MOONBASE-PHASES",
     "R-LS-NASA-REL24-136",
+    "R-LS-NASA-SIVB-TIMES",
     "R-LS-NASA-TO20A",
     "R-LS-NASA-VIPER",
     "R-LS-NSSDC-APOLLO",
     "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-RANGER-TIMES",
     "R-LS-NSSDC-SURVEYOR",
     "R-LS-NSSDC-USSR",
     "R-LS-NTRS-20250011660",
     "R-LS-PTI-THEPRINT-CH4",
     "R-LS-SCIAM-CHANGE7-DELAY",
     "R-LS-SIDDIQI-2018",
+    "R-LS-SPACEIL-BERESHEET-TIME",
     "R-LS-TPS-CHANGE7",
     "R-LS-USGS-1439",
     "R-LS-USGS-14502",
@@ -2949,7 +2970,7 @@
     "R-LS-USGS-8058",
     "R-LS-ZHAO2025-CE7"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris.json",
@@ -2969,7 +2990,7 @@
     "R-NAIF-SPKPOS",
     "R-NAIF-PCK"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   },
   {
    "file": "ephemeris_history.json",
@@ -2990,7 +3011,7 @@
     "R-NAIF-PCK",
     "R-NAIF-TIME"
    ],
-   "generated_utc": "2026-11-15T04:37:42Z"
+   "generated_utc": "2026-11-15T04:43:51Z"
   }
  ],
  "references": [
@@ -2999,11 +3020,11 @@
    "authority": "NASA Scientific Visualization Studio (Ernie Wright)",
    "title": "CGI Moon Kit",
    "url": "https://svs.gsfc.nasa.gov/4720/",
-   "version": "2025 color map, lroc_color_2k.jpg",
-   "kind": "imagery",
-   "role": "display only",
-   "verified": "Source and texture checksum recorded in public/textures/provenance.json",
-   "accessed": "2026-11-14"
+   "version": "Color map lroc_color_2k.jpg and LOLA elevation map ldem_16_uint.tif",
+   "kind": "imagery and elevation",
+   "role": "display color and regional horizon input",
+   "verified": "Texture checksum recorded in public/textures/provenance.json. Global elevation TIFF verified as 5760 × 2880 with the half-metre encoding documented by NASA SVS.",
+   "accessed": "2026-11-15"
   },
   {
    "id": "R-NAIF-GK",
@@ -3710,6 +3731,237 @@
    "accessed": "2026-11-14",
    "verified": "Launch 'Early 2028', 'Crewed Surface Landing' near 'the lunar South Pole region'; states 'the agency has identified nine candidate landing regions near the lunar South Pole' with 'multiple potential landing sites'; no region names or coordinates on the page.",
    "role": "catalogue coordinates (display and site selection)"
+  },
+  {
+   "id": "R-LS-NASA-APOLLO-TIMES",
+   "authority": "NASA History Office",
+   "title": "Apollo by the Numbers: LM Lunar Landing",
+   "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_18-27_LM_Lunar_Landing.htm",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "GMT date and time rows are used for the six crewed landings.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-SIVB-TIMES",
+   "authority": "NASA History Office",
+   "title": "Apollo by the Numbers: S-IVB Lunar Impact",
+   "url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "The appendix gives the estimated GMT instants on the Moon for the five S-IVB impacts.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NSSDC-RANGER-TIMES",
+   "authority": "NASA NSSDCA",
+   "title": "Ranger to the Moon",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/ranger.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Mission summaries report the UT times of the Ranger 7, 8 and 9 impacts.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-JPL-RANGER6-TIME",
+   "authority": "NASA/JPL",
+   "title": "JPL Technical Report 32-694",
+   "url": "https://ntrs.nasa.gov/api/citations/19650003678/downloads/19650003678.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table 21 gives the recorded, light-time-corrected Ranger VI impact at 09:24:31.86 GMT, rounded here to seconds.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-LUNA2-TIME",
+   "authority": "NASA",
+   "title": "Summary of Hard and Soft Landers",
+   "url": "https://ntrs.nasa.gov/api/citations/19680022029/downloads/19680022029.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table VII reports Luna II on 1959-09-13 at 21:02:23, consistent with the catalogue UTC date.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-LP-TIME",
+   "authority": "NASA Science",
+   "title": "Lunar Prospector",
+   "url": "https://science.nasa.gov/mission/lunar-prospector/",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Mission results report impact at 09:52:02 UT.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-LCROSS-TIME",
+   "authority": "NASA Planetary Data System",
+   "title": "LCROSS Apache Point Observatory archive",
+   "url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=EAR-L-APO3.5M_AGILE-2-EDR-LCROSS-V1.0",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "The Centaur impact is reported at 11:31:19.51 UTC, rounded here to seconds.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-ESA-SMART1-TIME",
+   "authority": "ESA",
+   "title": "ESA Annual Report 2006: Science",
+   "url": "https://www.esa.int/esapub/annuals/annual06/ar6_activities.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports the September 3 SMART-1 impact at 05:42:22 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-CNSA-CE1-TIME",
+   "authority": "CNSA",
+   "title": "China's lunar probe Chang'e-1 impacts moon",
+   "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c6478763/content.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports the March 1 controlled impact at 08:13 GMT.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-CNSA-CE3-TIME",
+   "authority": "CNSA",
+   "title": "Chang'e 3 landing announcement",
+   "url": "https://www.cnsa.gov.cn/n6758968/n6758972/c6798565/content.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown at 21:11 Beijing Time, 13:11 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-CNSA-CE4-TIME",
+   "authority": "CNSA",
+   "title": "China's Chang'e-4 probe makes historic landing on moon's far side",
+   "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c6805049/content.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown at 10:26 Beijing Time, 02:26 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-CNSA-CE5-TIME",
+   "authority": "CNSA",
+   "title": "Chang'e 5 landing announcement",
+   "url": "https://www.cnsa.gov.cn/n6759533/c6810683/content.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown at 23:11 Beijing Time, 15:11 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-CNSA-CE6-TIME",
+   "authority": "CNSA",
+   "title": "China's Chang'e-6 lands on moon's far side to collect samples",
+   "url": "https://www.cnsa.gov.cn/english/n6465652/n6465653/c10541840/content.html",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown June 2 at 06:23 Beijing Time, June 1 at 22:23 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-ISRO-CH3-TIME",
+   "authority": "ISRO",
+   "title": "Chandrayaan-3 APXS overview",
+   "url": "https://www.isro.gov.in/media_isro/pdf/APXS_CH3.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown August 23 at 18:04 IST, 12:34 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-JAXA-SLIM-TIME",
+   "authority": "JAXA/ISAS",
+   "title": "SLIM mission archive",
+   "url": "https://darts.isas.jaxa.jp/en/missions/slim",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown January 20 at 00:20 JST, January 19 at 15:20 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-IM1-TIME",
+   "authority": "NASA Goddard Space Flight Center",
+   "title": "NASA?s LRO Images Intuitive Machine?s Odysseus Lander",
+   "url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown February 22 at 18:24 EST, 23:24 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-IM2-TIME",
+   "authority": "NASA PRIME-1 team",
+   "title": "MSolo PRIME-1 overview and results",
+   "url": "https://ntrs.nasa.gov/api/citations/20260003150/downloads/MSolo%20PRIME-1%20overview%20and%20results%20-%20LSSW.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Mission overview gives the Athena landing as March 6 at 17:28 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-NASA-BGM1-TIME",
+   "authority": "NASA",
+   "title": "Blue Ghost Lands on Moon",
+   "url": "https://www.nasa.gov/image-article/blue-ghost-lands-on-moon/",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports touchdown March 2 at 03:34 EST, 08:34 UTC.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-JAXA-KAGUYA-TIME",
+   "authority": "JAXA/SELENE",
+   "title": "KAGUYA Lunar Impact",
+   "url": "https://www.kaguya.jaxa.jp/en/communication/KAGUYA_Lunar_Impact_e.htm",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Reports controlled impact June 10 at 18:25 GMT.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-GRAIL-LPSC-TIMES",
+   "authority": "LRO LAMP and GRAIL teams",
+   "title": "LRO-LAMP Observations of the GRAIL Impacts",
+   "url": "https://www.lpi.usra.edu/meetings/lpsc2013/pdf/3004.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "Table 1 reports the GRAIL team impact times as 22:28:47.0 and 22:29:15.6, rounded here to seconds.",
+   "role": "catalogue UTC event times"
+  },
+  {
+   "id": "R-LS-SPACEIL-BERESHEET-TIME",
+   "authority": "SpaceIL mission team (Aharonson et al.)",
+   "title": "The science mission of SpaceIL?s Beresheet lander",
+   "url": "https://static1.squarespace.com/static/56d74e9c4c2f85996d16a562/t/5ff342080f9679460523c65e/1609777692371/Aharonson_2020_PSS.pdf",
+   "version": "Published mission record",
+   "kind": "mission record",
+   "accessed": "2026-11-14",
+   "verified": "The mission timeline table reports impact at 19:23 on April 11.",
+   "role": "catalogue UTC event times"
   },
   {
    "id": "R-LS-FIREFLY-BGM2",

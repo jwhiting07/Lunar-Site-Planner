@@ -2,6 +2,14 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { OrbitBody } from './orbits';
 
+const moonLighting = THREE.ShaderChunk.lights_physical_pars_fragment.replace(
+  'float dotNL = saturate( dot( geometryNormal, directLight.direction ) );',
+  `float incidence = dot( geometryNormal, directLight.direction );
+   float width = 0.035;
+   float ramp = clamp( ( incidence + width ) / ( 2.0 * width ), 0.0, 1.0 );
+   float dotNL = max( incidence - width, 0.0 ) + width * ramp * ramp;`,
+);
+
 /** Each caller owns its model and GPU resources; HTTP cache reuses the local GLB. */
 export async function loadNasaModel(body: OrbitBody): Promise<THREE.Group> {
   const gltf = await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/${body}.glb`);
@@ -34,6 +42,29 @@ export async function loadNasaModel(body: OrbitBody): Promise<THREE.Group> {
     }
   });
   return root;
+}
+
+export function smoothMoonLighting(root: THREE.Object3D) {
+  root.traverse(node => {
+    if (!(node instanceof THREE.Mesh)) return;
+    // Radial normals stay continuous across the Moon model's duplicated UV edges.
+    const positions = node.geometry.getAttribute('position');
+    const normals = new THREE.BufferAttribute(new Float32Array(positions.count * 3), 3);
+    const localCentre = node.worldToLocal(new THREE.Vector3());
+    const radial = new THREE.Vector3();
+    for (let i = 0; i < positions.count; i++) {
+      radial.fromBufferAttribute(positions, i).sub(localCentre).normalize();
+      normals.setXYZ(i, radial.x, radial.y, radial.z);
+    }
+    node.geometry.setAttribute('normal', normals);
+    for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      if (!(material instanceof THREE.MeshStandardMaterial)) continue;
+      material.onBeforeCompile = shader => {
+        // Round the diffuse falloff within roughly two degrees of the terminator.
+        shader.fragmentShader = shader.fragmentShader.replace('#include <lights_physical_pars_fragment>', moonLighting);
+      };
+    }
+  });
 }
 
 export function disposeModel(root: THREE.Object3D) {

@@ -89,7 +89,7 @@ export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal): Pro
   if (!response.ok) throw new Error('The local terrain calculator is unavailable.');
   const data = await response.json();
   if (data === null) { customCache.set(cacheKey, null); return null; }
-  const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM } = data;
+  const { elevationM, observerHeightM, coverageKm, azStepDeg, elevDeg, distM, terrainResolutionM } = data;
   if (![elevationM, observerHeightM, coverageKm].every(Number.isFinite) ||
       !(azStepDeg > 0) || !Array.isArray(elevDeg) || !Array.isArray(distM) ||
       elevDeg.length !== 360 / azStepDeg || elevDeg.length !== distM.length ||
@@ -97,10 +97,11 @@ export async function loadCustomHorizon(site: SiteDoc, signal: AbortSignal): Pro
     throw new Error('The local terrain calculator returned an invalid horizon.');
   }
   const mask: HorizonMask = { azStepDeg, elevDeg: Float32Array.from(elevDeg), distM: Float32Array.from(distM), terrainAware: true };
+  if (Number.isFinite(terrainResolutionM) && terrainResolutionM > 0) mask.resolutionM = terrainResolutionM;
   const resolvedSite: SiteDoc = {
     ...site, terrain_aware: true, elevation_m: elevationM,
-    elevation_source: 'LOLA DEM bilinear sample [R-LOLA-PGDA]',
-    coord_note: 'User-selected coordinates with a computed LOLA horizon [M-HORIZON].',
+    elevation_source: mask.resolutionM ? 'Global LOLA DEM bilinear sample [R-SVS-MOON-KIT]' : 'Polar LOLA DEM bilinear sample [R-LOLA-PGDA]',
+    coord_note: 'Coordinates with a computed LOLA horizon [M-HORIZON].',
     horizon: {
       ...site.horizon, n_az: elevDeg.length, az_step_deg: azStepDeg, coverage_min_km: coverageKm,
       min_deg: Math.min(...elevDeg), max_deg: Math.max(...elevDeg),

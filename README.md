@@ -27,8 +27,10 @@ npm.cmd run dev -- --host 127.0.0.1 --port 5200 --strictPort
 
 If a port is occupied, select another port and use the URL Vite prints.
 For a production build, run `npm run build` and serve it with `npm run preview`.
-On-demand terrain requires the Python environment from `requirements.txt` and the
-80 m and 240 m LOLA rasters in `data_cache/lola/` (see `scripts/fetch_sources.py`).
+On-demand terrain uses the Python environment from `requirements.txt` and the
+LOLA rasters in `data_cache/lola/` (see `scripts/fetch_sources.py`). The 80 m and
+240 m rasters cover the south pole. The 16 pixels/degree global raster from the
+[NASA CGI Moon Kit](https://svs.gsfc.nasa.gov/4720) supplies regional skylines elsewhere.
 The server uses `.venv` when present. Set `SERAPHIM_PYTHON` to use a different
 Python executable. The first on-demand request starts a Python worker that keeps the
 rasters in memory (about 7 s once, then about 1 s per location); the worker exits after
@@ -57,7 +59,7 @@ verdict, and terrain model. Checking a row immediately includes that scenario in
 **Compare**; unchecking removes it. Up to twelve scenarios can be compared,
 including different dates and durations at one location. Basic and detailed
 comparison and CSV/JSON exports retain each scenario's parameters and targets.
-Comparison is held in memory for the current page session.
+Compared scenarios and their Moon markers are kept in this browser until removed or reset.
 
 **Open** reveals Results, Timeline, Terrain, and Compare. The timeline and local
 horizon share a cursor; the Terrain view uses the same cursor for Sun/Earth
@@ -67,11 +69,11 @@ without changing the search settings just by opening it. Nearby alternatives
 preserve duration and targets while testing dates within seven days and locations
 within 50 km.
 
-Custom south-polar coordinates first show a flat-horizon preview while a LOLA
-profile computes in the background. Where coverage is sufficient, results and
-the local skyline update together. Outside coverage, results remain labeled as
-flat-horizon estimates. Sampled searches use flat-horizon screening; opening a
-candidate can refine its terrain. Try `-83` and `25` for an on-demand profile.
+Custom coordinates first show a flat-horizon preview while a LOLA profile computes
+in the background. Results and the lander skyline update together. The regional
+profile uses a DEM with cells about 1.9 km across at the equator and cannot resolve
+small local obstructions. Sampled searches use flat-horizon screening. Try `-83`
+and `25` for a higher-resolution south-polar profile.
 
 Drag or use arrow keys to rotate the Moon; scroll or use +/− to zoom. The map
 centers an entered location and retains cursor coordinates and a distance scale.

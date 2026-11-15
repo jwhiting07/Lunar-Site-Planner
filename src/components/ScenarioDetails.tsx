@@ -25,9 +25,10 @@ export type TerrainState = 'pending' | 'uncovered' | 'unavailable' | null;
 
 /** One-line description of the horizon behind the sky view. */
 function horizonState(mask: HorizonMask | null, terrain: TerrainState): string {
+  if (mask?.resolutionM) return `Regional LOLA skyline · ${(mask.resolutionM / 1000).toFixed(1)} km DEM at equator`;
   if (mask?.terrainAware) return `LOLA terrain horizon · ${mask.azStepDeg}° azimuth steps`;
   if (terrain === 'pending') return 'Flat 0° horizon · Calculating terrain…';
-  if (terrain === 'uncovered') return 'Flat 0° horizon · Outside LOLA coverage';
+  if (terrain === 'uncovered') return 'Flat 0° horizon · No terrain profile available';
   if (terrain === 'unavailable') return 'Flat 0° horizon · Terrain calculator unavailable';
   return 'Flat 0° horizon · No terrain data for this site';
 }

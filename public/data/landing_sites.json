@@ -14,6 +14,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1969-07-20",
+   "event_utc": "1969-07-20T20:17:39Z",
    "lat_deg": 0.67416,
    "lon_deg": 23.47314,
    "coord_basis": "reported landing position",
@@ -21,7 +22,8 @@
    "precision_deg": 1e-05,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -34,6 +36,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1969-11-19",
+   "event_utc": "1969-11-19T06:54:36Z",
    "lat_deg": -3.0128,
    "lon_deg": -23.4219,
    "coord_basis": "reported landing position",
@@ -41,7 +44,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -54,6 +58,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1971-02-05",
+   "event_utc": "1971-02-05T09:18:13Z",
    "lat_deg": -3.64589,
    "lon_deg": -17.47194,
    "coord_basis": "reported landing position",
@@ -61,7 +66,8 @@
    "precision_deg": 1e-05,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -74,6 +80,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1971-07-30",
+   "event_utc": "1971-07-30T22:16:29Z",
    "lat_deg": 26.13239,
    "lon_deg": 3.6333,
    "coord_basis": "reported landing position",
@@ -81,7 +88,8 @@
    "precision_deg": 1e-05,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -94,6 +102,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1972-04-21",
+   "event_utc": "1972-04-21T02:23:35Z",
    "lat_deg": -8.9734,
    "lon_deg": 15.5011,
    "coord_basis": "reported landing position",
@@ -101,7 +110,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -114,6 +124,7 @@
    "category": "crewed",
    "status": "landed",
    "date": "1972-12-11",
+   "event_utc": "1972-12-11T19:54:58Z",
    "lat_deg": 20.1911,
    "lon_deg": 30.7723,
    "coord_basis": "reported landing position",
@@ -121,7 +132,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-NSSDC-APOLLO",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-APOLLO-TIMES"
    ]
   },
   {
@@ -134,6 +146,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1970-04-15",
+   "event_utc": "1970-04-15T01:09:39Z",
    "lat_deg": -2.555,
    "lon_deg": -27.8875,
    "coord_basis": "reported impact position",
@@ -141,7 +154,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-SIVB-TIMES"
    ]
   },
   {
@@ -154,6 +168,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1971-02-04",
+   "event_utc": "1971-02-04T07:40:54Z",
    "lat_deg": -8.181,
    "lon_deg": -26.0305,
    "coord_basis": "reported impact position",
@@ -161,7 +176,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-SIVB-TIMES"
    ]
   },
   {
@@ -174,6 +190,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1971-07-29",
+   "event_utc": "1971-07-29T20:58:41Z",
    "lat_deg": -1.2897,
    "lon_deg": -11.8245,
    "coord_basis": "reported impact position",
@@ -181,7 +198,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-SIVB-TIMES"
    ]
   },
   {
@@ -194,6 +212,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1972-04-19",
+   "event_utc": "1972-04-19T21:02:04Z",
    "lat_deg": 1.921,
    "lon_deg": -24.623,
    "coord_basis": "reported impact position",
@@ -201,7 +220,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-SIVB-TIMES"
    ]
   },
   {
@@ -214,6 +234,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1972-12-10",
+   "event_utc": "1972-12-10T20:32:40Z",
    "lat_deg": -4.1681,
    "lon_deg": -12.3307,
    "coord_basis": "reported impact position",
@@ -221,7 +242,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-SIVB-TIMES"
    ]
   },
   {
@@ -234,6 +256,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1966-06-02",
+   "event_utc": "1966-06-02T06:17:36Z",
    "lat_deg": -2.4745,
    "lon_deg": -43.3398,
    "coord_basis": "reported landing position",
@@ -255,6 +278,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1967-04-20",
+   "event_utc": "1967-04-20T00:04:53Z",
    "lat_deg": -3.0162,
    "lon_deg": -23.418,
    "coord_basis": "reported landing position",
@@ -276,6 +300,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1967-09-11",
+   "event_utc": "1967-09-11T00:46:44Z",
    "lat_deg": 1.4551,
    "lon_deg": 23.1943,
    "coord_basis": "reported landing position",
@@ -297,6 +322,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1967-11-10",
+   "event_utc": "1967-11-10T01:01:06Z",
    "lat_deg": 0.4742,
    "lon_deg": -1.4275,
    "coord_basis": "reported landing position",
@@ -318,6 +344,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1968-01-10",
+   "event_utc": "1968-01-10T01:05:36Z",
    "lat_deg": -40.9812,
    "lon_deg": -11.5127,
    "coord_basis": "reported landing position",
@@ -339,6 +366,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1964-02-02",
+   "event_utc": "1964-02-02T09:24:32Z",
    "lat_deg": 9.3864,
    "lon_deg": 21.4806,
    "coord_basis": "reported impact position",
@@ -346,7 +374,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-JPL-RANGER6-TIME"
    ]
   },
   {
@@ -359,6 +388,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1964-07-31",
+   "event_utc": "1964-07-31T13:25:49Z",
    "lat_deg": -10.634,
    "lon_deg": -20.677,
    "coord_basis": "reported impact position",
@@ -366,7 +396,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-RANGER-TIMES"
    ]
   },
   {
@@ -379,6 +410,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1965-02-20",
+   "event_utc": "1965-02-20T09:57:37Z",
    "lat_deg": 2.6376,
    "lon_deg": 24.7881,
    "coord_basis": "reported impact position",
@@ -386,7 +418,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-RANGER-TIMES"
    ]
   },
   {
@@ -399,6 +432,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1965-03-24",
+   "event_utc": "1965-03-24T14:08:20Z",
    "lat_deg": -12.8281,
    "lon_deg": -2.3884,
    "coord_basis": "reported impact position",
@@ -406,7 +440,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-RANGER-TIMES"
    ]
   },
   {
@@ -419,13 +454,15 @@
    "category": "impact",
    "status": "impact",
    "date": "1999-07-31",
+   "event_utc": "1999-07-31T09:52:02Z",
    "lat_deg": -87.7,
    "lon_deg": 42.0,
    "coord_basis": "reported impact position",
    "coord_note": "Planned/estimated controlled-impact point (source: Ulivi and Harland 2004, per NSSDC footnote); not imaged; DE421 ME frame stated for the table. One decimal (~0.1 deg, km-scale).",
    "precision_deg": 0.1,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-LP-TIME"
    ]
   },
   {
@@ -438,13 +475,15 @@
    "category": "impact",
    "status": "impact",
    "date": "2009-10-09",
+   "event_utc": "2009-10-09T11:31:20Z",
    "lat_deg": -84.6796,
    "lon_deg": -48.7093,
    "coord_basis": "reported impact position",
    "coord_note": "Centaur upper-stage impact point in permanently shadowed Cabeus crater (not easily observable per NSSDC footnote); the LCROSS shepherding spacecraft hit nearby at 84.719 S, 49.61 W. DE421 ME frame stated for the table; four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-LCROSS-TIME"
    ]
   },
   {
@@ -457,6 +496,7 @@
    "category": "impact",
    "status": "impact",
    "date": "2012-12-17",
+   "event_utc": "2012-12-17T22:28:47Z",
    "lat_deg": 75.6088,
    "lon_deg": -26.594,
    "coord_basis": "reported impact position",
@@ -464,7 +504,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-GRAIL-LPSC-TIMES"
    ]
   },
   {
@@ -477,6 +518,7 @@
    "category": "impact",
    "status": "impact",
    "date": "2012-12-17",
+   "event_utc": "2012-12-17T22:29:16Z",
    "lat_deg": 75.6508,
    "lon_deg": -26.8341,
    "coord_basis": "reported impact position",
@@ -484,7 +526,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-GRAIL-LPSC-TIMES"
    ]
   },
   {
@@ -517,6 +560,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1959-09-13",
+   "event_utc": "1959-09-13T21:02:23Z",
    "lat_deg": 30.0,
    "lon_deg": 0.0,
    "coord_basis": "region/feature centre",
@@ -526,7 +570,8 @@
     "R-LS-NSSDC-IMPACTS",
     "R-LS-SIDDIQI-2018",
     "R-LS-NASA-HIST-LUNA2",
-    "R-LS-NSSDC-USSR"
+    "R-LS-NSSDC-USSR",
+    "R-LS-NASA-LUNA2-TIME"
    ]
   },
   {
@@ -539,6 +584,7 @@
    "category": "impact",
    "status": "impact",
    "date": "1962-04-26",
+   "event_utc": "1962-04-26T12:49:53Z",
    "lat_deg": -15.5,
    "lon_deg": -130.7,
    "coord_basis": "reported impact position",
@@ -559,13 +605,15 @@
    "category": "lander",
    "status": "landed",
    "date": "1966-02-03",
+   "event_utc": "1966-02-03T18:44:52Z",
    "lat_deg": 7.13,
    "lon_deg": -64.37,
    "coord_basis": "reported landing position",
    "coord_note": "Historical value from an early Pravda report; NSSDC footnote says LROC images show no lander at these coordinates, so the true site is probably at least 10 km away. Printed to 0.01 deg but real uncertainty is >0.3 deg.",
    "precision_deg": 0.5,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -578,13 +626,15 @@
    "category": "lander",
    "status": "landed",
    "date": "1966-12-24",
+   "event_utc": "1966-12-24T18:01Z",
    "lat_deg": 18.87,
    "lon_deg": -62.05,
    "coord_basis": "reported landing position",
    "coord_note": "Historical reported value (Siddiqi 2002/2018; Ulivi and Harland 2004, per NSSDC footnote), not LROC-confirmed; 297.95 E converted to east-positive. Two decimals; true accuracy likely coarser.",
    "precision_deg": 0.1,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -597,6 +647,7 @@
    "category": "sample-return",
    "status": "landed",
    "date": "1970-09-20",
+   "event_utc": "1970-09-20T05:18Z",
    "lat_deg": -0.5137,
    "lon_deg": 56.3638,
    "coord_basis": "reported landing position",
@@ -604,7 +655,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -617,6 +669,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1970-11-17",
+   "event_utc": "1970-11-17T03:47Z",
    "lat_deg": 38.23764,
    "lon_deg": -35.00163,
    "coord_basis": "reported landing position",
@@ -624,7 +677,8 @@
    "precision_deg": 1e-05,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -676,6 +730,7 @@
    "category": "sample-return",
    "status": "landed",
    "date": "1972-02-21",
+   "event_utc": "1972-02-21T19:19Z",
    "lat_deg": 3.7863,
    "lon_deg": 56.6242,
    "coord_basis": "reported landing position",
@@ -683,7 +738,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -696,6 +752,7 @@
    "category": "lander",
    "status": "landed",
    "date": "1973-01-15",
+   "event_utc": "1973-01-15T23:35Z",
    "lat_deg": 25.9994,
    "lon_deg": 30.4076,
    "coord_basis": "reported landing position",
@@ -703,7 +760,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NSSDC-USSR"
    ]
   },
   {
@@ -756,6 +814,7 @@
    "category": "sample-return",
    "status": "landed",
    "date": "1976-08-18",
+   "event_utc": "1976-08-18T06:36Z",
    "lat_deg": 12.7142,
    "lon_deg": 62.2129,
    "coord_basis": "reported landing position",
@@ -763,7 +822,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-SIDDIQI-2018"
    ]
   },
   {
@@ -795,13 +855,15 @@
    "category": "impact",
    "status": "impact",
    "date": "2006-09-03",
+   "event_utc": "2006-09-03T05:42:22Z",
    "lat_deg": -34.4,
    "lon_deg": -46.2,
    "coord_basis": "reported impact position",
    "coord_note": "Impact point from Burchell et al. (2015) per NSSDC footnote; 313.8 E converted to east-positive. One decimal (~0.1 deg, ~3 km).",
    "precision_deg": 0.1,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-ESA-SMART1-TIME"
    ]
   },
   {
@@ -814,13 +876,15 @@
    "category": "impact",
    "status": "impact",
    "date": "2009-06-10",
+   "event_utc": "2009-06-10T18:25Z",
    "lat_deg": -65.5,
    "lon_deg": 80.4,
    "coord_basis": "reported impact position",
    "coord_note": "Controlled-impact point from a 2009 JAXA press release per NSSDC footnote; not LROC-confirmed. One decimal.",
    "precision_deg": 0.1,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-JAXA-KAGUYA-TIME"
    ]
   },
   {
@@ -833,13 +897,15 @@
    "category": "impact",
    "status": "impact",
    "date": "2009-03-01",
+   "event_utc": "2009-03-01T08:13Z",
    "lat_deg": -1.5,
    "lon_deg": 52.36,
    "coord_basis": "reported impact position",
    "coord_note": "Controlled-impact point from Xinhua (2009) per NSSDC footnote; Siddiqi (2018) gives 1.66 S, 52.27 E instead. Two decimals; not LROC-confirmed.",
    "precision_deg": 0.1,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-CNSA-CE1-TIME"
    ]
   },
   {
@@ -852,6 +918,7 @@
    "category": "lander",
    "status": "landed",
    "date": "2013-12-14",
+   "event_utc": "2013-12-14T13:11Z",
    "lat_deg": 44.1214,
    "lon_deg": -19.5117,
    "coord_basis": "reported landing position",
@@ -859,7 +926,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-2016",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-CNSA-CE3-TIME"
    ]
   },
   {
@@ -892,13 +960,15 @@
    "category": "lander",
    "status": "landed",
    "date": "2019-01-03",
+   "event_utc": "2019-01-03T02:26Z",
    "lat_deg": -45.4561,
    "lon_deg": 177.5885,
    "coord_basis": "reported landing position",
    "coord_note": "Lander position, imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-CNSA-CE4-TIME"
    ]
   },
   {
@@ -930,13 +1000,15 @@
    "category": "sample-return",
    "status": "landed",
    "date": "2020-12-01",
+   "event_utc": "2020-12-01T15:11Z",
    "lat_deg": 43.0576,
    "lon_deg": -51.9161,
    "coord_basis": "reported landing position",
    "coord_note": "Lander (descent stage) position, imaged by LROC; DE421 mean Earth/polar axis per page. Four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-CNSA-CE5-TIME"
    ]
   },
   {
@@ -949,6 +1021,7 @@
    "category": "sample-return",
    "status": "landed",
    "date": "2024-06-01",
+   "event_utc": "2024-06-01T22:23Z",
    "lat_deg": -41.6385,
    "lon_deg": -153.9852,
    "coord_basis": "reported landing position",
@@ -956,7 +1029,8 @@
    "precision_deg": 0.0001,
    "source_refs": [
     "R-LS-LROC-CE6",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-CNSA-CE6-TIME"
    ]
   },
   {
@@ -988,6 +1062,7 @@
    "category": "lander",
    "status": "landed",
    "date": "2023-08-23",
+   "event_utc": "2023-08-23T12:34Z",
    "lat_deg": -69.3741,
    "lon_deg": 32.32,
    "coord_basis": "reported landing position",
@@ -995,7 +1070,8 @@
    "precision_deg": 0.01,
    "source_refs": [
     "R-LS-LROC-CH3",
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-ISRO-CH3-TIME"
    ]
   },
   {
@@ -1008,13 +1084,15 @@
    "category": "lander",
    "status": "landed",
    "date": "2024-01-19",
+   "event_utc": "2024-01-19T15:20Z",
    "lat_deg": -13.316,
    "lon_deg": 25.251,
    "coord_basis": "reported landing position",
    "coord_note": "Lander position, imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-JAXA-SLIM-TIME"
    ]
   },
   {
@@ -1065,13 +1143,15 @@
    "category": "impact",
    "status": "crashed",
    "date": "2019-04-11",
+   "event_utc": "2019-04-11T19:23Z",
    "lat_deg": 32.5956,
    "lon_deg": 19.3496,
    "coord_basis": "reported impact position",
    "coord_note": "Impact site imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-SPACEIL-BERESHEET-TIME"
    ]
   },
   {
@@ -1084,13 +1164,15 @@
    "category": "lander",
    "status": "landed",
    "date": "2024-02-22",
+   "event_utc": "2024-02-22T23:24Z",
    "lat_deg": -80.13,
    "lon_deg": 1.44,
    "coord_basis": "reported landing position",
    "coord_note": "Lander position (landed tipped over), imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Only two decimals (~0.01 deg, ~300 m N-S).",
    "precision_deg": 0.01,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-IM1-TIME"
    ]
   },
   {
@@ -1103,13 +1185,15 @@
    "category": "lander",
    "status": "landed",
    "date": "2025-03-06",
+   "event_utc": "2025-03-06T17:28Z",
    "lat_deg": -84.7906,
    "lon_deg": 29.1957,
    "coord_basis": "reported landing position",
    "coord_note": "Lander position (landed on its side), imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Four decimals.",
    "precision_deg": 0.0001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-IM2-TIME"
    ]
   },
   {
@@ -1122,13 +1206,15 @@
    "category": "lander",
    "status": "landed",
    "date": "2025-03-02",
+   "event_utc": "2025-03-02T08:34Z",
    "lat_deg": 18.562,
    "lon_deg": 61.81,
    "coord_basis": "reported landing position",
    "coord_note": "Lander position, imaged by LROC (NSSDC footnote d); DE421 mean Earth/polar axis per page. Three decimals (~30 m).",
    "precision_deg": 0.001,
    "source_refs": [
-    "R-LS-NSSDC-IMPACTS"
+    "R-LS-NSSDC-IMPACTS",
+    "R-LS-NASA-BGM1-TIME"
    ]
   },
   {
