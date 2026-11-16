@@ -8,7 +8,11 @@ NASA/JPL SPICE geometry and NASA LRO/LOLA terrain data.
 [Release notes](CHANGELOG.md) · [Development guide](docs/DEVELOPMENT.md) ·
 [Sources and assumptions](docs/REFERENCES_AND_ASSUMPTIONS.md)
 
-https://lunarsiteplanner.com/
+Official Site: https://lunarsiteplanner.com/
+
+NASA Space App Submission: https://www.spaceappschallenge.org/2026/find-a-team/seraphim/?tab=project
+
+Demo Video: https://www.youtube.com/watch?v=2hjhapZHjLc
 
 Built by **Project Seraphim** for the **2026 NASA Space Apps Challenge**.
 
